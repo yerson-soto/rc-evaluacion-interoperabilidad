@@ -1,10 +1,23 @@
 import React from "react";
 
-import { AdminPanel } from "modules/AdminPanel";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { AdminPanel } from "features/AdminPanel";
+import { Dashboard } from "features/Dashboard";
+import { EvaluationList } from "features/EvaluationList";
+import { EvaluationDetail } from "features/EvaluationDetail";
 
 function App() {
   return (
-    <AdminPanel />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AdminPanel />}>
+          <Route index element={<Dashboard />} />
+          <Route path="evaluaciones" element={<EvaluationList />} />
+          <Route path="evaluaciones/:slug" element={<EvaluationDetail />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
