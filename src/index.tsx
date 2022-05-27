@@ -4,11 +4,6 @@ import "./index.css";
 import App from "./main/App";
 import reportWebVitals from "./reportWebVitals";
 
-// Styles
-import "@fontsource/maven-pro";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

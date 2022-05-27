@@ -1,5 +1,10 @@
+@import url('../node_modules/antd/dist/antd.css');
+@import url('../node_modules/@fontsource/maven-pro');
+
 :root {
   --header-h: 65px;
+  --sider-w: 260px;
+  --sider-collapsed-w: 80px;
 }
 
 #root {
@@ -9,16 +14,7 @@
 body {
   margin: 0;
   height: 100%;
-  font-family: 'Maven Pro', sans-serif;
+  font-family: 'Maven Pro', sans-serif!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.p-component {
-  font-family: 'Maven Prop', sans-serif!important;
 }
