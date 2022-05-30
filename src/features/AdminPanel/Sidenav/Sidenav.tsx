@@ -94,7 +94,7 @@ export default function Sidenav(props: SidenavProps) {
   return (
     <Layout.Sider
       collapsible
-      theme="light"
+      theme="dark"
       breakpoint="lg"
       trigger={null}
       className={classes.sidenav}
@@ -113,7 +113,7 @@ export default function Sidenav(props: SidenavProps) {
         />
       </div>
       <Menu
-        theme="light"
+        theme="dark"
         mode="inline"
         defaultSelectedKeys={["1"]}
         items={getItems()}

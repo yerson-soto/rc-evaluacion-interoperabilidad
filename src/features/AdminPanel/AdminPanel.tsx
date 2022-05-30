@@ -44,13 +44,14 @@ export default function AdminPanel() {
         style={{
           marginLeft: contentOffset,
           transition: "all .2s",
+          // background: "#fff"
         }}
       >
         <Header onToggleSidenav={onChangeCollapsed} />
         <Main><Outlet /></Main>
-        <Layout.Footer style={{ textAlign: "center" }}>
+        {/* <Layout.Footer style={{ textAlign: "center" }}>
           Ant Design ©2018 Created by Ant UED
-        </Layout.Footer>
+        </Layout.Footer> */}
       </Layout>
     </Layout>
   );

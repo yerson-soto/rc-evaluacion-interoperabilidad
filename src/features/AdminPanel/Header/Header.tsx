@@ -11,7 +11,7 @@ interface HeaderProps {
 export default function Header({ onToggleSidenav }: HeaderProps) {
   return (
     <Layout.Header 
-    // className={classes.header}
+    className={classes.header}
     >
       {React.createElement(MenuOutlined, {
         className: classes.trigger,

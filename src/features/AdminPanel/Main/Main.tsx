@@ -1,7 +1,7 @@
-import React from 'react'
-import { Breadcrumb, Layout } from 'antd'
+import React from "react";
+import { Breadcrumb, Layout } from "antd";
 
-import classes from './Main.module.css';
+import classes from "./Main.module.css";
 
 interface MainProps {
   children: React.ReactNode;
@@ -14,9 +14,8 @@ export default function Main({ children }: MainProps) {
         <Breadcrumb.Item>User</Breadcrumb.Item>
         <Breadcrumb.Item>Bill</Breadcrumb.Item>
       </Breadcrumb>
-      <div className={classes.content}>
-        {children}
-      </div>
+
+      {children}
     </Layout.Content>
-  )
+  );
 }
