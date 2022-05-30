@@ -23,16 +23,21 @@ import Background from 'resources/images/sidebar.jpg';
 
 import "./Sidebar.css";
 
-export default function Sidebar() {
+interface SidebarProps {
+  isCompacted: boolean;
+  onToggle: () => void;
+}
+
+export default function Sidebar({ isCompacted, onToggle }: SidebarProps) {
   // const { collapsed, toggled, handleToggleSidebar } = props;
 
   return (
     <ProSidebar
       image={Background}
-      collapsed={false}
+      collapsed={isCompacted}
       toggled={true}
       breakPoint="md"
-      onToggle={() => {}}
+      onToggle={onToggle}
     >
       <SidebarHeader>
         <div

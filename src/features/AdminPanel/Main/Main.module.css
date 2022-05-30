@@ -1,0 +1,14 @@
+.main {
+  height: auto;
+  margin: 24px 16px;
+  overflow: initial;
+}
+
+.breadcrumb {
+  margin: 16px 0;
+}
+
+.content {
+  background: #fff;
+}
+
