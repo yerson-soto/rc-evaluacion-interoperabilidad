@@ -1,8 +1,8 @@
-import React from 'react';
-import { Layout } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
+import React from "react";
+import { Avatar, Image, Layout, Space } from "antd";
+import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 
-import classes from './Header.module.css';
+import classes from "./Header.module.css";
 
 interface HeaderProps {
   onToggleSidenav: () => void;
@@ -10,13 +10,12 @@ interface HeaderProps {
 
 export default function Header({ onToggleSidenav }: HeaderProps) {
   return (
-    <Layout.Header 
-    className={classes.header}
-    >
-      {React.createElement(MenuOutlined, {
-        className: classes.trigger,
-        onClick: onToggleSidenav,
-      })}
+    <Layout.Header className={classes.header}>
+      <MenuOutlined className={classes.trigger} onClick={onToggleSidenav} />
+
+      <Space>
+        <Avatar size="large" icon={<UserOutlined />} />
+      </Space>
     </Layout.Header>
   );
 }

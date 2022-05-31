@@ -1,11 +1,12 @@
 @import url('../node_modules/antd/dist/antd.css');
 @import url('../node_modules/@fontsource/maven-pro');
-@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
   --header-h: 65px;
   --sider-w: 260px;
   --sider-collapsed-w: 80px;
+  --content-gutter: 24px;
 }
 
 #root {
@@ -15,7 +16,8 @@
 body {
   margin: 0;
   height: 100%;
-  font-family: 'Mukta', sans-serif!important;
+  font-family: 'Open Sans', sans-serif!important;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

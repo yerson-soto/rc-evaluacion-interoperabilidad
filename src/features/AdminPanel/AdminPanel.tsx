@@ -13,7 +13,11 @@ export default function AdminPanel() {
 
   const siderWidth = "var(--sider-w)";
   const collapsedWidth = broken ? "0" : "var(--sider-collapsed-w)";
-  const contentOffset = broken ? "0" : collapsed ? "var(--sider-collapsed-w)" : siderWidth;
+  const contentOffset = broken
+    ? "0"
+    : collapsed
+    ? "var(--sider-collapsed-w)"
+    : siderWidth;
 
   React.useEffect(() => {
     function adjustSidebar() {
@@ -25,11 +29,11 @@ export default function AdminPanel() {
 
   const onChangeCollapsed = () => {
     setCollapsed(!collapsed);
-  }
+  };
 
   const onChangeBroken = (isBroken: boolean) => {
     setBroken(isBroken);
-  }
+  };
 
   return (
     <Layout hasSider className={classes.wrapper}>
@@ -41,14 +45,13 @@ export default function AdminPanel() {
         onLayoutChange={onChangeBroken}
       />
       <Layout
-        style={{
-          marginLeft: contentOffset,
-          transition: "all .2s",
-          // background: "#fff"
-        }}
+        className={classes.content}
+        style={{ marginLeft: contentOffset }}
       >
         <Header onToggleSidenav={onChangeCollapsed} />
-        <Main><Outlet /></Main>
+        <Main>
+          <Outlet />
+        </Main>
         {/* <Layout.Footer style={{ textAlign: "center" }}>
           Ant Design ©2018 Created by Ant UED
         </Layout.Footer> */}

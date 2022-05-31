@@ -1,6 +1,6 @@
 .main {
   height: auto;
-  margin: 24px 34px;
+  margin: var(--content-gutter);
   overflow: initial;
 }
 

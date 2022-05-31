@@ -1,3 +1,36 @@
 .wrapper {
   height: 100%;
 }
+
+.content {
+  transition: all .2s;
+  height: 100%;
+  background: #fff;
+  overflow-y: auto;
+}
+
+/* Width */
+.content::-webkit-scrollbar {
+  width: 4px;
+}
+
+@media(min-width: 768px) {
+  .content::-webkit-scrollbar {
+    width: 7px;
+  }
+}
+
+/* Track */
+.content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.content::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

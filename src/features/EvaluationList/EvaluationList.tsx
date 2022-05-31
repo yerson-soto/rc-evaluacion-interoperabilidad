@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Button, Space, Typography } from "antd";
+import { Table, Button, Space, Typography, Avatar, Card, Row, Col, PageHeader } from "antd";
 import type { TableProps } from "antd";
 import type {
   ColumnsType,
@@ -12,7 +12,10 @@ import {
   EditOutlined,
   EllipsisOutlined,
   SettingOutlined,
+  ArrowRightOutlined,
 } from "@ant-design/icons";
+import { Link, useNavigate } from 'react-router-dom';
+import { FaArrowAltCircleRight } from "react-icons/fa";
 
 interface DataType {
   key: string;
@@ -89,6 +92,7 @@ export default function EvaluationList() {
     Record<string, FilterValue | null>
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
+  const navigate = useNavigate();
 
   const handleChange: TableProps<DataType>["onChange"] = (
     pagination,
@@ -157,21 +161,59 @@ export default function EvaluationList() {
 
   return (
     <Space direction="vertical" size="large">
+      <PageHeader
+        style={{ padding: 0 }}
+        onBack={() => navigate("/evaluaciones")}
+        title="Evaluaciones"
+        subTitle="Lista de evaluaciones tomadas..."
+        // extra={[
+        //   <Button key="2">Crear</Button>,
+        //   <Button key="1" type="primary">
+        //     Editar
+        //   </Button>,
+        // ]}
+      />
+      
       <CustomCard
-        bordered={false}
+        bordered
         // actions={[
-        //   <SettingOutlined key="setting" />,
+        //   <Link to="/evaluaciones/abcd/complete">
+        //     <SettingOutlined key="setting" />
+        //   </Link>,
         //   <EditOutlined key="edit" />,
         //   <Button>Iniciar</Button>,
         // ]}
       >
-        <Typography.Title level={4}>Nueva evaluación</Typography.Title>
+        <Row align="middle" gutter={[5, 15]}>
+          <Col xs={24} md={20} lg={22}>
+            <Typography.Title level={4}>Nueva evaluación</Typography.Title>
 
-        <Typography.Text>Enviada el 2022 de mayo de 2022</Typography.Text>
+            <Typography.Text>Enviada el 2022 de mayo de 2022</Typography.Text>
+          </Col>
+
+          <Col flex="auto">
+            <Button
+              style={{ width: "100%" }}
+              type="primary"
+              icon={<ArrowRightOutlined />}
+              size="large"
+              onClick={() => navigate('/evaluaciones/abcd/complete')}
+            >
+              Iniciar
+            </Button>
+          </Col>
+        </Row>
 
         {/* <Button type="primary" color="green">Iniciar</Button> */}
+        {/* 
+        <Card.Meta
+          
+     
+      title="Nueva Evaluacion"
+      description="Enviada el 2022 de mayo de 2022"
+    /> */}
       </CustomCard>
-      <Space style={{ marginBottom: 16 }}>
+      <Space style={{ marginBottom: 16 }} wrap>
         <Button onClick={setAgeSort}>Sort age</Button>
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>

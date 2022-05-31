@@ -1,10 +1,9 @@
-import React from 'react'
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout, Menu } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
+import { Button, Layout, Menu } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
 
-import classes from './Sidenav.module.css';
-
+import classes from "./Sidenav.module.css";
 
 // Replace block Starts
 import {
@@ -13,6 +12,8 @@ import {
   FileOutlined,
   TeamOutlined,
   SlidersOutlined,
+  RightOutlined,
+  LeftOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
@@ -33,7 +34,6 @@ type MenuItem = Required<MenuProps>["items"][number];
 //       label,
 //   } as MenuItem;
 // }
-
 
 // const items: MenuItem[] = [
 //   getItem("Dashboard", "1", "/", <PieChartOutlined />),
@@ -62,9 +62,16 @@ interface SidenavProps {
 
 export default function Sidenav(props: SidenavProps) {
   const navigate = useNavigate();
-  const { isCompacted, baseWidth, compactedWidth, onToggle, onLayoutChange } = props;
+  const { isCompacted, baseWidth, compactedWidth, onToggle, onLayoutChange } =
+    props;
 
-  const getItem = (label: React.ReactNode, key: React.Key, href: string, icon?: React.ReactNode, children?: MenuItem[]): MenuItem => {
+  const getItem = (
+    label: React.ReactNode,
+    key: React.Key,
+    href: string,
+    icon?: React.ReactNode,
+    children?: MenuItem[]
+  ): MenuItem => {
     return {
       key,
       icon,
@@ -72,24 +79,24 @@ export default function Sidenav(props: SidenavProps) {
       onClick: () => navigate(href),
       label,
     } as MenuItem;
-  }
+  };
 
   const getItems = (): MenuItem[] => {
     return [
       getItem("Dashboard", "1", "/", <PieChartOutlined />),
       getItem("Evaluaciones", "2", "/evaluaciones", <BarChartOutlined />),
       getItem("Medición", "sub1", "/", <SlidersOutlined />, [
-        getItem("Tom", "3", "/",),
-        getItem("Bill", "4", "/",),
-        getItem("Alex", "5", "/",),
+        getItem("Tom", "3", "/"),
+        getItem("Bill", "4", "/"),
+        getItem("Alex", "5", "/"),
       ]),
       getItem("Team", "sub2", "/", <TeamOutlined />, [
-        getItem("Team 1", "6", "/",),
-        getItem("Team 2", "8", "/",),
+        getItem("Team 1", "6", "/"),
+        getItem("Team 2", "8", "/"),
       ]),
       getItem("Files", "9", "/", <FileOutlined />),
     ];
-  }
+  };
 
   return (
     <Layout.Sider
@@ -106,18 +113,23 @@ export default function Sidenav(props: SidenavProps) {
       }}
     >
       <div className={classes.logo}>
-        <MenuOutlined
+        {/* <MenuOutlined
           className={classes.trigger}
           style={{ color: "#ffffff" }}
           onClick={onToggle}
-        />
+        /> */}
       </div>
       <Menu
+        className={classes.menu}
         theme="dark"
         mode="inline"
         defaultSelectedKeys={["1"]}
         items={getItems()}
       />
+
+      <RightOutlined
+        className={`${classes.trigger} ${isCompacted && 'open'}`}
+      />
     </Layout.Sider>
-  )
+  );
 }
