@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Layout, Menu } from "antd";
+import { Button, Layout, Menu, Typography } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
+import { Box } from "library/components/Box";
+import classnames from "classnames";
 
 import classes from "./Sidenav.module.css";
 
@@ -12,7 +14,7 @@ import {
   FileOutlined,
   TeamOutlined,
   SlidersOutlined,
-  RightOutlined,
+  AppstoreOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -65,6 +67,8 @@ export default function Sidenav(props: SidenavProps) {
   const { isCompacted, baseWidth, compactedWidth, onToggle, onLayoutChange } =
     props;
 
+  
+
   const getItem = (
     label: React.ReactNode,
     key: React.Key,
@@ -86,17 +90,23 @@ export default function Sidenav(props: SidenavProps) {
       getItem("Dashboard", "1", "/", <PieChartOutlined />),
       getItem("Evaluaciones", "2", "/evaluaciones", <BarChartOutlined />),
       getItem("Medición", "sub1", "/", <SlidersOutlined />, [
-        getItem("Tom", "3", "/"),
-        getItem("Bill", "4", "/"),
-        getItem("Alex", "5", "/"),
+        getItem("Prueba 1", "3", "/"),
+        getItem("Prueba 2", "4", "/"),
+        getItem("Prueba 3", "5", "/"),
       ]),
-      getItem("Team", "sub2", "/", <TeamOutlined />, [
+      getItem("Equipo", "sub2", "/", <TeamOutlined />, [
         getItem("Team 1", "6", "/"),
         getItem("Team 2", "8", "/"),
       ]),
-      getItem("Files", "9", "/", <FileOutlined />),
+      getItem("Manual de Usuario", "9", "/", <FileOutlined />),
     ];
   };
+
+  const onBreakpoint = (broken: boolean): void => onLayoutChange(broken);
+
+  const getClassNames = (): string => classnames(classes.sidenav, {
+    [classes.closed]: isCompacted,
+  });
 
   return (
     <Layout.Sider
@@ -104,21 +114,18 @@ export default function Sidenav(props: SidenavProps) {
       theme="dark"
       breakpoint="lg"
       trigger={null}
-      className={classes.sidenav}
       width={baseWidth}
       collapsedWidth={compactedWidth}
       collapsed={isCompacted}
-      onBreakpoint={(broken) => {
-        onLayoutChange(broken);
-      }}
+      onBreakpoint={onBreakpoint}
+      className={getClassNames()}
     >
-      <div className={classes.logo}>
-        {/* <MenuOutlined
-          className={classes.trigger}
-          style={{ color: "#ffffff" }}
-          onClick={onToggle}
-        /> */}
-      </div>
+      <Box className={classes.logo}>
+        <AppstoreOutlined className={classes.logoIcon} />
+        <Typography.Text className={classes.logoText}>
+          Madurez
+        </Typography.Text>
+      </Box>
       <Menu
         className={classes.menu}
         theme="dark"
@@ -127,9 +134,9 @@ export default function Sidenav(props: SidenavProps) {
         items={getItems()}
       />
 
-      <RightOutlined
-        className={`${classes.trigger} ${isCompacted && 'open'}`}
-      />
+      <Box onClick={onToggle} className={classes.trigger}>
+        <LeftOutlined />
+      </Box>
     </Layout.Sider>
   );
 }

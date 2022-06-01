@@ -1,29 +1,43 @@
-.logo {
-  height: 60px;
-}
-
 .sidenav {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
   z-index: 2;
-  /* border-right: 1px solid #f0f0f0; */
 }
 
-/* .trigger {
-  padding: 0 24px;
-  font-size: 18px;
-  line-height: 64px;
-  cursor: pointer;
-  transition: color 0.3s;
+.logo {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 20px;
 }
 
-.trigger:hover {
-  color: #1890ff;
-} */
+.logoIcon {
+  color: #dadada;
+  margin-right: 0.5rem;
+  font-size: 1.8rem;
+  transition: all 0.2s;
+}
+
+.logoText {
+  color: #dadada !important;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  transition: all 0.5s;
+}
+
+.sidenav.closed .logoIcon {
+  transform: scale(1.1) translateX(5px);
+}
+
+.sidenav.closed .logoText {
+  opacity: 0;
+}
 
 .trigger {
   position: absolute;
@@ -37,13 +51,12 @@
   text-align: center;
   background: #002140;
   cursor: pointer;
-  transition: all .2s;
 }
 
-.trigger.open {
+.trigger span {
+  transition: all 0.2s;
+}
+
+.sidenav.closed .trigger span {
   transform: scale(-1);
 }
-
-/* .menu {
-  border-right: none;
-} */

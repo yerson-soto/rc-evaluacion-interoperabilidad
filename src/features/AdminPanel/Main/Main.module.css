@@ -1,7 +1,6 @@
 .main {
   height: auto;
   margin: var(--content-gutter);
-  overflow: initial;
 }
 
 .breadcrumb {
