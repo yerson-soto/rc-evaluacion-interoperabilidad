@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
+import evaluationReducer from './slices/evaluationSlice';
+
 export const store = configureStore({
   reducer: {
-    
+    evaluations: evaluationReducer
   },
 })
 

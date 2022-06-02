@@ -16,6 +16,8 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import { useEvaluationList } from './useEvaluationList';
+import { Evaluation } from "library/models/Evaluation";
 
 interface DataType {
   key: string;
@@ -91,17 +93,19 @@ export default function EvaluationList() {
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
+  const [sortedInfo, setSortedInfo] = useState<SorterResult<Evaluation>>({});
   const navigate = useNavigate();
 
-  const handleChange: TableProps<DataType>["onChange"] = (
+  const { isLoading, evaluations } = useEvaluationList();
+
+  const handleChange: TableProps<Evaluation>["onChange"] = (
     pagination,
     filters,
     sorter
   ) => {
     console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<DataType>);
+    setSortedInfo(sorter as SorterResult<Evaluation>);
   };
 
   const clearFilters = () => {
@@ -120,41 +124,38 @@ export default function EvaluationList() {
     });
   };
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<Evaluation> = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      filters: [
-        { text: "Joe", value: "Joe" },
-        { text: "Jim", value: "Jim" },
-      ],
+      title: "UUID",
+      dataIndex: "uuid",
+      key: "uuid",
+      // filters: [
+      //   { text: "Joe", value: "Joe" },
+      //   { text: "Jim", value: "Jim" },
+      // ],
       filteredValue: filteredInfo.name || null,
-      onFilter: (value: any, record) => record.name.includes(value),
-      sorter: (a, b) => a.name.length - b.name.length,
+      onFilter: (value: any, record) => record.dateCreated.includes(value),
+      sorter: (a, b) => a.dateCreated.length - b.dateCreated.length,
       sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a, b) => a.age - b.age,
-      sortOrder: sortedInfo.columnKey === "age" ? sortedInfo.order : null,
+      title: "Organismo",
+      dataIndex: "organizationId",
+      key: "organizationId",
+      sorter: (a, b) => a.organizationId - b.organizationId,
+      sortOrder: sortedInfo.columnKey === "organizationId" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Fecha de Creacion",
+      dataIndex: "dateCreated",
+      key: "dateCreated",
       filters: [
-        { text: "London", value: "London" },
-        { text: "New York", value: "New York" },
+        { text: "2022-05-22", value: "2022-05-22" },
+        { text: "2022-05-22", value: "2022-05-22" },
       ],
       filteredValue: filteredInfo.address || null,
-      onFilter: (value: any, record) => record.address.includes(value),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortOrder: sortedInfo.columnKey === "address" ? sortedInfo.order : null,
       ellipsis: true,
     },
   ];
@@ -218,7 +219,7 @@ export default function EvaluationList() {
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>
       </Space>
-      {/* <Table columns={columns} dataSource={data} onChange={handleChange} /> */}
+      <Table columns={columns} dataSource={evaluations} onChange={handleChange} />
     </Space>
   );
 }

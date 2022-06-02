@@ -17,9 +17,8 @@ import {
   AppstoreOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import { MenuItem } from "library/common/types";
 
-type MenuItem = Required<MenuProps>["items"][number];
 
 // function getItem(
 //   label: React.ReactNode,

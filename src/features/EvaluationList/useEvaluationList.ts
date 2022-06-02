@@ -1,9 +1,16 @@
-import { Evaluation } from "library/models/Evaluation";
-import { useState } from "react";
-
+import { useFetchList } from "library/hooks/useFetchList";
+import { EvaluationService } from 'main/services/EvaluationService';
+import * as actions from 'main/store/slices/evaluationSlice';
 
 export function useEvaluationList() {
-  const [evaluations, setEvaluations] = useState<Evaluation[]>();
+  const { isLoading, results: evaluations } = useFetchList({
+    service: EvaluationService,
+    actions: {
+      start: actions.evaluationsLoad,
+      success: actions.evaluationsListed,
+      failure: actions.evaluationsNotListed
+    }
+  });
 
-  return { evaluations };
+  return { isLoading, evaluations };
 }
