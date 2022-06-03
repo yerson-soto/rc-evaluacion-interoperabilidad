@@ -4,6 +4,8 @@ import * as actions from 'main/store/slices/evaluationSlice';
 
 export function useEvaluationList() {
   const { isLoading, results: evaluations } = useFetchList({
+    selectLoading: (state) => state.evaluations.isLoading,
+    selectResults: (state) => state.evaluations.results,
     service: EvaluationService,
     actions: {
       start: actions.evaluationsLoad,

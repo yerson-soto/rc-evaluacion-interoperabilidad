@@ -1,5 +1,9 @@
+import { Organization } from './Organization';
+import { Domain } from './Domain';
+
 export interface Evaluation {
   uuid: string;
-  organizationId: number;
+  domains: Domain[];
+  organization: Organization;
   dateCreated: string;
 }

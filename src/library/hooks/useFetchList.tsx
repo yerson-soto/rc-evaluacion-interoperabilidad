@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "main/store/index";
 import { CommonRepository } from "library/repositories/CommonRepository";
 import { ErrorMessage } from "library/common/types";
 import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
-
+import { RootState } from 'main/store/index';
 
 interface Actions<T> {
   start: ActionCreatorWithoutPayload;
@@ -12,15 +12,18 @@ interface Actions<T> {
 }
 
 interface UseListParams<T> {
-  service: new () => CommonRepository<T>;
   actions: Actions<T>;
+  service: new () => CommonRepository<T>;
+  selectResults: (state: RootState) => T[];
+  selectLoading: (state: RootState) => boolean;
 }
 
 export function useFetchList<T>(params: UseListParams<T>) {
-  const results = useAppSelector((state) => state.evaluations);
+  const results = useAppSelector(params.selectResults);
+  const isLoading = useAppSelector(params.selectLoading);
   const dispatch = useAppDispatch();
   const { service: Service, actions } = params;
-
+  
   useEffect(() => {
     const fetchResults = (): void => {
       dispatch(actions.start());
@@ -34,7 +37,9 @@ export function useFetchList<T>(params: UseListParams<T>) {
     };
 
     fetchResults();
-  }, []);
 
-  return { isLoading: results.isLoading, results: results.results };
+    // eslint-disable-next-line
+  }, []); 
+
+  return { isLoading, results };
 }

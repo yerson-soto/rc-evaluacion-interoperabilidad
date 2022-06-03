@@ -3,7 +3,15 @@ import { Evaluation } from "library/models/Evaluation";
 export interface GetEvaluation {
   id: string;
   dateInitial: string;
-  organismoId: number;
+  organismo: {
+    id: number;
+    orgasnimo: string;
+    siglas: string;
+  };
+  domain: {
+    id: number;
+    description: string;
+  }
 }
 
 export interface GetPaginatedEvaluation {

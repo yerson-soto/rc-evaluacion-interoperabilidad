@@ -16,7 +16,7 @@ export class EvaluationService implements CommonRepository<Evaluation>, Evaluati
   
   getAll(): Promise<Evaluation[]> { 
     return new Promise((resolve, reject) => {
-      this.client.get<Response<GetPaginatedEvaluation>>('/evaluations/1/5/a')
+      this.client.get<Response<GetPaginatedEvaluation>>('/evaluations/1/10')
         .then(res => {
           const { result: { evaluationInstitutionalsResponse} } = res.data;
           const evaluations = evaluationInstitutionalsResponse.map(this.mapResult);
@@ -29,7 +29,17 @@ export class EvaluationService implements CommonRepository<Evaluation>, Evaluati
   mapResult(result: GetEvaluation): Evaluation {
     return {
       uuid: result.id,
-      organizationId: result.organismoId,
+      organization: {
+        id: result.organismo.id,
+        name: result.organismo.orgasnimo,
+        acronym: result.organismo.siglas
+      },
+      domains: [
+        {
+          id: result.domain.id,
+          name: result.domain.description
+        }
+      ],
       dateCreated: result.dateInitial
     }
   }
