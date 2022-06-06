@@ -19,7 +19,7 @@ export interface GetPaginatedEvaluation {
   page: number;
   rows: number;
   paginastotales: number;
-  evaluationInstitutionalsResponse: GetEvaluation[];
+  evaluations: GetEvaluation[];
 }
 
 export interface EvaluationRepository {

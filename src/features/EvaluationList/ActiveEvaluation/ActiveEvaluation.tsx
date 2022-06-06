@@ -12,9 +12,9 @@ export default function ActiveEvaluation() {
     <CustomCard bordered={false}>
         <Row align="middle" gutter={[5, 15]}>
           <Col xs={24} md={20} lg={22}>
-            <Typography.Title level={4}>Nueva evaluación</Typography.Title>
+            <Typography.Title level={4}>Evaluacion Actual</Typography.Title>
 
-            <Typography.Text>Enviada el 2022 de mayo de 2022</Typography.Text>
+            <Typography.Text>2022 de mayo de 2022</Typography.Text>
           </Col>
 
           <Col flex="auto">

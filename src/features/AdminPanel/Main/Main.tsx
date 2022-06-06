@@ -1,5 +1,7 @@
 import React from "react";
-import { Breadcrumb, Layout } from "antd";
+import { useNavigate, useLocation, Location } from 'react-router-dom';
+import { Breadcrumb, Layout, PageHeader } from "antd";
+import { Box } from "library/components/Box";
 
 import classes from "./Main.module.css";
 
@@ -8,12 +10,24 @@ interface MainProps {
 }
 
 export default function Main({ children }: MainProps) {
+  const navigate = useNavigate();
+  const location = useLocation(); 
+
+  console.log();
+  
   return (
     <Layout.Content className={classes.main}>
-      <Breadcrumb className={classes.breadcrumb}>
-        <Breadcrumb.Item>User</Breadcrumb.Item>
-        <Breadcrumb.Item>Bill</Breadcrumb.Item>
-      </Breadcrumb>
+      <Box>
+        <Breadcrumb className={classes.breadcrumb}>
+          <Breadcrumb.Item>User</Breadcrumb.Item>
+          <Breadcrumb.Item>Bill</Breadcrumb.Item>
+        </Breadcrumb>
+
+        {/* <PageHeader
+          onBack={() => navigate("/")}
+          title={'headings.complete_evaluation'}
+        /> */}
+      </Box>
 
       {children}
     </Layout.Content>

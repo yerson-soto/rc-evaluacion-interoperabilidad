@@ -1,3 +1,20 @@
-.evaluation {
-  width: 100%;
+.row {
+  padding: 16px 0 !important;
+}
+
+.content {
+  display: flex;
+  column-gap: 20px;
+}
+
+.title {
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 18px;
+  }
 }

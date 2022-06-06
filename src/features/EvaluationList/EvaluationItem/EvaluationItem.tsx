@@ -1,84 +1,50 @@
 import React from "react";
-import { Button, List, Tag, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Button, Col, List, Row, Typography } from "antd";
 import { Evaluation } from "library/models/Evaluation";
-import {
-  SettingOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
-import { ActionCard } from "library/components/ActionCard";
+import { Box } from "library/components/Box";
+import { Score } from "library/components/Score";
 
 import classes from "./EvaluationItem.module.css";
-import { Box } from "library/components/Box";
 
 interface EvaluationItemProps {
   evaluation: Evaluation;
 }
 
-const IconButton = ({ icon }: { icon: React.FC }) => {
-  return <Button type="link" icon={React.createElement(icon)} />;
-};
-
 export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
+  const navigate = useNavigate();
+
   const { uuid, organization, dateCreated } = evaluation;
+
+  const goToDetail = () => navigate(`/evaluaciones/${uuid}`);
 
   return (
     <List.Item
+      className={classes.row}
       actions={[
         // <IconButton key="setting" icon={SettingOutlined} />,
-        // <IconButton key="edit" icon={EditOutlined} />,
+        // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
-        <Button>Ver</Button>,
+        <Button onClick={goToDetail}>Ver</Button>,
         <Button danger>Eliminar</Button>,
       ]}
     >
-      <Box style={{ display: 'flex', gap: 20 }}>
-        <Box style={{
-          width: 100,
-          height: 80,
-          background: 'blue',
-          position: 'relative'
-        }}>
-          <Box style={{
-            fontSize: '25px',
-            color: '#fff',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+      <Row gutter={20} wrap={false}>
+        <Col>
+          <Score value={2.5} />
+        </Col>
 
-          }}>3.5</Box>
-        </Box>
-
-        <Box>
-          <Typography.Title level={4} style={{ margin: 0 }}>
-            Ministerio de Administracion Publica
-          </Typography.Title>
-          <Typography.Text>
-            Asignada el 24 de mayo de 2022
-          </Typography.Text>
-          {/* <Box>
-            <Tag color="magenta">magenta</Tag>
-            <Tag color="red">red</Tag>
-            <Tag color="volcano">volcano</Tag>
-          </Box> */}
-        </Box>
-        {/* <List.Item.Meta
-          title={organization.name}
-          description={
-            <React.Fragment>
-              <Tag color="magenta">magenta</Tag>
-              <Tag color="red">red</Tag>
-              <Tag color="volcano">volcano</Tag>
-            </React.Fragment>
-          }
-        />
-        <Typography.Text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-          reprehenderit, doloribus dolore iste est facilis natus, eos sit sed
-          fugit iusto error.
-        </Typography.Text> */}
-      </Box>
+        <Col>
+          <Box>
+            <Typography.Text className={classes.title}>
+              {organization.name}
+            </Typography.Text>
+            <Typography.Text>
+              {new Date(dateCreated).toDateString()}
+            </Typography.Text>
+          </Box>
+        </Col>
+      </Row>
     </List.Item>
   );
 }

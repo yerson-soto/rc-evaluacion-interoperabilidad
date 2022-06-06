@@ -1,7 +1,15 @@
 .answer {
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
+  cursor: pointer;
+  transition: all .2s;
 }
+
+.answer:hover {
+  transform: scale(1.01);
+}
+
+
 
 .box {
   position: relative;
@@ -17,7 +25,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
 
   background: rgb(73, 255, 115);
   width: 40px;

@@ -1,16 +1,25 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { PageHeader, Button, Typography, Tag, Space } from "antd";
+import { useTranslation } from "react-i18next";
+import { PageHeader, Collapse, Row, Col, Typography, Tag, Card, Space } from "antd";
 
 import { Box } from "library/components/Box";
 import { CustomCard } from "library/components/CustomCard";
-import { AnswerRadio } from "library/components/AnswerRadio";
+import { AnswerRadio } from "features/EvaluationTake/AnswerRadio";
 
 import { Radio } from "antd";
 import type { RadioChangeEvent } from "antd";
+import { Score } from "library/components/Score";
+
+const text = `
+  A dog is a type of domesticated animal.
+  Known for its loyalty and faithfulness,
+  it can be found as a welcome guest in many households across the world.
+`;
 
 export default function EvaluationTake() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [value, setValue] = React.useState(1);
 
@@ -22,51 +31,51 @@ export default function EvaluationTake() {
   return (
     <Box>
       <PageHeader
-        style={{ padding: 0 }}
         onBack={() => navigate("/evaluaciones")}
-        title="Dominio Organizacional"
-        subTitle="Este dominio evalúa las habilidades..."
-        extra={[
-          <Button key="3">Operation</Button>,
-          <Button key="2">Operation</Button>,
-          <Button key="1" type="primary">
-            Primary
-          </Button>,
-        ]}
+        title={t("headings.complete_evaluation")}
       />
 
-      {/* <CustomCard
-        title="Liderazgo del Marco de Interoperabilidad"
-        extra={
-          <div style={{ marginBottom: 10 }}>
-            <Tag about="asdasdas" color="#2db7f5">
-              LI.I15D.05.01
-            </Tag>
-            <Tag color="#87d068">LI.I15D.05.02</Tag>
-            <Tag color="#108ee9">LI.I15D.05.03</Tag>
-          </div>
-        }
-        style={{ marginTop: 30 }}
-      >
-        <div style={{ marginBottom: 10 }}>
-          <Tag color="#2db7f5">LI.I15D.05.01</Tag>
-          <Tag color="#87d068">LI.I15D.05.02</Tag>
-          <Tag color="#108ee9">LI.I15D.05.03</Tag>
-        </div>
-        <Typography.Title level={3}>
-          Liderazgo del Marco de Interoperabilidad
-        </Typography.Title>
+      <Row gutter={40}>
+        <Col span={18}>
 
-        <div>
-          <AnswerRadio />
-          <AnswerRadio />
-          <AnswerRadio />
-          <AnswerRadio />
-          <AnswerRadio />
-        </div>
-      </CustomCard> */}
+        <Collapse bordered={false} defaultActiveKey={['1']} ghost>
+          <Collapse.Panel header="Dominio Organizacional" key="1">
+          <Box style={{ padding: "20px" }}>
+                <Box>
+                <Typography.Text style={{ marginRight: '15px' }}>LI.I15D.OG.01</Typography.Text>
+                <Typography.Text style={{ marginRight: '15px' }}>LI.I15D.OG.01</Typography.Text>
+                <Typography.Text style={{ marginRight: '15px' }}>LI.I15D.OG.01</Typography.Text>
+                </Box>
+                <Typography.Text style={{ fontSize: '18px', fontWeight: 500 }}>Liderazgo del Marco de Interoperabilidad</Typography.Text>
 
-      <Space direction="vertical">
+                <Space style={{ marginTop: '20px' }} direction="vertical" size="middle">
+                  <AnswerRadio color="#fce5d8" label="No existe un responsable de los servicios de intercambio de información" />
+                  <AnswerRadio color="#fff2cd" label="Existen varias personas responsables de los servicios de intercambio de información" />
+                  <AnswerRadio color="#fefed8" label="Existe un único responsable de intercambio de información pero no es formal"/>
+                  <AnswerRadio color="#e2efdb" label="Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad formalmente." />
+                  <AnswerRadio color="#c6e0b3" label="Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad" />
+                </Space>
+                
+              </Box>
+          </Collapse.Panel>
+          <Collapse.Panel header="Dominio Semantico" key="2">
+            {text}
+          </Collapse.Panel>
+          <Collapse.Panel header="Dominio Politico" key="3">
+            {text}
+          </Collapse.Panel>
+        </Collapse>
+        
+        </Col>
+
+        <Col flex="auto">
+          <CustomCard>
+            <Score value={5.0} />
+          </CustomCard>
+        </Col>
+      </Row>
+
+      {/* <Space direction="vertical">
         <CustomCard style={{ marginTop: 30, borderRadius: 10 }}>
           <Space>
             <Typography.Title level={5}>
@@ -192,7 +201,7 @@ export default function EvaluationTake() {
             </Radio.Group>
           </div>
         </CustomCard>
-      </Space>
+      </Space> */}
     </Box>
   );
 }

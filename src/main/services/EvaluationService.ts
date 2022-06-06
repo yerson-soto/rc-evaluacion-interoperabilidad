@@ -18,8 +18,8 @@ export class EvaluationService implements CommonRepository<Evaluation>, Evaluati
     return new Promise((resolve, reject) => {
       this.client.get<Response<GetPaginatedEvaluation>>('/evaluations/1/10')
         .then(res => {
-          const { result: { evaluationInstitutionalsResponse} } = res.data;
-          const evaluations = evaluationInstitutionalsResponse.map(this.mapResult);
+          const results = res.data.result.evaluations;
+          const evaluations = results.map(this.mapResult);
           resolve(evaluations);
         })
         .catch(() => reject('No se pudo cargar las evaluaciones'))
