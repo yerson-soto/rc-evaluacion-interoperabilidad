@@ -25,13 +25,45 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   return (
     <List.Item
       actions={[
-        <IconButton key="setting" icon={SettingOutlined} />,
-        <IconButton key="edit" icon={EditOutlined} />,
-        <IconButton key="delete" icon={DeleteOutlined} />,
+        // <IconButton key="setting" icon={SettingOutlined} />,
+        // <IconButton key="edit" icon={EditOutlined} />,
+        // <IconButton key="delete" icon={DeleteOutlined} />,
+        <Button>Ver</Button>,
+        <Button danger>Eliminar</Button>,
       ]}
     >
-      <Box>
-        <List.Item.Meta
+      <Box style={{ display: 'flex', gap: 20 }}>
+        <Box style={{
+          width: 100,
+          height: 80,
+          background: 'blue',
+          position: 'relative'
+        }}>
+          <Box style={{
+            fontSize: '25px',
+            color: '#fff',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+
+          }}>3.5</Box>
+        </Box>
+
+        <Box>
+          <Typography.Title level={4} style={{ margin: 0 }}>
+            Ministerio de Administracion Publica
+          </Typography.Title>
+          <Typography.Text>
+            Asignada el 24 de mayo de 2022
+          </Typography.Text>
+          {/* <Box>
+            <Tag color="magenta">magenta</Tag>
+            <Tag color="red">red</Tag>
+            <Tag color="volcano">volcano</Tag>
+          </Box> */}
+        </Box>
+        {/* <List.Item.Meta
           title={organization.name}
           description={
             <React.Fragment>
@@ -45,7 +77,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
           reprehenderit, doloribus dolore iste est facilis natus, eos sit sed
           fugit iusto error.
-        </Typography.Text>
+        </Typography.Text> */}
       </Box>
     </List.Item>
   );

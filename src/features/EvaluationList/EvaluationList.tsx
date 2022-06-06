@@ -15,8 +15,48 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import { CustomCard } from "library/components/CustomCard";
+import { Evaluation } from "library/models/Evaluation";
 
 const { useBreakpoint } = Grid;
+
+const fakeData: Evaluation[] = [
+  { 
+    uuid: 'abcd-efgh',
+    dateCreated: '2022-06-05',
+    organization: {
+      id: 1,
+      name: 'Ministerio de Industria y Comercio',
+      acronym: 'MIYPC'
+    },
+    domains: [
+
+    ]
+  },
+  { 
+    uuid: 'abcd-efgh-2',
+    dateCreated: '2022-06-05',
+    organization: {
+      id: 1,
+      name: 'Ministerio de Administracion Publica',
+      acronym: 'EFGH'
+    },
+    domains: [
+      
+    ]
+  },
+  { 
+    uuid: 'abcd-efgh-3',
+    dateCreated: '2022-06-05',
+    organization: {
+      id: 1,
+      name: 'Ministerio de Turismo',
+      acronym: 'ABCD'
+    },
+    domains: [
+      
+    ]
+  }
+]
 
 export default function EvaluationList() {
   const navigate = useNavigate();
@@ -47,7 +87,7 @@ export default function EvaluationList() {
           loading={isLoading}
           itemLayout={xl ? "horizontal" : "vertical"}
           size="large"
-          dataSource={evaluations}
+          dataSource={fakeData}
           footer={
             <div>
               <b>{evaluations.length}</b> evaluaciones
