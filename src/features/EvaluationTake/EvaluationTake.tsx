@@ -1,7 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { PageHeader, Collapse, Row, Col, Typography, Tag, Card, Space } from "antd";
+import {
+  PageHeader,
+  Collapse,
+  Row,
+  Col,
+  Typography,
+  Tag,
+  Card,
+  Space,
+  Affix,
+} from "antd";
 
 import { Box } from "library/components/Box";
 import { CustomCard } from "library/components/CustomCard";
@@ -10,6 +20,7 @@ import { AnswerRadio } from "features/EvaluationTake/AnswerRadio";
 import { Radio } from "antd";
 import type { RadioChangeEvent } from "antd";
 import { Score } from "library/components/Score";
+import { DomainList } from "./DomainList";
 
 const text = `
   A dog is a type of domesticated animal.
@@ -36,10 +47,11 @@ export default function EvaluationTake() {
       />
 
       <Row gutter={40}>
-        <Col span={18}>
+        <Col span={16}>
+          <DomainList />
 
-        <Collapse bordered={false} defaultActiveKey={['1']} ghost>
-          <Collapse.Panel header="Dominio Organizacional" key="1">
+          {/* <Collapse bordered={false} defaultActiveKey={['1']} ghost>
+          <Collapse.Panel header="Dominio Organizacional" key="1" showArrow={false}>
           <Box style={{ padding: "20px" }}>
                 <Box>
                 <Typography.Text style={{ marginRight: '15px' }}>LI.I15D.OG.01</Typography.Text>
@@ -52,7 +64,7 @@ export default function EvaluationTake() {
                   <AnswerRadio color="#fce5d8" label="No existe un responsable de los servicios de intercambio de información" />
                   <AnswerRadio color="#fff2cd" label="Existen varias personas responsables de los servicios de intercambio de información" />
                   <AnswerRadio color="#fefed8" label="Existe un único responsable de intercambio de información pero no es formal"/>
-                  <AnswerRadio color="#e2efdb" label="Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad formalmente." />
+                  <AnswerRadio color="#e2efdb" label="La entidad  tiene documentada toda la información de entrada y de salida de sus servicios y se encuentra actualizada. Esta información incluye todos los tipos de dato que se utilizan en los servicios de intercambio de información. La caracterización de los servicios incluye los casos de prueba" />
                   <AnswerRadio color="#c6e0b3" label="Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad" />
                 </Space>
                 
@@ -64,14 +76,18 @@ export default function EvaluationTake() {
           <Collapse.Panel header="Dominio Politico" key="3">
             {text}
           </Collapse.Panel>
-        </Collapse>
-        
+        </Collapse> */}
         </Col>
 
         <Col flex="auto">
-          <CustomCard>
-            <Score value={5.0} />
-          </CustomCard>
+          
+            <CustomCard style={{ 
+              position: 'sticky',
+              top: '20px'
+            }}>
+              <Score value={5.0} />
+            </CustomCard>
+         
         </Col>
       </Row>
 

@@ -1,0 +1,32 @@
+[data-theme='compact'] .domain-collapse,
+.domain-collapse {
+  background-color: transparent;
+}
+
+[data-theme='compact'] .domain-collapse .domain-panel,
+.domain-collapse .domain-panel {
+  background: #ffffff;
+  margin-bottom: 20px;
+  border-bottom: none;
+  padding: 0;
+}
+
+[data-theme='compact'] .domain-collapse,
+.domain-collapse {
+  background-color: transparent;
+}
+
+
+.domain-collapse .domain-header {
+  font-size: 20px;
+  font-weight: 600;
+  padding: .8rem 1.3rem;
+  opacity: .8;
+}
+
+
+.domain-collapse .ant-collapse-content-box {
+  background-color: #f8f6f8;
+  /* border-left: 4px solid #1890ff; */
+  box-shadow: inset 0px 0px 2px #d4d4d4;
+}

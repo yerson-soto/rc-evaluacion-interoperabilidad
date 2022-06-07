@@ -1,30 +1,67 @@
-import React from "react";
+import React, { useState, forwardRef } from "react";
 import { Box } from "library/components/Box";
 import { Typography, Input, Card } from "antd";
+import { CheckOutlined, CheckCircleFilled } from "@ant-design/icons";
 
 import classes from "./AnswerRadio.module.css";
 
-interface AnswerRadioProps {
+interface AnswerRadioProps extends React.HTMLProps<HTMLInputElement> {
   label: string;
   color: string;
 }
 
-export default function AnswerRadio(props: AnswerRadioProps) {
-  const { label, color, ...rest } = props;
-  
-  return (
-    <Card className={classes.answer} style={{ background: color }} bordered={false}>
-      {/* <Box>
-        <input type="radio" className={classes.radio} />
-        <label className={classes.label}>A</label>
-      </Box> */}
-      <Typography.Text>
-        {label}
-      </Typography.Text>
+export default forwardRef<any, AnswerRadioProps>((props, ref) => {
+  const { label, color, ...inputProps } = props;
 
-    </Card>
+  return (
+    <label
+      className={classes.answer}
+      style={{ borderLeftColor: color }}
+      // onClick={handleClick}
+    >
+      {label}
+
+      <input
+        type="radio"
+        name={inputProps.name}
+        className={classes.radio}
+        ref={ref}
+        {...inputProps}
+      />
+
+      <span className={classes.markBox}>
+        <CheckCircleFilled className={classes.mark} />
+      </span>
+    </label>
   );
-}
+});
+
+// export default function AnswerRadio(props: AnswerRadioProps) {
+//   const ref = useRef() as React.RefObject<HTMLInputElement>;
+//   const { label, color, ...inputProps } = props;
+
+//   return (
+//     <label
+//       className={classes.answer}
+//       style={{ borderLeftColor: color }}
+//       // onClick={handleClick}
+//     >
+//       {label}
+
+//       <input
+//         type="radio"
+//         name={inputProps.name}
+//         className={classes.radio}
+//         ref={ref}
+//         {...inputProps}
+//       />
+
+//       <Box className={classes.markBox}>
+//         <CheckCircleFilled className={classes.mark} />
+//       </Box>
+//     </label>
+//   );
+// }
 
 // export default function AnswerRadio({ label }: AnswerRadioProps) {
 //   return (

@@ -1,18 +1,20 @@
 .answer {
-  /* display: flex;
-  align-items: center; */
   cursor: pointer;
   transition: all .2s;
+  position: relative;
+  padding: 1rem 1.5rem;
+  border: 1px solid #f0f0f0;
+  border-left-width: 10px;
+  background-color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 2rem;
 }
 
 .answer:hover {
-  transform: scale(1.01);
-}
-
-
-
-.box {
-  position: relative;
+  transform: translateX(10px);
 }
 
 .radio {
@@ -21,21 +23,41 @@
   display: none;
 }
 
-.label {
+.markBox {
+  position: relative;
+  background-color: #e5e5e5;
+  border-radius: 100%;
+  width: 23px;
+  height: 23px;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background: rgb(73, 255, 115);
-  width: 40px;
-  height: 40px;
-  /* position: absolute;
-  content: '';
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
+  transition: all .2s;
 }
 
-.radio:checked + .label {
-  background-color: rgb(110, 240, 123);
+.mark {
+  font-size: 23px;
+  opacity: 0;
+  transition: all .2s;
+  color: #afafaf;
 }
+
+.radio:checked + .markBox,
+.answer:hover .markBox {
+  background-color: #ffffff;
+}
+
+.radio:checked + .markBox .mark {
+  color: #29d55d;
+  opacity: 1;
+}
+
+.answer:hover .markBox .mark {
+  opacity: 1;
+}
+
+.box {
+  position: relative;
+}
+
