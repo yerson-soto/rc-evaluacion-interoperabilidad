@@ -1,3 +1,4 @@
+import { CommonRepository } from "./CommonRepository";
 import { Evaluation } from "library/models/Evaluation";
 
 export interface GetEvaluation {
@@ -22,6 +23,6 @@ export interface GetPaginatedEvaluation {
   evaluations: GetEvaluation[];
 }
 
-export interface EvaluationRepository {
+export interface EvaluationRepository extends CommonRepository<Evaluation> {
   mapResult: (result: GetEvaluation) => Evaluation;
 }

@@ -4,7 +4,7 @@
   position: relative;
   padding: 1rem 1.5rem;
   border: 1px solid #f0f0f0;
-  border-left-width: 10px;
+  border-left-width: 4px;
   background-color: #ffffff;
 
   display: flex;
@@ -25,7 +25,7 @@
 
 .markBox {
   position: relative;
-  background-color: #e5e5e5;
+  border: 2px solid #e5e5e5;
   border-radius: 100%;
   width: 23px;
   height: 23px;
@@ -40,7 +40,7 @@
   font-size: 23px;
   opacity: 0;
   transition: all .2s;
-  color: #afafaf;
+  color: #d5d5d5;
 }
 
 .radio:checked + .markBox,

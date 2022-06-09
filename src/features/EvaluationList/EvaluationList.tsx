@@ -87,7 +87,7 @@ export default function EvaluationList() {
           loading={isLoading}
           itemLayout={xl ? "horizontal" : "vertical"}
           size="large"
-          dataSource={evaluations}
+          dataSource={fakeData}
           footer={
             <div>
               <b>{evaluations.length}</b> evaluaciones

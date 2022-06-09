@@ -1,0 +1,19 @@
+import { useState } from "react";
+import { Domain } from "library/models/Domain";
+import { DomainService } from "main/services/DomainService";
+import { useFetchList } from '../../../library/hooks/useFetchList';
+
+export function useDomainList() {
+  const [domains, setDomains] = useState<Domain[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  useFetchList({
+    service: DomainService,
+    onStart: () => setLoading(true),
+    onFinish: () => setLoading(false),
+    onSuccess: setDomains,
+    onFailure: () => {} 
+  })
+
+  return { isLoading, domains };
+}
