@@ -11,6 +11,7 @@ const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
   </Space>
 );
 const data = Array.from({ length: 23 }).map((_, i) => ({
+  number: i + 1,
   href: 'https://ant.design',
   title: `ant design part ${i}`,
   avatar: 'https://joeschmoe.io/api/v1/random',
@@ -33,8 +34,8 @@ export default function Questionary() {
       pageSize: 1,
     }}
     dataSource={data}
-    renderItem={item => (
-      <Question key={item.href} />
+    renderItem={(item) => (
+      <Question key={item.href} number={item.number} />
       // <List.Item
       //   key={item.title}
       //   actions={[

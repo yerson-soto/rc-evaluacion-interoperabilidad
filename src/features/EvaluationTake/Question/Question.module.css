@@ -1,0 +1,21 @@
+.number {
+  background-color: lightgreen;
+  color: green;
+}
+
+.tag {
+  border-radius: 10;
+  cursor: pointer;
+}
+
+.divider {
+  font-size: 14px!important;
+}
+
+.section {
+  margin-bottom: 1.6rem;
+}
+
+.alert {
+  margin-bottom: 14px;
+}

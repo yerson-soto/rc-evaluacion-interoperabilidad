@@ -1,82 +1,70 @@
 import React, { useState } from "react";
-import { Button, Divider, Space, Tag, Tooltip, Typography } from "antd";
+import { Alert, Divider, Space, Tag, Tooltip } from "antd";
 import { Box } from "library/components/Box";
 import { AnswerRadio } from "../AnswerRadio";
 
-import { Input, Radio } from "antd";
-import type { RadioChangeEvent } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Modal, Upload } from "antd";
 
-import { PlusOutlined } from '@ant-design/icons';
-import { Modal, Upload } from 'antd';
-import type { RcFile, UploadProps } from 'antd/es/upload';
-import type { UploadFile } from 'antd/es/upload/interface';
+import type { RcFile, UploadProps } from "antd/es/upload";
+import type { UploadFile } from "antd/es/upload/interface";
 
-import {
-  UploadOutlined,
-  MessageOutlined,
-  CommentOutlined,
-  FileAddOutlined,
-} from "@ant-design/icons";
 import { Avatar, List } from "antd";
 
-const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-  <Tooltip title="Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.">
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  </Tooltip>
-);
+import classes from "./Question.module.css";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result as string);
-    reader.onerror = error => reject(error);
+    reader.onerror = (error) => reject(error);
   });
 
-export default function Question() {
+interface QuestionProps {
+  number: number;
+}
 
+export default function Question(props: QuestionProps) {
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([
     {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      uid: "-1",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
     {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      uid: "-2",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
     {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      uid: "-3",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
     {
-      uid: '-4',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      uid: "-4",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
     {
-      uid: '-xxx',
+      uid: "-xxx",
       percent: 50,
-      name: 'image.png',
-      status: 'uploading',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      name: "image.png",
+      status: "uploading",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
     {
-      uid: '-5',
-      name: 'image.png',
-      status: 'error',
+      uid: "-5",
+      name: "image.png",
+      status: "error",
     },
   ]);
 
@@ -89,10 +77,12 @@ export default function Question() {
 
     setPreviewImage(file.url || (file.preview as string));
     setPreviewVisible(true);
-    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+    setPreviewTitle(
+      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
+    );
   };
 
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
     setFileList(newFileList);
 
   const uploadButton = (
@@ -103,76 +93,39 @@ export default function Question() {
   );
 
   return (
-    <List.Item
-      
-      
-      >
+    <List.Item>
       <List.Item.Meta
-        avatar={<Avatar style={{ color: "green", backgroundColor: "lightgreen" }}>1</Avatar>}
+        avatar={<Avatar className={classes.number}>{props.number}</Avatar>}
         title="Liderazgo del Marco de Interoperabilidad"
-        // description={
-        //   <Box>
-        //     <Typography.Text style={{ marginRight: 8 }}>Lineamientos:</Typography.Text>
-        //     <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-        //       <Tag
-        //         color="orange"
-        //         style={{ borderRadius: 10 }}
-        //       >
-        //         LI.I15D.OG.01
-        //       </Tag>
-        //     </Tooltip>
-        //     <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-        //       <Tag
-        //         color="orange"
-        //         style={{ borderRadius: 10 }}
-        //       >
-        //         LI.I15D.OG.02
-        //       </Tag>
-        //     </Tooltip>
-        //     <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-        //       <Tag
-        //         color="orange"
-        //         style={{ borderRadius: 10 }}
-        //       >
-        //         LI.I15D.OG.03
-        //       </Tag>
-        //     </Tooltip>
-        //   </Box>
-        // }
       />
 
+      <Divider className={classes.divider} orientation="left">
+        Lineamientos
+      </Divider>
 
-          <Box>
-            <Divider orientation="left">Lineamientos</Divider>
-            <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-              <Tag
-                color="orange"
-                style={{ borderRadius: 10 }}
-              >
-                LI.I15D.OG.01
-              </Tag>
-            </Tooltip>
-            <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-              <Tag
-                color="orange"
-                style={{ borderRadius: 10 }}
-              >
-                LI.I15D.OG.02
-              </Tag>
-            </Tooltip>
-            <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-              <Tag
-                color="orange"
-                style={{ borderRadius: 10 }}
-              >
-                LI.I15D.OG.03
-              </Tag>
-            </Tooltip>
-          </Box>
-        
+      <Box component="section" className={classes.section}>
+        <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
+          <Tag color="orange" className={classes.tag}>
+            LI.I15D.OG.01
+          </Tag>
+        </Tooltip>
+        <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
+          <Tag color="orange" className={classes.tag}>
+            LI.I15D.OG.02
+          </Tag>
+        </Tooltip>
+        <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
+          <Tag color="orange" className={classes.tag}>
+            LI.I15D.OG.03
+          </Tag>
+        </Tooltip>
+      </Box>
 
-      <Box>
-        <Divider orientation="left">Elige un nivel</Divider>
+      <Divider className={classes.divider} orientation="left">
+        Nivel del criterio
+      </Divider>
+
+      <Box component="section" className={classes.section}>
         <Space direction="vertical">
           <AnswerRadio
             value={1}
@@ -207,22 +160,43 @@ export default function Question() {
         </Space>
       </Box>
 
-      
-      <>
-      <Divider orientation="left">Justificar</Divider>
-      <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        listType="picture-card"
-        fileList={fileList}
-        onPreview={handlePreview}
-        onChange={handleChange}
-      >
-        {fileList.length >= 8 ? null : uploadButton}
-      </Upload>
-      <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img alt="example" style={{ width: '100%' }} src={previewImage} />
-      </Modal>
-    </>
+      <Divider className={classes.divider} orientation="left">
+        Justificacion
+      </Divider>
+
+      <Box component="section" className={classes.section}>
+        <Alert
+          className={classes.alert}
+          message="Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion."
+          type="info"
+        />
+
+        <Upload
+          // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={handlePreview}
+          onChange={handleChange}
+        >
+          {fileList.length >= 8 ? null : uploadButton}
+        </Upload>
+        <Modal
+          visible={previewVisible}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+        </Modal>
+      </Box>
+
+      <Divider className={classes.divider} orientation="left">
+        Pasos a seguir
+      </Divider>
+
+      <Box component="section" className={classes.section}>
+        Pasos a seguir
+      </Box>
     </List.Item>
   );
 }
