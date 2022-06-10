@@ -1,45 +1,34 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "main/store/index";
 import { CommonRepository } from "library/repositories/CommonRepository";
-import { ErrorMessage } from "library/common/types";
-import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
-import { RootState } from 'main/store/index';
 
-interface Actions<T> {
-  start: ActionCreatorWithoutPayload;
-  success: ActionCreatorWithPayload<T[]>;
-  failure: ActionCreatorWithPayload<ErrorMessage>;
-}
-
-interface UseListParams<T> {
-  actions: Actions<T>;
+interface UseFetchListParams<T> {
   service: new () => CommonRepository<T>;
-  selectResults: (state: RootState) => T[];
-  selectLoading: (state: RootState) => boolean;
+  onSuccess: (results: T[]) => void;
+  onFailure: (message: string) => void;
+  onStart?: () => void;
+  onFinish?: () => void;
 }
 
-export function useFetchList<T>(params: UseListParams<T>) {
-  const results = useAppSelector(params.selectResults);
-  const isLoading = useAppSelector(params.selectLoading);
-  const dispatch = useAppDispatch();
-  const { service: Service, actions } = params;
-  
+export function useFetchList<T>(params: UseFetchListParams<T>) {
+  const { service: Service, onSuccess, onFailure, onStart, onFinish } = params;
+
   useEffect(() => {
-    const fetchResults = (): void => {
-      dispatch(actions.start());
+    const fetchResults = async () => {
+      if (onStart) onStart();
 
-      const service = new Service();
+      try {
+        const service = new Service();
+        const results = await service.getAll();
+        onSuccess(results);
+      } catch (message) {
+        onFailure(message as string);
+      }
 
-      service
-        .getAll()
-        .then((results) => dispatch(actions.success(results)))
-        .catch((message) => dispatch(actions.failure(message)));
+      if (onFinish) onFinish();
     };
 
     fetchResults();
 
     // eslint-disable-next-line
-  }, []); 
-
-  return { isLoading, results };
+  }, []);
 }
