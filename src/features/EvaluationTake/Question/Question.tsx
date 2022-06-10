@@ -104,25 +104,46 @@ export default function Question() {
 
   return (
     <List.Item
-      actions={[
-        <Button type="primary" shape="round" icon={<UploadOutlined />}>
-          Subir
-        </Button>,
-        <IconText icon={FileAddOutlined} text="5" key="list-vertical-file-o" />,
-        // <IconText icon={CommentOutlined} text="156" key="list-vertical-comment-o" />,
-        // <IconText
-        //   icon={MessageOutlined}
-        //   text="2"
-        //   key="list-vertical-message"
-        // />,
-      ]}
-    >
+      
+      
+      >
       <List.Item.Meta
-        avatar={<Avatar />}
-        title="Liderazgo del marco de interoperabilidad"
-        description={
+        avatar={<Avatar style={{ color: "green", backgroundColor: "lightgreen" }}>1</Avatar>}
+        title="Liderazgo del Marco de Interoperabilidad"
+        // description={
+        //   <Box>
+        //     <Typography.Text style={{ marginRight: 8 }}>Lineamientos:</Typography.Text>
+        //     <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
+        //       <Tag
+        //         color="orange"
+        //         style={{ borderRadius: 10 }}
+        //       >
+        //         LI.I15D.OG.01
+        //       </Tag>
+        //     </Tooltip>
+        //     <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
+        //       <Tag
+        //         color="orange"
+        //         style={{ borderRadius: 10 }}
+        //       >
+        //         LI.I15D.OG.02
+        //       </Tag>
+        //     </Tooltip>
+        //     <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
+        //       <Tag
+        //         color="orange"
+        //         style={{ borderRadius: 10 }}
+        //       >
+        //         LI.I15D.OG.03
+        //       </Tag>
+        //     </Tooltip>
+        //   </Box>
+        // }
+      />
+
+
           <Box>
-            <Typography.Text style={{ marginRight: 8 }}>Lineamientos:</Typography.Text>
+            <Divider orientation="left">Lineamientos</Divider>
             <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
               <Tag
                 color="orange"
@@ -148,10 +169,10 @@ export default function Question() {
               </Tag>
             </Tooltip>
           </Box>
-        }
-      />
+        
 
-      <Space style={{ marginTop: "20px" }} direction="vertical">
+      <Box>
+        <Divider orientation="left">Elige un nivel</Divider>
         <Space direction="vertical">
           <AnswerRadio
             value={1}
@@ -184,23 +205,24 @@ export default function Question() {
             label="Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad"
           />
         </Space>
-      </Space>
+      </Box>
 
-      <Divider orientation="left">Justificacion</Divider>
+      
       <>
-        <Upload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          listType="picture-card"
-          fileList={fileList}
-          onPreview={handlePreview}
-          onChange={handleChange}
-        >
-          {fileList.length >= 8 ? null : uploadButton}
-        </Upload>
-        <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
-        </Modal>
-      </>
+      <Divider orientation="left">Justificar</Divider>
+      <Upload
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        listType="picture-card"
+        fileList={fileList}
+        onPreview={handlePreview}
+        onChange={handleChange}
+      >
+        {fileList.length >= 8 ? null : uploadButton}
+      </Upload>
+      <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+      </Modal>
+    </>
     </List.Item>
   );
 }
