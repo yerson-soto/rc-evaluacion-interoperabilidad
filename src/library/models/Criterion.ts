@@ -1,4 +1,7 @@
+import { Lineament } from "./Lineament";
+
 export interface Criterion {
-  id: string;
+  id: number;
   name: string;
+  categories: Lineament[];
 }

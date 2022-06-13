@@ -29,8 +29,7 @@ interface SidenavProps {
 
 export default function Sidenav(props: SidenavProps) {
   const navigate = useNavigate();
-  const { isCompacted, baseWidth, compactedWidth, onToggle, onLayoutChange } =
-    props;
+  const { isCompacted, baseWidth, compactedWidth, onToggle, onLayoutChange } = props;
 
   
 

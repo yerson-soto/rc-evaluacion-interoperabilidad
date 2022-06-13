@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Divider, Space, Tag, Tooltip } from "antd";
+import { Alert, Badge, Divider, Space, Tag, Tooltip, Grid } from "antd";
 import { Box } from "library/components/Box";
 import { AnswerRadio } from "../AnswerRadio";
 
@@ -12,6 +12,63 @@ import type { UploadFile } from "antd/es/upload/interface";
 import { Avatar, List } from "antd";
 
 import classes from "./Question.module.css";
+import { Criterion } from "library/models/Criterion";
+import { Choice } from "library/models/Choice";
+
+const { useBreakpoint } = Grid;
+
+const fakeChoices: Choice[] = [
+  {
+    id: 1,
+    details:
+      "No existe un responsable de los servicios de intercambio de información",
+    level: {
+      id: 1,
+      value: 1,
+      name: "Ausente",
+    },
+  },
+  {
+    id: 2,
+    details:
+      "Existen varias personas responsables de los servicios de intercambio de información",
+    level: {
+      id: 2,
+      value: 2,
+      name: "Inicial",
+    },
+  },
+  {
+    id: 3,
+    details:
+      "Existe un único responsable de intercambio de información pero no es formal",
+    level: {
+      id: 3,
+      value: 3,
+      name: "Intermedio",
+    },
+  },
+  {
+    id: 4,
+    details:
+      "Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad formalmente.",
+    level: {
+      id: 4,
+      value: 4,
+      name: "Consolidado",
+    },
+  },
+  {
+    id: 5,
+    details:
+      "Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad",
+    level: {
+      id: 3,
+      value: 3,
+      name: "Institucionalizado",
+    },
+  },
+];
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -23,11 +80,14 @@ const getBase64 = (file: RcFile): Promise<string> =>
 
 interface QuestionProps {
   number: number;
+  criterion: Criterion;
   onLevelChange: () => void;
   onEvidenceChange: () => void;
 }
 
 export default function Question(props: QuestionProps) {
+  const { number: count, criterion } = props;
+
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -94,15 +154,17 @@ export default function Question(props: QuestionProps) {
     </div>
   );
 
-  const handleLevelChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleLevelChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     console.log(event.target.value);
-  }
+  };
 
   return (
-    <List.Item>
+    <List.Item className={classes.question}>
       <List.Item.Meta
-        avatar={<Avatar className={classes.number}>{props.number}</Avatar>}
-        title="Liderazgo del Marco de Interoperabilidad"
+        avatar={<Avatar className={classes.number}>{count}</Avatar>}
+        title={criterion.name}
       />
 
       <Divider className={classes.divider} orientation="left">
@@ -110,21 +172,13 @@ export default function Question(props: QuestionProps) {
       </Divider>
 
       <Box component="section" className={classes.section}>
-        <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-          <Tag color="orange" className={classes.tag}>
-            LI.I15D.OG.01
-          </Tag>
-        </Tooltip>
-        <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-          <Tag color="orange" className={classes.tag}>
-            LI.I15D.OG.02
-          </Tag>
-        </Tooltip>
-        <Tooltip title="El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.">
-          <Tag color="orange" className={classes.tag}>
-            LI.I15D.OG.03
-          </Tag>
-        </Tooltip>
+        {criterion.categories.map((category) => (
+          <Tooltip key={category.id} title={category.description}>
+            <Tag color="orange" className={classes.tag}>
+              {category.nomenclature}
+            </Tag>
+          </Tooltip>
+        ))}
       </Box>
 
       <Divider className={classes.divider} orientation="left">
@@ -133,41 +187,23 @@ export default function Question(props: QuestionProps) {
 
       <Box component="section" className={classes.section}>
         <Space direction="vertical">
-          <AnswerRadio
-            value={1}
-            name="answer"
-            color="#fce5d7"
-            onChange={handleLevelChange}
-            label="No existe un responsable de los servicios de intercambio de información"
-          />
-          <AnswerRadio
-            value={2}
-            name="answer"
-            color="#fff2cd"
-            onChange={handleLevelChange}
-            label="Existen varias personas responsables de los servicios de intercambio de información"
-          />
-          <AnswerRadio
-            value={3}
-            name="answer"
-            color="#fefed8"
-            onChange={handleLevelChange}
-            label="Existe un único responsable de intercambio de información pero no es formal"
-          />
-          <AnswerRadio
-            value={4}
-            name="answer"
-            color="#e2efdb"
-            onChange={handleLevelChange}
-            label="La entidad tiene documentada toda la información de entrada y de salida de sus servicios y se encuentra actualizada. Esta información incluye todos los tipos de dato que se utilizan en los servicios de intercambio de información. La caracterización de los servicios incluye los casos de prueba"
-          />
-          <AnswerRadio
-            value={5}
-            name="answer"
-            color="#c6e0b3"
-            onChange={handleLevelChange}
-            label="Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad"
-          />
+          {fakeChoices.map((choice) => (
+            <Box className={classes.choice}>
+              <Badge.Ribbon
+                placement="start"
+                color="blue"
+                text={choice.level.value}
+              >
+                <AnswerRadio
+                  value={choice.id}
+                  name="choice"
+                  color="#fce5d7"
+                  onChange={handleLevelChange}
+                  label={choice.details}
+                />
+              </Badge.Ribbon>
+            </Box>
+          ))}
         </Space>
       </Box>
 

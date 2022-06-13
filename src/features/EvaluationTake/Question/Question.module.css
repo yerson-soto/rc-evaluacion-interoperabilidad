@@ -1,3 +1,21 @@
+.question {
+  padding: 0!important;
+}
+
+.choice {
+  transition: all .2s;
+}
+
+@media (min-width: 768px) {
+  .question {
+    padding: 0px 24px!important;
+  }
+
+  .choice:hover {
+    transform: translateX(10px);
+  }
+}
+
 .number {
   background-color: lightgreen;
   color: green;

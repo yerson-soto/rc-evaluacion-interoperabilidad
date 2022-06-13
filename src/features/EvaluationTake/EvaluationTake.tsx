@@ -11,6 +11,7 @@ import {
   Card,
   Space,
   Affix,
+  Descriptions,
 } from "antd";
 
 import { Box } from "library/components/Box";
@@ -44,10 +45,9 @@ export default function EvaluationTake() {
       <PageHeader
         onBack={() => navigate("/evaluaciones")}
         title={t("headings.complete_evaluation")}
-
       />
 
-      <Row gutter={25} style={{ marginBottom:  '2rem' }}>
+      {/* <Row gutter={25} style={{ marginBottom:  '2rem' }}>
         <Col lg={16}>
           <Card>
             <Score value={5.0} />
@@ -60,30 +60,38 @@ export default function EvaluationTake() {
         </Col>
       </Row>
 
-      {/* <Card>
-        <Score value={5.0} />
-      </Card> */}
+      <DomainList /> */}
 
-      <DomainList />
-
-
-      {/* <Row gutter={40}>
-
+      <Row gutter={40}>
         <Col span={16}>
           <DomainList />
         </Col>
 
         <Col flex="auto">
+          <Card
+            style={{
+              position: "sticky",
+              top: "20px",
+            }}
+          >
+            <Descriptions
+              title="Responsive Descriptions"
+              bordered
+              column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
+            >
+              <Descriptions.Item label="Product">
+                Cloud Database
+              </Descriptions.Item>
+              <Descriptions.Item label="Billing">Prepaid</Descriptions.Item>
+              <Descriptions.Item label="time">18:00:00</Descriptions.Item>
+              <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
+              <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
+              <Descriptions.Item label="Official">$60.00</Descriptions.Item>
 
-          <Card style={{
-            position: 'sticky',
-            top: '20px'
-          }}>
-            <Score value={5.0} />
+            </Descriptions>
           </Card>
-
         </Col>
-      </Row> */}
+      </Row>
     </Box>
   );
 }

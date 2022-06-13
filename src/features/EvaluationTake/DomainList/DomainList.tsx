@@ -52,7 +52,12 @@ export default function DomainList() {
   };
 
   return (
-    <>
+    <React.Fragment>
+      <Questionary 
+        isOpen={visible} 
+        onClose={onClose} 
+      />
+    
       <Card>
         <List
           loading={false}
@@ -123,24 +128,6 @@ export default function DomainList() {
           )}
         />
       </Card>
-
-      <Drawer
-        title="Dominio Organizacional"
-        placement="right"
-        width={500}
-        onClose={onClose}
-        visible={visible}
-        extra={
-          <Space>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button type="primary" onClick={onClose}>
-              OK
-            </Button>
-          </Space>
-        }
-      >
-        <Questionary />
-      </Drawer>
-    </>
+    </React.Fragment>
   );
 }
