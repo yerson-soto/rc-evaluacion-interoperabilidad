@@ -26,3 +26,29 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+
+/* Scrollbar Width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+@media(min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

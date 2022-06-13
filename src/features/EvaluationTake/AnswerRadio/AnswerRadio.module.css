@@ -4,7 +4,8 @@
   position: relative;
   padding: 1rem 1.5rem;
   border: 1px solid #f0f0f0;
-  border-left-width: 4px;
+  border-left-width: 6px;
+  border-radius: 20px;
   background-color: #ffffff;
 
   display: flex;

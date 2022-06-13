@@ -9,14 +9,16 @@ import {
   Card,
   Drawer,
   Space,
+  Progress,
+  Popconfirm,
 } from "antd";
 import { Question } from "../Question";
 
+import { Domain } from "library/models/Domain";
+import { Questionary } from "features/EvaluationTake/Questionary";
+import { ListItem } from "library/components/ListItem";
+
 import "./DomainList.css";
-import { useDomainList } from "./useDomainList";
-import { Box } from "library/components/Box";
-import { Domain } from "../../../library/models/Domain";
-import { Questionary } from "../Questionary";
 
 const domains: Domain[] = [
   {
@@ -30,6 +32,10 @@ const domains: Domain[] = [
   {
     id: 3,
     name: "Dominio Politico Legal",
+  },
+  {
+    id: 4,
+    name: "Dominio Semantico Legal",
   },
 ];
 
@@ -65,30 +71,55 @@ export default function DomainList() {
             </div>
           }
           renderItem={(domain) => (
-            <List.Item
+            <ListItem
               key={domain.id}
               actions={[
                 <Button onClick={showDrawer}>Evaluar</Button>,
-                <Button danger>Restablecer</Button>,
+
+                <Popconfirm
+                  title="Seguro que deseas restablecer este dominio?"
+                  onConfirm={() => {}}
+                  onCancel={() => {}}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button danger>Restablecer</Button>,
+                </Popconfirm>
               ]}
-              // extra="3.5"
+            // extra="3.5"
             >
-              <Box>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar
-                      style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
-                    >
-                      3.6
-                    </Avatar>
-                  }
-                  title={domain.name}
-                  description="reiciendis obcaecati earum, non commodi nihil corrupti "
-                />
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas
-                exercitationem.
-              </Box>
-            </List.Item>
+
+              <List.Item.Meta
+                avatar={
+                  // <Avatar
+                  //   style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
+                  // >
+                  //   3.6
+                  // </Avatar>
+                  //  <Progress type="circle" width={35} percent={67} />
+                  <Progress
+                    width={40}
+                    type="circle"
+                    // strokeColor={{
+                    //   '0%': '#d57418',
+                    //   '100%': '#339503',
+                    // }}
+                    format={() => "3.5"}
+                    percent={40}
+                  />
+                }
+                title={domain.name}
+                description="reiciendis obcaecati earum, non commodi nihil corrupti "
+              // description={
+              //   <Progress  percent={30} />
+              // }
+              />
+              <Typography.Text>
+                Faltan <strong>2</strong> elementos por evaluar
+              </Typography.Text>
+              {/* <Progress type="circle" width={50} percent={30} /> */}
+
+            </ListItem>
           )}
         />
       </Card>

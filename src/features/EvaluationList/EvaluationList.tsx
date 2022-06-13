@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEvaluationList } from "./useEvaluationList";
-import { Space, PageHeader, Typography } from "antd";
+import { Space, PageHeader, Typography, Card } from "antd";
 import { EvaluationItem } from "./EvaluationItem";
 import { ActiveEvaluation } from "./ActiveEvaluation";
 
@@ -14,7 +14,7 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { CustomCard } from "library/components/CustomCard";
+
 import { Evaluation } from "library/models/Evaluation";
 
 const { useBreakpoint } = Grid;
@@ -82,7 +82,7 @@ export default function EvaluationList() {
         ))}
       </Space> */}
 
-      <CustomCard>
+      <Card>
         <List
           loading={isLoading}
           itemLayout={xl ? "horizontal" : "vertical"}
@@ -103,7 +103,7 @@ export default function EvaluationList() {
             <EvaluationItem key={evaluation.uuid} evaluation={evaluation} />
           )}
         />
-      </CustomCard>
+      </Card>
     </Space>
   );
 }

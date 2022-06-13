@@ -1,15 +1,8 @@
 import React from 'react'
+import { List } from 'antd';
+import { Question } from 'features/EvaluationTake/Question';
 
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
-import { Avatar, List, Space } from 'antd';
-import { Question } from '../Question';
 
-const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
 const data = Array.from({ length: 23 }).map((_, i) => ({
   number: i + 1,
   href: 'https://ant.design',
@@ -25,33 +18,20 @@ const data = Array.from({ length: 23 }).map((_, i) => ({
 export default function Questionary() {
   return (
     <List
-    itemLayout="vertical"
-    size="large"
-    pagination={{
-      onChange: page => {
-        console.log(page);
-      },
-      pageSize: 1,
-    }}
-    dataSource={data}
-    renderItem={(item) => (
-      <Question key={item.href} number={item.number} />
-      // <List.Item
-      //   key={item.title}
-      //   actions={[
-      //     <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-      //     <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-      //     <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-      //   ]}
-      // >
-      //   <List.Item.Meta
-      //     avatar={<Avatar src={item.avatar} />}
-      //     title={<a href={item.href}>{item.title}</a>}
-      //     description={item.description}
-      //   />
-      //   {item.content}
-      // </List.Item>
-    )}
-  />
+      itemLayout="vertical"
+      size="large"
+      pagination={{
+        pageSize: 1,
+      }}
+      dataSource={data}
+      renderItem={(item) => (
+        <Question 
+          key={item.number} 
+          onLevelChange={() => { }} 
+          onEvidenceChange={() => { }} 
+          number={item.number} 
+        />
+      )}
+    />
   )
 }

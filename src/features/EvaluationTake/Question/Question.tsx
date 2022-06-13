@@ -23,6 +23,8 @@ const getBase64 = (file: RcFile): Promise<string> =>
 
 interface QuestionProps {
   number: number;
+  onLevelChange: () => void;
+  onEvidenceChange: () => void;
 }
 
 export default function Question(props: QuestionProps) {
@@ -92,6 +94,10 @@ export default function Question(props: QuestionProps) {
     </div>
   );
 
+  const handleLevelChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    console.log(event.target.value);
+  }
+
   return (
     <List.Item>
       <List.Item.Meta
@@ -131,30 +137,35 @@ export default function Question(props: QuestionProps) {
             value={1}
             name="answer"
             color="#fce5d7"
+            onChange={handleLevelChange}
             label="No existe un responsable de los servicios de intercambio de información"
           />
           <AnswerRadio
             value={2}
             name="answer"
             color="#fff2cd"
+            onChange={handleLevelChange}
             label="Existen varias personas responsables de los servicios de intercambio de información"
           />
           <AnswerRadio
             value={3}
             name="answer"
             color="#fefed8"
+            onChange={handleLevelChange}
             label="Existe un único responsable de intercambio de información pero no es formal"
           />
           <AnswerRadio
             value={4}
             name="answer"
             color="#e2efdb"
+            onChange={handleLevelChange}
             label="La entidad tiene documentada toda la información de entrada y de salida de sus servicios y se encuentra actualizada. Esta información incluye todos los tipos de dato que se utilizan en los servicios de intercambio de información. La caracterización de los servicios incluye los casos de prueba"
           />
           <AnswerRadio
             value={5}
             name="answer"
             color="#c6e0b3"
+            onChange={handleLevelChange}
             label="Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad"
           />
         </Space>
