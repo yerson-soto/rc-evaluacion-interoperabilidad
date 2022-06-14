@@ -21,6 +21,10 @@ function App() {
               path="evaluaciones/:slug/complete"
               element={<EvaluationTake />}
             />
+            <Route
+              path="evaluaciones/:slug/complete"
+              element={<EvaluationTake />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

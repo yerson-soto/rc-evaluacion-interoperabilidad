@@ -14,9 +14,9 @@ interface EvaluationItemProps {
 export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   const navigate = useNavigate();
 
-  const { uuid, organization, dateCreated } = evaluation;
+  const { uid, organization, dateCreated } = evaluation;
 
-  const goToDetail = () => navigate(`/evaluaciones/${uuid}`);
+  const goToDetail = () => navigate(`/evaluaciones/${uid}`);
 
   return (
     <List.Item

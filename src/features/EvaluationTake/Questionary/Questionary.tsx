@@ -1,7 +1,9 @@
 import React from "react";
-import { Drawer, List, Grid } from "antd";
+import { Drawer, List, Grid, Badge } from "antd";
 import { Question } from "features/EvaluationTake/Question";
 import { Criterion } from "library/models/Criterion";
+
+import classes from './Questionary.module.css';
 
 const fakeData: Criterion[] = [
   {
@@ -62,8 +64,14 @@ interface QuestionaryProps {
 }
 
 export default function Questionary(props: QuestionaryProps) {
-  const { isOpen, onClose } = props;
+  const [score, setScore] = React.useState(0);
   const { md: isDesktop } = useBreakpoint();
+  const { isOpen, onClose } = props;
+
+  const calcScore = (level: number): void => {
+    const newScore = score + level;
+    setScore(Number((newScore / fakeData.length).toFixed(2)))
+  }
 
   return (
     <Drawer
@@ -72,6 +80,9 @@ export default function Questionary(props: QuestionaryProps) {
       visible={isOpen}
       onClose={onClose}
       width={isDesktop ? "500" : "100%"}
+      extra={
+        <Badge status="processing" text={score} />
+      }
       forceRender
       destroyOnClose
     >
@@ -86,8 +97,9 @@ export default function Questionary(props: QuestionaryProps) {
           <Question
             key={criterion.id}
             criterion={criterion}
-            onLevelChange={() => {}}
-            onEvidenceChange={() => {}}
+            onLevelChange={calcScore}
+            onEvidenceDelete={() => {}}
+            onEvidenceAdd={() => {}}
             number={index + 1}
           />
         )}

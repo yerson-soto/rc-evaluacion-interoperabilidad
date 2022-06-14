@@ -21,7 +21,7 @@ const { useBreakpoint } = Grid;
 
 const fakeData: Evaluation[] = [
   { 
-    uuid: 'abcd-efgh',
+    uid: 'abcd-efgh',
     dateCreated: '2022-06-05',
     organization: {
       id: 1,
@@ -33,7 +33,7 @@ const fakeData: Evaluation[] = [
     ]
   },
   { 
-    uuid: 'abcd-efgh-2',
+    uid: 'abcd-efgh-2',
     dateCreated: '2022-06-05',
     organization: {
       id: 1,
@@ -45,7 +45,7 @@ const fakeData: Evaluation[] = [
     ]
   },
   { 
-    uuid: 'abcd-efgh-3',
+    uid: 'abcd-efgh-3',
     dateCreated: '2022-06-05',
     organization: {
       id: 1,
@@ -100,7 +100,7 @@ export default function EvaluationList() {
             pageSize: 5,
           }}
           renderItem={(evaluation) => (
-            <EvaluationItem key={evaluation.uuid} evaluation={evaluation} />
+            <EvaluationItem key={evaluation.uid} evaluation={evaluation} />
           )}
         />
       </Card>

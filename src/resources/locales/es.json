@@ -1,0 +1,86 @@
+{
+  "headings": {
+    "login": "Login",
+    "signup": "Create your account",
+    "settings": "Settings",
+    "validate_account": "Validate your account",
+    "latest_jobs": "Latest Jobs",
+    "popular_categories": "Categorias",
+    "picture_settings": "Pictures",
+    "personal_settings": "Personal Information"
+  },
+  "subheadings": {
+    "picture_settings": "Adding an avatar helps others find you.",
+    "personal_settings": "Manage your personal information."
+  },
+  "texts": {
+    "login": "Use your credentials to login to Laboro",
+    "signup": "Welcome to Laboro",
+    "validate_account": "We just sent a message to your {{ subject }} with the activation code for your account."
+  },
+  "dividers": {
+    "lineaments": "Lineamientos",
+    "levels": "Nivel del criterio",
+    "justification": "Justificación",
+    "next_steps": "Pasos a seguir"
+  },
+  "hints": {
+    "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion."
+  },
+  "placeholders": {
+    "first_name": "What's your firstname?",
+    "last_name": "What's your lastname",
+    "username": "Introduce your username",
+    "email": "Your e-mail address",
+    "phone_number": "Your phone number",
+    "password": "Your password",
+    "confirm_pass": "Confirm your password",
+    "bio": "Short description about you",
+    "job_title": "Job Title",
+    "salary": "Salary",
+    "work_schedule": "Work Schedule",
+    "category": "Category",
+    "image_field": "Supports: JPG, PNG, GIF"
+  },
+  "fields": {
+    "pin_code": "Pin code",
+    "job_title": "Job title",
+    "category": "Category",
+    "work_schedule": "Work schedule",
+    "salary": "Salary"
+  },
+  "labels": {
+    "username": "Username",
+    "phone_number": "Phone Number",
+    "email": "Email",
+    "bio": "About",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "password": "Password",
+    "confirm_pass": "Confirm Password",
+    "pin_code": "Enter the code bellow",
+    "image_field": "Drop your image here, or click to browse"
+  },
+  "errors": {
+    "required": "{{ field }} is required",
+    "min_length": "{{ field }} must be at least {{ length }} characters",
+    "match_password": "Passwords must match"
+  },
+  "messages": {
+    "email_exists": "Someone is already using this email",
+    "invalid_code": "The provided code is invalid",
+    "invalid_credentials": "Invalid credentials were provided",
+    "user_not_loaded": "Couldn't load the user"
+  },
+  "buttons": {
+    "upload": "Subir"
+  },
+  "links": {
+    "forgot_password": "Forgot your password?"
+  },
+  "nav": {
+    "home": "Home",
+    "pubs": "Publications",
+    "login": "Sign In"
+  }
+}

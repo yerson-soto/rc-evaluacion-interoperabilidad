@@ -21,7 +21,7 @@ export class EvaluationService extends APIService implements EvaluationRepositor
    
   mapResult(result: GetEvaluation): Evaluation {
     return {
-      uuid: result.id,
+      uid: result.id,
       organization: {
         id: result.organismo.id,
         name: result.organismo.orgasnimo,

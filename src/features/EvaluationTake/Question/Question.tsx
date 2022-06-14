@@ -1,16 +1,12 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Badge, Divider, Space, Tag, Tooltip } from "antd";
 import { Box } from "library/components/Box";
 import { AnswerRadio } from "../AnswerRadio";
-
-import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload } from "antd";
-
-import type { RcFile, UploadProps } from "antd/es/upload";
-import type { UploadFile } from "antd/es/upload/interface";
 import { Avatar, List } from "antd";
 import { Criterion } from "library/models/Criterion";
 import { Choice } from "library/models/Choice";
+import { AddEvidence } from "features/EvaluationTake/AddEvidence";
 
 import classes from "./Question.module.css";
 
@@ -22,9 +18,11 @@ const choices = [
   "Existe un único responsable de intercambio de información pero no es formal",
   "Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad",
   "Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad",
-]
+];
 
-const colors = chroma.scale(['#ed9324', '#d1af26', '#27af0e']).colors(choices.length);
+const colors = chroma
+  .scale(["#ed9324", "#d1af26", "#27af0e"])
+  .colors(choices.length);
 
 const fakeChoices: Choice[] = choices.map((text, idx) => {
   const number = idx + 1;
@@ -36,62 +34,29 @@ const fakeChoices: Choice[] = choices.map((text, idx) => {
       id: number,
       value: number,
       name: "Lorem Ipsum",
-    }
-  }
-})
-
-
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+    },
+  };
+});
 
 interface QuestionProps {
   number: number;
   criterion: Criterion;
-  onLevelChange: () => void;
-  onEvidenceChange: () => void;
+  onLevelChange: (level: number) => void;
+  onEvidenceAdd: () => void;
+  onEvidenceDelete: () => void;
 }
 
 export default function Question(props: QuestionProps) {
-  const { number: count, criterion } = props;
+  const { number: count, criterion, onLevelChange } = props;
+  const { t } = useTranslation();
 
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-  const handleCancel = () => setPreviewVisible(false);
-
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewVisible(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
-    );
-  };
-
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
-    setFileList(newFileList);
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+  const handleEvidenceChange = (): void => {};
 
   const handleLevelChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    console.log(event.target.value);
+    const level = Number(event.target.value);
+    onLevelChange(level);
   };
 
   return (
@@ -102,10 +67,10 @@ export default function Question(props: QuestionProps) {
       />
 
       <Divider className={classes.divider} orientation="left">
-        Lineamientos
+        {t("dividers.lineaments")}
       </Divider>
 
-      <Box component="section" className={classes.section}>
+      <Space className={classes.section} size={[0, 10]} wrap>
         {criterion.categories.map((category) => (
           <Tooltip key={category.id} title={category.description}>
             <Tag color="orange" className={classes.tag}>
@@ -113,73 +78,51 @@ export default function Question(props: QuestionProps) {
             </Tag>
           </Tooltip>
         ))}
-      </Box>
+      </Space>
 
       <Divider className={classes.divider} orientation="left">
-        Nivel del criterio
+        {t("dividers.levels")}
       </Divider>
 
-      <Box component="section" className={classes.section}>
-        <Space direction="vertical">
-          {fakeChoices.map((choice) => (
-            <Box key={choice.id} className={classes.choice}>
-              <Badge.Ribbon
-                placement="start"
-                color={choice.hexColor}
-                text={choice.level.value}
-              >
-                <AnswerRadio
-                  value={choice.id}
-                  name="choice"
-                  color="#fce5d7"
-                  onChange={handleLevelChange}
-                  label={choice.details}
-                />
-              </Badge.Ribbon>
-            </Box>
-          ))}
-        </Space>
-      </Box>
+      <Space className={classes.section} direction="vertical" size={15}>
+        {fakeChoices.map((choice) => (
+          <Box key={choice.id} className={classes.choice}>
+            <Badge.Ribbon
+              placement="start"
+              color={choice.hexColor}
+              text={choice.level.value}
+            >
+              <AnswerRadio
+                value={choice.level.value}
+                name="choice"
+                color="#fce5d7"
+                onChange={handleLevelChange}
+                label={choice.details}
+              />
+            </Badge.Ribbon>
+          </Box>
+        ))}
+      </Space>
 
       <Divider className={classes.divider} orientation="left">
-        Justificacion
+        {t("dividers.justification")}
       </Divider>
 
-      <Box component="section" className={classes.section}>
+      <Box className={classes.section}>
         <Alert
           className={classes.alert}
-          message="Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion."
+          message={t("hints.upload_evidence")}
           type="info"
         />
 
-        <Upload
-          // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          listType="picture-card"
-          multiple
-          fileList={fileList}
-          onPreview={handlePreview}
-          onChange={handleChange}
-        >
-          {fileList.length >= 8 ? null : uploadButton}
-        </Upload>
-        <Modal
-          visible={previewVisible}
-          title={previewTitle}
-          footer={null}
-          onCancel={handleCancel}
-          
-        >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
-        </Modal>
+        <AddEvidence />
       </Box>
 
       <Divider className={classes.divider} orientation="left">
-        Pasos a seguir
+        {t("dividers.next_steps")}
       </Divider>
 
-      <Box component="section" className={classes.section}>
-        Pasos a seguir
-      </Box>
+      <Box className={classes.section}>Pasos a seguir</Box>
     </List.Item>
   );
 }

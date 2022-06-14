@@ -7,7 +7,7 @@ import {
   List,
   Typography,
   Card,
-  Drawer,
+  Grid,
   Space,
   Progress,
   Popconfirm,
@@ -19,6 +19,8 @@ import { Questionary } from "features/EvaluationTake/Questionary";
 import { ListItem } from "library/components/ListItem";
 
 import "./DomainList.css";
+
+const { useBreakpoint } = Grid;
 
 const domains: Domain[] = [
   {
@@ -43,6 +45,8 @@ export default function DomainList() {
   // const { isLoading, domains } = useDomainList();
   const [visible, setVisible] = React.useState(false);
 
+  const { lg: isHorizontal } = useBreakpoint();
+
   const showDrawer = () => {
     setVisible(true);
   };
@@ -53,15 +57,12 @@ export default function DomainList() {
 
   return (
     <React.Fragment>
-      <Questionary 
-        isOpen={visible} 
-        onClose={onClose} 
-      />
-    
+      <Questionary isOpen={visible} onClose={onClose} />
+
       <Card>
         <List
           loading={false}
-          itemLayout="horizontal"
+          itemLayout={isHorizontal ? "horizontal" : "vertical"}
           size="large"
           pagination={{
             onChange: (page) => {
@@ -89,11 +90,10 @@ export default function DomainList() {
                   cancelText="No"
                 >
                   <Button danger>Restablecer</Button>,
-                </Popconfirm>
+                </Popconfirm>,
               ]}
-            // extra="3.5"
+              // extra="3.5"
             >
-
               <List.Item.Meta
                 avatar={
                   // <Avatar
@@ -115,15 +115,14 @@ export default function DomainList() {
                 }
                 title={domain.name}
                 description="reiciendis obcaecati earum, non commodi nihil corrupti "
-              // description={
-              //   <Progress  percent={30} />
-              // }
+                // description={
+                //   <Progress  percent={30} />
+                // }
               />
               <Typography.Text>
-                Faltan <strong>2</strong> elementos por evaluar
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo illo quod, exercitationem iste minima tenetur ipsam. Aliquam explicabo dolor molestias ipsam minima? Itaque beatae hic esse, unde facere minus laudantium!
               </Typography.Text>
               {/* <Progress type="circle" width={50} percent={30} /> */}
-
             </ListItem>
           )}
         />

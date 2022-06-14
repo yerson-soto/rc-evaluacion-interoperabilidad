@@ -17,7 +17,6 @@ import {
 } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
 
-
 interface SidenavProps {
   isCompacted: boolean;
   baseWidth: string | number;
@@ -25,13 +24,19 @@ interface SidenavProps {
 
   onToggle: () => void;
   onLayoutChange: (isSmallDevice: boolean) => void;
+  onCollapse: () => void;
 }
 
 export default function Sidenav(props: SidenavProps) {
   const navigate = useNavigate();
-  const { isCompacted, baseWidth, compactedWidth, onToggle, onLayoutChange } = props;
-
-  
+  const {
+    isCompacted,
+    baseWidth,
+    compactedWidth,
+    onToggle,
+    onCollapse,
+    onLayoutChange,
+  } = props;
 
   const getItem = (
     label: React.ReactNode,
@@ -68,9 +73,10 @@ export default function Sidenav(props: SidenavProps) {
 
   const onBreakpoint = (broken: boolean): void => onLayoutChange(broken);
 
-  const getClassNames = (): string => classnames(classes.sidenav, {
-    [classes.closed]: isCompacted,
-  });
+  const getClassNames = (): string =>
+    classnames(classes.sidenav, {
+      [classes.closed]: isCompacted,
+    });
 
   return (
     <Layout.Sider
@@ -86,9 +92,7 @@ export default function Sidenav(props: SidenavProps) {
     >
       <Box className={classes.logo}>
         <AppstoreOutlined className={classes.logoIcon} />
-        <Typography.Text className={classes.logoText}>
-          Madurez
-        </Typography.Text>
+        <Typography.Text className={classes.logoText}>Madurez</Typography.Text>
       </Box>
       <Menu
         className={classes.menu}

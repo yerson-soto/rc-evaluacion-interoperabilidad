@@ -63,11 +63,11 @@ export default function EvaluationTake() {
       <DomainList /> */}
 
       <Row gutter={40}>
-        <Col span={16}>
+        <Col span={24}>
           <DomainList />
         </Col>
 
-        <Col flex="auto">
+        <Col span={24}>
           <Card
             style={{
               position: "sticky",

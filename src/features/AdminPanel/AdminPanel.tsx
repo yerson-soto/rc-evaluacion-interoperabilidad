@@ -31,9 +31,9 @@ export default function AdminPanel() {
     setCollapsed(!collapsed);
   };
 
-  const onChangeBroken = (isBroken: boolean) => {
-    setBroken(isBroken);
-  };
+  const handleToggle = (): void => setCollapsed(!collapsed);
+  const handleCollapse = (): void => setCollapsed(true);
+  const handleLayoutChange = (broken: boolean): void => setBroken(broken);
 
   return (
     <Layout hasSider className={classes.wrapper}>
@@ -41,8 +41,9 @@ export default function AdminPanel() {
         isCompacted={collapsed}
         baseWidth={siderWidth}
         compactedWidth={collapsedWidth}
-        onToggle={onChangeCollapsed}
-        onLayoutChange={onChangeBroken}
+        onToggle={handleToggle}
+        onCollapse={handleCollapse}
+        onLayoutChange={handleLayoutChange}
       />
       <Layout
         className={classes.content}
