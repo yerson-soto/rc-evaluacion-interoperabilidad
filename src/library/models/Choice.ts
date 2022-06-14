@@ -4,4 +4,5 @@ export interface Choice {
   id: number;
   details: string;
   level: Level;
+  hexColor: string;
 }

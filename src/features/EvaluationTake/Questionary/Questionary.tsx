@@ -62,7 +62,6 @@ interface QuestionaryProps {
 }
 
 export default function Questionary(props: QuestionaryProps) {
-  const question = React.useRef(1);
   const { isOpen, onClose } = props;
   const { md: isDesktop } = useBreakpoint();
 

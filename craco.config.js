@@ -1,5 +1,6 @@
 const CracoAntDesignPlugin = require("craco-antd");
 
+// TODO: Modify default theme
 module.exports = {
   plugins: [
     {

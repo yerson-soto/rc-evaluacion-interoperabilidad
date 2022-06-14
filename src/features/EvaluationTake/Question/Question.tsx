@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Badge, Divider, Space, Tag, Tooltip, Grid } from "antd";
+import { Alert, Badge, Divider, Space, Tag, Tooltip } from "antd";
 import { Box } from "library/components/Box";
 import { AnswerRadio } from "../AnswerRadio";
 
@@ -8,67 +8,38 @@ import { Modal, Upload } from "antd";
 
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
-
 import { Avatar, List } from "antd";
-
-import classes from "./Question.module.css";
 import { Criterion } from "library/models/Criterion";
 import { Choice } from "library/models/Choice";
 
-const { useBreakpoint } = Grid;
+import classes from "./Question.module.css";
 
-const fakeChoices: Choice[] = [
-  {
-    id: 1,
-    details:
-      "No existe un responsable de los servicios de intercambio de información",
+import chroma from "chroma-js";
+
+const choices = [
+  "No existe un responsable de los servicios de intercambio de información",
+  "Existen varias personas responsables de los servicios de intercambio de información",
+  "Existe un único responsable de intercambio de información pero no es formal",
+  "Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad",
+  "Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad",
+]
+
+const colors = chroma.scale(['#ed9324', '#d1af26', '#27af0e']).colors(choices.length);
+
+const fakeChoices: Choice[] = choices.map((text, idx) => {
+  const number = idx + 1;
+  return {
+    id: number,
+    hexColor: colors[idx],
+    details: text,
     level: {
-      id: 1,
-      value: 1,
-      name: "Ausente",
-    },
-  },
-  {
-    id: 2,
-    details:
-      "Existen varias personas responsables de los servicios de intercambio de información",
-    level: {
-      id: 2,
-      value: 2,
-      name: "Inicial",
-    },
-  },
-  {
-    id: 3,
-    details:
-      "Existe un único responsable de intercambio de información pero no es formal",
-    level: {
-      id: 3,
-      value: 3,
-      name: "Intermedio",
-    },
-  },
-  {
-    id: 4,
-    details:
-      "Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad formalmente.",
-    level: {
-      id: 4,
-      value: 4,
-      name: "Consolidado",
-    },
-  },
-  {
-    id: 5,
-    details:
-      "Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad",
-    level: {
-      id: 3,
-      value: 3,
-      name: "Institucionalizado",
-    },
-  },
-];
+      id: number,
+      value: number,
+      name: "Lorem Ipsum",
+    }
+  }
+})
+
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -91,44 +62,7 @@ export default function Question(props: QuestionProps) {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<UploadFile[]>([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-2",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-3",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-4",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-xxx",
-      percent: 50,
-      name: "image.png",
-      status: "uploading",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-5",
-      name: "image.png",
-      status: "error",
-    },
-  ]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const handleCancel = () => setPreviewVisible(false);
 
@@ -188,10 +122,10 @@ export default function Question(props: QuestionProps) {
       <Box component="section" className={classes.section}>
         <Space direction="vertical">
           {fakeChoices.map((choice) => (
-            <Box className={classes.choice}>
+            <Box key={choice.id} className={classes.choice}>
               <Badge.Ribbon
                 placement="start"
-                color="blue"
+                color={choice.hexColor}
                 text={choice.level.value}
               >
                 <AnswerRadio
@@ -221,6 +155,7 @@ export default function Question(props: QuestionProps) {
         <Upload
           // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           listType="picture-card"
+          multiple
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
@@ -232,6 +167,7 @@ export default function Question(props: QuestionProps) {
           title={previewTitle}
           footer={null}
           onCancel={handleCancel}
+          
         >
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
