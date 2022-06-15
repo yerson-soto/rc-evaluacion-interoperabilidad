@@ -74,7 +74,7 @@ export default function EvaluationList() {
         subTitle="Lista de evaluaciones tomadas..."
       />
 
-      <ActiveEvaluation />
+      {evaluations[0] && <ActiveEvaluation evaluation={evaluations[0]} />}
 
       {/* <Space direction="vertical" style={{ width: "100%" }}>
         {evaluations.map((evaluation, idx) => (

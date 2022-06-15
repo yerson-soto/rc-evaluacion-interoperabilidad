@@ -17,14 +17,19 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="evaluaciones" element={<EvaluationList />} />
             <Route path="evaluaciones/:slug" element={<EvaluationDetail />} />
-            <Route
-              path="evaluaciones/:slug/complete"
+            {/* <Route
+              path="evaluaciones/:uid/iniciar"
               element={<EvaluationTake />}
             />
             <Route
-              path="evaluaciones/:slug/complete"
+              path="evaluaciones/:uid/iniciar/:domain-slug"
               element={<EvaluationTake />}
-            />
+            /> */}
+
+            <Route path="evaluaciones/:uid/iniciar">
+              <Route index element={<EvaluationTake />} />
+              <Route path=":slug" element={<EvaluationTake />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -2,8 +2,9 @@ import React from "react";
 import { Drawer, List, Grid, Badge } from "antd";
 import { Question } from "features/EvaluationTake/Question";
 import { Criterion } from "library/models/Criterion";
+import { Domain } from "library/models/Domain";
 
-import classes from './Questionary.module.css';
+import classes from "./Questionary.module.css";
 
 const fakeData: Criterion[] = [
   {
@@ -60,6 +61,7 @@ const { useBreakpoint } = Grid;
 
 interface QuestionaryProps {
   isOpen: boolean;
+  // domain: Domain;
   onClose: () => void;
 }
 
@@ -70,8 +72,8 @@ export default function Questionary(props: QuestionaryProps) {
 
   const calcScore = (level: number): void => {
     const newScore = score + level;
-    setScore(Number((newScore / fakeData.length).toFixed(2)))
-  }
+    setScore(Number((newScore / fakeData.length).toFixed(2)));
+  };
 
   return (
     <Drawer
@@ -80,9 +82,7 @@ export default function Questionary(props: QuestionaryProps) {
       visible={isOpen}
       onClose={onClose}
       width={isDesktop ? "500" : "100%"}
-      extra={
-        <Badge status="processing" text={score} />
-      }
+      extra={<Badge status="processing" text={score} />}
       forceRender
       destroyOnClose
     >

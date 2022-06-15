@@ -6347,6 +6347,13 @@ multicast-dns@^7.2.4:
     dns-packet "^5.2.2"
     thunky "^1.0.2"
 
+named-urls@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/named-urls/-/named-urls-2.0.1.tgz#24bcf998a834d39522da0d4983408744f70e327d"
+  integrity sha512-e/WeLA52FeLZpWt5JcpYp4fZqESBxoNuyJB3LQljHqNPNt0ow1t8QOTFEIeOZf+X+bJOLIXCPCnmyPZnBV8sMg==
+  dependencies:
+    path-to-regexp "^6.1.0"
+
 nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
@@ -6723,6 +6730,11 @@ path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   integrity sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+
+path-to-regexp@^6.1.0:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.1.tgz#d54934d6798eb9e5ef14e7af7962c945906918e5"
+  integrity sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==
 
 path-type@^4.0.0:
   version "4.0.0"

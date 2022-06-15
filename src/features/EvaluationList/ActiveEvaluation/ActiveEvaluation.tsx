@@ -1,11 +1,19 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Typography, Row, Col, Card } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { Evaluation } from "library/models/Evaluation";
 
+interface ActiveEvaluationProps {
+  evaluation: Evaluation;
+}
 
-export default function ActiveEvaluation() {
+export default function ActiveEvaluation(props: ActiveEvaluationProps) {
+  const { evaluation } = props;
+  
   const navigate = useNavigate();
+
+  const goToEvaluation = (): void => navigate(`/evaluaciones/${evaluation.uid}/iniciar`) 
 
   return (
     <Card bordered={false}>
@@ -22,12 +30,12 @@ export default function ActiveEvaluation() {
             type="primary"
             icon={<ArrowRightOutlined />}
             size="large"
-            onClick={() => navigate("/evaluaciones/abcd/complete")}
+            onClick={goToEvaluation}
           >
             Iniciar
           </Button>
         </Col>
       </Row>
     </Card>
-  )
+  );
 }
