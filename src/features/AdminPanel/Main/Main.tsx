@@ -1,7 +1,8 @@
 import React from "react";
-import { useNavigate, useLocation, Location } from 'react-router-dom';
-import { Breadcrumb, Layout, PageHeader } from "antd";
+import { useNavigate, useLocation, Location } from "react-router-dom";
+import { Layout, PageHeader } from "antd";
 import { Box } from "library/components/Box";
+import { Breadcrumb } from "library/components/Breadcrumb";
 
 import classes from "./Main.module.css";
 
@@ -11,17 +12,18 @@ interface MainProps {
 
 export default function Main({ children }: MainProps) {
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
   console.log();
-  
+
   return (
     <Layout.Content className={classes.main}>
       <Box>
-        <Breadcrumb className={classes.breadcrumb}>
+        <Breadcrumb />
+        {/* <Breadcrumb className={classes.breadcrumb}>
           <Breadcrumb.Item>User</Breadcrumb.Item>
           <Breadcrumb.Item>Bill</Breadcrumb.Item>
-        </Breadcrumb>
+        </Breadcrumb> */}
 
         {/* <PageHeader
           onBack={() => navigate("/")}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer, List, Grid, Badge } from "antd";
-import { Question } from "features/EvaluationTake/Question";
+import { Question } from "features/EvaluationInit/Question";
 import { Criterion } from "library/models/Criterion";
 import { Domain } from "library/models/Domain";
 
@@ -59,16 +59,16 @@ const fakeData: Criterion[] = [
 
 const { useBreakpoint } = Grid;
 
-interface QuestionaryProps {
+export interface QuestionaryProps {
   isOpen: boolean;
-  // domain: Domain;
+  domain: Domain;
   onClose: () => void;
 }
 
 export default function Questionary(props: QuestionaryProps) {
   const [score, setScore] = React.useState(0);
   const { md: isDesktop } = useBreakpoint();
-  const { isOpen, onClose } = props;
+  const { isOpen, onClose, domain } = props;
 
   const calcScore = (level: number): void => {
     const newScore = score + level;
@@ -77,7 +77,7 @@ export default function Questionary(props: QuestionaryProps) {
 
   return (
     <Drawer
-      title="Dominio Organizacional"
+      title={`Dominio ${domain.name}`}
       placement="right"
       visible={isOpen}
       onClose={onClose}

@@ -6,7 +6,7 @@ import { AnswerRadio } from "../AnswerRadio";
 import { Avatar, List } from "antd";
 import { Criterion } from "library/models/Criterion";
 import { Choice } from "library/models/Choice";
-import { AddEvidence } from "features/EvaluationTake/AddEvidence";
+import { AddEvidence } from "features/EvaluationInit/AddEvidence";
 
 import classes from "./Question.module.css";
 
@@ -73,7 +73,7 @@ export default function Question(props: QuestionProps) {
       <Space className={classes.section} size={[0, 10]} wrap>
         {criterion.categories.map((category) => (
           <Tooltip key={category.id} title={category.description}>
-            <Tag color="orange" className={classes.tag}>
+            <Tag color="volcano" className={classes.tag}>
               {category.nomenclature}
             </Tag>
           </Tooltip>

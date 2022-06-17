@@ -1,62 +1,84 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEvaluationList } from "./useEvaluationList";
-import { Space, PageHeader, Typography, Card } from "antd";
+import { Space, PageHeader, Card } from "antd";
 import { EvaluationItem } from "./EvaluationItem";
 import { ActiveEvaluation } from "./ActiveEvaluation";
 
-import { List, Avatar, Grid } from "antd";
-import {
-  MessageOutlined,
-  LikeOutlined,
-  StarOutlined,
-  SettingOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { List, Grid } from "antd";
 
 import { Evaluation } from "library/models/Evaluation";
 
 const { useBreakpoint } = Grid;
 
 const fakeData: Evaluation[] = [
-  { 
-    uid: 'abcd-efgh',
-    dateCreated: '2022-06-05',
+  {
+    uid: "abcd-efgh",
+    dateCreated: "2022-06-05",
     organization: {
       id: 1,
-      name: 'Ministerio de Industria y Comercio',
-      acronym: 'MIYPC'
+      name: "Ministerio de Industria y Comercio",
+      acronym: "MIYPC",
     },
-    domains: [
-
-    ]
+    domains: [],
+    score: 0.75,
   },
-  { 
-    uid: 'abcd-efgh-2',
-    dateCreated: '2022-06-05',
+  {
+    uid: "abcd-efgh-asd",
+    dateCreated: "2022-06-05",
     organization: {
       id: 1,
-      name: 'Ministerio de Administracion Publica',
-      acronym: 'EFGH'
+      name: "Ministerio de Industria y Comercio",
+      acronym: "MIYPC",
     },
-    domains: [
-      
-    ]
+    domains: [],
+    score: 0,
   },
-  { 
-    uid: 'abcd-efgh-3',
-    dateCreated: '2022-06-05',
+  {
+    uid: "abc3d-efgh",
+    dateCreated: "2022-06-05",
     organization: {
-      id: 1,
-      name: 'Ministerio de Turismo',
-      acronym: 'ABCD'
+      id: 2,
+      name: "Ministerio de Industria y Comercio",
+      acronym: "MIYPC",
     },
-    domains: [
-      
-    ]
-  }
-]
+    domains: [],
+    score: 2.5,
+  },
+  {
+    uid: "abc3d-e34-fgh",
+    dateCreated: "2022-06-05",
+    organization: {
+      id: 2,
+      name: "Ministerio de Industria y Comercio",
+      acronym: "MIYPC",
+    },
+    domains: [],
+    score: 3,
+  },
+  {
+    uid: "abcd-efgh-2",
+    dateCreated: "2022-06-05",
+    organization: {
+      id: 3,
+      name: "Ministerio de Administracion Publica",
+      acronym: "EFGH",
+    },
+    domains: [],
+    score: 4.1,
+  },
+  {
+    uid: "abcd-efgh-3",
+    dateCreated: "2022-06-05",
+    organization: {
+      id: 4,
+      name: "Ministerio de Turismo",
+      acronym: "ABCD",
+    },
+    domains: [],
+    score: 5,
+  },
+];
 
 export default function EvaluationList() {
   const navigate = useNavigate();
@@ -74,7 +96,7 @@ export default function EvaluationList() {
         subTitle="Lista de evaluaciones tomadas..."
       />
 
-      {evaluations[0] && <ActiveEvaluation evaluation={evaluations[0]} />}
+      <ActiveEvaluation evaluation={fakeData[0]} />
 
       {/* <Space direction="vertical" style={{ width: "100%" }}>
         {evaluations.map((evaluation, idx) => (
@@ -97,7 +119,7 @@ export default function EvaluationList() {
             onChange: (page) => {
               console.log(page);
             },
-            pageSize: 5,
+            pageSize: 10,
           }}
           renderItem={(evaluation) => (
             <EvaluationItem key={evaluation.uid} evaluation={evaluation} />

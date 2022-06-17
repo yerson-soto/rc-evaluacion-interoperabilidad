@@ -1,4 +1,4 @@
-import { URLPath } from "./types";
+import { Location } from "react-router-dom";
 
 export interface Response<T> {
   result: T;
@@ -12,6 +12,6 @@ export interface CommonState {
   errorMessage: string;
 }
 
-export interface LocationState {
-  from: URLPath;
+export interface LocationState<T> extends Location {
+  state: T;
 }

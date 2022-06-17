@@ -18,10 +18,11 @@ export class EvaluationService extends APIService implements EvaluationRepositor
         .catch(() => reject('No se pudo cargar las evaluaciones'))
     });
   }
-   
+  
   mapResult(result: GetEvaluation): Evaluation {
     return {
       uid: result.id,
+      score: 5,
       organization: {
         id: result.organismo.id,
         name: result.organismo.orgasnimo,
@@ -30,7 +31,8 @@ export class EvaluationService extends APIService implements EvaluationRepositor
       domains: [
         {
           id: result.domain.id,
-          name: result.domain.description
+          name: result.domain.description,
+          slug: result.domain.description.replaceAll(' ', '-').toLowerCase()
         }
       ],
       dateCreated: result.dateInitial

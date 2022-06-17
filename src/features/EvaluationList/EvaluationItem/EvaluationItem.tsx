@@ -14,7 +14,7 @@ interface EvaluationItemProps {
 export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   const navigate = useNavigate();
 
-  const { uid, organization, dateCreated } = evaluation;
+  const { uid, organization, dateCreated, score } = evaluation;
 
   const goToDetail = () => navigate(`/evaluaciones/${uid}`);
 
@@ -31,7 +31,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
     >
       <Row gutter={20} wrap={false}>
         <Col>
-          <Score value={2.5} />
+          <Score value={score} />
         </Col>
 
         <Col>

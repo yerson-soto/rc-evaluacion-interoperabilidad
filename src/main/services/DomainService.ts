@@ -19,7 +19,8 @@ export class DomainService extends APIService implements DomainRepository {
   mapResult(result: GetDomain): Domain {
     return {
       id: result.id,
-      name: result.description
+      name: result.description,
+      slug: result.description.replaceAll(' ', '-').toLowerCase()
     };
   }
 }

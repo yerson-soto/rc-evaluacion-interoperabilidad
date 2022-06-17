@@ -6,4 +6,5 @@ export interface Evaluation {
   domains: Domain[];
   organization: Organization;
   dateCreated: string;
+  score: number;
 }

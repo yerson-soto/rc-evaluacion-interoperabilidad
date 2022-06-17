@@ -73,7 +73,8 @@
     "user_not_loaded": "Couldn't load the user"
   },
   "buttons": {
-    "upload": "Subir"
+    "upload": "Subir",
+    "evaluate": "Evaluar"
   },
   "links": {
     "forgot_password": "Forgot your password?"

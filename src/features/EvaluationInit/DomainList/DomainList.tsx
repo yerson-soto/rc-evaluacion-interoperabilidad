@@ -12,19 +12,23 @@ const { useBreakpoint } = Grid;
 const domains: Domain[] = [
   {
     id: 1,
-    name: "Dominio Organizacional",
+    name: "Organizacional",
+    slug: 'organizacional'
   },
   {
     id: 2,
-    name: "Dominio Semantico",
+    name: "Semantico",
+    slug: 'semantico'
   },
   {
     id: 3,
-    name: "Dominio Politico Legal",
+    name: "Politico Legal",
+    slug: 'politico-legal'
   },
   {
     id: 4,
-    name: "Dominio Semantico Legal",
+    name: "Semantico Legal",
+    slug: 'semantico-legal'
   },
 ];
 

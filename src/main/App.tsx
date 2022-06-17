@@ -5,30 +5,28 @@ import { AdminPanel } from "features/AdminPanel";
 import { Dashboard } from "features/Dashboard";
 import { EvaluationList } from "features/EvaluationList";
 import { EvaluationDetail } from "features/EvaluationDetail";
-import { EvaluationTake } from "features/EvaluationTake";
-import { store } from './store/index';
+import { EvaluationInit } from "features/EvaluationInit";
+import { store } from "./store/index";
+import { urls } from "library/common/constants";
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AdminPanel />}>
+          <Route path={urls.home.path} element={<AdminPanel />}>
             <Route index element={<Dashboard />} />
-            <Route path="evaluaciones" element={<EvaluationList />} />
-            <Route path="evaluaciones/:slug" element={<EvaluationDetail />} />
-            {/* <Route
-              path="evaluaciones/:uid/iniciar"
-              element={<EvaluationTake />}
-            />
-            <Route
-              path="evaluaciones/:uid/iniciar/:domain-slug"
-              element={<EvaluationTake />}
-            /> */}
 
-            <Route path="evaluaciones/:uid/iniciar">
-              <Route index element={<EvaluationTake />} />
-              <Route path=":slug" element={<EvaluationTake />} />
+            <Route path={urls.evaluations.path}>
+              <Route index element={<EvaluationList />} />
+              <Route
+                path={urls.evaluations.detail.path}
+                element={<EvaluationDetail />}
+              />
+              <Route
+                path={urls.evaluations.init.path}
+                element={<EvaluationInit />}
+              />
             </Route>
           </Route>
         </Routes>
