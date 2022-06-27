@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Drawer, List, Grid, Badge } from "antd";
 import { Question } from "features/EvaluationInit/Question";
 import { Criterion } from "library/models/Criterion";
 import { Domain } from "library/models/Domain";
 
+import { useLocation } from 'react-router-dom';
+import { LocationState } from 'library/common/interfaces';
 import classes from "./Questionary.module.css";
 
 const fakeData: Criterion[] = [
@@ -61,23 +63,29 @@ const { useBreakpoint } = Grid;
 
 export interface QuestionaryProps {
   isOpen: boolean;
-  domain: Domain;
   onClose: () => void;
 }
 
 export default function Questionary(props: QuestionaryProps) {
-  const [score, setScore] = React.useState(0);
+  const [score, setScore] = useState(0);
   const { md: isDesktop } = useBreakpoint();
-  const { isOpen, onClose, domain } = props;
+  const { state: domain } = useLocation() as LocationState<Domain>;
+  const { isOpen, onClose } = props;
 
   const calcScore = (level: number): void => {
     const newScore = score + level;
     setScore(Number((newScore / fakeData.length).toFixed(2)));
   };
 
+  React.useEffect(() => {
+    if (!domain) {
+      onClose();
+    }
+  }, [])
+
   return (
     <Drawer
-      title={`Dominio ${domain.name}`}
+      title={`Dominio ${domain?.name}`}
       placement="right"
       visible={isOpen}
       onClose={onClose}
@@ -85,6 +93,7 @@ export default function Questionary(props: QuestionaryProps) {
       extra={<Badge status="processing" text={score} />}
       forceRender
       destroyOnClose
+
     >
       <List<Criterion>
         itemLayout="vertical"
@@ -98,8 +107,8 @@ export default function Questionary(props: QuestionaryProps) {
             key={criterion.id}
             criterion={criterion}
             onLevelChange={calcScore}
-            onEvidenceDelete={() => {}}
-            onEvidenceAdd={() => {}}
+            onEvidenceDelete={() => { }}
+            onEvidenceAdd={() => { }}
             number={index + 1}
           />
         )}
