@@ -6,9 +6,13 @@ import { DomainList } from "./DomainList";
 import { Questionary } from "./Questionary";
 import { Box } from "library/components/Box";
 import { useEvaluationInit } from "./useEvaluationInit";
+import { withIfDirective } from "library/hocs/withIfDirective";
+import { QuestionaryProps } from "./Questionary/Questionary";
+
+const QuestionaryIf = withIfDirective<QuestionaryProps>(Questionary);
 
 export default function EvaluationInit() {
-  const { isOpen, openEvaluation, closeEvaluation } = useEvaluationInit();
+  const { isOpen, domain, setOpen, setClose, afterClosed } = useEvaluationInit();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -19,8 +23,15 @@ export default function EvaluationInit() {
         title={t("headings.complete_evaluation")}
       />
 
-      <DomainList onEvaluate={openEvaluation} onReset={() => {}} />
-      <Questionary isOpen={isOpen} onClose={closeEvaluation} />
+      <DomainList onEvaluate={setOpen} onReset={() => {}} />
+
+      <QuestionaryIf
+        if={!!domain}
+        isOpen={isOpen}
+        domain={domain}
+        onClose={setClose}
+        onCloseEnd={afterClosed}
+      />
     </Box>
   );
 }

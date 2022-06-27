@@ -16,6 +16,10 @@ export class DomainService extends APIService implements DomainRepository {
     });
   }
 
+  // createSlug(name: string): string {
+  //   return name.replaceAll(' ', '-').toLowerCase()
+  // }
+
   mapResult(result: GetDomain): Domain {
     return {
       id: result.id,

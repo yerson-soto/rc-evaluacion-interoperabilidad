@@ -9,10 +9,6 @@ export interface GetEvaluation {
     orgasnimo: string;
     siglas: string;
   };
-  domain: {
-    id: number;
-    description: string;
-  }
 }
 
 export interface GetPaginatedEvaluation {

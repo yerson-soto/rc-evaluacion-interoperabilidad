@@ -4,33 +4,35 @@ import { Button, List, Typography, Card } from "antd";
 import { Progress, Grid, Popconfirm } from 'antd';
 import { Domain } from "library/models/Domain";
 import { ListItem } from "library/components/ListItem";
+import { useDomainList } from "./useDomainList";
 
 import "./DomainList.css";
+import { PaginationFooter } from "library/components/PaginationFooter";
 
 const { useBreakpoint } = Grid;
 
-const domains: Domain[] = [
-  {
-    id: 1,
-    name: "Organizacional",
-    slug: 'organizacional'
-  },
-  {
-    id: 2,
-    name: "Semantico",
-    slug: 'semantico'
-  },
-  {
-    id: 3,
-    name: "Politico Legal",
-    slug: 'politico-legal'
-  },
-  {
-    id: 4,
-    name: "Semantico Legal",
-    slug: 'semantico-legal'
-  },
-];
+// const domains: Domain[] = [
+//   {
+//     id: 1,
+//     name: "Organizacional",
+//     slug: 'organizacional'
+//   },
+//   {
+//     id: 2,
+//     name: "Semantico",
+//     slug: 'semantico'
+//   },
+//   {
+//     id: 3,
+//     name: "Politico Legal",
+//     slug: 'politico-legal'
+//   },
+//   {
+//     id: 4,
+//     name: "Semantico Legal",
+//     slug: 'semantico-legal'
+//   },
+// ];
 
 interface DomainListProps {
   onEvaluate: (domain: Domain) => void;
@@ -39,24 +41,25 @@ interface DomainListProps {
 
 export default function DomainList(props: DomainListProps) {
   const { onEvaluate, onReset } = props;
-  // const { isLoading, domains } = useDomainList();
+  const { isLoading, domains } = useDomainList();
   const { lg: isHorizontal } = useBreakpoint();
   const { t } = useTranslation();
 
   return (
     <Card>
       <List
-        loading={false}
+        loading={isLoading}
         dataSource={domains}
         itemLayout={isHorizontal ? "horizontal" : "vertical"}
         size="large"
         pagination={{
-          pageSize: 3,
+          pageSize: 10,
         }}
         footer={
-          <div>
-            <b>{domains.length}</b> Dominios
-          </div>
+          <PaginationFooter 
+            total={domains.length}
+            label={t('pagination.domains')}
+          />
         }
         renderItem={(domain) => (
           <ListItem
@@ -103,10 +106,9 @@ export default function DomainList(props: DomainListProps) {
               // }
             />
             <Typography.Text>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Explicabo illo quod, exercitationem iste minima tenetur ipsam.
-              Aliquam explicabo dolor molestias ipsam minima? Itaque beatae hic
-              esse, unde facere minus laudantium!
+              La entidad ha logrado que la implementación de los lineamientos del 
+              Marco de Interoperabilidad del Estado sea un tema conocido a nivel 
+              institucional sin embargo no ha logrado involucrar a todos los interesados.
             </Typography.Text>
           </ListItem>
         )}

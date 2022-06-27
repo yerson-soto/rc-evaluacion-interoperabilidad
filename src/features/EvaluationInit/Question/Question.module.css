@@ -26,12 +26,9 @@
   cursor: pointer;
 }
 
-.divider {
-  font-size: 14px!important;
-}
-
 .section {
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .alert {

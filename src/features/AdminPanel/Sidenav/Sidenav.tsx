@@ -92,7 +92,7 @@ export default function Sidenav(props: SidenavProps) {
     >
       <Box className={classes.logo}>
         <AppstoreOutlined className={classes.logoIcon} />
-        <Typography.Text className={classes.logoText}>Madurez</Typography.Text>
+        <Typography.Text className={classes.logoText}>Evaluaci&oacute;n</Typography.Text>
       </Box>
       <Menu
         className={classes.menu}

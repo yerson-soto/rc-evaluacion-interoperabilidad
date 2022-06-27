@@ -1,42 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Badge, Divider, Space, Tag, Tooltip } from "antd";
+import { Alert, Skeleton, Space, Tag, Tooltip } from "antd";
 import { Box } from "library/components/Box";
-import { AnswerRadio } from "../AnswerRadio";
 import { Avatar, List } from "antd";
 import { Criterion } from "library/models/Criterion";
-import { Choice } from "library/models/Choice";
+import { SectionDivider } from "library/components/SectionDivider";
 import { AddEvidence } from "features/EvaluationInit/AddEvidence";
+import { Response } from "features/EvaluationInit/Response";
+import { useChoiceList } from "./useChoiceList";
 
 import classes from "./Question.module.css";
 
-import chroma from "chroma-js";
+// const choices = [
+//   "No existe un responsable de los servicios de intercambio de información",
+//   "Existen varias personas responsables de los servicios de intercambio de información",
+//   "Existe un único responsable de intercambio de información pero no es formal",
+//   "Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad",
+//   "Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad",
+// ];
 
-const choices = [
-  "No existe un responsable de los servicios de intercambio de información",
-  "Existen varias personas responsables de los servicios de intercambio de información",
-  "Existe un único responsable de intercambio de información pero no es formal",
-  "Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad",
-  "Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad",
-];
-
-const colors = chroma
-  .scale(["#ed9324", "#d1af26", "#27af0e"])
-  .colors(choices.length);
-
-const fakeChoices: Choice[] = choices.map((text, idx) => {
-  const number = idx + 1;
-  return {
-    id: number,
-    hexColor: colors[idx],
-    details: text,
-    level: {
-      id: number,
-      value: number,
-      name: "Lorem Ipsum",
-    },
-  };
-});
+// const colors = chroma
+//   .scale(["#ef8269", "#fba31e", "#2ac158"])
+//   .colors(choices.length);
+// const isLoading = true;
+// const fakeChoices: Choice[] = choices.map((text, idx) => {
+//   const number = idx + 1;
+//   return {
+//     id: number,
+//     hexColor: colors[idx],
+//     details: text,
+//     level: {
+//       id: number,
+//       value: number,
+//       name: "Ausente",
+//     },
+//   };
+// });
 
 interface QuestionProps {
   number: number;
@@ -48,6 +47,7 @@ interface QuestionProps {
 
 export default function Question(props: QuestionProps) {
   const { number: count, criterion, onLevelChange } = props;
+  const { isLoading, choices } = useChoiceList(criterion.id);
   const { t } = useTranslation();
 
   const handleEvidenceChange = (): void => {};
@@ -66,48 +66,31 @@ export default function Question(props: QuestionProps) {
         title={criterion.name}
       />
 
-      <Divider className={classes.divider} orientation="left">
-        {t("dividers.lineaments")}
-      </Divider>
-
+      <SectionDivider text={t("dividers.lineaments")} />
       <Space className={classes.section} size={[0, 10]} wrap>
         {criterion.categories.map((category) => (
           <Tooltip key={category.id} title={category.description}>
-            <Tag color="volcano" className={classes.tag}>
+            <Tag color="orange" className={classes.tag}>
               {category.nomenclature}
             </Tag>
           </Tooltip>
         ))}
       </Space>
 
-      <Divider className={classes.divider} orientation="left">
-        {t("dividers.levels")}
-      </Divider>
+      <SectionDivider text={t("dividers.levels")} />
+      <Skeleton loading={isLoading} paragraph={{ rows: 5 }} active>
+        <Space className={classes.section} direction="vertical" size={15}>
+          {choices.map((choice) => (
+            <Response
+              key={choice.id}
+              choice={choice}
+              onChange={handleLevelChange}
+            />
+          ))}
+        </Space>
+      </Skeleton>
 
-      <Space className={classes.section} direction="vertical" size={15}>
-        {fakeChoices.map((choice) => (
-          <Box key={choice.id} className={classes.choice}>
-            <Badge.Ribbon
-              placement="start"
-              color={choice.hexColor}
-              text={choice.level.value}
-            >
-              <AnswerRadio
-                value={choice.level.value}
-                name="choice"
-                color="#fce5d7"
-                onChange={handleLevelChange}
-                label={choice.details}
-              />
-            </Badge.Ribbon>
-          </Box>
-        ))}
-      </Space>
-
-      <Divider className={classes.divider} orientation="left">
-        {t("dividers.justification")}
-      </Divider>
-
+      <SectionDivider text={t("dividers.justification")} />
       <Box className={classes.section}>
         <Alert
           className={classes.alert}
@@ -118,10 +101,7 @@ export default function Question(props: QuestionProps) {
         <AddEvidence />
       </Box>
 
-      <Divider className={classes.divider} orientation="left">
-        {t("dividers.next_steps")}
-      </Divider>
-
+      <SectionDivider text={t("dividers.next_steps")} />
       <Box className={classes.section}>Pasos a seguir</Box>
     </List.Item>
   );

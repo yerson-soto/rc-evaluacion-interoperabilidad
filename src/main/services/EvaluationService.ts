@@ -9,7 +9,7 @@ export class EvaluationService extends APIService implements EvaluationRepositor
   
   getAll(): Promise<Evaluation[]> { 
     return new Promise((resolve, reject) => {
-      this.client.get<Response<GetPaginatedEvaluation>>('/evaluations/1/10')
+      this.client.get<Response<GetPaginatedEvaluation>>('/evaluationsinstitutional/1/10')
         .then(res => {
           const results = res.data.result.evaluations;
           const evaluations = results.map(this.mapResult);
@@ -28,13 +28,6 @@ export class EvaluationService extends APIService implements EvaluationRepositor
         name: result.organismo.orgasnimo,
         acronym: result.organismo.siglas
       },
-      domains: [
-        {
-          id: result.domain.id,
-          name: result.domain.description,
-          slug: result.domain.description.replaceAll(' ', '-').toLowerCase()
-        }
-      ],
       dateCreated: result.dateInitial
     }
   }

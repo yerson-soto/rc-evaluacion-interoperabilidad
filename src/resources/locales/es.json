@@ -1,17 +1,9 @@
 {
   "headings": {
-    "login": "Login",
-    "signup": "Create your account",
-    "settings": "Settings",
-    "validate_account": "Validate your account",
-    "latest_jobs": "Latest Jobs",
-    "popular_categories": "Categorias",
-    "picture_settings": "Pictures",
-    "personal_settings": "Personal Information"
+  
   },
   "subheadings": {
-    "picture_settings": "Adding an avatar helps others find you.",
-    "personal_settings": "Manage your personal information."
+    
   },
   "texts": {
     "login": "Use your credentials to login to Laboro",
@@ -49,17 +41,9 @@
     "work_schedule": "Work schedule",
     "salary": "Salary"
   },
-  "labels": {
-    "username": "Username",
-    "phone_number": "Phone Number",
-    "email": "Email",
-    "bio": "About",
-    "first_name": "First Name",
-    "last_name": "Last Name",
-    "password": "Password",
-    "confirm_pass": "Confirm Password",
-    "pin_code": "Enter the code bellow",
-    "image_field": "Drop your image here, or click to browse"
+  "pagination": {
+    "evaluations": "Evaluación(es)",
+    "domains": "Dominio(s)"
   },
   "errors": {
     "required": "{{ field }} is required",
@@ -83,5 +67,8 @@
     "home": "Home",
     "pubs": "Publications",
     "login": "Sign In"
+  },
+  "empty": {
+    "evaluations": "No hay evaluaciones"
   }
 }

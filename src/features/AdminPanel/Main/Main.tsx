@@ -14,8 +14,6 @@ export default function Main({ children }: MainProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log();
-
   return (
     <Layout.Content className={classes.main}>
       <Box>

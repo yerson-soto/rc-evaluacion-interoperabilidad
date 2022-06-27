@@ -1,13 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEvaluationList } from "./useEvaluationList";
-import { Space, PageHeader, Card } from "antd";
+import { Space, PageHeader, Card, Empty } from "antd";
 import { EvaluationItem } from "./EvaluationItem";
 import { ActiveEvaluation } from "./ActiveEvaluation";
 
 import { List, Grid } from "antd";
 
 import { Evaluation } from "library/models/Evaluation";
+import { useTranslation } from "react-i18next";
+import { PaginationFooter } from "library/components/PaginationFooter";
 
 const { useBreakpoint } = Grid;
 
@@ -20,7 +22,6 @@ const fakeData: Evaluation[] = [
       name: "Ministerio de Industria y Comercio",
       acronym: "MIYPC",
     },
-    domains: [],
     score: 0.75,
   },
   {
@@ -31,7 +32,6 @@ const fakeData: Evaluation[] = [
       name: "Ministerio de Industria y Comercio",
       acronym: "MIYPC",
     },
-    domains: [],
     score: 0,
   },
   {
@@ -42,7 +42,6 @@ const fakeData: Evaluation[] = [
       name: "Ministerio de Industria y Comercio",
       acronym: "MIYPC",
     },
-    domains: [],
     score: 2.5,
   },
   {
@@ -53,7 +52,6 @@ const fakeData: Evaluation[] = [
       name: "Ministerio de Industria y Comercio",
       acronym: "MIYPC",
     },
-    domains: [],
     score: 3,
   },
   {
@@ -64,7 +62,6 @@ const fakeData: Evaluation[] = [
       name: "Ministerio de Administracion Publica",
       acronym: "EFGH",
     },
-    domains: [],
     score: 4.1,
   },
   {
@@ -75,7 +72,6 @@ const fakeData: Evaluation[] = [
       name: "Ministerio de Turismo",
       acronym: "ABCD",
     },
-    domains: [],
     score: 5,
   },
 ];
@@ -84,6 +80,8 @@ export default function EvaluationList() {
   const navigate = useNavigate();
 
   const { xl } = useBreakpoint();
+
+  const { t } = useTranslation();
 
   const { isLoading, evaluations } = useEvaluationList();
 
@@ -98,28 +96,23 @@ export default function EvaluationList() {
 
       <ActiveEvaluation evaluation={fakeData[0]} />
 
-      {/* <Space direction="vertical" style={{ width: "100%" }}>
-        {evaluations.map((evaluation, idx) => (
-          <EvaluationItem key={idx} evaluation={evaluation} />
-        ))}
-      </Space> */}
-
       <Card>
         <List
           loading={isLoading}
           itemLayout={xl ? "horizontal" : "vertical"}
           size="large"
-          dataSource={fakeData}
+          dataSource={evaluations}
           footer={
-            <div>
-              <b>{evaluations.length}</b> evaluaciones
-            </div>
+            <PaginationFooter
+              total={evaluations.length}
+              label={t("pagination.evaluations")}
+            />
           }
           pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
             pageSize: 10,
+          }}
+          locale={{
+            emptyText: <Empty description={t("empty.evaluations")} />,
           }}
           renderItem={(evaluation) => (
             <EvaluationItem key={evaluation.uid} evaluation={evaluation} />

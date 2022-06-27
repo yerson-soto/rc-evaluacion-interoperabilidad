@@ -21,9 +21,6 @@ const breadcrumbNameMap: Record<string, string> = {
 export default function Breadcrumb() {
   const location = useLocation();
 
-
-  console.log(location);
-
   const pathSnippets = location.pathname.split("/").filter((i) => i);
 
   const extraBreadcrumbItems = pathSnippets.map((_, index) => {
