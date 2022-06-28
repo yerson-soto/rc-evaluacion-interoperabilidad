@@ -17,7 +17,7 @@ export default function Main({ children }: MainProps) {
   return (
     <Layout.Content className={classes.main}>
       <Box>
-        <Breadcrumb />
+        {/* <Breadcrumb /> */}
         {/* <Breadcrumb className={classes.breadcrumb}>
           <Breadcrumb.Item>User</Breadcrumb.Item>
           <Breadcrumb.Item>Bill</Breadcrumb.Item>

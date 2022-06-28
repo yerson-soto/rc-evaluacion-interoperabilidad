@@ -1,13 +1,15 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Button, List, Typography, Card, Empty } from "antd";
-import { Progress, Grid, Popconfirm } from 'antd';
+import { Progress, Grid, Popconfirm } from "antd";
 import { Domain } from "library/models/Domain";
 import { ListItem } from "library/components/ListItem";
-import { useDomainList } from "./useDomainList";
-
-import "./DomainList.css";
 import { PaginationFooter } from "library/components/PaginationFooter";
+import { useDomainList } from "./useDomainList";
+import { useMedia } from "use-media";
+
+import classes from "./DomainList.module.css";
+import { Box } from "library/components/Box";
 
 const { useBreakpoint } = Grid;
 
@@ -42,15 +44,16 @@ interface DomainListProps {
 export default function DomainList(props: DomainListProps) {
   const { onEvaluate, onReset } = props;
   const { isLoading, domains } = useDomainList();
-  const { lg: isHorizontal } = useBreakpoint();
   const { t } = useTranslation();
 
+  const isSmall = useMedia({ maxWidth: 768 });
+  console.log("small", isSmall);
   return (
     <Card>
       <List
         loading={isLoading}
         dataSource={domains}
-        itemLayout={isHorizontal ? "horizontal" : "vertical"}
+        itemLayout={isSmall ? "vertical" : "horizontal"}
         size="large"
         pagination={{
           pageSize: 10,
@@ -59,14 +62,15 @@ export default function DomainList(props: DomainListProps) {
           emptyText: <Empty description={t("empty.domains")} />,
         }}
         footer={
-          <PaginationFooter 
+          <PaginationFooter
             total={domains.length}
-            label={t('pagination.domains')}
+            label={t("pagination.domains")}
           />
         }
         renderItem={(domain) => (
           <ListItem
             key={domain.id}
+            className={classes.domain}
             actions={[
               <Button onClick={() => onEvaluate(domain)}>
                 {t("buttons.evaluate")}
@@ -109,9 +113,10 @@ export default function DomainList(props: DomainListProps) {
               // }
             />
             <Typography.Text>
-              La entidad ha logrado que la implementación de los lineamientos del 
-              Marco de Interoperabilidad del Estado sea un tema conocido a nivel 
-              institucional sin embargo no ha logrado involucrar a todos los interesados.
+              La entidad ha logrado que la implementación de los lineamientos
+              del Marco de Interoperabilidad del Estado sea un tema conocido a
+              nivel institucional sin embargo no ha logrado involucrar a todos
+              los interesados.
             </Typography.Text>
           </ListItem>
         )}

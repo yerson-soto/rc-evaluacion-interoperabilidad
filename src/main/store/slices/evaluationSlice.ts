@@ -30,6 +30,16 @@ export const evaluationSlice = createSlice({
       state.isLoading = false
       state.hasError = true
       state.errorMessage = action.payload
+    },
+
+    evaluationCreated: (state, action: PayloadAction<Evaluation>) => {
+      state.isLoading = false
+      state.results.unshift({...action.payload, score: null})
+    },
+    evaluationNotCreated: (state, action: PayloadAction<ErrorMessage>) => {
+      state.isLoading = false
+      state.hasError = true
+      state.errorMessage = action.payload
     }
   },
 });
@@ -38,7 +48,10 @@ export const evaluationSlice = createSlice({
 export const {
   evaluationsLoad,
   evaluationsListed,
-  evaluationsNotListed
+  evaluationsNotListed,
+
+  evaluationCreated,
+  evaluationNotCreated
 } = evaluationSlice.actions;
 
 export default evaluationSlice.reducer;

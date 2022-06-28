@@ -20,7 +20,7 @@ export default function AddEvidence(props: UploadProps) {
   const uploadButton = (
     <div>
       <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>Subir</div>
     </div>
   );
 
@@ -39,6 +39,10 @@ export default function AddEvidence(props: UploadProps) {
         //   })
         // }}
         {...props}
+        
+        locale={{
+          uploading: 'Subiendo',
+        }}
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>

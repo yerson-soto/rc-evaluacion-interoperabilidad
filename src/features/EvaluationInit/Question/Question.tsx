@@ -10,6 +10,7 @@ import { Response } from "features/EvaluationInit/Response";
 import { useChoiceList } from "./useChoiceList";
 
 import classes from "./Question.module.css";
+import { Choice } from "library/models/Choice";
 
 // const choices = [
 //   "No existe un responsable de los servicios de intercambio de información",
@@ -40,14 +41,15 @@ import classes from "./Question.module.css";
 interface QuestionProps {
   number: number;
   criterion: Criterion;
+  choices: Choice[];
   onLevelChange: (level: number) => void;
   onEvidenceAdd: () => void;
   onEvidenceDelete: () => void;
 }
 
 export default function Question(props: QuestionProps) {
-  const { number: count, criterion, onLevelChange } = props;
-  const { isLoading, choices } = useChoiceList(criterion.id);
+  const { number: count, criterion, choices, onLevelChange } = props;
+  // const { isLoading, choices } = useChoiceList(criterion.id);
   const { t } = useTranslation();
 
   const handleEvidenceChange = (): void => {};
@@ -78,7 +80,6 @@ export default function Question(props: QuestionProps) {
       </Space>
 
       <SectionDivider text={t("dividers.levels")} />
-      <Skeleton loading={isLoading} paragraph={{ rows: 5 }} active>
         <Space className={classes.section} direction="vertical" size={15}>
           {choices.map((choice) => (
             <Response
@@ -88,7 +89,6 @@ export default function Question(props: QuestionProps) {
             />
           ))}
         </Space>
-      </Skeleton>
 
       <SectionDivider text={t("dividers.justification")} />
       <Box className={classes.section}>

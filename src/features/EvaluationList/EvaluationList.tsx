@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import { List, Grid } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useEvaluationList } from "./useEvaluationList";
-import { Space, PageHeader, Card, Empty } from "antd";
+import { Space, PageHeader, Card, Empty, Button } from "antd";
 import { EvaluationItem } from "./EvaluationItem";
 import { ActiveEvaluation } from "./ActiveEvaluation";
-
-import { List, Grid } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 import { Evaluation } from "library/models/Evaluation";
 import { useTranslation } from "react-i18next";
 import { PaginationFooter } from "library/components/PaginationFooter";
+import { AddEvaluation } from "./AddEvaluation";
 
 const { useBreakpoint } = Grid;
 
@@ -78,6 +79,8 @@ const fakeData: Evaluation[] = [
 
 export default function EvaluationList() {
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+  
 
   const { xl } = useBreakpoint();
 
@@ -85,6 +88,14 @@ export default function EvaluationList() {
 
   const { isLoading, evaluations } = useEvaluationList();
 
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const closeModal = () => {
+    setVisible(false);
+  };
+  
   return (
     <Space direction="vertical" size="large" style={{ width: "100%" }}>
       <PageHeader
@@ -92,12 +103,25 @@ export default function EvaluationList() {
         onBack={() => navigate("/evaluaciones")}
         title="Evaluaciones"
         subTitle="Lista de evaluaciones tomadas..."
+        extra={
+          <Button
+            type="primary"
+            size="large"
+            shape="circle"
+            icon={<PlusOutlined />}
+            onClick={showModal}
+          />
+        }
       />
 
-      <ActiveEvaluation evaluation={fakeData[0]} />
+      {evaluations.length > 0 && (
+        <ActiveEvaluation evaluation={evaluations[0]} />
+      )}
+
+      <AddEvaluation isOpen={visible} onClose={closeModal} />
 
       <Card>
-        <List
+        <List<Evaluation>
           loading={isLoading}
           itemLayout={xl ? "horizontal" : "vertical"}
           size="large"
@@ -109,7 +133,7 @@ export default function EvaluationList() {
             />
           }
           pagination={{
-            pageSize: 10,
+            pageSize: 5,
           }}
           locale={{
             emptyText: <Empty description={t("empty.evaluations")} />,

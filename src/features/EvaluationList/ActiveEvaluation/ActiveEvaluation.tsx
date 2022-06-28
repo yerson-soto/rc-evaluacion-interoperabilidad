@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Typography, Row, Col, Card } from "antd";
+import { Button, Typography, Row, Col, Card, Tag } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Evaluation } from "library/models/Evaluation";
 
@@ -19,9 +19,14 @@ export default function ActiveEvaluation(props: ActiveEvaluationProps) {
     <Card bordered={false}>
       <Row align="middle" gutter={[5, 15]}>
         <Col xs={24} md={20} lg={22}>
-          <Typography.Title level={4}>Evaluacion Actual</Typography.Title>
+          <Typography.Title level={4}>
+            Evaluacion Actual
 
-          <Typography.Text>2022 de mayo de 2022</Typography.Text>
+            <Tag style={{ marginLeft: '.5rem' }} color="warning">Pendiente</Tag>
+          </Typography.Title>
+          
+
+          <Typography.Text>{evaluation.dateCreated}</Typography.Text>
         </Col>
 
         <Col flex="auto">

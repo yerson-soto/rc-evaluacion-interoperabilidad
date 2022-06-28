@@ -5,5 +5,5 @@ export interface Evaluation {
   uid: string;
   organization: Organization;
   dateCreated: string;
-  score: number;
+  score: number | null;
 }

@@ -69,10 +69,10 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         <Col>
           <Box>
             <Typography.Text className={classes.title}>
-              Evaluacion #4531
+              {organization.name}
             </Typography.Text>
             <Typography.Text>
-              {new Date(dateCreated).toDateString()}
+              {dateCreated}
             </Typography.Text>
           </Box>
         </Col>

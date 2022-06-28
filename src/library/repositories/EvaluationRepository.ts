@@ -20,5 +20,6 @@ export interface GetPaginatedEvaluation {
 }
 
 export interface EvaluationRepository extends CommonRepository<Evaluation> {
+  createNew: (organization: number) => Promise<Evaluation>;
   mapResult: (result: GetEvaluation) => Evaluation;
 }
