@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, List, Typography, Card } from "antd";
+import { Button, List, Typography, Card, Empty } from "antd";
 import { Progress, Grid, Popconfirm } from 'antd';
 import { Domain } from "library/models/Domain";
 import { ListItem } from "library/components/ListItem";
@@ -54,6 +54,9 @@ export default function DomainList(props: DomainListProps) {
         size="large"
         pagination={{
           pageSize: 10,
+        }}
+        locale={{
+          emptyText: <Empty description={t("empty.domains")} />,
         }}
         footer={
           <PaginationFooter 

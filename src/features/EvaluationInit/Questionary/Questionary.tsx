@@ -71,7 +71,7 @@ export interface QuestionaryProps {
 
   domain: Domain;
 
-  // This is used to keep domain during animation
+  // This is used to keep domain during transition
   onClose: (keepDomain: Domain) => void;
   onCloseEnd: () => void;
 }

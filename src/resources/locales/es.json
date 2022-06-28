@@ -1,6 +1,6 @@
 {
   "headings": {
-  
+    "complete_evaluation": "Completar Evaluación"
   },
   "subheadings": {
     
@@ -69,6 +69,7 @@
     "login": "Sign In"
   },
   "empty": {
-    "evaluations": "No hay evaluaciones"
+    "evaluations": "No hay evaluaciones",
+    "domains": "No hay dominios"
   }
 }
