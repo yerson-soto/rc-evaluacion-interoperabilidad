@@ -1,31 +1,47 @@
 import { Criterion } from "library/models/Criterion";
-import { CriterionRepository } from "library/repositories/CriterionRepository";
+import { ChangeLevel, CriterionRepository, GetChoice } from "library/repositories/CriterionRepository";
 import { GetCriterion } from "library/repositories/CriterionRepository";
 import { APIService } from "./ApiService";
 import { Response } from "library/common/interfaces";
-import chroma from "chroma-js";
+import { Choice } from "library/models/Choice";
 
-export class CriterionService
-  extends APIService
-  implements CriterionRepository
-{
+export class CriterionService extends APIService implements CriterionRepository {
   getByDomain(domainId: number): Promise<Criterion[]> {
     return new Promise((resolve, reject) => {
       this.client
         .get<Response<GetCriterion[]>>(`/criterions/${domainId}`)
         .then((res) => {
-          const criterions = res.data.result.map(this.mapResult);
+          const criterions = res.data.result.map(this.mapResult.bind(this));
           resolve(criterions);
         })
         .catch(() => reject("No se pudo cargar los criterios"));
     });
   }
 
-  mapResult(result: GetCriterion): Criterion {
-    const colors = chroma
-      .scale(["#ef8269", "#fba31e", "#2ac158"])
-      .colors(result.responses.length);
+  changeLevel(data: ChangeLevel): Promise<Choice> {
+    return new Promise((resolve, reject) => {
+      this.client.post<Response<GetChoice>>('/evaluationtechnics', data)
+        .then(res => {
+          const choice: Choice = this.mapChoice(res.data.result);
+          resolve(choice);
+        })
+        .catch(() => reject('Error al cambiar el nivel'))
+    })
+  }
 
+  mapChoice(data: GetChoice): Choice {
+    return {
+      id: data.responsesId,
+      details: data.responseDecription,
+      level: {
+        id: data.levelsResponse.levelsId,
+        name: data.levelsResponse.description,
+        value: data.levelsResponse.levelValue,
+      },
+    }
+  }
+
+  mapResult(result: GetCriterion): Criterion {
     return {
       id: result.id,
       name: result.description,
@@ -34,16 +50,7 @@ export class CriterionService
         nomenclature: lineament.description,
         description: lineament.definictionLineament,
       })),
-      choices: result.responses.map((response, index) => ({
-        id: response.responsesId,
-        details: response.responseDecription,
-        hexColor: colors[index],
-        level: {
-          id: response.levelsResponse.levelsId,
-          name: response.levelsResponse.description,
-          value: response.levelsResponse.levelValue,
-        },
-      })),
+      choices: result.responses.map((response) => this.mapChoice(response)),
     };
   }
 }

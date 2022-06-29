@@ -1,5 +1,6 @@
 {
   "name": "rc-madurez-interoperabilidad",
+  "homepage": "madurez-interoperabilidad",
   "version": "0.1.0",
   "private": true,
   "scripts": {

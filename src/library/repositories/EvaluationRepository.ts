@@ -9,6 +9,7 @@ export interface GetEvaluation {
     orgasnimo: string;
     siglas: string;
   };
+  currentLevel: number;
 }
 
 export interface GetPaginatedEvaluation {

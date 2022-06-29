@@ -49,6 +49,8 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   const { uid, organization, dateCreated, score } = evaluation;
 
   const goToDetail = () => navigate(`/evaluaciones/${uid}`);
+  const goToEvaluation = (): void => navigate(`/evaluaciones/${evaluation.uid}/iniciar`)
+  
 
   return (
     <List.Item
@@ -57,7 +59,9 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="setting" icon={SettingOutlined} />,
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
-        <Button onClick={goToDetail}>Ver</Button>,
+        evaluation.score 
+        ? <Button onClick={goToDetail}>Ver</Button> 
+        : <Button onClick={goToEvaluation}>Iniciar</Button>,
         <Button danger>Eliminar</Button>,
       ]}
     >

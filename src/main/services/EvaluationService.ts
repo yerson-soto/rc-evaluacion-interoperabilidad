@@ -32,12 +32,10 @@ export class EvaluationService extends APIService implements EvaluationRepositor
     });
   }
   
-  mapResult(result: GetEvaluation): Evaluation {
-    const scores = [1.4, 4.5, 3.2, 5, 0.3, 4.5, 4, 1, 3];
-    
+  mapResult(result: GetEvaluation): Evaluation {    
     return {
       uid: result.id,
-      score: scores[Math.floor(Math.random() * scores.length)],
+      score: Number(result.currentLevel.toFixed(2)),
       organization: {
         id: result.organismo.id,
         name: result.organismo.orgasnimo,

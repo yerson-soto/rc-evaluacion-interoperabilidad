@@ -16,13 +16,12 @@ export default function EvaluationDetail() {
       <PageHeader
         style={{ padding: 0 }}
         onBack={() => navigate("/evaluaciones")}
-        title="Dominio Organizacional"
+        title="Detalle de Evaluacion"
         subTitle="Este dominio evalúa las habilidades..."
         extra={[
-          <Button key="3">Operation</Button>,
-          <Button key="2">Operation</Button>,
+          <Button key="2">Evaluar</Button>,
           <Button key="1" type="primary">
-            Primary
+            Finalizar
           </Button>,
         ]}
       >
@@ -36,13 +35,13 @@ export default function EvaluationDetail() {
           <Descriptions.Item label="Usage Time" span={2}>
             2019-04-24 18:00:00
           </Descriptions.Item>
-          <Descriptions.Item label="Status" span={3}>
+          <Descriptions.Item label="Estado" span={3}>
             <Badge status="processing" text="Running" />
           </Descriptions.Item>
           <Descriptions.Item label="Negotiated Amount">
             $80.00
           </Descriptions.Item>
-          <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
+          <Descriptions.Item label="Puntuacion">20.00</Descriptions.Item>
           <Descriptions.Item label="Official Receipts">
             $60.00
           </Descriptions.Item>

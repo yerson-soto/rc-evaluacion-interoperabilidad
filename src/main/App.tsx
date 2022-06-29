@@ -10,9 +10,11 @@ import { store } from "./store/index";
 import { urls } from "library/common/constants";
 
 function App() {
+  const basename = process.env.PUBLIC_URL;
+  
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route path={urls.home.path} element={<AdminPanel />}>
             <Route index element={<Dashboard />} />

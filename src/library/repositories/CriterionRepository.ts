@@ -1,3 +1,4 @@
+import { Choice } from "library/models/Choice";
 import { Criterion } from "library/models/Criterion";
 
 export interface GetCriterion {
@@ -26,7 +27,14 @@ export interface GetChoice {
   };
 }
 
+export interface ChangeLevel {
+  evaluationInstitutionalId: string;
+  criterionId: number;
+  responsesId: number;
+}
+
 export interface CriterionRepository {
   getByDomain: (domainId: number) => Promise<Criterion[]>;
+  changeLevel: (data: ChangeLevel) => Promise<Choice>;
   mapResult: (result: GetCriterion) => Criterion;
 }

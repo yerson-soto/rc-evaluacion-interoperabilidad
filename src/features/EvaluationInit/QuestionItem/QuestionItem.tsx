@@ -8,9 +8,12 @@ import { SectionDivider } from "library/components/SectionDivider";
 import { AddEvidence } from "features/EvaluationInit/AddEvidence";
 import { Response } from "features/EvaluationInit/Response";
 import { useChoiceList } from "./useChoiceList";
-
-import classes from "./Question.module.css";
 import { Choice } from "library/models/Choice";
+import { Question } from "library/models/Question";
+
+import classes from "./QuestionItem.module.css";
+
+import chroma from "chroma-js";
 
 // const choices = [
 //   "No existe un responsable de los servicios de intercambio de información",
@@ -38,28 +41,44 @@ import { Choice } from "library/models/Choice";
 //   };
 // });
 
-interface QuestionProps {
+interface QuestionItemProps {
   number: number;
-  criterion: Criterion;
-  choices: Choice[];
-  onLevelChange: (level: number) => void;
+  question: Question;
+  onLevelChange: (choice: Choice) => void;
   onEvidenceAdd: () => void;
   onEvidenceDelete: () => void;
 }
 
-export default function Question(props: QuestionProps) {
-  const { number: count, criterion, choices, onLevelChange } = props;
+export default function QuestionItem(props: QuestionItemProps) {
+  const { number: count, question, onLevelChange } = props;
   // const { isLoading, choices } = useChoiceList(criterion.id);
   const { t } = useTranslation();
 
+  const { criterion } = question;
+
   const handleEvidenceChange = (): void => {};
 
-  const handleLevelChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const level = Number(event.target.value);
-    onLevelChange(level);
+  const handleLevelChange = (choice: Choice): void => {
+    onLevelChange(choice);
   };
+
+  const renderResponses = (): React.ReactNode => {
+    const choices = criterion.choices;
+    
+    const colors = chroma
+      .scale(["#ef8269", "#fba31e", "#2ac158"])
+      .colors(choices.length);
+      
+    return choices.map((choice, index) => (
+      <Response
+        key={choice.id}
+        choice={choice}
+        color={colors[index]}
+        isSelected={choice.id === question.response?.id}
+        onChange={() => handleLevelChange(choice)}
+      />
+    ))
+  }
 
   return (
     <List.Item className={classes.question}>
@@ -81,13 +100,7 @@ export default function Question(props: QuestionProps) {
 
       <SectionDivider text={t("dividers.levels")} />
         <Space className={classes.section} direction="vertical" size={15}>
-          {choices.map((choice) => (
-            <Response
-              key={choice.id}
-              choice={choice}
-              onChange={handleLevelChange}
-            />
-          ))}
+          {renderResponses()}
         </Space>
 
       <SectionDivider text={t("dividers.justification")} />

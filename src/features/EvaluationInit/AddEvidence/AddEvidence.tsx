@@ -1,10 +1,10 @@
 import React from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload } from "antd";
+import { Modal, Upload, Image } from "antd";
 import { UploadProps } from "antd/es/upload";
 import { useUploadHandler } from "./useAddEvidence";
 
-import classes from './AddEvidence.module.css';
+import classes from "./AddEvidence.module.css";
 
 export default function AddEvidence(props: UploadProps) {
   const {
@@ -39,21 +39,31 @@ export default function AddEvidence(props: UploadProps) {
         //   })
         // }}
         {...props}
-        
         locale={{
-          uploading: 'Subiendo',
+          uploading: "Subiendo",
         }}
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>
-      <Modal
+      {/* <Modal
         visible={isPreviewVisible}
         title={previewTitle}
         footer={null}
         onCancel={handleCancel}
       >
         <img alt={previewTitle} className={classes.preview} src={previewImage} />
-      </Modal>
+      </Modal> */}
+
+      <div style={{ display: "none" }}>
+        <Image.PreviewGroup
+          preview={{
+            visible: isPreviewVisible,
+            onVisibleChange: () => handleCancel(),
+          }}
+        >
+          <Image src={previewImage} />
+        </Image.PreviewGroup>
+      </div>
     </React.Fragment>
   );
 }

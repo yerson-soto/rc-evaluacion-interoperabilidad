@@ -9,7 +9,7 @@ interface ScoreProps {
 }
 
 export default function Score({ value }: ScoreProps) {
-  const colors = chroma.scale(["#ef8269", "#fba31e", "#2ac158"]).colors(6);
+  const colors = chroma.scale(["#cfc039", "#fba31e", "#2ac158"]).colors(6);
   const color = value ? colors[Number(value.toFixed())] : 'gray';
 
   return (

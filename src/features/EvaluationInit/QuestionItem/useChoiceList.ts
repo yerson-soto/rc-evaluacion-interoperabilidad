@@ -3,6 +3,7 @@ import { Choice } from "library/models/Choice";
 import { ChoiceService } from "main/services/ChoiceService";
 
 
+// TODO: Remove this
 export function useChoiceList(criterionId: number) {
   const [choices, setChoices] = useState<Choice[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);

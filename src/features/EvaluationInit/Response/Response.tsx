@@ -8,17 +8,19 @@ import classes from "./Response.module.css";
 
 interface ResponseProps {
   choice: Choice;
+  color: string;
+  isSelected?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function ResponseProps(props: ResponseProps) {
-  const { choice, onChange } = props;
+  const { choice, color, isSelected, onChange } = props;
 
   return (
     <Box className={classes.choice}>
       <Badge.Ribbon
         placement="start"
-        color={choice.hexColor}
+        color={color}
         text={choice.level.value}
       >
         <AnswerRadio
@@ -26,6 +28,7 @@ export default function ResponseProps(props: ResponseProps) {
           name="choice"
           color="#fce5d7"
           onChange={onChange}
+          defaultChecked={isSelected}
           label={choice.details}
         />
       </Badge.Ribbon>

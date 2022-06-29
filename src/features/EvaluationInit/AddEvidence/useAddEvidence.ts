@@ -31,7 +31,6 @@ export function useUploadHandler() {
   };
 
   const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    console.log(fileList);
     setFileList(newFileList);
   };
 

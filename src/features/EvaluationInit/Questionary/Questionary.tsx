@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Drawer, List, Grid, Badge, Pagination, Button } from "antd";
-import { Question } from "features/EvaluationInit/Question";
+import { QuestionItem } from "features/EvaluationInit/QuestionItem";
 import { Criterion } from "library/models/Criterion";
 import { useCriterionList } from "./useCriterionList";
 import { PaginationProps } from "antd/es/pagination";
 import { Domain } from "library/models/Domain";
 
 import classes from "./Questionary.module.css";
+import { useQuestionary } from "./useQuestionary";
+import { Question } from "library/models/Question";
+import { Choice } from "library/models/Choice";
 
 // const fakeData: Criterion[] = [
 //   {
@@ -75,18 +79,38 @@ export interface QuestionaryProps {
   onCloseEnd: () => void;
 }
 
+interface QuestionaryParams {
+  uid: string;
+}
+
 export default function Questionary(props: QuestionaryProps) {
   const [score, setScore] = useState<CriterionScore>([]);
   const [current, setCurrent] = useState(1);
 
+  const { uid } = useParams<Record<"uid", string>>();
   const { md: isDesktop } = useBreakpoint();
   const { isOpen, domain, onClose, onCloseEnd } = props;
-  const { isLoading, criterions } = useCriterionList(domain.id);
+  const { isLoading, questions, changeResponse } = useQuestionary(domain.id);
 
-  const addScore = (criterion: Criterion, level: number): void => {
+  React.useEffect(() => {
+    const handleNotFound = () => {
+      if (!domain) onCloseEnd();
+    };
+
+    handleNotFound();
+  }, []);
+
+  const onResponseChange = (criterion: Criterion, choice: Choice): void => {
+
+    changeResponse({
+      evaluationInstitutionalId: uid as string,
+      criterionId: criterion.id,
+      responsesId: choice.id
+    })
+    
     const newScore = {
       ...score,
-      [criterion.id]: level,
+      [criterion.id]: choice.level.value,
     };
 
     setScore(newScore);
@@ -98,16 +122,8 @@ export default function Questionary(props: QuestionaryProps) {
       0
     );
 
-    return Number((total / criterions.length).toFixed(2)) || 0;
+    return Number((total / questions.length).toFixed(2)) || 0;
   };
-
-  React.useEffect(() => {
-    const handleNotFound = () => {
-      if (!domain) onCloseEnd();
-    };
-
-    handleNotFound();
-  }, []);
 
   const onVisibilityChange = (isVisible: boolean): void => {
     if (!isVisible) onCloseEnd();
@@ -142,7 +158,7 @@ export default function Questionary(props: QuestionaryProps) {
       footer={
         <Pagination
           pageSize={1}
-          total={criterions.length}
+          total={questions.length}
           itemRender={renderPaginationItem}
           onChange={onPageChange}
           current={current}
@@ -151,7 +167,7 @@ export default function Questionary(props: QuestionaryProps) {
       forceRender
       destroyOnClose
     >
-      <List<Criterion>
+      <List<Question>
         itemLayout="vertical"
         size="large"
         loading={isLoading}
@@ -163,13 +179,12 @@ export default function Questionary(props: QuestionaryProps) {
           },
         }}
         split={false}
-        dataSource={criterions}
-        renderItem={(criterion) => (
-          <Question
-            key={criterion.id}
-            criterion={criterion}
-            choices={criterion.choices}
-            onLevelChange={(level) => addScore(criterion, level)}
+        dataSource={questions}
+        renderItem={(question) => (
+          <QuestionItem
+            key={question.criterion.id}
+            question={question}
+            onLevelChange={(choice) => onResponseChange(question.criterion, choice)}
             onEvidenceDelete={() => {}}
             onEvidenceAdd={() => {}}
             number={current}
