@@ -80,7 +80,6 @@ const fakeData: Evaluation[] = [
 export default function EvaluationList() {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
-  
 
   const { xl } = useBreakpoint();
 
@@ -95,7 +94,7 @@ export default function EvaluationList() {
   const closeModal = () => {
     setVisible(false);
   };
-  
+
   return (
     <Space direction="vertical" size="large" style={{ width: "100%" }}>
       <PageHeader
@@ -114,11 +113,15 @@ export default function EvaluationList() {
         }
       />
 
+      <AddEvaluation isOpen={visible} onClose={closeModal} />
+
       {evaluations.length > 0 && (
         <ActiveEvaluation evaluation={evaluations[0]} />
       )}
 
-      <AddEvaluation isOpen={visible} onClose={closeModal} />
+      <Card>
+        Filtro
+      </Card>
 
       <Card>
         <List<Evaluation>
@@ -134,6 +137,7 @@ export default function EvaluationList() {
           }
           pagination={{
             pageSize: 5,
+            total: 50
           }}
           locale={{
             emptyText: <Empty description={t("empty.evaluations")} />,
