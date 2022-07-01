@@ -7,30 +7,44 @@ import { EvaluationList } from "features/EvaluationList";
 import { EvaluationDetail } from "features/EvaluationDetail";
 import { EvaluationInit } from "features/EvaluationInit";
 import { store } from "./store/index";
-import { urls } from "library/common/constants";
+import { paths } from "library/common/constants";
+import { Login } from "features/Login";
+import { AuthPanel } from "../features/AuthPanel";
 
 function App() {
   const basename = process.env.PUBLIC_URL;
-  
+
   return (
     <Provider store={store}>
       <BrowserRouter basename={basename}>
         <Routes>
-          <Route path={urls.home.path} element={<AdminPanel />}>
-            <Route index element={<Dashboard />} />
+          <Route path={paths.auth.index} element={<AuthPanel />}>
+            <Route path={paths.auth.login.index} element={<Login />} />
+          </Route>
 
-            <Route path={urls.evaluations.path}>
+          <Route path={paths.admin} element={<AdminPanel />}>
+            <Route path={paths.dashboard} element={<Dashboard />} />
+            <Route path={paths.evaluations.index}>
               <Route index element={<EvaluationList />} />
               <Route
-                path={urls.evaluations.detail.path}
+                path={paths.evaluations.detail.index}
                 element={<EvaluationDetail />}
               />
               <Route
-                path={urls.evaluations.init.path}
+                path={paths.evaluations.init.index}
                 element={<EvaluationInit />}
               />
             </Route>
           </Route>
+
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </Provider>

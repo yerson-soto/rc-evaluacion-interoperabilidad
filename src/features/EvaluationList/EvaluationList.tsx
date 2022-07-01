@@ -11,6 +11,7 @@ import { Evaluation } from "library/models/Evaluation";
 import { useTranslation } from "react-i18next";
 import { PaginationFooter } from "library/components/PaginationFooter";
 import { AddEvaluation } from "./AddEvaluation";
+import { EvaluationFilter } from "./EvaluationFilter";
 
 const { useBreakpoint } = Grid;
 
@@ -119,9 +120,7 @@ export default function EvaluationList() {
         <ActiveEvaluation evaluation={evaluations[0]} />
       )}
 
-      <Card>
-        Filtro
-      </Card>
+      <EvaluationFilter />
 
       <Card>
         <List<Evaluation>

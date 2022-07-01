@@ -7,7 +7,7 @@ import { Card } from 'antd'
 export default function EvaluationFilter() {
   return (
     <Card>
-      
+      Filtro
     </Card>
   )
 }

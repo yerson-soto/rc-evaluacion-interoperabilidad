@@ -1,0 +1,31 @@
+.layout {
+  padding: var(--content-gutter);
+  height: 100%;
+
+  display: flex;
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  justify-content: center;
+}
+
+.row,
+.card {
+  width: 100%;
+}
+
+.card {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.footer {
+  text-align: center;
+}

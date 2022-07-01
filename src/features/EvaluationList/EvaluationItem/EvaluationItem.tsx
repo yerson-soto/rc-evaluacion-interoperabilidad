@@ -8,6 +8,7 @@ import { Score } from "library/components/Score";
 import classes from "./EvaluationItem.module.css";
 import { ListItem } from "library/components/ListItem";
 import chroma from "chroma-js";
+import { paths } from '../../../library/common/constants';
 
 interface EvaluationItemProps {
   evaluation: Evaluation;
@@ -48,8 +49,8 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
 
   const { uid, organization, dateCreated, score } = evaluation;
 
-  const goToDetail = () => navigate(`/evaluaciones/${uid}`);
-  const goToEvaluation = (): void => navigate(`/evaluaciones/${evaluation.uid}/iniciar`)
+  const goToDetail = () => navigate(paths.evaluations.detail.reverse({ uid }));
+  const goToEvaluation = (): void => navigate(paths.evaluations.init.reverse({ uid }));
   
 
   return (

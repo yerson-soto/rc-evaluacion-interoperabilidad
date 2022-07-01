@@ -35,11 +35,9 @@
     "image_field": "Supports: JPG, PNG, GIF"
   },
   "fields": {
-    "pin_code": "Pin code",
-    "job_title": "Job title",
-    "category": "Category",
-    "work_schedule": "Work schedule",
-    "salary": "Salary"
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "remember": "Recuerdame"
   },
   "pagination": {
     "evaluations": "Evaluación(es)",
@@ -58,10 +56,12 @@
   },
   "buttons": {
     "upload": "Subir",
-    "evaluate": "Evaluar"
+    "evaluate": "Evaluar",
+    "login": "Inicar Sesión"
   },
   "links": {
-    "forgot_password": "Forgot your password?"
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "register_now": "Regístrate ahora"
   },
   "nav": {
     "home": "Home",
@@ -71,5 +71,8 @@
   "empty": {
     "evaluations": "No hay evaluaciones",
     "domains": "No hay dominios"
+  },
+  "operators": {
+    "or": "O"
   }
 }

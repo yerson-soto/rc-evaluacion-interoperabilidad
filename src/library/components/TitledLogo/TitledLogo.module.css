@@ -1,0 +1,16 @@
+.around {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  display: flex;
+}
+
+.title {
+  margin-bottom: 0;
+  font-size: 22px;
+}

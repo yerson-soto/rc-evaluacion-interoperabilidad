@@ -1,20 +1,30 @@
-export const urls = {
-  home: {
-    path: "/"
+export const paths = {
+  auth: {
+    index: "auth",
+    login: {
+      index: "iniciar-sesion",
+      reverse: () => "/iniciar-sesion"
+    },
+    signup: {
+      index: "registrarse",
+      reverse: () => "/registrarse"
+    },
+    passwordReset: {
+      index: "restablecer-p",
+      reverse: () => "/restablecer-p"
+    }
   },
+  admin: "/",  
+  dashboard: "",
   evaluations: {
-    path: "evaluaciones",
+    index: "evaluaciones",
     detail: {
-      path: ":uid",
-      reverse: ({ uid }: { uid: string }) => {
-        return `/evaluaciones/${uid}`;
-      },
+      index: ":uid",
+      reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}`,
     },
     init: {
-      path: ":uid/iniciar",
-      reverse: ({ uid }: { uid: string }) => {
-        return  `/evaluaciones/${uid}/iniciar`;
-      },
+      index: ":uid/iniciar",
+      reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
     },
   },
 };

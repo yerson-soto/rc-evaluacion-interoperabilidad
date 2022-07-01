@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, Breadcrumb as BreadCrumb } from "antd";
 import { HashRouter, Link, Route, Routes, useLocation, useMatch } from "react-router-dom";
-import { urls } from "library/common/constants";
+import { paths } from "library/common/constants";
 
 // const breadcrumbNameMap: Record<string, string> = {
 //   '/evaluaciones': 'Evaluation List',
@@ -12,10 +12,10 @@ import { urls } from "library/common/constants";
 // };
 
 const breadcrumbNameMap: Record<string, string> = {
-  [urls.home.path]: "Inicio",
-  [urls.evaluations.path]: "Evaluaciones",
-  [urls.evaluations.detail.path]: "Detalle",
-  [urls.evaluations.init.path]: "Completar Evaluacion",
+  [paths.dashboard]: "Inicio",
+  [paths.evaluations.index]: "Evaluaciones",
+  [paths.evaluations.detail.index]: "Detalle",
+  [paths.evaluations.init.index]: "Completar Evaluacion",
 };
 
 export default function Breadcrumb() {

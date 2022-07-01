@@ -1,7 +1,6 @@
 import React from "react";
-import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import { Domain } from "library/models/Domain";
-import { urls } from "../../library/common/constants";
 import { LocationState } from "library/common/interfaces";
 
 export function useEvaluationInit() {
@@ -17,7 +16,7 @@ export function useEvaluationInit() {
 
     setQueryParams(params, options);
   };
-
+  
   const setClose = (keepDomain: Domain) => {
     setQueryParams({}, { state: keepDomain });
   };
