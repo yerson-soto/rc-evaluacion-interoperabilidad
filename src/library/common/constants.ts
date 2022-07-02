@@ -3,15 +3,19 @@ export const paths = {
     index: "auth",
     login: {
       index: "iniciar-sesion",
-      reverse: () => "/iniciar-sesion"
+      reverse: () => "/auth/iniciar-sesion"
     },
     signup: {
       index: "registrarse",
-      reverse: () => "/registrarse"
+      reverse: () => "/auth/registrarse"
+    },
+    forgotPassword: {
+      index: "clave-olvidada",
+      reverse: () => "/auth/clave-olvidada"
     },
     passwordReset: {
-      index: "restablecer-p",
-      reverse: () => "/restablecer-p"
+      index: "restablecer-clave",
+      reverse: () => "/auth/restablecer-clave"
     }
   },
   admin: "/",  

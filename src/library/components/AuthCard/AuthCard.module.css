@@ -1,0 +1,26 @@
+.card {
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  background-color: transparent;
+}
+
+.cardCover {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.cardSubtitle {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.redirectSuggestion {
+  text-align: center;
+  padding: rem 0;
+  margin-top: auto;
+}

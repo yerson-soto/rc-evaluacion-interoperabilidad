@@ -3,25 +3,36 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Space } from "antd";
 import { Link } from "react-router-dom";
 import { paths } from "library/common/constants";
-
 import { Box } from "library/components/Box";
 import { useTranslation } from 'react-i18next';
 
 import classes from "./LoginForm.module.css";
 
+// interface LoginFormProps {
+//   onSubmit: () =>
+// }
+
+interface FormValues {
+  username: string;
+  password: string;
+  remember: boolean;
+}
+
 export default function LoginForm() {
   const { t } = useTranslation();
+  const [form] = Form.useForm<FormValues>();
   
-  const onFinish = (values: any) => {
+  const onFinish = (values: FormValues) => {
     console.log("Received values of form: ", values);
+    form.resetFields()
   };
-
+  
   return (
     <Form
       size="large"
-      name="normal_login"
-      className="login-form"
+      name="login"
       initialValues={{ remember: true }}
+      form={form}
       onFinish={onFinish}
     >
       <Space className={classes.space} direction="vertical" size="small">
@@ -58,7 +69,7 @@ export default function LoginForm() {
 
           <Link
             className={classes.forgotPassword}
-            to={paths.auth.passwordReset.reverse()}
+            to={paths.auth.forgotPassword.reverse()}
           >
             {t("links.forgot_password")}
           </Link>
@@ -66,16 +77,10 @@ export default function LoginForm() {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className={classes.submit}>
+        <Button type="primary" htmlType="submit" block>
           {t("buttons.login")}
         </Button>
       </Form.Item>
-
-      <Box className={classes.redirectQuestion}>
-        O <Link to={paths.auth.signup.reverse()}>
-          {t("links.register_now")}
-        </Link>
-      </Box>
     </Form>
   );
 }

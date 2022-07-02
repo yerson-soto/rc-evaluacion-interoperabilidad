@@ -2,13 +2,11 @@
   "headings": {
     "complete_evaluation": "Completar Evaluación"
   },
-  "subheadings": {
-    
-  },
   "texts": {
-    "login": "Use your credentials to login to Laboro",
-    "signup": "Welcome to Laboro",
-    "validate_account": "We just sent a message to your {{ subject }} with the activation code for your account."
+    "login": "!Bienvenido! Utiliza tus credenciales para acceder",
+    "signup": "Bievenido al Sistema de Madurez de Interabilidad",
+    "reset_password": "Complete el siguiente formulario para restablecer su contraseña",
+    "forgot_password": "Ingrese su correo electronico en el siguiente formulario para enviarle su correo de recuperación."
   },
   "dividers": {
     "lineaments": "Lineamientos",
@@ -37,7 +35,9 @@
   "fields": {
     "username": "Nombre de usuario",
     "password": "Contraseña",
-    "remember": "Recuerdame"
+    "email": "Correo electrónico",
+    "confirm_password": "Confirmar contraseña",
+    "remember": "Recuérdame"
   },
   "pagination": {
     "evaluations": "Evaluación(es)",
@@ -57,11 +57,14 @@
   "buttons": {
     "upload": "Subir",
     "evaluate": "Evaluar",
-    "login": "Inicar Sesión"
+    "login": "Iniciar Sesión",
+    "send_reset_email": "Enviar Correo",
+    "reset_password": "Restablecer"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",
-    "register_now": "Regístrate ahora"
+    "register_now": "Regístrate ahora",
+    "back_login": "Volver al Inicio de Sesión"
   },
   "nav": {
     "home": "Home",

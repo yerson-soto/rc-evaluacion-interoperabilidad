@@ -9,7 +9,9 @@ import { EvaluationInit } from "features/EvaluationInit";
 import { store } from "./store/index";
 import { paths } from "library/common/constants";
 import { Login } from "features/Login";
-import { AuthPanel } from "../features/AuthPanel";
+import { AuthPanel } from "features/AuthPanel";
+import { PasswordReset } from 'features/PasswordReset';
+import { ForgotPassword } from 'features/ForgotPassword';
 
 function App() {
   const basename = process.env.PUBLIC_URL;
@@ -19,7 +21,18 @@ function App() {
       <BrowserRouter basename={basename}>
         <Routes>
           <Route path={paths.auth.index} element={<AuthPanel />}>
-            <Route path={paths.auth.login.index} element={<Login />} />
+            <Route
+              path={paths.auth.login.index}
+              element={<Login />}
+            />
+            <Route
+              path={paths.auth.forgotPassword.index}
+              element={<ForgotPassword />}
+            />
+            <Route
+              path={paths.auth.passwordReset.index}
+              element={<PasswordReset />}
+            />
           </Route>
 
           <Route path={paths.admin} element={<AdminPanel />}>

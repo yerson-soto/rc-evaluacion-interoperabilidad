@@ -14,17 +14,10 @@
 
 .row {
   justify-content: center;
-}
-
-.row,
-.card {
   width: 100%;
 }
 
-.card {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
+
 
 .footer {
   text-align: center;

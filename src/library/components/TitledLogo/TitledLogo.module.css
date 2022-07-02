@@ -5,12 +5,12 @@
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   display: flex;
 }
 
 .title {
-  margin-bottom: 0;
-  font-size: 22px;
+  margin: 0 !important;
+  text-align: center;
 }

@@ -1,26 +1,19 @@
 import React from "react";
-import { Box } from "library/components/Box";
 import { LoginForm } from "./LoginForm";
-import { TitledLogo } from "library/components/TitledLogo";
-import { Typography } from "antd";
+import { AuthCard } from 'library/components/AuthCard';
+import { useTranslation } from 'react-i18next';
+import { paths } from 'library/common/constants';
 
 export default function Login() {
+  const { t } = useTranslation();
+
   return (
-    <Box>
-      <Box
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          marginBottom: 20,
-        }}
-      >
-        <TitledLogo />
-        <Typography.Paragraph style={{ fontSize: 16 }}>
-          Acceder al Modelo de Madurez de Interorabilidad
-        </Typography.Paragraph>
-      </Box>
+    <AuthCard
+      text={t("texts.login")}
+      redirectSuggestion={t("links.register_now")}
+      redirectPath={paths.auth.signup.reverse()}
+    >
       <LoginForm />
-    </Box>
+    </AuthCard>
   );
 }

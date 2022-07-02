@@ -6,9 +6,9 @@ import classes from "./TitledLogo.module.css";
 
 export default function TitledLogo() {
   return (
-    <Space size="middle">
+    <Space direction="vertical" size="middle" align="center">
       <Logo className={classes.logo} />
-      <Typography.Title style={{ margin: 0 }} level={2}>
+      <Typography.Title className={classes.title} level={2}>
         Ant Design
       </Typography.Title>
     </Space>

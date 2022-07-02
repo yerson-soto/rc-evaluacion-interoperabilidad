@@ -2,11 +2,6 @@
   width: 100%;
 }
 
-.submit {
-  display: block;
-  width: 100%;
-}
-
 .forgotWrapper {
   display: flex;
   justify-content: space-between;
@@ -14,10 +9,4 @@
 
 .forgotPassword {
   margin-left: auto;
-}
-
-.redirectQuestion {
-  text-align: center;
-  padding: rem 0;
-  margin-top: auto;
 }
