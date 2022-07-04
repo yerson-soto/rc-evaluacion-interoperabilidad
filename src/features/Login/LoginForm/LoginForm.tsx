@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next';
 
 import classes from "./LoginForm.module.css";
 
-// interface LoginFormProps {
-//   onSubmit: () =>
-// }
+interface LoginFormProps {
+  isLoading: boolean;
+  onSubmit: () => void;
+}
 
 interface FormValues {
   username: string;
@@ -19,8 +20,8 @@ interface FormValues {
 }
 
 export default function LoginForm() {
-  const { t } = useTranslation();
   const [form] = Form.useForm<FormValues>();
+  const { t } = useTranslation();
   
   const onFinish = (values: FormValues) => {
     console.log("Received values of form: ", values);
