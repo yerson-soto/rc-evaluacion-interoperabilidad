@@ -6,7 +6,9 @@
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
     "signup": "Bievenido al Sistema de Madurez de Interabilidad",
     "reset_password": "Complete el siguiente formulario para restablecer su contraseña",
-    "forgot_password": "Ingrese su correo electronico en el siguiente formulario para enviarle su correo de recuperación."
+    "forgot_password": "Ingrese su correo electrónico en el siguiente formulario para enviarle su correo de recuperación.",
+    "reset_mail_sent": "Revise su bandeja de entrada. En caso de que su usuario este registrado, verá un correo de recuperación de contraseña.",
+    "reset_password_success": "Su contraseña ha sido restablecida con éxito. Será redirigido para que inicie sesión con sus nuevas credenciales."
   },
   "dividers": {
     "lineaments": "Lineamientos",
@@ -48,23 +50,27 @@
     "min_length": "{{ field }} must be at least {{ length }} characters",
     "match_password": "Passwords must match"
   },
-  "messages": {
-    "email_exists": "Someone is already using this email",
-    "invalid_code": "The provided code is invalid",
-    "invalid_credentials": "Invalid credentials were provided",
-    "user_not_loaded": "Couldn't load the user"
+  "alerts": {
+    "page_not_found": "Lo sentimos, la página que visitaste no existe",
+    "login_failed": "Email o contraseña incorrectos",
+    "send_reset_mail_failed": "Introduzca un correo válido",
+    "reset_password_failed": "No se ha podido cambiar la contraseña",
+    "reset_password_success": "Contraseña restablecida",
+    "reset_link_invalid": "El enlace de recuperación es inválido o ha expirado"
   },
   "buttons": {
     "upload": "Subir",
     "evaluate": "Evaluar",
     "login": "Iniciar Sesión",
     "send_reset_email": "Enviar Correo",
-    "reset_password": "Restablecer"
+    "reset_password": "Restablecer",
+    "resend_mail": "Reenviar correo"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",
     "register_now": "Regístrate ahora",
-    "back_login": "Volver al Inicio de Sesión"
+    "back_login": "Volver al Inicio de Sesión",
+    "back_home": "Volver a Inicio"
   },
   "nav": {
     "home": "Home",

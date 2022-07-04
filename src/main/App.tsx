@@ -12,6 +12,7 @@ import { Login } from "features/Login";
 import { AuthPanel } from "features/AuthPanel";
 import { PasswordReset } from 'features/PasswordReset';
 import { ForgotPassword } from 'features/ForgotPassword';
+import { NotFound } from "features/NotFound";
 
 function App() {
   const basename = process.env.PUBLIC_URL;
@@ -50,14 +51,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>There's nothing here!</p>
-              </main>
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>

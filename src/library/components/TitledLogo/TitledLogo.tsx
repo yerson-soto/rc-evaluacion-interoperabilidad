@@ -8,7 +8,7 @@ export default function TitledLogo() {
   return (
     <Space direction="vertical" size="middle" align="center">
       <Logo className={classes.logo} />
-      <Typography.Title className={classes.title} level={2}>
+      <Typography.Title level={2} className={classes.title}>
         Ant Design
       </Typography.Title>
     </Space>

@@ -4,13 +4,13 @@ import { Button, Checkbox, Form, Input, Space } from "antd";
 import { Link } from "react-router-dom";
 import { paths } from "library/common/constants";
 import { Box } from "library/components/Box";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 import classes from "./LoginForm.module.css";
 
 interface LoginFormProps {
   isLoading: boolean;
-  onSubmit: () => void;
+  onSubmit: (username: string, password: string, remember: boolean) => void;
 }
 
 interface FormValues {
@@ -19,15 +19,19 @@ interface FormValues {
   remember: boolean;
 }
 
-export default function LoginForm() {
+export default function LoginForm(props: LoginFormProps) {
   const [form] = Form.useForm<FormValues>();
   const { t } = useTranslation();
-  
+
+  const { isLoading, onSubmit } = props;
+
   const onFinish = (values: FormValues) => {
-    console.log("Received values of form: ", values);
-    form.resetFields()
+    const { username, password, remember } = values;
+    onSubmit(username, password, remember);
+
+    form.resetFields();
   };
-  
+
   return (
     <Form
       size="large"
@@ -46,7 +50,7 @@ export default function LoginForm() {
             placeholder={t("fields.username")}
           />
         </Form.Item>
-          
+
         <Form.Item
           name="password"
           rules={[{ required: true, message: "Please input your Password!" }]}
@@ -60,11 +64,7 @@ export default function LoginForm() {
       </Space>
       <Form.Item>
         <Box className={classes.forgotWrapper}>
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            noStyle
-          >
+          <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>{t("fields.remember")}</Checkbox>
           </Form.Item>
 
@@ -78,7 +78,7 @@ export default function LoginForm() {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" loading={isLoading} block>
           {t("buttons.login")}
         </Button>
       </Form.Item>

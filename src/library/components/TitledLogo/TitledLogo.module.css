@@ -11,6 +11,14 @@
 }
 
 .title {
-  margin: 0 !important;
+  margin: 0!important;
   text-align: center;
 }
+
+/* .title {
+  margin: 0;
+  line-height: 1.23;
+  font-size: 26px;
+  color: #003876;
+  text-align: center;
+} */

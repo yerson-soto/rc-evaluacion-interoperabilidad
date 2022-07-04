@@ -1,2 +1,2 @@
-import SendResetEmail from "./SendResetEmail";
-export { SendResetEmail };
+import SendResetMail from "./SendResetMail";
+export { SendResetMail };
