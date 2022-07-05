@@ -31,4 +31,7 @@ export const paths = {
       reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
     },
   },
+  domains: {
+    index: "dominios",
+  }
 };

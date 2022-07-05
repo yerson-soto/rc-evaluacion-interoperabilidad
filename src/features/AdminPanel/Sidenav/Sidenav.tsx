@@ -11,11 +11,12 @@ import {
   PieChartOutlined,
   FileOutlined,
   TeamOutlined,
-  SlidersOutlined,
+  BuildOutlined,
   AppstoreOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
+import { paths } from '../../../library/common/constants';
 
 interface SidenavProps {
   isCompacted: boolean;
@@ -58,11 +59,7 @@ export default function Sidenav(props: SidenavProps) {
     return [
       getItem("Dashboard", "1", "/", <PieChartOutlined />),
       getItem("Evaluaciones", "2", "/evaluaciones", <BarChartOutlined />),
-      getItem("Medición", "sub1", "/", <SlidersOutlined />, [
-        getItem("Prueba 1", "3", "/"),
-        getItem("Prueba 2", "4", "/"),
-        getItem("Prueba 3", "5", "/"),
-      ]),
+      getItem("Dominios", "3", paths.domains.index, <BuildOutlined />),
       getItem("Equipo", "sub2", "/", <TeamOutlined />, [
         getItem("Team 1", "6", "/"),
         getItem("Team 2", "8", "/"),
