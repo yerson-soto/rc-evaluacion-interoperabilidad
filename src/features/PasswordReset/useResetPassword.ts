@@ -44,7 +44,10 @@ export function useResetPassword() {
         setStatus('success');
         success(t("alerts.reset_password_success"))
       })
-      .catch(() => error(t("alerts.reset_password_failed")));
+      .catch((message) => {
+        setStatus('error');
+        error(t(message))
+      });
 
     setLoading(false)
   };

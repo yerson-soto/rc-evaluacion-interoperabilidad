@@ -1,14 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Button, Col, List, Row, Typography } from "antd";
+import { Button, Col, List, Row, Typography } from "antd";
 import { Evaluation } from "library/models/Evaluation";
 import { Box } from "library/components/Box";
 import { Score } from "library/components/Score";
 
 import classes from "./EvaluationItem.module.css";
-import { ListItem } from "library/components/ListItem";
-import chroma from "chroma-js";
-import { paths } from '../../../library/common/constants';
+
+import { paths } from "library/common/constants";
 
 interface EvaluationItemProps {
   evaluation: Evaluation;
@@ -18,7 +17,7 @@ interface EvaluationItemProps {
 //   const navigate = useNavigate();
 
 //   const colors = chroma.scale(["#f16317", "#e9c320", "#0ba931"]).colors(6);
-  
+
 //   const { uid, organization, dateCreated, score } = evaluation;
 //   const color = colors[Number(score.toFixed())];
 
@@ -35,7 +34,7 @@ interface EvaluationItemProps {
 //         <Button danger>Eliminar</Button>,
 //       ]}
 //     >
-//       <List.Item.Meta 
+//       <List.Item.Meta
 //         avatar={<Avatar size="large" style={{ color: 'white', backgroundColor: color }}>5.0</Avatar>}
 //         title="Evaluacion #4531"
 //         description="17 de enero de 2020"
@@ -50,8 +49,8 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   const { uid, organization, dateCreated, score } = evaluation;
 
   const goToDetail = () => navigate(paths.evaluations.detail.reverse({ uid }));
-  const goToEvaluation = (): void => navigate(paths.evaluations.init.reverse({ uid }));
-  
+  const goToEvaluation = (): void =>
+    navigate(paths.evaluations.init.reverse({ uid }));
 
   return (
     <List.Item
@@ -60,9 +59,11 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="setting" icon={SettingOutlined} />,
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
-        evaluation.score 
-        ? <Button onClick={goToDetail}>Ver</Button> 
-        : <Button onClick={goToEvaluation}>Iniciar</Button>,
+        evaluation.score ? (
+          <Button onClick={goToDetail}>Ver</Button>
+        ) : (
+          <Button onClick={goToEvaluation}>Iniciar</Button>
+        ),
         <Button danger>Eliminar</Button>,
       ]}
     >
@@ -76,9 +77,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
             <Typography.Text className={classes.title}>
               {organization.name}
             </Typography.Text>
-            <Typography.Text>
-              {dateCreated}
-            </Typography.Text>
+            <Typography.Text>{dateCreated}</Typography.Text>
           </Box>
         </Col>
       </Row>

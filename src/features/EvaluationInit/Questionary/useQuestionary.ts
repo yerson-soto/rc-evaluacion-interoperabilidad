@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { CriterionService } from "main/services/CriterionService";
 import { Question } from "library/models/Question";
-import { Choice } from "library/models/Choice";
-import { Criterion } from "library/models/Criterion";
 import { ChangeLevel } from "library/repositories/CriterionRepository";
 
 export function useQuestionary(domainId: number) {
@@ -42,7 +40,7 @@ export function useQuestionary(domainId: number) {
         (question) => question.criterion.id === data.criterionId
       );
 
-      if (questionIdx != -1) {
+      if (questionIdx !== -1) {
         const newQuestions = [...questions];
         newQuestions[questionIdx].response = choice;
         setQuestions(newQuestions);

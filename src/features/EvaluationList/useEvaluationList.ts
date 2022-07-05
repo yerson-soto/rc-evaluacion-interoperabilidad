@@ -1,4 +1,3 @@
-import { useFetchList } from "library/hooks/useFetchList";
 import { EvaluationService } from "main/services/EvaluationService";
 import { useLoadList } from "library/hooks/useLoadList";
 import * as actions from "main/store/slices/evaluationSlice";

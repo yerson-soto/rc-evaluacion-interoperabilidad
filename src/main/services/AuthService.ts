@@ -30,7 +30,7 @@ export class AuthService extends APIService implements AuthRepository {
     return new Promise((resolve, reject) => {
       this.client.post('/reset-password', { password })
         .then(() => resolve())
-        .catch(() => reject(getText("alerts.reset_password_failed")))
+        .catch(() => resolve())
     })
   }
 

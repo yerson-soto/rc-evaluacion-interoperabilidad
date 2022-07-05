@@ -8,7 +8,8 @@
     "reset_password": "Complete el siguiente formulario para restablecer su contraseña",
     "forgot_password": "Ingrese su correo electrónico en el siguiente formulario para enviarle su correo de recuperación.",
     "reset_mail_sent": "Revise su bandeja de entrada. En caso de que su usuario este registrado, verá un correo de recuperación de contraseña.",
-    "reset_password_success": "Su contraseña ha sido restablecida con éxito. Será redirigido para que inicie sesión con sus nuevas credenciales."
+    "reset_password_success": "Su contraseña fue modificada.",
+    "reset_password_redirect": "Será redirigido para que inicie sesión con sus nuevas credenciales ({{ timeLeft }})"
   },
   "dividers": {
     "lineaments": "Lineamientos",
@@ -55,7 +56,7 @@
     "login_failed": "Email o contraseña incorrectos",
     "send_reset_mail_failed": "Introduzca un correo válido",
     "reset_password_failed": "No se ha podido cambiar la contraseña",
-    "reset_password_success": "Contraseña restablecida",
+    "reset_password_success": "Su contraseña ha sido restablecida con éxito",
     "reset_link_invalid": "El enlace de recuperación es inválido o ha expirado"
   },
   "buttons": {

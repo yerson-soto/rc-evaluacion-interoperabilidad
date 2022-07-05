@@ -8,7 +8,6 @@ import { Box } from "library/components/Box";
 import { useEvaluationInit } from "./useEvaluationInit";
 import { withIfDirective } from "library/hocs/withIfDirective";
 import { QuestionaryProps } from "./Questionary/Questionary";
-import { Temporal } from "./Temporal";
 
 const QuestionaryIf = withIfDirective<QuestionaryProps>(Questionary);
 

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "main/store/index";
 import { CommonRepository } from "library/repositories/CommonRepository";
 import { ErrorMessage } from "library/common/types";

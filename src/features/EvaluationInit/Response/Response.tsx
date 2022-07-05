@@ -13,7 +13,7 @@ interface ResponseProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function ResponseProps(props: ResponseProps) {
+export default function Response(props: ResponseProps) {
   const { choice, color, isSelected, onChange } = props;
 
   return (

@@ -1,4 +1,3 @@
-import React from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { Domain } from "library/models/Domain";
 import { LocationState } from "library/common/interfaces";

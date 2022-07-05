@@ -1,25 +1,15 @@
 import React from "react";
-import { Button, Result } from "antd";
+import { Alert } from "antd";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { paths } from "library/common/constants";
+import { useSuccessResult } from "./useSuccessResult";
 
 export default function SuccessResult() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const { timeLeft } = useSuccessResult();
 
-  const goToLogin = () => navigate(paths.auth.login.reverse());
+  const message = t("texts.reset_password_redirect", {
+    timeLeft,
+  });
 
-  return (
-    <Result
-      status="success"
-      title={t("alerts.reset_password_success")}
-      subTitle={t("texts.reset_password_success")}
-      extra={[
-        <Button type="primary" onClick={goToLogin}>
-          {t("links.back_login")}
-        </Button>,
-      ]}
-    />
-  );
+  return <Alert message={message} type="info" showIcon />;
 }

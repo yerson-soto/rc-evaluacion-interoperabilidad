@@ -1,4 +1,3 @@
-import { AxiosInstance } from "axios";
 import { Evaluation } from "library/models/Evaluation";
 import { Response } from "library/common/interfaces";
 import { EvaluationRepository, GetEvaluation } from "library/repositories/EvaluationRepository";
