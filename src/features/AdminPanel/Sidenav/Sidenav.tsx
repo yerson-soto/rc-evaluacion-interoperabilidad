@@ -7,11 +7,12 @@ import classnames from "classnames";
 import classes from "./Sidenav.module.css";
 
 import {
-  BarChartOutlined,
-  PieChartOutlined,
-  FileOutlined,
+  SignalFilled,
+  PieChartFilled,
+  SnippetsFilled,
+  AppstoreFilled,
+  LoginOutlined,
   TeamOutlined,
-  BuildOutlined,
   AppstoreOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
@@ -57,14 +58,14 @@ export default function Sidenav(props: SidenavProps) {
 
   const getItems = (): MenuItem[] => {
     return [
-      getItem("Dashboard", "1", "/", <PieChartOutlined />),
-      getItem("Evaluaciones", "2", "/evaluaciones", <BarChartOutlined />),
-      getItem("Dominios", "3", paths.domains.index, <BuildOutlined />),
+      getItem("Dashboard", "1", "/", <PieChartFilled />),
+      getItem("Evaluaciones", "2", "/evaluaciones", <AppstoreFilled />),
+      getItem("Dominios", "3", paths.domains.index, <SignalFilled />),
       getItem("Equipo", "sub2", "/", <TeamOutlined />, [
         getItem("Team 1", "6", "/"),
         getItem("Team 2", "8", "/"),
       ]),
-      getItem("Manual de Usuario", "9", "/", <FileOutlined />),
+      getItem("Iniciar Sesión", "9", paths.auth.login.reverse(), <LoginOutlined />),
     ];
   };
 
