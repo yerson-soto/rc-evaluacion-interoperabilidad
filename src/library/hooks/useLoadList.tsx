@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "main/store/index";
-import { CommonRepository } from "library/repositories/CommonRepository";
+import { CommonRepository } from "library/api/repositories/CommonRepository";
 import { ErrorMessage } from "library/common/types";
 import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
 import { RootState } from 'main/store/index';

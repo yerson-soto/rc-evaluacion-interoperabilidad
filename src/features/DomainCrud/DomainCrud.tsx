@@ -4,6 +4,7 @@ import {
   Card,
   Drawer,
   List,
+  Modal,
   PageHeader,
   Popconfirm,
   Typography,
@@ -11,7 +12,7 @@ import {
 import { ListItem } from "library/components/ListItem";
 import { useDomainList } from "../EvaluationInit/DomainList/useDomainList";
 
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, UserOutlined, EyeOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -128,6 +129,8 @@ import {
 } from "@ant-design/icons";
 import { Box } from "library/components/Box";
 import { Domain } from "library/models/Domain";
+import AppDrawer from '../../library/components/AppDrawer/AppDrawer';
+import { AddDomain } from "./AddDomain";
 
 interface DataType {
   key: React.Key;
@@ -163,6 +166,7 @@ const columns: ColumnsType<Domain> = [
     // here is that finding the name started with `value`
     onFilter: (value, record) => record.name.indexOf(value as string) === 0,
     sorter: (a, b) => a.name.length - b.name.length,
+    render: (name) => <DetailAction text={name} />
     // sortDirections: ["descend"],
   },
   {
@@ -188,6 +192,7 @@ const columns: ColumnsType<Domain> = [
     render(_, record) {
       return (
         <Space>
+          {/* <EyeOutlined /> */}
           <EditAction />
           <DeleteAction />
         </Space>
@@ -212,6 +217,38 @@ const DeleteAction = () => (
     ></Button>
   </Popconfirm>
 );
+
+const DetailAction = ({ text }: { text: string }) => {
+  const [visible, setVisible] = useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
+  return (
+    <React.Fragment>
+      <a onClick={showModal}>{text}</a>
+      {/* <Button
+        size="small"
+        type="link"
+        shape="round"
+        icon={<EyeOutlined />}
+        onClick={showModal}
+      ></Button> */}
+
+            <Modal title="Basic Modal" visible={visible} onOk={() => {}} onCancel={onClose}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+    </React.Fragment>
+  );
+};
+
 
 const EditAction = () => {
   const [visible, setVisible] = useState(false);
@@ -252,6 +289,9 @@ const EditAction = () => {
 const App: React.FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
+  const [visible, setVisible] = useState(false);
+
+
   const { domains, isLoading } = useDomainList();
 
   const domainsWithKey = domains.map((domain, key) => ({ key, ...domain }));
@@ -261,6 +301,15 @@ const App: React.FC = () => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const closeDrawer = () => {
+    setVisible(false);
+  };
+  
   const onChange: TableProps<Domain>["onChange"] = (
     pagination,
     filters,
@@ -334,12 +383,8 @@ const App: React.FC = () => {
           </Box>
 
           <Space direction="horizontal">
-            <Button shape="round" block icon={<PlusOutlined />}>
-              Crear
-            </Button>
-            <Button shape="round" block icon={<ExportOutlined />}>
-              Exportar
-            </Button>
+            <Button shape="round" block icon={<ExportOutlined />} ></Button>
+            <Button type="primary" shape="round" block icon={<PlusOutlined />} onClick={showDrawer}></Button>
           </Space>
         </Box>
       </Card>
@@ -373,22 +418,32 @@ const App: React.FC = () => {
         </Form>
       </Card> */}
 
-      <Card bodyStyle={{ paddingLeft: 16, paddingTop: 0, paddingRight: 16, paddingBottom: 16 }}>
+      <Card
+        bodyStyle={{
+          paddingLeft: 16,
+          paddingTop: 16,
+          paddingRight: 16,
+          paddingBottom: 16,
+        }}
+      >
         <Table
           loading={isLoading}
           rowSelection={rowSelection}
           columns={columns}
           dataSource={domainsWithKey}
           onChange={onChange}
+          sticky
           pagination={{
             pageSize: 25,
-            style: { 
-              position: 'sticky',
-              bottom: 0
-            }
+            style: {
+              position: "sticky",
+              bottom: 0,
+            },
           }}
         />
       </Card>
+
+      <AddDomain show={visible} onCancel={closeDrawer} onCreate={() => {}}/>
     </React.Fragment>
   );
 };

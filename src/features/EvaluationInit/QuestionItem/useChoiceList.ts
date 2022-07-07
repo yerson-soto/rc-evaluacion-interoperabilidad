@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Choice } from "library/models/Choice";
-import { ChoiceService } from "main/services/ChoiceService";
+import { ChoiceService } from "library/api/services/ChoiceService";
 
 
 // TODO: Remove this

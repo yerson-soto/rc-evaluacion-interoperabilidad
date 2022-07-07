@@ -1,14 +1,15 @@
 import { Domain } from "library/models/Domain";
-import { DomainRepository } from "library/repositories/DomainRepository";
-import { GetDomain } from "library/repositories/DomainRepository";
+import { DomainRepository } from "library/api/repositories/DomainRepository";
+import { GetDomain } from "library/api/repositories/DomainRepository";
 import { APIService } from './ApiService';
-import { Response } from "library/common/interfaces";
+import { APIResponse } from "library/common/interfaces";
 import capitalize from 'library/helpers/capitalize';
+import createSlug from "library/helpers/create-slug";
 
 export class DomainService extends APIService implements DomainRepository {
   getAll(): Promise<Domain[]> {
     return new Promise((resolve, reject) => {
-      this.client.get<Response<GetDomain[]>>('/domains')
+      this.client.get<APIResponse<GetDomain[]>>('/domains')
         .then(res => {
           const domains = res.data.result.map(this.mapResult.bind(this))
           resolve(domains);
@@ -23,12 +24,8 @@ export class DomainService extends APIService implements DomainRepository {
     return {
       id: result.id,
       name: 'Dominio ' + name,
-      slug: this.createSlug(name)
+      slug: createSlug(name)
     };
-  }
-
-  createSlug(name: string): string {
-    return name.replaceAll(' ', '-').toLowerCase()
   }
 
   cleanName(name: string): string {
@@ -36,3 +33,7 @@ export class DomainService extends APIService implements DomainRepository {
     return capitalize(domainName);
   }
 }
+
+
+
+

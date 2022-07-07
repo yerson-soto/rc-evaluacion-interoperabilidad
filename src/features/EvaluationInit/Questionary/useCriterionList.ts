@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Criterion } from "library/models/Criterion";
-import { CriterionService } from "main/services/CriterionService";
+import { CriterionService } from "library/api/services/CriterionService";
 
 
 export function useCriterionList(domainId: number) {

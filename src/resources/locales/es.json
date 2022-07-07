@@ -1,6 +1,7 @@
 {
   "headings": {
-    "complete_evaluation": "Completar Evaluación"
+    "complete_evaluation": "Completar Evaluación",
+    "create_domain": "Crear nuevo dominio"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -17,39 +18,31 @@
     "justification": "Justificación",
     "next_steps": "Pasos a seguir"
   },
-  "hints": {
-    "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion."
-  },
   "placeholders": {
-    "first_name": "What's your firstname?",
-    "last_name": "What's your lastname",
-    "username": "Introduce your username",
-    "email": "Your e-mail address",
-    "phone_number": "Your phone number",
-    "password": "Your password",
-    "confirm_pass": "Confirm your password",
-    "bio": "Short description about you",
-    "job_title": "Job Title",
-    "salary": "Salary",
-    "work_schedule": "Work Schedule",
-    "category": "Category",
-    "image_field": "Supports: JPG, PNG, GIF"
+    "domain": "Título del dominio",
+    "slug": "Identificador del dominio"
   },
   "fields": {
     "username": "Nombre de usuario",
     "password": "Contraseña",
     "email": "Correo electrónico",
     "confirm_password": "Confirmar contraseña",
-    "remember": "Recuérdame"
+    "remember": "Recuérdame",
+    "domain": "Dominio",
+    "slug": "Slug"
+  },
+  "rules": {
+    "required": "{{ field }} es un campo obligatorio!",
+    "min_length": "{{ field }} must be at least {{ length }} characters",
+    "match_password": "Passwords must match"
+  },
+  "hints": {
+    "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.",
+    "slug": "Este texto se utiliza como identificador legible del dominio."
   },
   "pagination": {
     "evaluations": "Evaluación(es)",
     "domains": "Dominio(s)"
-  },
-  "errors": {
-    "required": "{{ field }} is required",
-    "min_length": "{{ field }} must be at least {{ length }} characters",
-    "match_password": "Passwords must match"
   },
   "alerts": {
     "page_not_found": "Lo sentimos, la página que visitaste no existe",
@@ -65,7 +58,9 @@
     "login": "Iniciar Sesión",
     "send_reset_email": "Enviar Correo",
     "reset_password": "Restablecer",
-    "resend_mail": "Reenviar correo"
+    "resend_mail": "Reenviar correo",
+    "create": "Crear",
+    "save": "Guardar"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",

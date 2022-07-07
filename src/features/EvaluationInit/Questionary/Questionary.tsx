@@ -11,6 +11,7 @@ import classes from "./Questionary.module.css";
 import { useQuestionary } from "./useQuestionary";
 import { Question } from "library/models/Question";
 import { Choice } from "library/models/Choice";
+import { AppDrawer } from "library/components/AppDrawer";
 
 // const fakeData: Criterion[] = [
 //   {
@@ -79,16 +80,11 @@ export interface QuestionaryProps {
   onCloseEnd: () => void;
 }
 
-interface QuestionaryParams {
-  uid: string;
-}
-
 export default function Questionary(props: QuestionaryProps) {
   const [score, setScore] = useState<CriterionScore>([]);
   const [current, setCurrent] = useState(1);
 
   const { uid } = useParams<Record<"uid", string>>();
-  const { md: isDesktop } = useBreakpoint();
   const { isOpen, domain, onClose, onCloseEnd } = props;
   const { isLoading, questions, changeResponse } = useQuestionary(domain.id);
 
@@ -101,13 +97,12 @@ export default function Questionary(props: QuestionaryProps) {
   }, []);
 
   const onResponseChange = (criterion: Criterion, choice: Choice): void => {
-
     changeResponse({
       evaluationInstitutionalId: uid as string,
       criterionId: criterion.id,
-      responsesId: choice.id
-    })
-    
+      responsesId: choice.id,
+    });
+
     const newScore = {
       ...score,
       [criterion.id]: choice.level.value,
@@ -147,11 +142,10 @@ export default function Questionary(props: QuestionaryProps) {
   };
 
   return (
-    <Drawer
+    <AppDrawer
       title={domain.name}
       placement="right"
       visible={isOpen}
-      width={isDesktop ? "500" : "100%"}
       extra={<Badge status="processing" text={getScore()} />}
       onClose={() => onClose(domain)}
       afterVisibleChange={onVisibilityChange}
@@ -184,13 +178,15 @@ export default function Questionary(props: QuestionaryProps) {
           <QuestionItem
             key={question.criterion.id}
             question={question}
-            onLevelChange={(choice) => onResponseChange(question.criterion, choice)}
+            onLevelChange={(choice) =>
+              onResponseChange(question.criterion, choice)
+            }
             onEvidenceDelete={() => {}}
             onEvidenceAdd={() => {}}
             number={current}
           />
         )}
       />
-    </Drawer>
+    </AppDrawer>
   );
 }

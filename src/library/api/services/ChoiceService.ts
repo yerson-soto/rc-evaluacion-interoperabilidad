@@ -1,15 +1,15 @@
 import { Choice } from "library/models/Choice";
-import { ChoiceRepository } from "library/repositories/ChoiceRepository";
-import { GetChoice } from "library/repositories/ChoiceRepository";
+import { ChoiceRepository } from "library/api/repositories/ChoiceRepository";
+import { GetChoice } from "library/api/repositories/ChoiceRepository";
 import { APIService } from "./ApiService";
-import { Response } from "library/common/interfaces";
+import { APIResponse } from "library/common/interfaces";
 
 
 export class ChoiceService extends APIService implements ChoiceRepository {
   getByCriterion(criterionId: number): Promise<Choice[]> {
     return new Promise((resolve, reject) => {
       this.client
-        .get<Response<GetChoice[]>>(`/responses/${criterionId}`)
+        .get<APIResponse<GetChoice[]>>(`/responses/${criterionId}`)
         .then((res) => {
           console.log("res", res.data);
           const choiceList = res.data.result;

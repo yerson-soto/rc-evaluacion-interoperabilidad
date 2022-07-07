@@ -1,5 +1,5 @@
 import { useAppDispatch } from 'main/store/index';
-import { EvaluationService } from 'main/services/EvaluationService';
+import { EvaluationService } from 'library/api/services/EvaluationService';
 import { evaluationCreated, evaluationNotCreated } from "main/store/slices/evaluationSlice";
 
 export function useAddEvaluation() {

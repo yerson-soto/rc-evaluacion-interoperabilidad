@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Organization } from "library/models/Organization";
-import { OrganizationService } from "main/services/OrganizationService";
+import { OrganizationService } from "library/api/services/OrganizationService";
 import { useFetchList } from 'library/hooks/useFetchList';
 
 export function useOrganizationList() {

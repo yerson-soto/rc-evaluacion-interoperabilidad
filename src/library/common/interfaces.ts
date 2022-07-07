@@ -1,6 +1,6 @@
 import { Location } from "react-router-dom";
 
-export interface Response<T> {
+export interface APIResponse<T> {
   result: T;
   message: string;
   isSuccess: boolean;

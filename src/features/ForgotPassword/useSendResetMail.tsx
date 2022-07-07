@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AuthService } from "main/services/AuthService";
+import { AuthService } from "library/api/services/AuthService";
 import { Button } from "antd";
 import { useTranslation } from "react-i18next";
 import { SendResetMail } from "./SendResetEmail";

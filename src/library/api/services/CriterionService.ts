@@ -1,15 +1,15 @@
 import { Criterion } from "library/models/Criterion";
-import { ChangeLevel, CriterionRepository, GetChoice } from "library/repositories/CriterionRepository";
-import { GetCriterion } from "library/repositories/CriterionRepository";
+import { ChangeLevel, CriterionRepository, GetChoice } from "library/api/repositories/CriterionRepository";
+import { GetCriterion } from "library/api/repositories/CriterionRepository";
 import { APIService } from "./ApiService";
-import { Response } from "library/common/interfaces";
+import { APIResponse } from "library/common/interfaces";
 import { Choice } from "library/models/Choice";
 
 export class CriterionService extends APIService implements CriterionRepository {
   getByDomain(domainId: number): Promise<Criterion[]> {
     return new Promise((resolve, reject) => {
       this.client
-        .get<Response<GetCriterion[]>>(`/criterions/${domainId}`)
+        .get<APIResponse<GetCriterion[]>>(`/criterions/${domainId}`)
         .then((res) => {
           const criterions = res.data.result.map(this.mapResult.bind(this));
           resolve(criterions);
@@ -20,7 +20,7 @@ export class CriterionService extends APIService implements CriterionRepository 
 
   changeLevel(data: ChangeLevel): Promise<Choice> {
     return new Promise((resolve, reject) => {
-      this.client.post<Response<GetChoice>>('/evaluationtechnics', data)
+      this.client.post<APIResponse<GetChoice>>('/evaluationtechnics', data)
         .then(res => {
           const choice: Choice = this.mapChoice(res.data.result);
           resolve(choice);

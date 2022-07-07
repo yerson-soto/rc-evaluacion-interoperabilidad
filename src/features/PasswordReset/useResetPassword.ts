@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useSearchParams } from 'react-router-dom';
-import { AuthService } from "main/services/AuthService";
+import { AuthService } from "library/api/services/AuthService";
 import { useTranslation } from 'react-i18next';
 
 type Status = 'initial' | 'success' | 'error' | 'forbidden';

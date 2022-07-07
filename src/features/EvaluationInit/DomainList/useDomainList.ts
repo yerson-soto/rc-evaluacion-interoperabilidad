@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Domain } from "library/models/Domain";
-import { DomainService } from "main/services/DomainService";
+import { DomainService } from "library/api/services/DomainService";
 import { useFetchList } from 'library/hooks/useFetchList';
 
 export function useDomainList() {

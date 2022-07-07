@@ -1,4 +1,4 @@
-import { EvaluationService } from "main/services/EvaluationService";
+import { EvaluationService } from "library/api/services/EvaluationService";
 import { useLoadList } from "library/hooks/useLoadList";
 import * as actions from "main/store/slices/evaluationSlice";
 

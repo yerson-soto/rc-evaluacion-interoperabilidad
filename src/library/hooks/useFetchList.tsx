@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { CommonRepository } from "library/repositories/CommonRepository";
+import { CommonRepository } from "library/api/repositories/CommonRepository";
 
 interface UseFetchListParams<T> {
   service: new () => CommonRepository<T>;

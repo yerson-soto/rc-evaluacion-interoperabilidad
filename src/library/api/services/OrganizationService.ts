@@ -1,6 +1,6 @@
 import { APIService } from './ApiService';
-import { Response } from "library/common/interfaces";
-import { GetOrganization, OrganizationRepository } from 'library/repositories/OrganizationRepository';
+import { APIResponse } from "library/common/interfaces";
+import { GetOrganization, OrganizationRepository } from 'library/api/repositories/OrganizationRepository';
 import { Organization } from "library/models/Organization";
 
 export class OrganizationService extends APIService implements OrganizationRepository {
@@ -8,7 +8,7 @@ export class OrganizationService extends APIService implements OrganizationRepos
   // TODO: DRY
   getAll(): Promise<Organization[]> {
     return new Promise((resolve, reject) => {
-      this.client.get<Response<GetOrganization[]>>('/institutions')
+      this.client.get<APIResponse<GetOrganization[]>>('/institutions')
         .then(res => {
           const domains = res.data.result.map(this.mapResult)
           resolve(domains);

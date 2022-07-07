@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "main/store/index";
-import { AuthService } from "main/services/AuthService";
+import { AuthService } from "library/api/services/AuthService";
 import { authLoading, loginDone, loginFailed } from "main/store/slices/authSlice";
 
 export function useLogin() {

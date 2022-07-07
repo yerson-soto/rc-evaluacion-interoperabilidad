@@ -1,14 +1,14 @@
 import { Evaluation } from "library/models/Evaluation";
-import { Response } from "library/common/interfaces";
-import { EvaluationRepository, GetEvaluation } from "library/repositories/EvaluationRepository";
-import { GetPaginatedEvaluation } from 'library/repositories/EvaluationRepository';
+import { APIResponse } from "library/common/interfaces";
+import { EvaluationRepository, GetEvaluation } from "library/api/repositories/EvaluationRepository";
+import { GetPaginatedEvaluation } from 'library/api/repositories/EvaluationRepository';
 import { APIService } from './ApiService';
 
 export class EvaluationService extends APIService implements EvaluationRepository  {
   
   getAll(): Promise<Evaluation[]> { 
     return new Promise((resolve, reject) => {
-      this.client.get<Response<GetPaginatedEvaluation>>('/evaluationsinstitutional/1/25')
+      this.client.get<APIResponse<GetPaginatedEvaluation>>('/evaluationsinstitutional/1/25')
         .then(res => {
           const results = res.data.result.evaluations;
           const evaluations = results.map(this.mapResult);
@@ -20,7 +20,7 @@ export class EvaluationService extends APIService implements EvaluationRepositor
 
   createNew(organization: number): Promise<Evaluation> {
     return new Promise((resolve, reject) => {
-      this.client.post<Response<GetEvaluation>>('/evaluationsinstitutional', {
+      this.client.post<APIResponse<GetEvaluation>>('/evaluationsinstitutional', {
         organismoId: organization
       })
         .then(res => {
