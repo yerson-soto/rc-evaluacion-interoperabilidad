@@ -1,32 +1,31 @@
 import { Domain } from "library/models/Domain";
-import { GetDomain } from "library/api/repositories/DomainRepository";
+import { GetDomain, CreateDomain } from "library/api/dto/domain-dto";
+import { Mapper } from "library/common/interfaces";
+import { AddDomainSchema } from "features/DomainCrud/AddDomain/AddDomainSchema";
 import createSlug from "library/helpers/create-slug";
 import capitalize from "library/helpers/capitalize";
 
-export class DomainMapper {
-  static fromAPI(result: GetDomain): Domain {
-    const domainName = result.description
-      .toLowerCase()
-      .replace("dominio", "")
-      .trim();
-    const name = capitalize(domainName);
+export class DomainMapper
+  implements Mapper<Domain, GetDomain, CreateDomain, AddDomainSchema>
+{
+  cleanName(name: string): string {
+    const domainName = name.toLowerCase().replace("dominio", "").trim();
+    return capitalize(domainName);
+  }
+
+  formSchemaToAPI(schema: AddDomainSchema): CreateDomain {
+    return {
+      description: schema.name,
+    };
+  }
+
+  fromAPI(data: GetDomain): Domain {
+    const name = this.cleanName(data.description);
 
     return {
-      id: result.id,
+      id: data.id,
       name: "Dominio " + name,
       slug: createSlug(name),
     };
-  }
-
-  static toAPI(domain: Domain): GetDomain {
-    return {
-      id: domain.id,
-      description: domain.name,
-    };
-  }
-
-  static cleanName(name: string): string {
-    const domainName = name.toLowerCase().replace("dominio", "").trim();
-    return capitalize(domainName);
   }
 }

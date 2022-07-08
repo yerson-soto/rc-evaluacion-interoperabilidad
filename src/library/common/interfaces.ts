@@ -15,3 +15,8 @@ export interface CommonState {
 export interface LocationState<T> extends Location {
   state: T;
 }
+
+export interface Mapper<Model, APIReceivedData, APISentData, FormSchema> {
+  formSchemaToAPI: (schema: FormSchema) => APISentData;
+  fromAPI: (data: APIReceivedData) => Model;
+}

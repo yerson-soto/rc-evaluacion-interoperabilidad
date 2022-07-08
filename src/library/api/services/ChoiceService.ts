@@ -1,11 +1,11 @@
 import { Choice } from "library/models/Choice";
 import { ChoiceRepository } from "library/api/repositories/ChoiceRepository";
-import { GetChoice } from "library/api/repositories/ChoiceRepository";
-import { APIService } from "./ApiService";
+import { AbstractAPIService } from "./AbstractApiService";
 import { APIResponse } from "library/common/interfaces";
+import { GetChoice } from "library/api/dto/choice-dto";
 
 
-export class ChoiceService extends APIService implements ChoiceRepository {
+export class ChoiceService extends AbstractAPIService implements ChoiceRepository {
   getByCriterion(criterionId: number): Promise<Choice[]> {
     return new Promise((resolve, reject) => {
       this.client

@@ -4,7 +4,7 @@ export const backend = axios.create({
   baseURL: 'https://c1491/Evaluacion_Institucional'
 })
 
-export abstract class APIService {
+export abstract class AbstractAPIService {
   protected client!: AxiosInstance;
   
   constructor() {

@@ -1,9 +1,10 @@
-import { APIService } from './ApiService';
+import { AbstractAPIService } from './AbstractApiService';
 import { APIResponse } from "library/common/interfaces";
-import { GetOrganization, OrganizationRepository } from 'library/api/repositories/OrganizationRepository';
+import { OrganizationRepository } from 'library/api/repositories/OrganizationRepository';
 import { Organization } from "library/models/Organization";
+import { GetOrganization } from 'library/api/dto/organization-dto';
 
-export class OrganizationService extends APIService implements OrganizationRepository {
+export class OrganizationService extends AbstractAPIService implements OrganizationRepository {
   
   // TODO: DRY
   getAll(): Promise<Organization[]> {

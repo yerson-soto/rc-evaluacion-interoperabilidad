@@ -1,11 +1,6 @@
 import { CommonRepository } from "./CommonRepository";
 import { Organization } from "library/models/Organization";
-
-export interface GetOrganization {
-  id: number;
-  name: string;
-  acroyn: string;
-}
+import { GetOrganization } from "library/api/dto/organization-dto";
 
 export interface OrganizationRepository extends CommonRepository<Organization> {
   mapResult: (result: GetOrganization) => Organization;

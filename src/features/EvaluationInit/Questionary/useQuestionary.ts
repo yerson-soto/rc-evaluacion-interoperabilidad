@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CriterionService } from "library/api/services/CriterionService";
 import { Question } from "library/models/Question";
-import { ChangeLevel } from "library/api/repositories/CriterionRepository";
+import { ChangeLevel } from "library/api/dto/criterion-dto";
 
 export function useQuestionary(domainId: number) {
   const [questions, setQuestions] = useState<Question[]>([]);

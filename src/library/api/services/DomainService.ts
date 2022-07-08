@@ -1,39 +1,29 @@
 import { Domain } from "library/models/Domain";
-import { DomainRepository } from "library/api/repositories/DomainRepository";
-import { GetDomain } from "library/api/repositories/DomainRepository";
-import { APIService } from './ApiService';
-import { APIResponse } from "library/common/interfaces";
-import capitalize from 'library/helpers/capitalize';
-import createSlug from "library/helpers/create-slug";
+import { GetDomain, CreateDomain } from "library/api/dto/domain-dto";
+import { AbstractCrudService } from "./AbstractCrudService";
+import { DomainMapper } from "library/api/mappers/DomainMapper";
+import { AddDomainSchema } from "features/DomainCrud/AddDomain/AddDomainSchema";
 
-export class DomainService extends APIService implements DomainRepository {
-  getAll(): Promise<Domain[]> {
-    return new Promise((resolve, reject) => {
-      this.client.get<APIResponse<GetDomain[]>>('/domains')
-        .then(res => {
-          const domains = res.data.result.map(this.mapResult.bind(this))
-          resolve(domains);
-        })
-        .catch(() => reject('No se pudo cargar los dominios'))
-    });
-  }
+export class DomainService extends AbstractCrudService<
+  Domain,
+  GetDomain,
+  CreateDomain,
+  AddDomainSchema
+> {
+  mapper: DomainMapper;
+  getAllUrl: string;
+  getByIdUrl: string;
+  createUrl: string;
+  editUrl: string;
+  deleteUrl: string;
 
-  mapResult(result: GetDomain): Domain {
-    const name = this.cleanName(result.description);
-    
-    return {
-      id: result.id,
-      name: 'Dominio ' + name,
-      slug: createSlug(name)
-    };
-  }
-
-  cleanName(name: string): string {
-    const domainName = name.toLowerCase().replace('dominio', '').trim();
-    return capitalize(domainName);
+  constructor() {
+    super();
+    this.mapper = new DomainMapper();
+    this.getAllUrl = "/domains";
+    this.getByIdUrl = "/domains";
+    this.createUrl = "";
+    this.editUrl = "";
+    this.deleteUrl = "";
   }
 }
-
-
-
-
