@@ -1,20 +1,34 @@
-import { AbstractCrudService } from "../api/services/AbstractCrudService";
+import { Slice } from "@reduxjs/toolkit";
+import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
+import { CrudCaseReducers, CrudState } from "library/common/interfaces";
+import { CrudRepository } from "library/api/repositories/CrudRepository";
 
-interface CreateAction<T, Post, Get, FormSchema> {
-  service: new () => AbstractCrudService<T, Get, Post, FormSchema>;
+interface CreateAction<T, State extends CrudState<T>, FormSchema> {
+  service: new () => CrudRepository<T, FormSchema>;
+  reducer: Slice<State, CrudCaseReducers<T, State>>;
+  loadingSelector: (state: RootState) => boolean;
 }
 
-export function useCreateAction<T, Get, Post, FormSchema>({
+export function useCreateAction<T, State extends CrudState<T>, FormSchema>({
   service: Service,
-}: CreateAction<T, Get, Post, FormSchema>) {
+  loadingSelector,
+  reducer,
+}: CreateAction<T, State, FormSchema>) {
+  const isLoading = useAppSelector(loadingSelector);
+  const dispatch = useAppDispatch();
   const service = new Service();
 
   const create = (data: FormSchema): void => {
-
+    console.log(data);
+    dispatch(reducer.actions.setLoading(true));
     
-    // service.create(data)
-    //   .then(result => )
+    service.create(data).then(result => {
+      dispatch(reducer.actions.createSuccess(result))
+    })
+    .catch((message) => {
+      dispatch(reducer.actions.createFailed(message))
+    })  
   };
 
-  return { create };
+  return { isLoading, create };
 }

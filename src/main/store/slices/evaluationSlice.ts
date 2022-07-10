@@ -53,5 +53,3 @@ export const {
   evaluationCreated,
   evaluationNotCreated
 } = evaluationSlice.actions;
-
-export default evaluationSlice.reducer;

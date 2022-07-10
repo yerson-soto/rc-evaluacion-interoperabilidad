@@ -1,4 +1,6 @@
+import { CaseReducer, PayloadAction, SliceCaseReducers } from "@reduxjs/toolkit";
 import { Location } from "react-router-dom";
+import { ErrorMessage } from "./types";
 
 export interface APIResponse<T> {
   result: T;
@@ -10,6 +12,22 @@ export interface CommonState {
   isLoading: boolean;
   hasError: boolean;
   errorMessage: string;
+}
+
+export interface CrudState<T> extends CommonState {
+  results: T[];
+}
+
+export interface CrudCaseReducers<T, State extends CrudState<T>> extends SliceCaseReducers<State> {
+  setLoading: CaseReducer<State, PayloadAction<boolean>>;
+  getSuccess: CaseReducer<State, PayloadAction<T[]>>;
+  getFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
+  createSuccess: CaseReducer<State, PayloadAction<T>>;
+  createFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
+  editSuccess: CaseReducer<State, PayloadAction<T>>;
+  editFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
+  deleteSuccess: CaseReducer<State, PayloadAction<T>>;
+  deleteFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
 }
 
 export interface LocationState<T> extends Location {

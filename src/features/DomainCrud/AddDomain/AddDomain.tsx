@@ -8,6 +8,7 @@ import createSlug from "library/helpers/create-slug";
 
 interface AddDomainProps {
   show: boolean;
+  isLoading: boolean;
   onCreate: (values: AddDomainSchema) => void;
   onCancel: () => void;
 }

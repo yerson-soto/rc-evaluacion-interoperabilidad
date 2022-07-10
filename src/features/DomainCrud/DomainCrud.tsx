@@ -17,6 +17,9 @@ import { Form, Input } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Domain } from 'library/models/Domain'
+
+
 // const data = Array.from({
 //   length: 23,
 // }).map((_, i) => ({
@@ -128,9 +131,14 @@ import {
   ExportOutlined,
 } from "@ant-design/icons";
 import { Box } from "library/components/Box";
-import { Domain } from "library/models/Domain";
+
 import AppDrawer from '../../library/components/AppDrawer/AppDrawer';
 import { AddDomain } from "./AddDomain";
+import { useCreateAction } from '../../library/hooks/useCreateAction';
+import { domainSlice, DomainState } from '../../main/store/slices/domainSlice';
+import { GetDomain, CreateDomain } from '../../library/api/dto/domain-dto';
+import { AddDomainSchema } from './AddDomain/AddDomainSchema';
+import { DomainService } from '../../library/api/services/DomainService';
 
 interface DataType {
   key: React.Key;
@@ -139,6 +147,30 @@ interface DataType {
   address: string;
   actions: React.ReactNode;
 }
+
+const domains: Domain[] = [
+  {
+    id: 1,
+    name: "Organizacional",
+    slug: 'organizacional'
+  },
+  {
+    id: 2,
+    name: "Semantico",
+    slug: 'semantico'
+  },
+  {
+    id: 3,
+    name: "Politico Legal",
+    slug: 'politico-legal'
+  },
+  {
+    id: 4,
+    name: "Semantico Legal",
+    slug: 'semantico-legal'
+  },
+];
+
 
 const columns: ColumnsType<Domain> = [
   // {
@@ -240,7 +272,7 @@ const DetailAction = ({ text }: { text: string }) => {
         onClick={showModal}
       ></Button> */}
 
-            <Modal title="Basic Modal" visible={visible} onOk={() => {}} onCancel={onClose}>
+      <Modal title="Basic Modal" visible={visible} onOk={() => { }} onCancel={onClose}>
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
@@ -288,11 +320,15 @@ const EditAction = () => {
 
 const App: React.FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
   const [visible, setVisible] = useState(false);
 
+  // const { domains, isLoading } = useDomainList();
 
-  const { domains, isLoading } = useDomainList();
+  const { create, isLoading } = useCreateAction<Domain, DomainState, AddDomainSchema>({
+    loadingSelector: (state) => state.domains.isLoading,
+    service: DomainService,
+    reducer: domainSlice
+  });
 
   const domainsWithKey = domains.map((domain, key) => ({ key, ...domain }));
 
@@ -301,7 +337,6 @@ const App: React.FC = () => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
-
   const showDrawer = () => {
     setVisible(true);
   };
@@ -309,7 +344,7 @@ const App: React.FC = () => {
   const closeDrawer = () => {
     setVisible(false);
   };
-  
+
   const onChange: TableProps<Domain>["onChange"] = (
     pagination,
     filters,
@@ -427,7 +462,7 @@ const App: React.FC = () => {
         }}
       >
         <Table
-          loading={isLoading}
+          loading={false}
           rowSelection={rowSelection}
           columns={columns}
           dataSource={domainsWithKey}
@@ -443,7 +478,12 @@ const App: React.FC = () => {
         />
       </Card>
 
-      <AddDomain show={visible} onCancel={closeDrawer} onCreate={() => {}}/>
+      <AddDomain 
+        show={visible} 
+        isLoading={isLoading} 
+        onCancel={closeDrawer} 
+        onCreate={create} 
+      />
     </React.Fragment>
   );
 };

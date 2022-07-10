@@ -14,7 +14,7 @@ const initialState: AuthState = {
   errorMessage: "",
 };
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -36,5 +36,3 @@ const authSlice = createSlice({
 });
 
 export const { authLoading, loginDone, loginFailed } = authSlice.actions;
-
-export default authSlice.reducer;
