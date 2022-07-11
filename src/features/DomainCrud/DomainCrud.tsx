@@ -482,8 +482,8 @@ const App: React.FC = () => {
       <AddDomain
         show={visible}
         isLoading={isLoading}
-        onCancel={closeDrawer}
-        onCreate={create}
+        onHide={closeDrawer}
+        onSave={create}
       />
     </React.Fragment>
   );

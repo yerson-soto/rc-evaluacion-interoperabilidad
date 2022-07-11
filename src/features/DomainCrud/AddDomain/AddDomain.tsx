@@ -9,19 +9,20 @@ import createSlug from "library/helpers/create-slug";
 interface AddDomainProps {
   show: boolean;
   isLoading: boolean;
-  onCreate: (values: AddDomainSchema) => void;
-  onCancel: () => void;
+  defaults?: AddDomainSchema;
+  onSave: (values: AddDomainSchema) => void;
+  onHide: () => void;
 }
 
 export default function AddDomain(props: AddDomainProps) {
   const [form] = Form.useForm<AddDomainSchema>();
-  const { show, onCancel, onCreate } = props;
+  const { show, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
   const onFinish = () => {
     form.validateFields().then((values) => {
-      form.resetFields();
-      onCreate(values);
+      onSave(values);
+      onHide();
     });
   };
 
@@ -38,11 +39,15 @@ export default function AddDomain(props: AddDomainProps) {
     <AppDrawer
       title={t("headings.create_domain")}
       placement="right"
-      onClose={onCancel}
+      onClose={onHide}
       visible={show}
       onCloseEnd={handleCloseEnd}
       extra={
-        <Button type="primary" onClick={onFinish}>
+        <Button 
+          type="primary" 
+          onClick={onFinish} 
+          loading={isLoading}
+        >
           {t("buttons.create")}
         </Button>
       }
@@ -52,6 +57,7 @@ export default function AddDomain(props: AddDomainProps) {
         name="create_domain"
         size="large"
         onFinish={onFinish}
+        initialValues={defaults}
         layout="vertical"
       >
         <Form.Item

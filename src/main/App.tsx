@@ -14,6 +14,7 @@ import { PasswordReset } from "features/PasswordReset";
 import { ForgotPassword } from "features/ForgotPassword";
 import { NotFound } from "features/NotFound";
 import { DomainCrud } from "features/DomainCrud";
+import Crud from '../library/components/Crud/Crud';
 
 function App() {
   const basename = process.env.PUBLIC_URL;
@@ -48,7 +49,7 @@ function App() {
               />
             </Route>
 
-            <Route path={paths.domains.index} element={<DomainCrud />} />
+            <Route path={paths.domains.index} element={<Crud />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

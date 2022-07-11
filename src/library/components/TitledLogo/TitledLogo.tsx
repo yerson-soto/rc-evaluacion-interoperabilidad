@@ -9,7 +9,7 @@ export default function TitledLogo() {
     <Space direction="vertical" size="middle" align="center">
       <Logo className={classes.logo} />
       <Typography.Title level={2} className={classes.title}>
-        Ant Design
+        MMI
       </Typography.Title>
     </Space>
   );

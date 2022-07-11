@@ -19,7 +19,6 @@ export function useCreateAction<T, State extends CrudState<T>, FormSchema>({
   const service = new Service();
 
   const create = (data: FormSchema): void => {
-    console.log(data);
     dispatch(reducer.actions.setLoading(true));
     
     service.create(data).then(result => {

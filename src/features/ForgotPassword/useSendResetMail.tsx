@@ -29,7 +29,7 @@ export function useSendResetMail() {
     await authService
       .sendResetLink(email)
       .then(() => setSent(true))
-      .catch(() => setSent(true));
+      .catch(() => setSent(false));
 
     start();
     setLoading(false);

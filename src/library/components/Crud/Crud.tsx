@@ -14,9 +14,9 @@ import { ListItem } from "library/components/ListItem";
 import { LockOutlined, UserOutlined, EyeOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { Domain } from 'library/models/Domain'
+import { Domain } from "library/models/Domain";
 
 import React, { useState } from "react";
 import { Button, Space, Table } from "antd";
@@ -30,10 +30,16 @@ import {
 } from "@ant-design/icons";
 import { Box } from "library/components/Box";
 
-import AppDrawer from 'library/components/AppDrawer/AppDrawer';
-import { useCreateAction } from 'library/hooks/useCreateAction';
-import { domainSlice, DomainState } from 'main/store/slices/domainSlice';
-import { DomainService } from 'library/api/services/DomainService';
+import AppDrawer from "library/components/AppDrawer/AppDrawer";
+import { useCreateAction } from "library/hooks/useCreateAction";
+import { domainSlice, DomainState } from "main/store/slices/domainSlice";
+import { DomainService } from "library/api/services/DomainService";
+import { AddDomain } from "features/DomainCrud/AddDomain";
+import { CrudRepository } from "../../api/repositories/CrudRepository";
+import { AddDomainSchema } from "features/DomainCrud/AddDomain/AddDomainSchema";
+import { useToogleAction } from "./useToggleAction";
+import { useDomainList } from "features/EvaluationInit/DomainList/useDomainList";
+import { useListAction } from "../../hooks/useListAction";
 
 interface DataType {
   key: React.Key;
@@ -43,29 +49,28 @@ interface DataType {
   actions: React.ReactNode;
 }
 
-const domains: Domain[] = [
-  {
-    id: 1,
-    name: "Organizacional",
-    slug: 'organizacional'
-  },
-  {
-    id: 2,
-    name: "Semantico",
-    slug: 'semantico'
-  },
-  {
-    id: 3,
-    name: "Politico Legal",
-    slug: 'politico-legal'
-  },
-  {
-    id: 4,
-    name: "Semantico Legal",
-    slug: 'semantico-legal'
-  },
-];
-
+// const domains: Domain[] = [
+//   {
+//     id: 1,
+//     name: "Organizacional",
+//     slug: "organizacional",
+//   },
+//   {
+//     id: 2,
+//     name: "Semantico",
+//     slug: "semantico",
+//   },
+//   {
+//     id: 3,
+//     name: "Politico Legal",
+//     slug: "politico-legal",
+//   },
+//   {
+//     id: 4,
+//     name: "Semantico Legal",
+//     slug: "semantico-legal",
+//   },
+// ];
 
 const columns: ColumnsType<Domain> = [
   // {
@@ -93,7 +98,7 @@ const columns: ColumnsType<Domain> = [
     // here is that finding the name started with `value`
     onFilter: (value, record) => record.name.indexOf(value as string) === 0,
     sorter: (a, b) => a.name.length - b.name.length,
-    render: (name) => <DetailAction text={name} />
+    render: (name) => <DetailAction text={name} />,
     // sortDirections: ["descend"],
   },
   {
@@ -120,7 +125,7 @@ const columns: ColumnsType<Domain> = [
       return (
         <Space>
           {/* <EyeOutlined /> */}
-          <EditAction />
+          <EditAction domain={record} />
           <DeleteAction />
         </Space>
       );
@@ -167,7 +172,12 @@ const DetailAction = ({ text }: { text: string }) => {
         onClick={showModal}
       ></Button> */}
 
-      <Modal title="Basic Modal" visible={visible} onOk={() => { }} onCancel={onClose}>
+      <Modal
+        title="Basic Modal"
+        visible={visible}
+        onOk={() => {}}
+        onCancel={onClose}
+      >
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
@@ -176,17 +186,22 @@ const DetailAction = ({ text }: { text: string }) => {
   );
 };
 
+const EditAction = ({ domain }: { domain: Domain }) => {
+  const { isOpen, onOpen, onCloseStart, onCloseEnd } = useToogleAction<Domain>({
+    action: "edit",
+    keyFrom: "id",
+    state: domain,
+  });
 
-const EditAction = () => {
-  const [visible, setVisible] = useState(false);
-
-  const showDrawer = () => {
-    setVisible(true);
-  };
-
-  const onClose = () => {
-    setVisible(false);
-  };
+  // const { create, isLoading } = useCreateAction<
+  //   Domain,
+  //   DomainState,
+  //   AddDomainSchema
+  // >({
+  //   loadingSelector: (state) => state.domains.isLoading,
+  //   service: DomainService,
+  //   reducer: domainSlice,
+  // });
 
   return (
     <React.Fragment>
@@ -195,30 +210,28 @@ const EditAction = () => {
         type="link"
         shape="round"
         icon={<EditOutlined />}
-        onClick={showDrawer}
+        onClick={onOpen}
       ></Button>
 
-   
-      <AppDrawer
-        title="Editar Dominio"
-        placement="right"
-        onClose={onClose}
-        visible={visible}
-        destroyOnClose
-      >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </AppDrawer>
+      <AddDomain
+        show={isOpen}
+        isLoading={false}
+        onHide={onCloseEnd}
+        onSave={() => {}}
+        defaults={domain}
+      />
     </React.Fragment>
   );
 };
 
-export default function Crud() {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [visible, setVisible] = useState(false);
+// interface CreateActionProps {
+//   renderModal: (visible: boolean, isLoading: boolean, onClose: () => void, onCreate: () => void);
+// }
 
-  // const { domains, isLoading } = useDomainList();
+const CreateAction = () => {
+  const { isOpen, onOpen, onCloseEnd } = useToogleAction<Domain>({
+    action: "create",
+  });
 
   const { create, isLoading } = useCreateAction<
     Domain,
@@ -227,24 +240,53 @@ export default function Crud() {
   >({
     loadingSelector: (state) => state.domains.isLoading,
     service: DomainService,
-    reducer: domainSlice
+    reducer: domainSlice,
   });
 
-  const domainsWithKey = domains.map((domain, key) => ({ key, ...domain }));
+  return (
+    <React.Fragment>
+      <Button
+        type="primary"
+        shape="round"
+        block
+        icon={<PlusOutlined />}
+        onClick={onOpen}
+      ></Button>
 
+      <AddDomain
+        show={isOpen}
+        isLoading={isLoading}
+        onHide={onCloseEnd}
+        onSave={create}
+      />
+    </React.Fragment>
+  );
+};
+
+export default function Crud<
+  T,
+  FormSchema,
+  Service extends new () => CrudRepository<T, FormSchema>
+>() {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+  // const { domains, isLoading } = useDomainList();
+
+  
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     console.log("selectedRowKeys changed: ", selectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
-
-  const showDrawer = () => {
-    setVisible(true);
-  };
-
-  const closeDrawer = () => {
-    setVisible(false);
-  };
-
+  
+  const { isLoading, results } = useListAction<Domain, DomainState, AddDomainSchema>({
+    loadingSelector: (state) => state.domains.isLoading,
+    resultsSelector: (state) => state.domains.results,
+    service: DomainService,
+    reducer: domainSlice,
+  });
+  
+  const domainsWithKey = results.map((domain, key) => ({ key, ...domain }));
+  
   const onChange: TableProps<Domain>["onChange"] = (
     pagination,
     filters,
@@ -316,10 +358,10 @@ export default function Crud() {
           >
             Lista de Dominios
           </Box>
-          
+
           <Space direction="horizontal">
             <Button shape="round" block icon={<ExportOutlined />}></Button>
-            <Button type="primary" shape="round" block icon={<PlusOutlined />} onClick={showDrawer}></Button>
+            <CreateAction />
           </Space>
         </Box>
       </Card>
@@ -362,14 +404,14 @@ export default function Crud() {
         }}
       >
         <Table
-          loading={false}
+          loading={isLoading}
           rowSelection={rowSelection}
           columns={columns}
           dataSource={domainsWithKey}
           onChange={onChange}
           sticky
           pagination={{
-            pageSize: 25,
+            pageSize: 10,
             style: {
               position: "sticky",
               bottom: 0,
@@ -377,13 +419,6 @@ export default function Crud() {
           }}
         />
       </Card>
-
-      <AddDomain
-        show={visible}
-        isLoading={isLoading}
-        onCancel={closeDrawer}
-        onCreate={create}
-      />
     </React.Fragment>
   );
-};
+}
