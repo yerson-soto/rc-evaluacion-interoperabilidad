@@ -21,7 +21,7 @@ export class DomainService extends AbstractCrudService<
     super();
     this.mapper = new DomainMapper();
     this.getAllUrl = "/domains";
-    this.getByIdUrl = "/domains";
+    this.getByIdUrl = "/domains/:id";
     this.createUrl = "/domains";
     this.editUrl = "";
     this.deleteUrl = "";
