@@ -1,6 +1,6 @@
 import { CaseReducer, PayloadAction, SliceCaseReducers } from "@reduxjs/toolkit";
 import { Location } from "react-router-dom";
-import { ErrorMessage } from "./types";
+import { ErrorMessage, ID } from './types';
 
 export interface APIResponse<T> {
   result: T;
@@ -26,7 +26,7 @@ export interface CrudCaseReducers<T, State extends CrudState<T>> extends SliceCa
   createFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
   editSuccess: CaseReducer<State, PayloadAction<T>>;
   editFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
-  deleteSuccess: CaseReducer<State, PayloadAction<T>>;
+  deleteSuccess: CaseReducer<State, PayloadAction<ID>>;
   deleteFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
 }
 

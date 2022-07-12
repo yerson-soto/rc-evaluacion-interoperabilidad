@@ -1,6 +1,7 @@
 import { AbstractAPIService } from "./AbstractApiService";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { APIResponse, Mapper } from "library/common/interfaces";
+import { ID } from "library/common/types";
 
 export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
   extends AbstractAPIService
@@ -8,11 +9,10 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
 {
   protected abstract mapper: Mapper<T, DataReceived, DataSent, FormSchema>;
   protected abstract getAllUrl: string;
-  protected abstract getByIdUrl: string;
   protected abstract createUrl: string;
-  protected abstract editUrl: string;
-  protected abstract deleteUrl: string;
-  
+
+  protected abstract getDetailUrl(id: ID): string;
+
   getAll(): Promise<T[]> {
     return new Promise((resolve, reject) => {
       this.client
@@ -40,15 +40,33 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
           const result = this.mapper.fromAPI(res.data.result);
           resolve(result);
         })
-        .catch(() => reject("No se pudo cargar los resultados"));
+        .catch(() => reject("No se pudo crear el registro"));
     });
   }
 
-  edit(): Promise<T> {
-    return new Promise((resolve, reject) => {});
+  edit(id: ID, schema: FormSchema): Promise<T> {
+    return new Promise((resolve, reject) => {
+      const data = this.mapper.formSchemaToAPI(schema);
+      const url = this.getDetailUrl(id);
+
+      this.client
+        .put<APIResponse<DataReceived>>(url, data)
+        .then((res) => {
+          const result = this.mapper.fromAPI(res.data.result);
+          resolve(result);
+        })
+        .catch(() => reject("No se pudo editar el registro"));
+    });
   }
 
-  delete(): Promise<void> {
-    return new Promise((resolve, reject) => {});
+  delete(id: ID): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const url = this.getDetailUrl(id);
+
+      this.client
+        .delete<APIResponse<null>>(url)
+        .then(() => resolve())
+        .catch(() => reject("No se pudo eliminar el registro"));
+    });
   }
 }

@@ -1,7 +1,9 @@
 {
   "headings": {
     "complete_evaluation": "Completar Evaluación",
-    "create_domain": "Crear nuevo dominio"
+    "create_domain": "Crear nuevo dominio",
+    "edit_domain": "Editar dominio",
+    "domain_list": "Lista de Dominios"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -20,7 +22,8 @@
   },
   "placeholders": {
     "domain": "Título del dominio",
-    "slug": "Identificador del dominio"
+    "slug": "Identificador del dominio",
+    "domain_acronym": "Abreviatura del dominio"
   },
   "fields": {
     "username": "Nombre de usuario",
@@ -29,16 +32,20 @@
     "confirm_password": "Confirmar contraseña",
     "remember": "Recuérdame",
     "domain": "Dominio",
-    "slug": "Slug"
+    "slug": "Slug",
+    "domain_acronym": "Abreviatura"
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",
-    "min_length": "{{ field }} must be at least {{ length }} characters",
+    "min_length": "{{ field }} debe contener un mínimo de {{ length }} caracteres",
+    "max_length": "{{ field }} debe contener un máximo de {{ length }} caracteres",
+    "length": "{{ field }} debe ser de {{ length }} caracteres",
     "match_password": "Passwords must match"
   },
   "hints": {
     "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.",
-    "slug": "Este texto se utiliza como identificador legible del dominio."
+    "slug": "Este texto se utiliza como identificador legible del dominio.",
+    "domain_acronym": "La abreviatura se utiliza para formar el código de los lineamientos."
   },
   "pagination": {
     "evaluations": "Evaluación(es)",

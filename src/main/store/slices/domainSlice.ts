@@ -1,5 +1,4 @@
-import { Slice, Reducer } from "@reduxjs/toolkit";
-import { CrudCaseReducers, CrudState } from "library/common/interfaces";
+import { CrudState } from "library/common/interfaces";
 import { Domain } from "library/models/Domain";
 import { createCrudSlice } from "./sliceCreator";
 
@@ -15,7 +14,7 @@ const initialState: DomainState = {
 export const domainSlice = createCrudSlice<Domain, DomainState>({
   name: "domains",
   initialState,
-  keySource: "id",
+  idSource: "id",
 });
 
 export const { ...actions } = domainSlice.actions;

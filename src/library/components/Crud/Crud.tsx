@@ -34,12 +34,14 @@ import AppDrawer from "library/components/AppDrawer/AppDrawer";
 import { useCreateAction } from "library/hooks/useCreateAction";
 import { domainSlice, DomainState } from "main/store/slices/domainSlice";
 import { DomainService } from "library/api/services/DomainService";
-import { AddDomain } from "features/DomainCrud/AddDomain";
+import { DomainForm } from "features/DomainCrud/DomainForm";
 import { CrudRepository } from "../../api/repositories/CrudRepository";
-import { AddDomainSchema } from "features/DomainCrud/AddDomain/AddDomainSchema";
+import { DomainFormSchema } from "features/DomainCrud/DomainForm/DomainFormSchema";
 import { useToogleAction } from "./useToggleAction";
-import { useDomainList } from "features/EvaluationInit/DomainList/useDomainList";
 import { useListAction } from "../../hooks/useListAction";
+import { useEditAction } from "../../hooks/useEditAction";
+import { useDeleteAction } from "../../hooks/useDeleteAction";
+import CrudHeader from './CrudHeader/CrudHeader';
 
 interface DataType {
   key: React.Key;
@@ -118,37 +120,57 @@ const columns: ColumnsType<Domain> = [
     // onFilter: (value, record) => record.address.indexOf(value as string) === 0,
   },
   {
+    title: "Abreviatura",
+    dataIndex: "acronym",
+    responsive: ["lg"],
+    // onFilter: (value, record) => record.address.indexOf(value as string) === 0,
+  },
+  {
     title: "Acciones",
-    dataIndex: "actions",
+    dataIndex: "id",
     key: "action-group",
-    render(_, record) {
+    render(id, record) {
       return (
-        <Space>
+        <Space key={id}>
           {/* <EyeOutlined /> */}
           <EditAction domain={record} />
-          <DeleteAction />
+          <DeleteAction domain={record} />
         </Space>
       );
     },
   },
 ];
 
-const DeleteAction = () => (
-  <Popconfirm
-    placement="right"
-    title="Are you sure？"
-    okText="Yes"
-    cancelText="No"
-  >
-    <Button
-      size="small"
-      type="link"
-      shape="round"
-      icon={<DeleteOutlined />}
-      danger
-    ></Button>
-  </Popconfirm>
-);
+const DeleteAction = ({ domain }: { domain: Domain }) => {
+  const { deleteOne, isLoading } = useDeleteAction<
+    Domain,
+    DomainState,
+    DomainFormSchema
+  >({
+    loadingSelector: (state) => state.domains.isLoading,
+    service: DomainService,
+    reducer: domainSlice,
+  });
+
+  return (
+    <Popconfirm
+      placement="right"
+      title="Are you sure？"
+      okText="Yes"
+      cancelText="No"
+      onConfirm={() => deleteOne(domain.id)}
+    >
+      <Button
+        loading={isLoading}
+        size="small"
+        type="link"
+        shape="round"
+        icon={<DeleteOutlined />}
+        danger
+      ></Button>
+    </Popconfirm>
+  );
+};
 
 const DetailAction = ({ text }: { text: string }) => {
   const [visible, setVisible] = useState(false);
@@ -187,21 +209,21 @@ const DetailAction = ({ text }: { text: string }) => {
 };
 
 const EditAction = ({ domain }: { domain: Domain }) => {
-  const { isOpen, onOpen, onCloseStart, onCloseEnd } = useToogleAction<Domain>({
+  const { isOpen, onOpen, onCloseEnd } = useToogleAction<Domain>({
     action: "edit",
     keyFrom: "id",
     state: domain,
   });
 
-  // const { create, isLoading } = useCreateAction<
-  //   Domain,
-  //   DomainState,
-  //   AddDomainSchema
-  // >({
-  //   loadingSelector: (state) => state.domains.isLoading,
-  //   service: DomainService,
-  //   reducer: domainSlice,
-  // });
+  const { editOne, isLoading } = useEditAction<
+    Domain,
+    DomainState,
+    DomainFormSchema
+  >({
+    loadingSelector: (state) => state.domains.isLoading,
+    service: DomainService,
+    reducer: domainSlice,
+  });
 
   return (
     <React.Fragment>
@@ -213,12 +235,13 @@ const EditAction = ({ domain }: { domain: Domain }) => {
         onClick={onOpen}
       ></Button>
 
-      <AddDomain
+      <DomainForm
         show={isOpen}
-        isLoading={false}
+        isLoading={isLoading}
         onHide={onCloseEnd}
-        onSave={() => {}}
+        onSave={async (schema) => await editOne(domain.id, schema)}
         defaults={domain}
+        isEdit
       />
     </React.Fragment>
   );
@@ -233,10 +256,10 @@ const CreateAction = () => {
     action: "create",
   });
 
-  const { create, isLoading } = useCreateAction<
+  const { createOne, isLoading } = useCreateAction<
     Domain,
     DomainState,
-    AddDomainSchema
+    DomainFormSchema
   >({
     loadingSelector: (state) => state.domains.isLoading,
     service: DomainService,
@@ -253,40 +276,45 @@ const CreateAction = () => {
         onClick={onOpen}
       ></Button>
 
-      <AddDomain
+      <DomainForm
         show={isOpen}
         isLoading={isLoading}
         onHide={onCloseEnd}
-        onSave={create}
+        onSave={createOne}
       />
     </React.Fragment>
   );
 };
 
+interface CrudProps<T> {
+  keySource: keyof T;
+}
+
 export default function Crud<
-  T,
-  FormSchema,
+  T, 
+  FormSchema, 
   Service extends new () => CrudRepository<T, FormSchema>
 >() {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-  // const { domains, isLoading } = useDomainList();
+  // const { keySource } = props;
 
-  
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  
-  const { isLoading, results } = useListAction<Domain, DomainState, AddDomainSchema>({
+  const { isLoading, results } = useListAction<
+    Domain,
+    DomainState,
+    DomainFormSchema
+  >({
     loadingSelector: (state) => state.domains.isLoading,
     resultsSelector: (state) => state.domains.results,
     service: DomainService,
     reducer: domainSlice,
   });
-  
+
   const domainsWithKey = results.map((domain, key) => ({ key, ...domain }));
-  
+
+  // const getResults = (results: T[]) => {
+  //   return results.map((result) => ({ key: result[keySource], ...result }));
+  // }
+
   const onChange: TableProps<Domain>["onChange"] = (
     pagination,
     filters,
@@ -296,129 +324,25 @@ export default function Crud<
     console.log("params", pagination, filters, sorter, extra);
   };
 
-  const rowSelection: TableRowSelection<Domain> = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-      {
-        key: "odd",
-        text: "Select Odd Row",
-        onSelect: (changableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return false;
-            }
-            return true;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-      {
-        key: "even",
-        text: "Select Even Row",
-        onSelect: (changableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return true;
-            }
-            return false;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-    ],
-  };
-
   return (
     <React.Fragment>
-      <Card style={{ marginBottom: 30 }}>
-        <Box
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box
-            style={{
-              display: "inline-block",
-              flex: "1 1",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              margin: 0,
-              fontWeight: 500,
-              fontSize: 16,
-            }}
-          >
-            Lista de Dominios
-          </Box>
+      <CrudHeader />
 
-          <Space direction="horizontal">
-            <Button shape="round" block icon={<ExportOutlined />}></Button>
-            <CreateAction />
-          </Space>
-        </Box>
-      </Card>
-
-      {/* <Card
-        style={{
-          marginBottom: 30,
+      <Table
+        loading={isLoading}
+        // rowSelection={rowSelection}
+        columns={columns}
+        dataSource={domainsWithKey}
+        onChange={onChange}
+        sticky
+        pagination={{
+          pageSize: 10,
+          style: {
+            position: "sticky",
+            bottom: 0,
+          },
         }}
-      >
-        <Form name="horizontal_login" layout="inline">
-          <Form.Item name="username">
-            <Input placeholder="Buscar" type="text" autoComplete="off" />
-          </Form.Item>
-          <Form.Item name="password">
-            <Input type="text" placeholder="Estado" autoComplete="off" />
-          </Form.Item>
-          <Form.Item name="password">
-            <Input type="text" placeholder="Por fecha" autoComplete="off" />
-          </Form.Item>
-          <Form.Item name="password">
-            <Input type="text" placeholder="Activo" autoComplete="off" />
-          </Form.Item>
-          <Form.Item name="password" style={{ marginRight: "auto" }}>
-            <Input type="text" placeholder="Acronimo" autoComplete="off" />
-          </Form.Item>
-          <Form.Item style={{ margin: 0 }}>
-            <Button type="primary" htmlType="submit">
-              Filtrar
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card> */}
-
-      <Card
-        bodyStyle={{
-          paddingLeft: 16,
-          paddingTop: 16,
-          paddingRight: 16,
-          paddingBottom: 16,
-        }}
-      >
-        <Table
-          loading={isLoading}
-          rowSelection={rowSelection}
-          columns={columns}
-          dataSource={domainsWithKey}
-          onChange={onChange}
-          sticky
-          pagination={{
-            pageSize: 10,
-            style: {
-              position: "sticky",
-              bottom: 0,
-            },
-          }}
-        />
-      </Card>
+      />
     </React.Fragment>
   );
 }

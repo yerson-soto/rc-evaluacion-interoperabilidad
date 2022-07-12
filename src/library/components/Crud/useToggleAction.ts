@@ -10,9 +10,7 @@ interface ToggleAction<T> {
 
 export function useToogleAction<T>({ action, state, keyFrom }: ToggleAction<T>) {
   const [params, setQueryParams] = useSearchParams();
-  const { state: currentState, ...others } = useLocation() as LocationState<T>;
-
-  console.log({...others, state: currentState });
+  const { state: currentState } = useLocation() as LocationState<T>;
 
   const checkIsOpen = (): boolean => {
     const actionMatch = action === params.get("action");

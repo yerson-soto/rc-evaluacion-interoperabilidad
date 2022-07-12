@@ -1,7 +1,5 @@
+import slugify from "slugify";
+
 export default function createSlug(sentence: string) {
-  return sentence
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w ]+/g, "")
-    .replace(/ +/g, "-");
+  return slugify(sentence.toLowerCase());
 }

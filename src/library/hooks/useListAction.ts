@@ -26,7 +26,8 @@ export function useListAction<T, State extends CrudState<T>, FormSchema>({
     const fetchResults = (): void => {
       dispatch(reducer.actions.setLoading(true));
       
-      service.getAll().then(results => {
+      service.getAll()
+      .then(results => {
         dispatch(reducer.actions.getSuccess(results))
       })
       .catch((message) => {
