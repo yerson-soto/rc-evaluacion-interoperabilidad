@@ -4,19 +4,19 @@ import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
 import { CrudCaseReducers, CrudState } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 
-interface ListAction<T, State extends CrudState<T>, FormSchema> {
-  service: new () => CrudRepository<T, FormSchema>;
+interface ListAction<T, State extends CrudState<T>> {
+  service: new () => CrudRepository<T, any>;
   reducer: Slice<State, CrudCaseReducers<T, State>>;
   loadingSelector: (state: RootState) => boolean;
   resultsSelector: (state: RootState) => T[];
 }
 
-export function useListAction<T, State extends CrudState<T>, FormSchema>({
+export function useListAction<T, State extends CrudState<T>>({
   service: Service,
   loadingSelector,
   resultsSelector,
   reducer,
-}: ListAction<T, State, FormSchema>) {
+}: ListAction<T, State>) {
   const isLoading = useAppSelector(loadingSelector);
   const results = useAppSelector(resultsSelector);
   const dispatch = useAppDispatch();

@@ -4,17 +4,17 @@ import { CrudCaseReducers, CrudState } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { ID } from "library/common/types";
 
-interface DeleteAction<T, State extends CrudState<T>, FormSchema> {
-  service: new () => CrudRepository<T, FormSchema>;
+interface DeleteAction<T, State extends CrudState<T>> {
+  service: new () => CrudRepository<T, any>;
   reducer: Slice<State, CrudCaseReducers<T, State>>;
   loadingSelector: (state: RootState) => boolean;
 }
 
-export function useDeleteAction<T, State extends CrudState<T>, FormSchema>({
+export function useDeleteAction<T, State extends CrudState<T>>({
   service: Service,
   loadingSelector,
   reducer,
-}: DeleteAction<T, State, FormSchema>) {
+}: DeleteAction<T, State>) {
   const isLoading = useAppSelector(loadingSelector);
   const dispatch = useAppDispatch();
   const service = new Service();
