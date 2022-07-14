@@ -1,4 +1,4 @@
-import { CaseReducer, PayloadAction, SliceCaseReducers } from "@reduxjs/toolkit";
+import { CaseReducer, PayloadAction, Slice, SliceCaseReducers } from "@reduxjs/toolkit";
 import { Location } from "react-router-dom";
 import { ErrorMessage, ID } from './types';
 
@@ -29,6 +29,8 @@ export interface CrudCaseReducers<T, State extends CrudState<T>> extends SliceCa
   deleteSuccess: CaseReducer<State, PayloadAction<ID>>;
   deleteFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
 }
+
+export interface CrudReducer<T> extends Slice<CrudState<T>, CrudCaseReducers<T, CrudState<T>>> {};
 
 export interface LocationState<T> extends Location {
   state: T;

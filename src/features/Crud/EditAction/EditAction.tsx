@@ -2,7 +2,10 @@ import React from "react";
 import { Button } from "antd";
 import { useToogleAction } from "../useToggleAction";
 import { EditOutlined } from "@ant-design/icons";
-import { ID } from "library/common/types";
+import { RootState } from 'main/store/index';
+import { useEditAction } from "./useEditAction";
+import { CrudRepository } from "library/api/repositories/CrudRepository";
+import { CrudReducer } from "library/common/interfaces";
 
 export interface RenderEdit<T, FormSchema> {
   record: T;
@@ -15,24 +18,39 @@ export interface RenderEdit<T, FormSchema> {
 export interface EditActionProps<T, FormSchema> {
   record: T;
   idSource: keyof T;
-  isLoading: boolean;
-  onEdit: (id: ID, data: FormSchema) => Promise<void>;
-  renderDismissible: (params: RenderEdit<T, FormSchema>) => React.ReactNode;
+  service: CrudRepository<T, FormSchema>;
+  reducer: CrudReducer<T>;
+  render: (params: RenderEdit<T, FormSchema>) => React.ReactNode;
+  selectLoading: (state: RootState) => boolean;
 }
 
 export default function EditAction<T, FormSchema>(
   props: EditActionProps<T, FormSchema>
 ) {
-  const { record, isLoading, idSource, onEdit, renderDismissible } = props;
+  const { record, service, reducer, idSource, render, selectLoading } = props;
   const { isOpen, onOpen, onCloseEnd } = useToogleAction<T>({
     action: "edit",
     keyFrom: idSource,
     state: record,
   });
 
+  const { editOne, isLoading } = useEditAction<T, FormSchema>({
+    selectLoading,
+    service,
+    reducer,
+  });
+
   const handleSave = async (schema: FormSchema) => {
-    return await onEdit(record[idSource] as any, schema);
+    return await editOne(record[idSource] as any, schema);
   };
+  
+  const renderEdit = () => render({
+    record,
+    visible: isOpen,
+    loading: isLoading,
+    onClose: onCloseEnd,
+    onSave: handleSave,
+  })
 
   return (
     <React.Fragment>
@@ -44,13 +62,7 @@ export default function EditAction<T, FormSchema>(
         onClick={onOpen}
       ></Button>
 
-      {renderDismissible({
-        record,
-        visible: isOpen,
-        loading: isLoading,
-        onClose: onCloseEnd,
-        onSave: handleSave,
-      })}
+      {renderEdit()}
     </React.Fragment>
   );
 }

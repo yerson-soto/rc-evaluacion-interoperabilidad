@@ -44,9 +44,6 @@ export const rules: Record<keyof DomainFormSchema, Rule[]> = {
         field: getText("fields.domain_acronym"),
         length: 2
       })
-    },
-    {
-      transform: (value: string) => value.toUpperCase()
     }
   ],
 }

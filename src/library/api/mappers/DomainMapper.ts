@@ -9,7 +9,6 @@ export class DomainMapper
 {
 
   formSchemaToAPI(schema: DomainFormSchema): CreateDomain {
-    console.log(schema);
     return {
       description: schema.name,
       acronym: schema.acronym,

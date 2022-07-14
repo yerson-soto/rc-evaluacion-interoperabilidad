@@ -33,5 +33,8 @@ export const paths = {
   },
   domains: {
     index: "dominios",
+  },
+  lineaments: {
+    index: "lineamientos"
   }
 };

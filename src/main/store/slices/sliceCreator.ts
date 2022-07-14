@@ -3,20 +3,20 @@ import { CrudState } from "library/common/interfaces";
 import { ErrorMessage, ID } from "library/common/types";
 import { CrudCaseReducers } from 'library/common/interfaces';
 
-export interface CrudSlice<T, State extends CrudState<T>> {
-  name: string;
+export interface CrudSliceOptions<T, State extends CrudState<T>, Name extends string = string> {
+  name: Name;
   initialState: State;
   idSource: keyof T;
   extend?: SliceCaseReducers<State>;
 }
 
-export function createCrudSlice<T, State extends CrudState<T>>({
+export function createCrudSlice<T, State extends CrudState<T>, Name extends string = string>({
   name,
   initialState,
   idSource,
   extend = {},
-}: CrudSlice<T, State>) {
-  return createSlice<State, CrudCaseReducers<T, State>>({
+}: CrudSliceOptions<T, State, Name>) { 
+  return createSlice<State, CrudCaseReducers<T, State>, Name>({
     name,
     initialState,
     reducers: {

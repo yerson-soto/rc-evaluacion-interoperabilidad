@@ -1,23 +1,21 @@
-import { Slice } from "@reduxjs/toolkit";
 import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
-import { CrudCaseReducers, CrudState } from "library/common/interfaces";
+import { CrudReducer, CrudState } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { ID } from "library/common/types";
 
-interface DeleteAction<T, State extends CrudState<T>> {
-  service: new () => CrudRepository<T, any>;
-  reducer: Slice<State, CrudCaseReducers<T, State>>;
-  loadingSelector: (state: RootState) => boolean;
+interface DeleteAction<T> {
+  service: CrudRepository<T, any>;
+  reducer: CrudReducer<T>;
+  selectLoading: (state: RootState) => boolean;
 }
 
-export function useDeleteAction<T, State extends CrudState<T>>({
-  service: Service,
-  loadingSelector,
+export function useDeleteAction<T>({
+  service,
+  selectLoading,
   reducer,
-}: DeleteAction<T, State>) {
-  const isLoading = useAppSelector(loadingSelector);
+}: DeleteAction<T>) {
+  const isLoading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
-  const service = new Service();
 
   const deleteOne = async (id: ID): Promise<void> => {
     dispatch(reducer.actions.setLoading(true));

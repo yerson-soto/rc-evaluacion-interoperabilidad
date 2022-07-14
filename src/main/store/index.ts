@@ -4,12 +4,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { authSlice } from "./slices/authSlice";
 import { evaluationSlice } from "./slices/evaluationSlice";
 import { domainSlice } from "./slices/domainSlice";
+import { lineamentSlice } from './slices/lineamentSlice';
 
 export const store = configureStore({
   reducer: {
-    auth: authSlice.reducer,
-    evaluations: evaluationSlice.reducer,
-    domains: domainSlice.reducer,
+    [authSlice.name]: authSlice.reducer,
+    [evaluationSlice.name]: evaluationSlice.reducer,
+    [domainSlice.name]: domainSlice.reducer,
+    [lineamentSlice.name]: lineamentSlice.reducer
   },
 });
 

@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { Layout, Menu, Typography } from "antd";
 import { Box } from "library/components/Box";
 
-import classnames from "classnames";
-import classes from "./Sidenav.module.css";
 
 import {
   SignalFilled,
   PieChartFilled,
-  SnippetsFilled,
   AppstoreFilled,
   LoginOutlined,
-  TeamOutlined,
+  AlignLeftOutlined,
   AppstoreOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
-import { paths } from '../../../library/common/constants';
+import { paths } from 'library/common/constants';
+
+import classnames from "classnames";
+import classes from "./Sidenav.module.css";
 
 interface SidenavProps {
   isCompacted: boolean;
@@ -61,10 +61,7 @@ export default function Sidenav(props: SidenavProps) {
       getItem("Dashboard", "1", "/", <PieChartFilled />),
       getItem("Evaluaciones", "2", "/evaluaciones", <AppstoreFilled />),
       getItem("Dominios", "3", paths.domains.index, <SignalFilled />),
-      getItem("Equipo", "sub2", "/", <TeamOutlined />, [
-        getItem("Team 1", "6", "/"),
-        getItem("Team 2", "8", "/"),
-      ]),
+      getItem("Lineamientos", "4", paths.lineaments.index, <AlignLeftOutlined />),
       getItem("Iniciar Sesión", "9", paths.auth.login.reverse(), <LoginOutlined />),
     ];
   };

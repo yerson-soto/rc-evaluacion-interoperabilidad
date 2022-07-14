@@ -3,7 +3,10 @@
     "complete_evaluation": "Completar Evaluación",
     "create_domain": "Crear nuevo dominio",
     "edit_domain": "Editar dominio",
-    "domain_list": "Lista de Dominios"
+    "domain_list": "Lista de Dominios",
+    "create_lineament": "Crear Lineamiento",
+    "edit_lineament": "Editar Lineamiento",
+    "lineament_list": "Lista de Lineamientos"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -23,7 +26,9 @@
   "placeholders": {
     "domain": "Título del dominio",
     "slug": "Identificador del dominio",
-    "domain_acronym": "Abreviatura del dominio"
+    "domain_acronym": "Abreviatura del dominio",
+    "select_domain": "Selecciona un dominio",
+    "description": "Definición del lineamiento"
   },
   "fields": {
     "username": "Nombre de usuario",
@@ -33,7 +38,8 @@
     "remember": "Recuérdame",
     "domain": "Dominio",
     "slug": "Slug",
-    "domain_acronym": "Abreviatura"
+    "domain_acronym": "Abreviatura",
+    "description": "Descripción"
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",
@@ -67,7 +73,9 @@
     "reset_password": "Restablecer",
     "resend_mail": "Reenviar correo",
     "create": "Crear",
-    "save": "Guardar"
+    "save": "Guardar",
+    "yes": "Si",
+    "no": "No"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",
@@ -86,5 +94,8 @@
   },
   "operators": {
     "or": "O"
+  },
+  "questions": {
+    "delete_item": "¿Eliminar este elemento?"
   }
 }

@@ -1,7 +1,11 @@
 import React from "react";
 import { Button } from "antd";
+import { RootState } from 'main/store/index';
 import { useToogleAction } from "../useToggleAction";
 import { PlusOutlined } from "@ant-design/icons";
+import { useCreateAction } from "./useCreateAction";
+import { CrudRepository } from "library/api/repositories/CrudRepository";
+import { CrudReducer } from "library/common/interfaces";
 
 export interface RenderCreate<FormSchema> {
   visible: boolean;
@@ -11,20 +15,34 @@ export interface RenderCreate<FormSchema> {
 }
 
 export interface CreateActionProps<T, FormSchema> {
-  isLoading: boolean;
-  onCreate: (data: FormSchema) => Promise<void>;
-  renderDismissible: (params: RenderCreate<FormSchema>) => React.ReactNode;
+  service: CrudRepository<T, FormSchema>;
+  reducer: CrudReducer<T>;
+  render: (params: RenderCreate<FormSchema>) => React.ReactNode;
+  selectLoading: (state: RootState) => boolean;
 }
 
 export default function CreateAction<T, FormSchema>(
   props: CreateActionProps<T, FormSchema>
 ) {
-  const { onCreate, isLoading, renderDismissible } = props;
+  const { service, reducer, selectLoading, render } = props;
 
   const { isOpen, onOpen, onCloseEnd } = useToogleAction({
     action: "create",
   });
 
+  const { createOne, isLoading } = useCreateAction<T, FormSchema>({
+    selectLoading,
+    service,
+    reducer,
+  });
+
+  const renderCreate = () => render({
+    visible: isOpen,
+    loading: isLoading,
+    onSave: createOne,
+    onClose: onCloseEnd,
+  })
+  
   return (
     <React.Fragment>
       <Button
@@ -35,12 +53,7 @@ export default function CreateAction<T, FormSchema>(
         onClick={onOpen}
       ></Button>
 
-      {renderDismissible({
-        visible: isOpen,
-        loading: isLoading,
-        onSave: onCreate,
-        onClose: onCloseEnd,
-      })}
+      {renderCreate()}
     </React.Fragment>
   );
 }

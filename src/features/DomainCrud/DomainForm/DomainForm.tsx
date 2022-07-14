@@ -4,9 +4,10 @@ import { LinkOutlined, BuildOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { DomainFormSchema, rules } from "./DomainFormSchema";
+import { useDomainForm } from './useDomainForm';
 import createSlug from "library/helpers/create-slug";
 
-interface AddDomainProps {
+interface DomainFormProps {
   show: boolean;
   isLoading: boolean;
   defaults?: DomainFormSchema;
@@ -15,56 +16,38 @@ interface AddDomainProps {
   onHide: () => void;
 }
 
-export default function DomainForm(props: AddDomainProps) {
-  const [form] = Form.useForm<DomainFormSchema>();
+export default function DomainForm(props: DomainFormProps) {
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
+  const { 
+    form, 
+    normalizeAcronym, 
+    normalizeSlug, 
+    populateSlug,
+    resetForm  
+  } = useDomainForm();
+
   const title = isEdit 
-    ? t("headings.edit_domain")
-    : t("headings.create_domain");
+    ? t("headings.edit_domain"): 
+    t("headings.create_domain");
 
   const btnText = isEdit 
-    ? t("buttons.save")
+    ? t("buttons.save") 
     : t("buttons.create");
 
-  const formName = isEdit
-    ? 'edit_domain'
+  const formName = isEdit 
+    ? 'edit_domain' 
     : 'create_domain';
   
-  // TODO: Refactor this, hint: useHook
+
   const onFinish = () => {
     form.validateFields().then((values) => {
-
       // Make sure slug is valid
       const slug = createSlug(values.slug);
-      
+
       onSave({ ...values, slug }).then(onHide);
     });
-  };
-
-  const populateSlug = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const slug = createSlug(value),
-      acronym = normalizeAcronym(value.substring(0, 2));
-
-    form.setFieldsValue({ slug });
-    form.setFieldsValue({ acronym });
-  };
-
-  const handleCloseEnd = () => {
-    form.resetFields();
-  };
-
-  const normalizeAcronym = (acronym: string) => {
-    return acronym
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toUpperCase();
-  }
-
-  const normalizeSlug = (slug: string) => {
-    return slug.replaceAll(' ', '-').toLowerCase()
   };
 
   return (
@@ -73,7 +56,7 @@ export default function DomainForm(props: AddDomainProps) {
       placement="right"
       onClose={onHide}
       visible={show}
-      onCloseEnd={handleCloseEnd}
+      onCloseEnd={resetForm}
       extra={
         <Button 
           type="primary" 

@@ -1,15 +1,10 @@
+import { GetLineament } from "./lineament-dto";
+
 export interface GetCriterion {
   id: number;
   description: string;
   lineaments: GetLineament[];
   responses: GetChoice[];
-}
-
-export interface GetLineament {
-  id: number;
-  description: string;
-  definictionLineament: string;
-  criterionResponses: null;
 }
 
 export interface GetChoice {

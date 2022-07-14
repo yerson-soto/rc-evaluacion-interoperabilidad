@@ -11,7 +11,7 @@ const initialState: DomainState = {
   errorMessage: "",
 };
 
-export const domainSlice = createCrudSlice<Domain, DomainState>({
+export const domainSlice = createCrudSlice<Domain, DomainState, "domains">({
   name: "domains",
   initialState,
   idSource: "id",

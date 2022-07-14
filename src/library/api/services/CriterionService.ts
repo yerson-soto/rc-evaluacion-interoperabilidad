@@ -4,6 +4,7 @@ import { AbstractAPIService } from "./AbstractApiService";
 import { APIResponse } from "library/common/interfaces";
 import { Choice } from "library/models/Choice";
 import * as dto from "library/api/dto/criterion-dto";
+import { LineamentMapper } from '../mappers/LineamentMapper';
 
 export class CriterionService
   extends AbstractAPIService
@@ -46,14 +47,12 @@ export class CriterionService
   }
 
   mapResult(result: dto.GetCriterion): Criterion {
+    const lineamentMapper = new LineamentMapper();
+    
     return {
       id: result.id,
       name: result.description,
-      categories: result.lineaments.map((lineament) => ({
-        id: lineament.id,
-        nomenclature: lineament.description,
-        description: lineament.definictionLineament,
-      })),
+      categories: result.lineaments.map(lineamentMapper.fromAPI),
       choices: result.responses.map((response) => this.mapChoice(response)),
     };
   }
