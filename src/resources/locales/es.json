@@ -4,8 +4,8 @@
     "create_domain": "Crear nuevo dominio",
     "edit_domain": "Editar dominio",
     "domain_list": "Lista de Dominios",
-    "create_lineament": "Crear Lineamiento",
-    "edit_lineament": "Editar Lineamiento",
+    "create_lineament": "Crear nuevo lineamiento",
+    "edit_lineament": "Editar lineamiento",
     "lineament_list": "Lista de Lineamientos"
   },
   "texts": {
@@ -39,7 +39,8 @@
     "domain": "Dominio",
     "slug": "Slug",
     "domain_acronym": "Abreviatura",
-    "description": "Descripción"
+    "description": "Descripción",
+    "nomenclature": "Nomenclatura"
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",
@@ -63,7 +64,8 @@
     "send_reset_mail_failed": "Introduzca un correo válido",
     "reset_password_failed": "No se ha podido cambiar la contraseña",
     "reset_password_success": "Su contraseña ha sido restablecida con éxito",
-    "reset_link_invalid": "El enlace de recuperación es inválido o ha expirado"
+    "reset_link_invalid": "El enlace de recuperación es inválido o ha expirado",
+    "item_created": "El registro se ha creado con éxito"
   },
   "buttons": {
     "upload": "Subir",
@@ -97,5 +99,12 @@
   },
   "questions": {
     "delete_item": "¿Eliminar este elemento?"
+  },
+  "backend": {
+    "domain_already_exists": "El dominio ingresado ya existe",
+    "domain_slug_aready_exists": "El dominio ingresado ya existe"
+  },
+  "preffixes": {
+    "domain":"Dominio"
   }
 }

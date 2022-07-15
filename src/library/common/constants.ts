@@ -36,5 +36,8 @@ export const paths = {
   },
   lineaments: {
     index: "lineamientos"
+  },
+  criterions: {
+    index: "criterios"
   }
 };

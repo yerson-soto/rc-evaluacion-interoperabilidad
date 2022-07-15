@@ -1,12 +1,13 @@
 import { ColumnsType } from "antd/lib/table";
 import { useTranslation } from 'react-i18next';
-import { Crud } from "features/Crud";
+import { Tag } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { LineamentForm } from "./LineamentForm";
 import { LineamentFormSchema } from "./LineamentForm/LineamentFormSchema";
 import { Lineament } from 'library/models/Lineament';
 import { LineamentService } from 'library/api/services/LineamentService';
 import { lineamentSlice } from 'main/store/slices/lineamentSlice';
+import { Crud } from "features/Crud";
 import { getText } from "i18n";
 
 const columns: ColumnsType<Lineament> = [
@@ -14,6 +15,7 @@ const columns: ColumnsType<Lineament> = [
     title: getText("fields.nomenclature") as string,
     dataIndex: "nomenclature",
     ellipsis: true,
+    render: (value) => <Tag color="magenta">{value}</Tag>,
     // sorter: (a, b) => {
     //   if (a.name < b.name) { return -1; }
     //   if (a.name > b.name) { return 1; }
@@ -21,15 +23,16 @@ const columns: ColumnsType<Lineament> = [
     // },
   },
   {
+    title: getText("fields.domain") as string,
+    dataIndex: ["domain", "name"],
+    responsive: ["lg"],
+  },
+  {
     title: getText("fields.description") as string,
     dataIndex: "description",
     ellipsis: true,
     responsive: ["lg"],
   },
-  {
-    title: getText("fields.domain") as string,
-    dataIndex: ["domain", "name"]
-  }
 ];
 
 export default function LineamentCrud() {

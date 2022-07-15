@@ -1,10 +1,10 @@
 import { Choice } from "library/models/Choice";
-import { Criterion } from "library/models/Criterion";
+import { FullCriterion } from "library/models/Criterion";
 import { ChangeLevel, GetCriterion } from "library/api/dto/criterion-dto";
 
 
 export interface CriterionRepository {
-  getByDomain: (domainId: number) => Promise<Criterion[]>;
+  getByDomain: (domainId: number) => Promise<FullCriterion[]>;
   changeLevel: (data: ChangeLevel) => Promise<Choice>;
-  mapResult: (result: GetCriterion) => Criterion;
+  mapResult: (result: GetCriterion) => FullCriterion;
 }

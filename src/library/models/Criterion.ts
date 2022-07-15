@@ -1,9 +1,15 @@
 import { Choice } from "./Choice";
-import { Lineament } from "./Lineament";
+import { LightLineament } from './Lineament';
 
 export interface Criterion {
   id: number;
   name: string;
-  categories: Lineament[];
+  lineaments: LightLineament[];
+}
+
+export interface FullCriterion {
+  id: number;
+  name: string;
+  categories: LightLineament[];
   choices: Choice[];
 }

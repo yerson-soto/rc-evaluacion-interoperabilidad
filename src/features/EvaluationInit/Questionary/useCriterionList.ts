@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Criterion } from "library/models/Criterion";
+import { FullCriterion } from "library/models/Criterion";
 import { CriterionService } from "library/api/services/CriterionService";
 
 
 export function useCriterionList(domainId: number) {
-  const [criterions, setCriterions] = useState<Criterion[]>([]);
+  const [criterions, setCriterions] = useState<FullCriterion[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {

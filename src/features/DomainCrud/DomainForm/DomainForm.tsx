@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { LinkOutlined, BuildOutlined } from "@ant-design/icons";
+import { LinkOutlined, BuildOutlined, FontColorsOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { DomainFormSchema, rules } from "./DomainFormSchema";
@@ -39,10 +39,10 @@ export default function DomainForm(props: DomainFormProps) {
   const formName = isEdit 
     ? 'edit_domain' 
     : 'create_domain';
-  
 
   const onFinish = () => {
     form.validateFields().then((values) => {
+
       // Make sure slug is valid
       const slug = createSlug(values.slug);
 
@@ -113,7 +113,7 @@ export default function DomainForm(props: DomainFormProps) {
             normalize={normalizeAcronym}
           >
             <Input
-              suffix={<LinkOutlined />}
+              suffix={<FontColorsOutlined />}
               type="text"
               placeholder={t("placeholders.domain_acronym")}
             />

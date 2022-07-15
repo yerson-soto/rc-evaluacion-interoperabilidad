@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Drawer, List, Grid, Badge, Pagination, Button } from "antd";
 import { QuestionItem } from "features/EvaluationInit/QuestionItem";
-import { Criterion } from "library/models/Criterion";
+import { FullCriterion } from "library/models/Criterion";
 import { useCriterionList } from "./useCriterionList";
 import { PaginationProps } from "antd/es/pagination";
 import { Domain } from "library/models/Domain";
@@ -96,7 +96,7 @@ export default function Questionary(props: QuestionaryProps) {
     handleNotFound();
   }, []);
 
-  const onResponseChange = (criterion: Criterion, choice: Choice): void => {
+  const onResponseChange = (criterion: FullCriterion, choice: Choice): void => {
     changeResponse({
       evaluationInstitutionalId: uid as string,
       criterionId: criterion.id,

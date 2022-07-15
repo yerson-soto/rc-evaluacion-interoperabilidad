@@ -9,6 +9,5 @@ export interface GetLineament {
 
 export interface CreateLineament {
   domainId: number;
-  description: string;
   definictionLineament: string;
 }

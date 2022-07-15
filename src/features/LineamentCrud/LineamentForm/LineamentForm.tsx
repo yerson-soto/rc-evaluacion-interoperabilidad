@@ -1,10 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { AlignRightOutlined, QrcodeOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Select } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { LineamentFormSchema, rules } from "./LineamentFormSchema";
 import { useLineamentForm } from "./useLineamentForm";
+import { TextArea } from "library/components/TextArea";
 
 interface LineamentFormProps {
   show: boolean;
@@ -16,7 +16,7 @@ interface LineamentFormProps {
 }
 
 export default function LineamentForm(props: LineamentFormProps) {
-  const { form, suffix, domains, resetForm, changeSuffix } = useLineamentForm();
+  const { form, domains, resetForm } = useLineamentForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
@@ -75,7 +75,6 @@ export default function LineamentForm(props: LineamentFormProps) {
               showSearch
               placeholder={t("placeholders.select_domain")}
               optionFilterProp="children"
-              // onChange={changeSuffix}
             >
               {domains.map((domain) => (
                 <Select.Option 
@@ -88,27 +87,16 @@ export default function LineamentForm(props: LineamentFormProps) {
             </Select>
           </Form.Item>
 
-          {/* <Form.Item
-            name="nomenclature"
-            label={t("fields.nomenclature")}
-            rules={rules.nomenclature}
-          >
-            <Input
-              suffix={<QrcodeOutlined />}
-              placeholder={t("placeholders.nomenclature")}
-              addonBefore={suffix}
-            />
-          </Form.Item> */}
-
           <Form.Item
             name="description"
             label={t("fields.description")}
             rules={rules.description}
           >
-            <Input
-              suffix={<AlignRightOutlined />}
-              type="text"
+            <TextArea
               placeholder={t("placeholders.description")}
+              maxLength={200}
+              allowClear
+              showCount
             />
           </Form.Item>
         </Form>

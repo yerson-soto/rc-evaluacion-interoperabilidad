@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Alert, Skeleton, Space, Tag, Tooltip } from "antd";
 import { Box } from "library/components/Box";
 import { Avatar, List } from "antd";
-import { Criterion } from "library/models/Criterion";
+import { FullCriterion } from "library/models/Criterion";
 import { SectionDivider } from "library/components/SectionDivider";
 import { AddEvidence } from "features/EvaluationInit/AddEvidence";
 import { Response } from "features/EvaluationInit/Response";

@@ -1,8 +1,8 @@
-import { Criterion } from "./Criterion";
+import { FullCriterion } from "./Criterion";
 import { Choice } from "./Choice";
 
 export interface Question {
-  criterion: Criterion;
+  criterion: FullCriterion;
   response: Choice | null;
   evidences: null;
 }

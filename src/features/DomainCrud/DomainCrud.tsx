@@ -8,6 +8,7 @@ import { domainSlice } from "main/store/slices/domainSlice";
 import { DomainForm } from "./DomainForm";
 import { DomainFormSchema } from "./DomainForm/DomainFormSchema";
 import { getText } from 'i18n';
+import { Tag } from "antd";
 
 const columns: ColumnsType<Domain> = [
   {
@@ -28,7 +29,8 @@ const columns: ColumnsType<Domain> = [
   {
     title: getText("fields.domain_acronym") as string,
     dataIndex: "acronym",
-    responsive: ["lg"]
+    responsive: ["lg"],
+    render: (value) => <Tag color="#d46b08">{value}</Tag>,
   },
 ];
 

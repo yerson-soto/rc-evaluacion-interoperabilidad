@@ -1,21 +1,43 @@
-import { Criterion } from "library/models/Criterion";
-import { CriterionRepository } from "library/api/repositories/CriterionRepository";
-import { AbstractAPIService } from "./AbstractApiService";
+import { FullCriterion } from "library/models/Criterion";
 import { APIResponse } from "library/common/interfaces";
 import { Choice } from "library/models/Choice";
+import { Criterion } from "library/models/Criterion";
+import { AbstractCrudService } from "./AbstractCrudService";
+import { CriterionMapper } from "library/api/mappers/CriterionMapper";
+import { CriterionFormSchema } from "features/CriterionCrud/CriterionForm/CriterionFormSchema";
+import { GetChoice } from "../dto/choice-dto";
+import { ChoiceMapper } from '../mappers/ChoiceMapper';
 import * as dto from "library/api/dto/criterion-dto";
-import { LineamentMapper } from '../mappers/LineamentMapper';
 
-export class CriterionService
-  extends AbstractAPIService
-  implements CriterionRepository
-{
-  getByDomain(domainId: number): Promise<Criterion[]> {
+export class CriterionService extends AbstractCrudService<
+  Criterion,
+  dto.GetCriterion,
+  dto.CreateCriterion,
+  CriterionFormSchema
+> {
+  mapper: CriterionMapper;
+  getAllUrl: string;
+  createUrl: string;
+
+  constructor() {
+    super();
+    this.mapper = new CriterionMapper();
+    this.getAllUrl = "/criterion";
+    this.createUrl = "/criterion";
+  }
+  
+  getDetailUrl(id: number): string {
+    return "/criterion/" + id.toString();
+  };
+
+  getByDomain(domainId: number): Promise<FullCriterion[]> {
     return new Promise((resolve, reject) => {
+      const url = this.getDetailUrl(domainId);
+      
       this.client
-        .get<APIResponse<dto.GetCriterion[]>>(`/criterions/${domainId}`)
+        .get<APIResponse<dto.GetCriterion[]>>(url)
         .then((res) => {
-          const criterions = res.data.result.map(this.mapResult.bind(this));
+          const criterions = res.data.result.map(this.mapper.fromAPIFull);
           resolve(criterions);
         })
         .catch(() => reject("No se pudo cargar los criterios"));
@@ -25,35 +47,14 @@ export class CriterionService
   changeLevel(data: dto.ChangeLevel): Promise<Choice> {
     return new Promise((resolve, reject) => {
       this.client
-        .post<APIResponse<dto.GetChoice>>("/evaluationtechnics", data)
+        .post<APIResponse<GetChoice>>("/evaluationtechnics", data)
         .then((res) => {
-          const choice: Choice = this.mapChoice(res.data.result);
+          const choiceMapper = new ChoiceMapper();
+          const choice: Choice = choiceMapper.fromAPI(res.data.result);
           resolve(choice);
         })
         .catch(() => reject("Error al cambiar el nivel"));
     });
   }
-
-  mapChoice(data: dto.GetChoice): Choice {
-    return {
-      id: data.responsesId,
-      details: data.responseDecription,
-      level: {
-        id: data.levelsResponse.levelsId,
-        name: data.levelsResponse.description,
-        value: data.levelsResponse.levelValue,
-      },
-    };
-  }
-
-  mapResult(result: dto.GetCriterion): Criterion {
-    const lineamentMapper = new LineamentMapper();
-    
-    return {
-      id: result.id,
-      name: result.description,
-      categories: result.lineaments.map(lineamentMapper.fromAPI),
-      choices: result.responses.map((response) => this.mapChoice(response)),
-    };
-  }
 }
+

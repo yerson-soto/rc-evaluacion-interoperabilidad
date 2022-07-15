@@ -15,11 +15,12 @@ import { ForgotPassword } from "features/ForgotPassword";
 import { NotFound } from "features/NotFound";
 import { DomainCrud } from "features/DomainCrud";
 import { LineamentCrud } from "features/LineamentCrud";
+import { CriterionCrud } from "features/CriterionCrud";
 
 function App() {
   // Create feature to prevent useList executes many times in range of time
   // useInitialData();
-  
+
   const basename = process.env.PUBLIC_URL;
 
   // TODO: Refactor as object
@@ -55,6 +56,7 @@ function App() {
 
             <Route path={paths.domains.index} element={<DomainCrud />} />
             <Route path={paths.lineaments.index} element={<LineamentCrud />} />
+            <Route path={paths.criterions.index} element={<CriterionCrud />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -11,6 +11,7 @@ import {
   LoginOutlined,
   AlignLeftOutlined,
   AppstoreOutlined,
+  ReconciliationOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
@@ -62,6 +63,7 @@ export default function Sidenav(props: SidenavProps) {
       getItem("Evaluaciones", "2", "/evaluaciones", <AppstoreFilled />),
       getItem("Dominios", "3", paths.domains.index, <SignalFilled />),
       getItem("Lineamientos", "4", paths.lineaments.index, <AlignLeftOutlined />),
+      getItem("Criterios", "5", paths.criterions.index, <ReconciliationOutlined />),
       getItem("Iniciar Sesión", "9", paths.auth.login.reverse(), <LoginOutlined />),
     ];
   };

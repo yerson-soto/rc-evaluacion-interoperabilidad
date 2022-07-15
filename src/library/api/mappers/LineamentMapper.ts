@@ -1,9 +1,8 @@
 import { Mapper } from "library/common/interfaces";
-import { Lineament } from "library/models/Lineament";
+import { LightLineament, Lineament } from "library/models/Lineament";
 import { LineamentFormSchema } from "features/LineamentCrud/LineamentForm/LineamentFormSchema";
 import { GetLineament, CreateLineament } from "../dto/lineament-dto";
 import { DomainMapper } from "./DomainMapper";
-import { Domain } from "library/models/Domain";
 
 export class LineamentMapper
   implements
@@ -12,7 +11,6 @@ export class LineamentMapper
   formSchemaToAPI(schema: LineamentFormSchema): CreateLineament {
     return {
       domainId: schema.domainId,
-      description: schema.nomenclature,
       definictionLineament: schema.description,
     };
   }
@@ -24,9 +22,15 @@ export class LineamentMapper
       id: data.id,
       nomenclature: data.description,
       description: data.definictionLineament,
-      domain: data.domain 
-        ? domainMapper.fromAPI(data.domain) 
-        : {} as Domain
+      domain: domainMapper.fromAPI(data.domain)
+    };
+  }
+
+  fromAPILighweight(data: GetLineament): LightLineament {
+    return {
+      id: data.id,
+      nomenclature: data.description,
+      description: data.definictionLineament
     };
   }
 }

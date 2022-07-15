@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Domain } from "library/models/Domain";
-import { Space, Table, TableProps } from "antd";
+import { Space, TableProps } from "antd";
 import { DeleteAction } from "./DeleteAction";
 import { EditAction, RenderEdit } from "./EditAction";
 import { DetailAction, RenderDetail } from "./DetailAction";
@@ -9,8 +8,6 @@ import { CrudReducer } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { useListAction } from "./useListAction";
 import { RootState } from "main/store";
-
-import type { TableRowSelection } from "antd/lib/table/interface";
 
 interface UseCrudOptions<T, FormSchema> {
   idSource: keyof T;
@@ -25,8 +22,6 @@ interface UseCrudOptions<T, FormSchema> {
 
 export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-  const [loading, setLoading] = React.useState(false)
 
   const {
     idSource,
@@ -48,17 +43,6 @@ export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
   const getDataWithKeys = (): T[] => {
     return results.map((row) => ({ key: row[idSource], ...row }));
   };
-
-
-
-  const start = () => {
-    setLoading(true);
-    // ajax request after empty completing
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-      setLoading(false);
-    }, 1000);
-  };
   
   const onChange: TableProps<T>["onChange"] = (
     pagination,
@@ -78,8 +62,6 @@ export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  
-  const hasSelected = selectedRowKeys.length > 0;
 
   const actionColumns: ColumnsType<T> = [
     {

@@ -5,13 +5,15 @@ import { authSlice } from "./slices/authSlice";
 import { evaluationSlice } from "./slices/evaluationSlice";
 import { domainSlice } from "./slices/domainSlice";
 import { lineamentSlice } from './slices/lineamentSlice';
+import { criterionSlice } from './slices/criterionSlice';
 
 export const store = configureStore({
   reducer: {
     [authSlice.name]: authSlice.reducer,
     [evaluationSlice.name]: evaluationSlice.reducer,
     [domainSlice.name]: domainSlice.reducer,
-    [lineamentSlice.name]: lineamentSlice.reducer
+    [lineamentSlice.name]: lineamentSlice.reducer,
+    [criterionSlice.name]: criterionSlice.reducer,
   },
 });
 

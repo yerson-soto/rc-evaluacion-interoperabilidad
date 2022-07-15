@@ -28,9 +28,9 @@ export class ChoiceService extends AbstractAPIService implements ChoiceRepositor
       id: result.responsesId,
       details: result.responseDecription,
       level: {
-        id: result.levels.levelsId,
-        name: result.levels.description,
-        value: result.levels.levelValue,
+        id: result.levelsResponse.levelsId,
+        name: result.levelsResponse.description,
+        value: result.levelsResponse.levelValue,
       },
     };
   }

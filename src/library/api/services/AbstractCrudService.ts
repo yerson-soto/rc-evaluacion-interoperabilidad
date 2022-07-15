@@ -2,6 +2,7 @@ import { AbstractAPIService } from "./AbstractApiService";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { APIResponse, Mapper } from "library/common/interfaces";
 import { ID } from "library/common/types";
+import { getText } from "i18n";
 
 export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
   extends AbstractAPIService
@@ -33,14 +34,17 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
   create(schema: FormSchema): Promise<T> {
     return new Promise((resolve, reject) => {
       const data = this.mapper.formSchemaToAPI(schema);
-
+      
       this.client
         .post<APIResponse<DataReceived>>(this.createUrl, data)
         .then((res) => {
           const result = this.mapper.fromAPI(res.data.result);
           resolve(result);
         })
-        .catch(() => reject("No se pudo crear el registro"));
+        .catch((err) => {
+          const errorMessage = getText(err.response.data.message);
+          reject(errorMessage);
+        });
     });
   }
 
@@ -55,7 +59,10 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
           const result = this.mapper.fromAPI(res.data.result);
           resolve(result);
         })
-        .catch(() => reject("No se pudo editar el registro"));
+        .catch((err) => {
+          const errorMessage = getText(err.response.data.message);
+          reject(errorMessage)
+        });
     });
   }
 

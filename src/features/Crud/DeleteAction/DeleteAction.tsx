@@ -19,7 +19,7 @@ export default function DeleteAction<T>(props: DeleteActionProps<T>) {
   const { record, idSource, service, reducer, selectLoading } = props;
   const { t } = useTranslation();
 
-  const { deleteOne, isLoading } = useDeleteAction<T>({
+  const { deleteOne } = useDeleteAction<T>({
     selectLoading,
     service,
     reducer,
@@ -34,7 +34,6 @@ export default function DeleteAction<T>(props: DeleteActionProps<T>) {
       onConfirm={() => deleteOne(record[idSource] as any)}
     >
       <Button
-        loading={isLoading}
         size="small"
         type="link"
         shape="round"
