@@ -10,12 +10,12 @@ export const paths = {
       reverse: () => "/auth/registrarse"
     },
     forgotPassword: {
-      index: "clave-olvidada",
-      reverse: () => "/auth/clave-olvidada"
+      index: "verificar",
+      reverse: () => "/auth/verificar"
     },
     passwordReset: {
-      index: "restablecer-clave",
-      reverse: () => "/auth/restablecer-clave"
+      index: "restablecer",
+      reverse: () => "/auth/restablecer"
     }
   },
   admin: "/",  
@@ -31,13 +31,10 @@ export const paths = {
       reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
     },
   },
-  domains: {
-    index: "dominios",
-  },
-  lineaments: {
-    index: "lineamientos"
-  },
-  criterions: {
-    index: "criterios"
-  }
+  domains: { index: "dominios" },
+  lineaments: { index: "lineamientos" },
+  criterions: { index: "criterios" },
+  levels: { index: "niveles" },
+  choices: { index: "respuestas" },
+  users: { index: "usuarios" },
 };

@@ -11,7 +11,7 @@ export class CriterionMapper
 {
   formSchemaToAPI(schema: CriterionFormSchema): CreateCriterion {
     return {
-      name: schema.name,
+      description: schema.name,
       lineaments: schema.lineaments,
     };
   }

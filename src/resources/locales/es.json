@@ -1,12 +1,26 @@
 {
   "headings": {
     "complete_evaluation": "Completar Evaluación",
+
     "create_domain": "Crear nuevo dominio",
     "edit_domain": "Editar dominio",
     "domain_list": "Lista de Dominios",
+
     "create_lineament": "Crear nuevo lineamiento",
     "edit_lineament": "Editar lineamiento",
-    "lineament_list": "Lista de Lineamientos"
+    "lineament_list": "Lista de Lineamientos",
+
+    "create_criterion": "Crear nuevo criterio",
+    "edit_criterion": "Editar criterio",
+    "criterion_list": "Lista de Criterios",
+
+    "create_level": "Crear nuevo nivel",
+    "edit_level": "Editar nivel",
+    "level_list": "Lista de Niveles",
+
+    "create_choice": "Crear nueva respuesta",
+    "edit_choice": "Editar respuesta",
+    "choice_list": "Lista de Respuestas"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -23,14 +37,8 @@
     "justification": "Justificación",
     "next_steps": "Pasos a seguir"
   },
-  "placeholders": {
-    "domain": "Título del dominio",
-    "slug": "Identificador del dominio",
-    "domain_acronym": "Abreviatura del dominio",
-    "select_domain": "Selecciona un dominio",
-    "description": "Definición del lineamiento"
-  },
   "fields": {
+    "name": "Nombre",
     "username": "Nombre de usuario",
     "password": "Contraseña",
     "email": "Correo electrónico",
@@ -40,7 +48,26 @@
     "slug": "Slug",
     "domain_acronym": "Abreviatura",
     "description": "Descripción",
-    "nomenclature": "Nomenclatura"
+    "nomenclature": "Nomenclatura",
+    "criterion": "Criterio",
+    "lineaments": "Lineamientos",
+    "level": "Nivel",
+    "response": "Respuesta"
+  },
+  "placeholders": {
+    "domain": "Título del dominio",
+    "slug": "Identificador del dominio",
+    "domain_acronym": "Abreviatura del dominio",
+    "select_domain": "Selecciona un dominio",
+    "lineament_description": "Definición del lineamiento",
+    "criterion": "Nombre del criterio",
+    "select_lineaments": "Seleccionar lineamentos",
+    "level_name": "Nombre del nivel",
+    "level_description": "Definición del nivel",
+    "level_value": "Valor del nivel",
+    "choice_description": "Descripción de la respuesta",
+    "select_criterion": "Seleccionar criterio",
+    "select_level": "Seleccionar nivel"
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",

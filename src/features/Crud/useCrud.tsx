@@ -69,7 +69,7 @@ export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
       dataIndex: idSource as any,
       render(key, record) {
         return (
-          <Space key={key} size={0}>
+          <Space key={key} size={1} wrap>
             <DetailAction<T>
               key="detail"
               record={record}

@@ -10,7 +10,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
     return new Promise((resolve, reject) => {
       const body = { username, password };
       this.client
-        .post<APIResponse<GetToken>>("/login", body)
+        .post<APIResponse<GetToken>>("/accounts", body)
         .then((res) => {
           const token: Token = { value: res.data.result.token };
           resolve(token);
@@ -21,8 +21,11 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
 
   sendResetLink(email: string): Promise<void> {
     return new Promise((resolve, reject) => {
+      const urlBase = process.env.REACT_APP_BASE_URL || '';
+      const body = { email, urlBase };
+      
       this.client
-        .post("/send-reset-mail", { email })
+        .post("/recover", body)
         .then(() => resolve())
         .catch(() => reject(getText("alerts.send_reset_mail_failed")));
     });
@@ -33,7 +36,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
       this.client
         .post("/reset-password", { password })
         .then(() => resolve())
-        .catch(() => resolve());
+        .catch(() => reject(getText("alerts.reset_password_failed")));
     });
   }
 

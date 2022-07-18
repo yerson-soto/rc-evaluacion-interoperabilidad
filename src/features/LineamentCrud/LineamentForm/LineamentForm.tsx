@@ -93,8 +93,8 @@ export default function LineamentForm(props: LineamentFormProps) {
             rules={rules.description}
           >
             <TextArea
-              placeholder={t("placeholders.description")}
-              maxLength={200}
+              placeholder={t("placeholders.lineament_description")}
+              maxLength={300}
               allowClear
               showCount
             />

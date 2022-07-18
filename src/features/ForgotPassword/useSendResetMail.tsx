@@ -31,8 +31,8 @@ export function useSendResetMail() {
       .then(() => setSent(true))
       .catch(() => setSent(false));
 
-    start();
     setLoading(false);
+    start();
   };
 
   const resendResetMail = (): Promise<void> | undefined => {

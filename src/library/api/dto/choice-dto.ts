@@ -1,33 +1,15 @@
+import { GetLevel } from './level-dto';
+import { GetCriterion } from './criterion-dto';
+
 export interface CreateChoice {
   levelId: number;
+  criterionId: number;
   description: string;
 }
-
-// export interface GetChoice {
-//   responsesId:        number;
-//   responseDecription: string;
-//   criterion:          null;
-//   levels:             Levels;
-// }
 
 export interface GetChoice {
   responsesId: number;
   responseDecription: string;
-  levelsResponse: {
-    levelsId: number;
-    level: string;
-    description: string;
-    levelDescription: string;
-    levelValue: number;
-  };
+  levelsResponse: GetLevel;
+  criterion: GetCriterion;
 }
-
-// export interface Levels {
-//   levelsId:         number;
-//   level:            string;
-//   description:      string;
-//   levelDescription: string;
-//   levelValue:       number;
-//   responsesId:      number;
-//   responses:        null;
-// }

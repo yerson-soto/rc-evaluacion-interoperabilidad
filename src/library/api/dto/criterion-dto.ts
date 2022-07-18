@@ -2,7 +2,7 @@ import { GetChoice } from "./choice-dto";
 import { GetLineament } from "./lineament-dto";
 
 export interface CreateCriterion {
-  name: string;
+  description: string;
   lineaments: number[];
 }
 

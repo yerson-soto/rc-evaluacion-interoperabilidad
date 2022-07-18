@@ -20,7 +20,6 @@ interface FormValues {
 }
 
 export default function LoginForm(props: LoginFormProps) {
-  const [form] = Form.useForm<FormValues>();
   const { t } = useTranslation();
 
   const { isLoading, onSubmit } = props;
@@ -28,8 +27,6 @@ export default function LoginForm(props: LoginFormProps) {
   const onFinish = (values: FormValues) => {
     const { username, password, remember } = values;
     onSubmit(username, password, remember);
-
-    form.resetFields();
   };
 
   return (
@@ -37,7 +34,6 @@ export default function LoginForm(props: LoginFormProps) {
       size="large"
       name="login"
       initialValues={{ remember: true }}
-      form={form}
       onFinish={onFinish}
     >
       <Space className={classes.space} direction="vertical" size="small">

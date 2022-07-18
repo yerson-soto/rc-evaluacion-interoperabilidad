@@ -6,6 +6,9 @@ import { evaluationSlice } from "./slices/evaluationSlice";
 import { domainSlice } from "./slices/domainSlice";
 import { lineamentSlice } from './slices/lineamentSlice';
 import { criterionSlice } from './slices/criterionSlice';
+import { levelSlice } from "./slices/levelSlice";
+import { choiceSlice } from "./slices/choiceSlice";
+import { userSlice } from "./slices/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +17,9 @@ export const store = configureStore({
     [domainSlice.name]: domainSlice.reducer,
     [lineamentSlice.name]: lineamentSlice.reducer,
     [criterionSlice.name]: criterionSlice.reducer,
+    [levelSlice.name]: levelSlice.reducer,
+    [choiceSlice.name]: choiceSlice.reducer,
+    [userSlice.name]: userSlice.reducer,
   },
 });
 

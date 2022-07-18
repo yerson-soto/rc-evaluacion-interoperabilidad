@@ -11,8 +11,11 @@ import {
   LoginOutlined,
   AlignLeftOutlined,
   AppstoreOutlined,
-  ReconciliationOutlined,
+  CompressOutlined,
   LeftOutlined,
+  FormOutlined,
+  AimOutlined,
+  UsergroupAddOutlined
 } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
 import { paths } from 'library/common/constants';
@@ -60,10 +63,13 @@ export default function Sidenav(props: SidenavProps) {
   const getItems = (): MenuItem[] => {
     return [
       getItem("Dashboard", "1", "/", <PieChartFilled />),
-      getItem("Evaluaciones", "2", "/evaluaciones", <AppstoreFilled />),
-      getItem("Dominios", "3", paths.domains.index, <SignalFilled />),
-      getItem("Lineamientos", "4", paths.lineaments.index, <AlignLeftOutlined />),
-      getItem("Criterios", "5", paths.criterions.index, <ReconciliationOutlined />),
+      getItem("Usuarios", "2", paths.users.index, <UsergroupAddOutlined />),
+      getItem("Evaluaciones", "3", "/evaluaciones", <AppstoreFilled />),
+      getItem("Dominios", "4", paths.domains.index, <AimOutlined />),
+      getItem("Lineamientos", "5", paths.lineaments.index, <AlignLeftOutlined />),
+      getItem("Criterios", "6", paths.criterions.index, <CompressOutlined />),
+      getItem("Niveles", "7", paths.levels.index, <SignalFilled />),
+      getItem("Respuestas", "8", paths.choices.index, <FormOutlined />),
       getItem("Iniciar Sesión", "9", paths.auth.login.reverse(), <LoginOutlined />),
     ];
   };

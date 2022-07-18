@@ -1,5 +1,4 @@
 export interface CreateLevel {
-  level: string;
   description: string;
   levelDescription: string;
   levelValue: number;

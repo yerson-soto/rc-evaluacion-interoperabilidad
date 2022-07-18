@@ -1,15 +1,16 @@
 import { Mapper } from "library/common/interfaces";
 import { Level } from "library/models/Level";
 import { GetLevel, CreateLevel } from "../dto/level-dto";
+import { LevelFormSchema } from "features/LevelCrud/LevelForm/LevelFormSchema";
 
-// Pending to add FormSchema Type
-export class LevelMapper implements Mapper<Level, GetLevel, CreateLevel, any> {
-  formSchemaToAPI(schema: any): CreateLevel {
+export class LevelMapper
+  implements Mapper<Level, GetLevel, CreateLevel, LevelFormSchema>
+{
+  formSchemaToAPI(schema: LevelFormSchema): CreateLevel {
     return {
-      level: schema,
-      description: schema,
-      levelDescription: schema,
-      levelValue: schema,
+      levelValue: schema.value,
+      description: schema.name,
+      levelDescription: schema.description,
     };
   }
 
@@ -17,6 +18,7 @@ export class LevelMapper implements Mapper<Level, GetLevel, CreateLevel, any> {
     return {
       id: data.levelsId,
       name: data.description,
+      description: data.levelDescription,
       value: data.levelValue,
     };
   }

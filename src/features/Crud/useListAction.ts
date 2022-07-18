@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
 import { CrudReducer } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
+import { useDebouncedCallback} from 'use-debounce';
 
 interface ListAction<T> {
   service: CrudRepository<T, any>;
@@ -20,19 +21,23 @@ export function useListAction<T>({
   const results = useAppSelector(selectResults);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const fetchResults = (): void => {
-      dispatch(reducer.actions.setLoading(true));
+  const fetchResults = useDebouncedCallback(() => {
+    dispatch(reducer.actions.setLoading(true));
       
-      service.getAll()
-      .then(results => {
-        dispatch(reducer.actions.getSuccess(results))
-      })
-      .catch((message) => {
-        dispatch(reducer.actions.getFailed(message))
-      })  
-    };
-    
+    service.getAll()
+    .then(results => {
+      console.log('fetched', results);
+      dispatch(reducer.actions.getSuccess(results))
+    })
+    .catch((message) => {
+      dispatch(reducer.actions.getFailed(message))
+    })  
+  }, 1000, {
+    leading: true,
+    trailing: false
+  })
+
+  useEffect(() => {
     fetchResults();
 
     // eslint-disable-next-line

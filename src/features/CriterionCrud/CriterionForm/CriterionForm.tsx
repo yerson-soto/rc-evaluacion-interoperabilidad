@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { AlignRightOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Select, Tag } from "antd";
+import { CompressOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Select } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { CriterionFormSchema, rules } from "./CriterionFormSchema";
 import { useCriterionForm } from "./useCriterionForm";
@@ -67,12 +67,12 @@ export default function CriterionForm(props: CriterionFormProps) {
           layout="vertical"
         >
           <Form.Item
-            name="description"
+            name="name"
             label={t("fields.criterion")}
             rules={rules.name}
           >
             <Input
-              suffix={<AlignRightOutlined />}
+              suffix={<CompressOutlined />}
               type="text"
               placeholder={t("placeholders.criterion")}
             />

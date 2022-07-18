@@ -1,8 +1,15 @@
 import { AbstractAPIService } from "./AbstractApiService";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { APIResponse, Mapper } from "library/common/interfaces";
 import { ID } from "library/common/types";
 import { getText } from "i18n";
+
+export interface CrudRepository<T, FormSchema> {
+  getAll: () => Promise<T[]>;
+  getById: () => Promise<T>;
+  create: (formSchema: FormSchema) => Promise<T>;
+  edit: (id: ID, formSchema: FormSchema) => Promise<T>;
+  delete: (id: ID) => Promise<void>;
+}
 
 export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
   extends AbstractAPIService
