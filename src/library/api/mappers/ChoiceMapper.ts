@@ -13,7 +13,7 @@ export class ChoiceMapper
     return {
       levelId: schema.levelId,
       criterionId: schema.criterionId,
-      description: schema.details,
+      responseDecription: schema.details
     };
   }
 

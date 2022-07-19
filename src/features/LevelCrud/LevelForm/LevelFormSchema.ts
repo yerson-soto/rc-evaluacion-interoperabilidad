@@ -3,7 +3,6 @@ import { Rule } from "antd/lib/form";
 
 export interface LevelFormSchema {
   name: string;
-  value: number;
   description: string;
 }
 
@@ -15,9 +14,6 @@ export const rules: Record<keyof LevelFormSchema, Rule[]> = {
         field: getText("fields.name"),
       }),
     },
-  ],
-  value: [
-
   ],
   description: [
     {

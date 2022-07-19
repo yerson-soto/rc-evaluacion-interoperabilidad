@@ -44,6 +44,7 @@ export class EvaluationService
       organization: {
         id: result.organismo.id,
         name: result.organismo.orgasnimo,
+        emailDomain: 'map.gob.do',
         acronym: result.organismo.siglas,
       },
       dateCreated: result.dateInitial,

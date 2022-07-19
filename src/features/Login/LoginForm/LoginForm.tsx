@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { paths } from "library/common/constants";
 import { Box } from "library/components/Box";
 import { useTranslation } from "react-i18next";
+import { LoginFormSchema, rules } from './LoginFormSchema';
 
 import classes from "./LoginForm.module.css";
 
@@ -13,18 +14,12 @@ interface LoginFormProps {
   onSubmit: (username: string, password: string, remember: boolean) => void;
 }
 
-interface FormValues {
-  username: string;
-  password: string;
-  remember: boolean;
-}
-
 export default function LoginForm(props: LoginFormProps) {
   const { t } = useTranslation();
 
   const { isLoading, onSubmit } = props;
 
-  const onFinish = (values: FormValues) => {
+  const onFinish = (values: LoginFormSchema) => {
     const { username, password, remember } = values;
     onSubmit(username, password, remember);
   };
@@ -39,10 +34,10 @@ export default function LoginForm(props: LoginFormProps) {
       <Space className={classes.space} direction="vertical" size="small">
         <Form.Item
           name="username"
-          rules={[{ required: true, message: "Please input your Username!" }]}
+          rules={rules.username}
         >
           <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
+            prefix={<UserOutlined />}
             placeholder={t("fields.username")}
           />
         </Form.Item>
@@ -52,7 +47,7 @@ export default function LoginForm(props: LoginFormProps) {
           rules={[{ required: true, message: "Please input your Password!" }]}
         >
           <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
+            prefix={<LockOutlined />}
             type="password"
             placeholder={t("fields.password")}
           />

@@ -1,7 +1,5 @@
 export interface CreateUser {
   document: string;
-  firtName: string;
-  lastName: string;
   email: string;
   urlBase: string;
   userType: number;
@@ -10,7 +8,7 @@ export interface CreateUser {
 export interface GetUser {
   id: string;
   document: string;
-  firstName: string;
+  firtName: string;
   lastName: string;
   email: string;
   urlBase: string;

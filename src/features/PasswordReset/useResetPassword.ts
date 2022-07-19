@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { message } from 'antd';
-import { useSearchParams } from 'react-router-dom';
 import { AuthService } from "library/api/services/AuthService";
 import { useTranslation } from 'react-i18next';
+import { useResetToken } from './useResetToken';
 
 type Status = 'initial' | 'success' | 'error' | 'forbidden';
 
 export function useResetPassword() {
   const [isLoading, setLoading] = useState(false);
   const [status, setStatus] = useState<Status>('forbidden');
-  const [queryParams] = useSearchParams();
+  const resetToken = useResetToken();
 
   const { t } = useTranslation();
 
@@ -19,10 +19,10 @@ export function useResetPassword() {
 
   useEffect(() => { 
     const checkHaveAccess = () => {
-      const resetLink = queryParams.get('token');
+      console.log(resetToken);
 
-      if (resetLink) {
-        authService.validateResetLink(resetLink)
+      if (resetToken) {
+        authService.validateResetLink(resetToken)
           .then(() => setStatus('initial'))
           .catch(() => setStatus('forbidden'))
           

@@ -15,68 +15,68 @@ import { EvaluationFilter } from "./EvaluationFilter";
 
 const { useBreakpoint } = Grid;
 
-const fakeData: Evaluation[] = [
-  {
-    uid: "abcd-efgh",
-    dateCreated: "2022-06-05",
-    organization: {
-      id: 1,
-      name: "Ministerio de Industria y Comercio",
-      acronym: "MIYPC",
-    },
-    score: 0.75,
-  },
-  {
-    uid: "abcd-efgh-asd",
-    dateCreated: "2022-06-05",
-    organization: {
-      id: 1,
-      name: "Ministerio de Industria y Comercio",
-      acronym: "MIYPC",
-    },
-    score: 0,
-  },
-  {
-    uid: "abc3d-efgh",
-    dateCreated: "2022-06-05",
-    organization: {
-      id: 2,
-      name: "Ministerio de Industria y Comercio",
-      acronym: "MIYPC",
-    },
-    score: 2.5,
-  },
-  {
-    uid: "abc3d-e34-fgh",
-    dateCreated: "2022-06-05",
-    organization: {
-      id: 2,
-      name: "Ministerio de Industria y Comercio",
-      acronym: "MIYPC",
-    },
-    score: 3,
-  },
-  {
-    uid: "abcd-efgh-2",
-    dateCreated: "2022-06-05",
-    organization: {
-      id: 3,
-      name: "Ministerio de Administracion Publica",
-      acronym: "EFGH",
-    },
-    score: 4.1,
-  },
-  {
-    uid: "abcd-efgh-3",
-    dateCreated: "2022-06-05",
-    organization: {
-      id: 4,
-      name: "Ministerio de Turismo",
-      acronym: "ABCD",
-    },
-    score: 5,
-  },
-];
+// const fakeData: Evaluation[] = [
+//   {
+//     uid: "abcd-efgh",
+//     dateCreated: "2022-06-05",
+//     organization: {
+//       id: 1,
+//       name: "Ministerio de Industria y Comercio",
+//       acronym: "MIYPC",
+//     },
+//     score: 0.75,
+//   },
+//   {
+//     uid: "abcd-efgh-asd",
+//     dateCreated: "2022-06-05",
+//     organization: {
+//       id: 1,
+//       name: "Ministerio de Industria y Comercio",
+//       acronym: "MIYPC",
+//     },
+//     score: 0,
+//   },
+//   {
+//     uid: "abc3d-efgh",
+//     dateCreated: "2022-06-05",
+//     organization: {
+//       id: 2,
+//       name: "Ministerio de Industria y Comercio",
+//       acronym: "MIYPC",
+//     },
+//     score: 2.5,
+//   },
+//   {
+//     uid: "abc3d-e34-fgh",
+//     dateCreated: "2022-06-05",
+//     organization: {
+//       id: 2,
+//       name: "Ministerio de Industria y Comercio",
+//       acronym: "MIYPC",
+//     },
+//     score: 3,
+//   },
+//   {
+//     uid: "abcd-efgh-2",
+//     dateCreated: "2022-06-05",
+//     organization: {
+//       id: 3,
+//       name: "Ministerio de Administracion Publica",
+//       acronym: "EFGH",
+//     },
+//     score: 4.1,
+//   },
+//   {
+//     uid: "abcd-efgh-3",
+//     dateCreated: "2022-06-05",
+//     organization: {
+//       id: 4,
+//       name: "Ministerio de Turismo",
+//       acronym: "ABCD",
+//     },
+//     score: 5,
+//   },
+// ];
 
 export default function EvaluationList() {
   const navigate = useNavigate();

@@ -2,29 +2,20 @@ import { getText } from "i18n";
 import { Rule } from "antd/lib/form";
 
 export interface UserFormSchema {
-  firstName: string;
-  lastName: string;
+  identification: string;
   email: string;
   type: number;
   organizationId: number;
 }
 
 export const rules: Record<keyof UserFormSchema, Rule[]> = {
-  firstName: [
+  identification: [
     {
       required: true,
       message: getText("rules.required", {
-        field: getText("fields.first_name"),
+        field: getText("fields.identification"),
       }),
     },
-  ],
-  lastName: [
-    {
-      required: true,
-      message: getText("rules.required", {
-        field: getText("fields.last_name")
-      })
-    }
   ],
   email: [
     {
@@ -32,6 +23,10 @@ export const rules: Record<keyof UserFormSchema, Rule[]> = {
       message: getText("rules.required", {
         field: getText("fields.email")
       })
+    },
+    {
+      pattern: /^[a-z0-9_\.]+$/,
+      message: getText("rules.invalid_username")
     }
   ],
   type: [

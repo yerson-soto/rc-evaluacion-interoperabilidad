@@ -8,7 +8,6 @@ export class LevelMapper
 {
   formSchemaToAPI(schema: LevelFormSchema): CreateLevel {
     return {
-      levelValue: schema.value,
       description: schema.name,
       levelDescription: schema.description,
     };

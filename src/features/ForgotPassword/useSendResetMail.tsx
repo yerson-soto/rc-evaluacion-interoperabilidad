@@ -49,7 +49,9 @@ export function useSendResetMail() {
       disabled={!canResentMail}
       block
     >
-      {canResentMail ? t("buttons.resend_mail") : `${timeLeft / 1000} seg`}
+      {canResentMail
+        ? t("buttons.resend_mail")
+        : t("buttons.resend_mail_wait", { timeLeft: timeLeft / 1000 })}
     </Button>
   );
 

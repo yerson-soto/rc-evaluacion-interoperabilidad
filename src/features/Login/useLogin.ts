@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { useAppSelector, useAppDispatch } from "main/store/index";
 import { AuthService } from "library/api/services/AuthService";
 import { authLoading, loginDone, loginFailed } from "main/store/slices/authSlice";
@@ -17,14 +18,17 @@ export function useLogin() {
     return authService
       .createToken(username, password)
       .then((token) => {
+        console.log('token', token);
         dispatch(loginDone(token));
 
         if (remember) {
           // Save token in storage
         }
       })
-      .catch((message) => {
-        dispatch(loginFailed(message));
+      .catch((errorMessage) => {
+        dispatch(loginFailed(errorMessage));
+
+        message.error(errorMessage);
       });
   };
 

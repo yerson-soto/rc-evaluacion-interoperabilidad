@@ -1,7 +1,9 @@
+import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { useTranslation } from "react-i18next";
 import { Crud } from "features/Crud";
 import { AppDrawer } from "library/components/AppDrawer";
+import { LightLineament } from "library/models/Lineament";
 import { CriterionForm } from "./CriterionForm";
 import { CriterionFormSchema } from "./CriterionForm/CriterionFormSchema";
 import { Criterion } from "library/models/Criterion";
@@ -20,12 +22,29 @@ const columns: ColumnsType<Criterion> = [
     //   return 0;
     // },
   },
-  // {
-  //   title: getText("fields.description") as string,
-  //   dataIndex: "description",
-  //   ellipsis: true,
-  //   responsive: ["lg"],
-  // },
+  {
+    title: getText("fields.lineaments") as string,
+    dataIndex: "lineaments",
+    ellipsis: true,
+    responsive: ["lg"],
+    render: (lineaments: LightLineament[]) => {
+      const total = lineaments.length;
+      const showResponsiveTag = total > 2;
+      const showLineaments = showResponsiveTag
+        ? lineaments.slice(0, 1)
+        : lineaments;
+
+      return (
+        <Space>
+          {showLineaments.map((value) => (
+            <Tag key={value.id}>{value.nomenclature}</Tag>
+          ))}
+
+          {showResponsiveTag && <Tag key="more">+ {total - 2}</Tag>}
+        </Space>
+      );
+    },
+  },
   // {
   //   title: getText("fields.domain") as string,
   //   dataIndex: ["domain", "name"],
@@ -69,11 +88,7 @@ export default function CriterionCrud() {
         />
       )}
       detailModal={({ record, visible, onClose }) => (
-        <AppDrawer
-          title={record.name}
-          visible={visible}
-          onClose={onClose}
-        >
+        <AppDrawer title={record.name} visible={visible} onClose={onClose}>
           Criterion Detail
         </AppDrawer>
       )}

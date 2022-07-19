@@ -22,6 +22,7 @@ export class OrganizationService extends AbstractAPIService implements Organizat
     return {
       id: result.id,
       name: result.name,
+      emailDomain: result.email,
       acronym: result.acroyn
     };
   }

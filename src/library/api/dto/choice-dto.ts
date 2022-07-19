@@ -4,7 +4,7 @@ import { GetCriterion } from './criterion-dto';
 export interface CreateChoice {
   levelId: number;
   criterionId: number;
-  description: string;
+  responseDecription: string;
 }
 
 export interface GetChoice {

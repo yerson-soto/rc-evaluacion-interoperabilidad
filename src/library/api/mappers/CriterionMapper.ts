@@ -22,7 +22,7 @@ export class CriterionMapper
     return {
       id: data.id,
       name: data.description,
-      lineaments: data.lineaments.map(lineamentMapper.fromAPI),
+      lineaments: data.lineaments.map(lineamentMapper.fromAPILighweight),
     };
   }
 

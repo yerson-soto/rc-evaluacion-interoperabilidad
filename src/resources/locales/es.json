@@ -1,26 +1,24 @@
 {
   "headings": {
     "complete_evaluation": "Completar Evaluación",
-
     "create_domain": "Crear nuevo dominio",
     "edit_domain": "Editar dominio",
     "domain_list": "Lista de Dominios",
-
     "create_lineament": "Crear nuevo lineamiento",
     "edit_lineament": "Editar lineamiento",
     "lineament_list": "Lista de Lineamientos",
-
     "create_criterion": "Crear nuevo criterio",
     "edit_criterion": "Editar criterio",
     "criterion_list": "Lista de Criterios",
-
     "create_level": "Crear nuevo nivel",
     "edit_level": "Editar nivel",
     "level_list": "Lista de Niveles",
-
     "create_choice": "Crear nueva respuesta",
     "edit_choice": "Editar respuesta",
-    "choice_list": "Lista de Respuestas"
+    "choice_list": "Lista de Respuestas",
+    "create_user": "Crear nuevo usuario",
+    "edit_user": "Editar usuario",
+    "user_list": "Lista de Usuarios"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -29,7 +27,8 @@
     "forgot_password": "Ingrese su correo electrónico en el siguiente formulario para enviarle su correo de recuperación.",
     "reset_mail_sent": "Revise su bandeja de entrada. En caso de que su usuario este registrado, verá un correo de recuperación de contraseña.",
     "reset_password_success": "Su contraseña fue modificada.",
-    "reset_password_redirect": "Será redirigido para que inicie sesión con sus nuevas credenciales ({{ timeLeft }})"
+    "reset_password_redirect": "Será redirigido para que inicie sesión con sus nuevas credenciales ({{ timeLeft }})",
+    "email_domain_not_found": "La institución seleccionada no esta asociada a ningún dominio de correo electrónico, por favor contacte con el área responsable para configurar su dominio."
   },
   "dividers": {
     "lineaments": "Lineamientos",
@@ -39,7 +38,11 @@
   },
   "fields": {
     "name": "Nombre",
+    "identification": "Cédula",
+    "user_type": "Tipo de usuario",
     "username": "Nombre de usuario",
+    "first_name": "Nombre",
+    "last_name": "Apellidos",
     "password": "Contraseña",
     "email": "Correo electrónico",
     "confirm_password": "Confirmar contraseña",
@@ -52,9 +55,15 @@
     "criterion": "Criterio",
     "lineaments": "Lineamientos",
     "level": "Nivel",
-    "response": "Respuesta"
+    "response": "Respuesta",
+    "organization": "Institución"
   },
   "placeholders": {
+    "first_name": "Introduce el nombre",
+    "last_name": "Introduce el apellido",
+    "email": "Introduce el correo electrónico",
+    "select_organization": "Seleccionar organización",
+    "select_user_type": "Seleccionar tipo de usuario",
     "domain": "Título del dominio",
     "slug": "Identificador del dominio",
     "domain_acronym": "Abreviatura del dominio",
@@ -74,7 +83,8 @@
     "min_length": "{{ field }} debe contener un mínimo de {{ length }} caracteres",
     "max_length": "{{ field }} debe contener un máximo de {{ length }} caracteres",
     "length": "{{ field }} debe ser de {{ length }} caracteres",
-    "match_password": "Passwords must match"
+    "match_password": "Passwords must match",
+    "invalid_username": "Agregue un usuario válido"
   },
   "hints": {
     "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.",
@@ -98,9 +108,10 @@
     "upload": "Subir",
     "evaluate": "Evaluar",
     "login": "Iniciar Sesión",
-    "send_reset_email": "Enviar Correo",
+    "send_reset_email": "Enviar correo",
     "reset_password": "Restablecer",
     "resend_mail": "Reenviar correo",
+    "resend_mail_wait": "Reenviar en {{ timeLeft }} segundos",
     "create": "Crear",
     "save": "Guardar",
     "yes": "Si",
@@ -129,7 +140,7 @@
   },
   "backend": {
     "domain_already_exists": "El dominio ingresado ya existe",
-    "domain_slug_aready_exists": "El dominio ingresado ya existe"
+    "domain_slug_aready_exists": "El slug del dominio ya existe"
   },
   "preffixes": {
     "domain":"Dominio"

@@ -81,7 +81,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
                   key={level.id} 
                   value={level.id}
                 >
-                  {level.name} - {level.value}
+                  {t("fields.level")} {level.value} ({level.name})
                 </Select.Option>
               ))}
             </Select>

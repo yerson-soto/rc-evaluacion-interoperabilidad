@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Form, Input, InputNumber } from "antd";
-import { OrderedListOutlined, NumberOutlined } from '@ant-design/icons';
+import { Button, Form, Input } from "antd";
+import { OrderedListOutlined } from '@ant-design/icons';
 import { AppDrawer } from "library/components/AppDrawer";
 import { LevelFormSchema, rules } from "./LevelFormSchema";
 import { useLevelForm } from "./useLevelForm";
@@ -17,7 +17,7 @@ interface LevelFormProps {
 }
 
 export default function LevelForm(props: LevelFormProps) {
-  const { form, resetForm } = useLevelForm();
+  const { form, resetForm, normalizeName } = useLevelForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
@@ -67,7 +67,7 @@ export default function LevelForm(props: LevelFormProps) {
           autoComplete="off"
           layout="vertical"
         >
-          <Form.Item
+          {/* <Form.Item
             name="value"
             label={t("fields.level")}
             rules={rules.name}
@@ -76,15 +76,15 @@ export default function LevelForm(props: LevelFormProps) {
               style={{ width: '100%' }}
               min={1} 
               max={100}
-              defaultValue={1}  
               placeholder={t("placeholders.level_value")}
             />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             name="name"
             label={t("fields.name")}
             rules={rules.name}
+            normalize={normalizeName}
           >
             <Input
               suffix={<OrderedListOutlined />}

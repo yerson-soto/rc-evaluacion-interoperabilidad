@@ -1,6 +1,5 @@
 import { ColumnsType } from "antd/lib/table";
 import { useTranslation } from 'react-i18next';
-import { Tag } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { UserForm } from "./UserForm";
 import { UserFormSchema } from "./UserForm/UserFormSchema";
@@ -14,13 +13,21 @@ const columns: ColumnsType<User> = [
   {
     title: getText("fields.first_name") as string,
     dataIndex: "firstName",
-    ellipsis: true
+    ellipsis: true,
+    responsive: ['sm']
   },
   {
     title: getText("fields.last_name") as string,
     dataIndex: "lastName",
-    ellipsis: true
+    ellipsis: true,
+    responsive: ['md']
   },
+  {
+    title: getText("fields.email") as string,
+    dataIndex: "email",
+    ellipsis: true,
+    
+  }
 ];
 
 export default function UserCrud() {

@@ -18,12 +18,12 @@ export class ChoiceService extends AbstractCrudService<
   constructor() {
     super();
     this.mapper = new ChoiceMapper();
-    this.getAllUrl = "/choice";
-    this.createUrl = "/choice";
+    this.getAllUrl = "/responses";
+    this.createUrl = "/responses";
   }
   
   getDetailUrl(id: number): string {
-    return "/choice/" + id.toString();
+    return "/responses/" + id.toString();
   };
 
   getByCriterion(criterionId: number): Promise<Choice[]> {

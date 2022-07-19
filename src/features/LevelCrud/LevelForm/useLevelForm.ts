@@ -1,6 +1,5 @@
 import { Form } from "antd";
 import { LevelFormSchema } from "./LevelFormSchema";
-import { useAppSelector } from 'main/store';
 
 export function useLevelForm() {
   const [form] = Form.useForm<LevelFormSchema>();
@@ -9,5 +8,7 @@ export function useLevelForm() {
     form.resetFields();
   };
 
-  return { form, resetForm };
+  const normalizeName = (value: string) => value.toUpperCase();
+
+  return { form, resetForm, normalizeName };
 }

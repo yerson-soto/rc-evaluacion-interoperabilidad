@@ -6,6 +6,7 @@ export interface LineamentFormSchema {
   description: string;
 }
 
+
 export const rules: Record<keyof LineamentFormSchema, Rule[]> = {
   domainId: [
     {

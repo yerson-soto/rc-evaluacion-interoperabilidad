@@ -1,3 +1,3 @@
 export interface GetToken {
-  token: string;
+  tokenUser: string;
 }

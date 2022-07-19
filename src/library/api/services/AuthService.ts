@@ -4,15 +4,24 @@ import { GetToken } from "library/api/dto/auth-dto";
 import { Token } from "library/models/Token";
 import { APIResponse } from "library/common/interfaces";
 import { getText } from "i18n";
+import { paths } from "../../common/constants";
 
 export class AuthService extends AbstractAPIService implements AuthRepository {
+  private get resetLink(): string {
+    return (
+      process.env.REACT_APP_BASE_URL +
+      paths.auth.passwordReset.reverse() +
+      "?token="
+    );
+  }
+
   createToken(username: string, password: string): Promise<Token> {
     return new Promise((resolve, reject) => {
       const body = { username, password };
       this.client
-        .post<APIResponse<GetToken>>("/accounts", body)
+        .post<GetToken>("/accounts", body)
         .then((res) => {
-          const token: Token = { value: res.data.result.token };
+          const token: Token = { value: res.data.tokenUser };
           resolve(token);
         })
         .catch(() => reject(getText("alerts.login_failed")));
@@ -21,9 +30,8 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
 
   sendResetLink(email: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      const urlBase = process.env.REACT_APP_BASE_URL || '';
-      const body = { email, urlBase };
-      
+      const body = { email, urlBase: this.resetLink };
+
       this.client
         .post("/recover", body)
         .then(() => resolve())

@@ -11,9 +11,7 @@ export class UserMapper
     const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:3000'
     
     return {
-      document: "",
-      firtName: schema.firstName,
-      lastName: schema.lastName,
+      document: schema.identification,
       email: schema.email,
       userType: schema.type,
       urlBase: baseUrl
@@ -23,7 +21,8 @@ export class UserMapper
   fromAPI(data: GetUser): User {
     return {
       uid: data.id,
-      firstName: data.firstName,
+      identification: data.document,
+      firstName: data.firtName,
       lastName: data.lastName,
       email: data.email,
       type: data.userType,

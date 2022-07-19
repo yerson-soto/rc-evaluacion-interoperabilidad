@@ -1,10 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Form, Input, Select } from "antd";
-import { UserOutlined, MailOutlined } from "@ant-design/icons";
+import { Alert, Button, Form, Input, Select } from "antd";
+import { IdcardOutlined, MailOutlined } from "@ant-design/icons";
 import { AppDrawer } from "library/components/AppDrawer";
 import { UserFormSchema, rules } from "./UserFormSchema";
 import { useUserForm } from "./useUserForm";
+import { MaskedInput } from 'antd-mask-input';
+import { UserType } from '../../../library/common/enums';
 
 interface UserFormProps {
   show: boolean;
@@ -16,9 +18,16 @@ interface UserFormProps {
 }
 
 export default function UserForm(props: UserFormProps) {
-  const { form, organizations, resetForm } = useUserForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
+  const { 
+    form, 
+    organizations, 
+    domainNotFound, 
+    emailDomain, 
+    changeDomain, 
+    resetForm 
+  } = useUserForm();
 
   const title = isEdit
     ? t("headings.edit_user")
@@ -34,7 +43,9 @@ export default function UserForm(props: UserFormProps) {
 
   const onFinish = () => {
     form.validateFields().then((values) => {
-      onSave(values).then(onHide);
+      const email = values.email + emailDomain;
+
+      onSave({ ...values, email }).then(onHide);
     });
   };
 
@@ -67,26 +78,14 @@ export default function UserForm(props: UserFormProps) {
           layout="vertical"
         >
           <Form.Item
-            name="firstName"
-            label={t("fields.firstName")}
-            rules={rules.firstName}
+            name="identification"
+            label={t("fields.identification")}
+            rules={rules.identification}
           >
-            <Input 
-              suffix={<UserOutlined />}
-              type="text"
-              placeholder={t("placeholders.firstName")}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="lastName"
-            label={t("fields.lastName")}
-            rules={rules.lastName}
-          >
-            <Input 
-              suffix={<UserOutlined />}
-              type="text"
-              placeholder={t("placeholders.lastName")}
+            <MaskedInput 
+              size="large" 
+              suffix={<IdcardOutlined />} 
+              mask="000-0000000-0" 
             />
           </Form.Item>
 
@@ -99,29 +98,38 @@ export default function UserForm(props: UserFormProps) {
               showSearch
               placeholder={t("placeholders.select_organization")}
               optionFilterProp="children"
+              onChange={changeDomain}
             >
               {organizations.map((organization) => (
                 <Select.Option 
                   key={organization.id} 
                   value={organization.id}
                 >
-                  {organization.name} ({organization.acronym})
+                  {organization.name}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
 
-          <Form.Item
-            name="email"
-            label={t("fields.email")}
-            rules={rules.email}
-          >
-            <Input 
-              suffix={<MailOutlined />}
-              type="text"
-              placeholder={t("placeholders.email")}
+          {domainNotFound && (
+            <Alert 
+              type="warning" 
+              message={t("texts.email_domain_not_found")} 
             />
-          </Form.Item>
+          )}
+
+          {emailDomain && (
+            <Form.Item
+              name="email"
+              label={t("fields.email")}
+              rules={rules.email}
+            >
+              <Input 
+                addonAfter={emailDomain}
+                placeholder={t("placeholders.email")}
+              />
+            </Form.Item>
+          )}
 
           <Form.Item
             name="type"
@@ -133,14 +141,15 @@ export default function UserForm(props: UserFormProps) {
               placeholder={t("placeholders.select_user_type")}
               optionFilterProp="children"
             >
-              {organizations.map((organization) => (
-                <Select.Option 
-                  key={organization.id} 
-                  value={organization.id}
-                >
-                  {organization.name} ({organization.acronym})
-                </Select.Option>
-              ))}
+              <Select.Option key="1" value={UserType.Admin}>
+                Administrador
+              </Select.Option>
+              <Select.Option key="2" value={UserType.Role2}>
+                Técnico
+              </Select.Option>
+              <Select.Option key="3" value={UserType.Role3}>
+                Analista
+              </Select.Option>
             </Select>
           </Form.Item>
         </Form>
