@@ -38,3 +38,8 @@ export const paths = {
   choices: { index: "respuestas" },
   users: { index: "usuarios" },
 };
+
+export const keys = {
+  resetTokenParam: 'token',
+  tokenLocalStorage: 'mdmitkn'
+}

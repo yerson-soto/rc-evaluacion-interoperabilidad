@@ -51,8 +51,9 @@ export function createCrudSlice<T, State extends CrudState<T>, Name extends stri
           }),
           itemExists = itemIndex !== -1;
         
-        if (itemExists)
-          state.results.splice(itemIndex, 1, action.payload as Draft<T>);
+        if (itemExists) {
+          state.results.splice(itemIndex, 1, action.payload as Draft<T>)
+        }
 
         state.isLoading = false;
         state.hasError = false;

@@ -25,13 +25,12 @@ export class ChoiceService extends AbstractCrudService<
   getDetailUrl(id: number): string {
     return "/responses/" + id.toString();
   };
-
+  
   getByCriterion(criterionId: number): Promise<Choice[]> {
     return new Promise((resolve, reject) => {
       this.client
         .get<APIResponse<GetChoice[]>>(`/responses/${criterionId}`)
         .then((res) => {
-          console.log("res", res.data);
           const choiceList = res.data.result;
 
           const mappedChoices = choiceList.map((choice) => {

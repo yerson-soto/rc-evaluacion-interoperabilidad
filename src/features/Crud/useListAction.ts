@@ -3,6 +3,7 @@ import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
 import { CrudReducer } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { useDebouncedCallback} from 'use-debounce';
+import { useFetchDebounced } from '../../library/hooks/useFetchDebounced';
 
 interface ListAction<T> {
   service: CrudRepository<T, any>;
@@ -21,7 +22,7 @@ export function useListAction<T>({
   const results = useAppSelector(selectResults);
   const dispatch = useAppDispatch();
 
-  const fetchResults = useDebouncedCallback(() => {
+  const fetchResults = useFetchDebounced(() => {
     dispatch(reducer.actions.setLoading(true));
       
     service.getAll()
@@ -32,9 +33,6 @@ export function useListAction<T>({
     .catch((message) => {
       dispatch(reducer.actions.getFailed(message))
     })  
-  }, 1000, {
-    leading: true,
-    trailing: false
   })
 
   useEffect(() => {

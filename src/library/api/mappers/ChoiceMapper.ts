@@ -20,12 +20,12 @@ export class ChoiceMapper
   fromAPI(data: GetChoice): Choice {
     const levelMapper = new LevelMapper();
     const criterionMapper = new CriterionMapper();
-
+    
     return {
       id: data.responsesId,
       details: data.responseDecription,
       level: levelMapper.fromAPI(data.levelsResponse),
-      criterion: criterionMapper.fromAPI(data.criterion)
+      criterion: criterionMapper.fromAPI(data.criterionResponse)
     };
   }
 }

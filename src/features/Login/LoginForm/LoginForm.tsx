@@ -31,20 +31,24 @@ export default function LoginForm(props: LoginFormProps) {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
-      <Space className={classes.space} direction="vertical" size="small">
+      <Space 
+        className={classes.space} 
+        direction="vertical" 
+        size="small"
+      >
         <Form.Item
           name="username"
           rules={rules.username}
         >
           <Input
             prefix={<UserOutlined />}
-            placeholder={t("fields.username")}
+            placeholder={t("fields.email")}
           />
         </Form.Item>
 
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={rules.password}
         >
           <Input
             prefix={<LockOutlined />}
@@ -53,9 +57,14 @@ export default function LoginForm(props: LoginFormProps) {
           />
         </Form.Item>
       </Space>
+      
       <Form.Item>
         <Box className={classes.forgotWrapper}>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Form.Item 
+            name="remember" 
+            valuePropName="checked" 
+            noStyle
+          >
             <Checkbox>{t("fields.remember")}</Checkbox>
           </Form.Item>
 
@@ -69,7 +78,12 @@ export default function LoginForm(props: LoginFormProps) {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={isLoading} block>
+        <Button 
+          type="primary" 
+          htmlType="submit" 
+          loading={isLoading} 
+          block
+        >
           {t("buttons.login")}
         </Button>
       </Form.Item>

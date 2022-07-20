@@ -3,7 +3,7 @@ import { GetLineament } from "./lineament-dto";
 
 export interface CreateCriterion {
   description: string;
-  lineaments: number[];
+  lineamentsId: number[];
 }
 
 export interface GetCriterion {

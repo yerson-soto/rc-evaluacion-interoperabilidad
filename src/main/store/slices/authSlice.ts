@@ -2,14 +2,31 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CommonState } from "library/common/interfaces";
 import { ErrorMessage } from "library/common/types";
 import { Token } from "library/models/Token";
+import { AuthUser } from "library/models/User";
+import { keys } from "library/common/constants";
 
 interface AuthState extends CommonState {
+  user: AuthUser;
   token: string;
+  isLogged: boolean;
 }
 
+const defaultToken = localStorage.getItem(keys.tokenLocalStorage) || "";
+
 const initialState: AuthState = {
-  token: "",
-  isLoading: false,
+  user: {
+    uid: "",
+    identification: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    type: 0,
+    organizationId: 0,
+    organization: null,
+  },
+  token: defaultToken,
+  isLogged: false,
+  isLoading: true,
   hasError: false,
   errorMessage: "",
 };
@@ -32,7 +49,27 @@ export const authSlice = createSlice({
       state.hasError = true;
       state.errorMessage = action.payload;
     },
+
+    loadUserSuccess: (state, action: PayloadAction<AuthUser>) => {
+      state.user = action.payload
+      state.isLogged = true;
+      state.isLoading = false;
+      state.hasError = false;
+      state.errorMessage = "";
+    },
+    loadUserFailed: (state, action: PayloadAction<ErrorMessage>) => {
+      state.isLoading = false;
+      state.hasError = true;
+      state.token = "";
+      state.errorMessage = action.payload;
+    },
   },
 });
 
-export const { authLoading, loginDone, loginFailed } = authSlice.actions;
+export const {
+  authLoading,
+  loginDone,
+  loginFailed,
+  loadUserSuccess,
+  loadUserFailed,
+} = authSlice.actions;

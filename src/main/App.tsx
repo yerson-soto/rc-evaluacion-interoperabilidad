@@ -17,10 +17,15 @@ import { CriterionCrud } from "features/CriterionCrud";
 import { LevelCrud } from "features/LevelCrud";
 import { ChoiceCrud } from "features/ChoiceCrud";
 import { UserCrud } from "features/UserCrud";
+import { useAuthUser } from "library/hooks/useAuthUser";
+
+import { GuestRoute } from "library/components/GuestRoute";
 
 function App() {
   // Create feature to prevent useList executes many times in range of time
   // useInitialData();
+
+  useAuthUser();
 
   const basename = process.env.PUBLIC_URL;
 
@@ -28,8 +33,14 @@ function App() {
   return (
     <BrowserRouter basename={basename}>
       <Routes>
-        <Route path={paths.auth.index} element={<AuthPanel />}>
-          <Route path={paths.auth.login.index} element={<Login />} />
+        <Route 
+          path={paths.auth.index} 
+          element={<AuthPanel />}
+        >
+          <Route
+            path={paths.auth.login.index} 
+            element={<Login />} 
+          />
           <Route
             path={paths.auth.forgotPassword.index}
             element={<ForgotPassword />}
@@ -41,9 +52,40 @@ function App() {
         </Route>
 
         <Route path={paths.admin} element={<AdminPanel />}>
-          <Route path={paths.dashboard} element={<Dashboard />} />
+          <Route 
+            path={paths.dashboard} 
+            element={<Dashboard />} 
+          />
+          <Route 
+            path={paths.users.index} 
+            element={<UserCrud />} 
+          />
+          <Route 
+            path={paths.domains.index} 
+            element={<DomainCrud />} 
+          />
+          <Route 
+            path={paths.lineaments.index} 
+            element={<LineamentCrud />} 
+          />
+          <Route 
+            path={paths.criterions.index} 
+            element={<CriterionCrud />} 
+          />
+          <Route 
+            path={paths.levels.index} 
+            element={<LevelCrud />} 
+          />
+          <Route 
+            path={paths.choices.index} 
+            element={<ChoiceCrud />} 
+          />
+          
           <Route path={paths.evaluations.index}>
-            <Route index element={<EvaluationList />} />
+            <Route 
+              index
+              element={<EvaluationList />} 
+            />
             <Route
               path={paths.evaluations.detail.index}
               element={<EvaluationDetail />}
@@ -54,12 +96,6 @@ function App() {
             />
           </Route>
 
-          <Route path={paths.domains.index} element={<DomainCrud />} />
-          <Route path={paths.lineaments.index} element={<LineamentCrud />} />
-          <Route path={paths.criterions.index} element={<CriterionCrud />} />
-          <Route path={paths.levels.index} element={<LevelCrud />} />
-          <Route path={paths.choices.index} element={<ChoiceCrud />} />
-          <Route path={paths.users.index} element={<UserCrud />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

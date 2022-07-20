@@ -4,3 +4,9 @@ export interface GetOrganization {
   acroyn: string;
   email: string;
 }
+
+export interface GetOrganizationNested {
+  id: number;
+  orgasnimo: string;
+  siglas: string;
+}

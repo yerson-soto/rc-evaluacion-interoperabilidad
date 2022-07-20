@@ -11,5 +11,5 @@ export interface GetChoice {
   responsesId: number;
   responseDecription: string;
   levelsResponse: GetLevel;
-  criterion: GetCriterion;
+  criterionResponse: GetCriterion;
 }

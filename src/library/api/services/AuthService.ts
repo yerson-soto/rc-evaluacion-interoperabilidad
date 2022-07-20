@@ -1,12 +1,21 @@
 import { AbstractAPIService } from "./AbstractApiService";
 import { AuthRepository } from "library/api/repositories/AuthRepository";
-import { GetToken } from "library/api/dto/auth-dto";
+import { GetAuthUser, GetToken } from "library/api/dto/auth-dto";
 import { Token } from "library/models/Token";
 import { APIResponse } from "library/common/interfaces";
 import { getText } from "i18n";
-import { paths } from "../../common/constants";
+import { paths } from "library/common/constants";
+import { AuthUser } from "library/models/User";
+import { AuthMapper } from "../mappers/AuthMapper";
 
 export class AuthService extends AbstractAPIService implements AuthRepository {
+  private mapper!: AuthMapper;
+
+  constructor() {
+    super();
+    this.mapper = new AuthMapper();
+  }
+  
   private get resetLink(): string {
     return (
       process.env.REACT_APP_BASE_URL +
@@ -26,6 +35,18 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
         })
         .catch(() => reject(getText("alerts.login_failed")));
     });
+  }
+
+  getAuthUser(token: string): Promise<AuthUser> {
+    return new Promise((resolve, reject) => {
+      this.client
+        .post<APIResponse<GetAuthUser>>("tokenUser", { token })
+        .then((res) => {
+          const user = this.mapper.userFromAPI(res.data.result);
+          resolve(user);
+        })
+        .catch(() => reject(getText("alerts.get_auth_user_failed")))
+    })
   }
 
   sendResetLink(email: string): Promise<void> {
