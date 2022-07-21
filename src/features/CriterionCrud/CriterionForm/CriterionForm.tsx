@@ -16,7 +16,7 @@ interface CriterionFormProps {
 }
 
 export default function CriterionForm(props: CriterionFormProps) {
-  const { form, selectOptions, resetForm } = useCriterionForm();
+  const { form, optionGroup, changeOption, resetForm } = useCriterionForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
@@ -90,10 +90,9 @@ export default function CriterionForm(props: CriterionFormProps) {
               placeholder={t("placeholders.select_lineaments")}
               optionFilterProp="children"
               maxTagCount="responsive"
-              // tagRender={(props) => <Tag closable={props.closable}>{props.label}</Tag>}
-              
+              onChange={changeOption}
             >
-              {selectOptions.map((group) => (
+              {optionGroup.map((group) => (
                 <Select.OptGroup 
                   key={group.id} 
                   label={`${t("preffixes.domain")} ${group.name}`}

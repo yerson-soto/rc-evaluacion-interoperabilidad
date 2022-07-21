@@ -1,13 +1,32 @@
 import { Evaluation } from "library/models/Evaluation";
 import { APIResponse } from "library/common/interfaces";
-import { EvaluationRepository } from "library/api/repositories/EvaluationRepository";
-import { AbstractAPIService } from "./AbstractApiService";
 import * as dto from "library/api/dto/evaluation-dto";
+import { AbstractCrudService } from "./AbstractCrudService";
+import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
+import { EvaluationMapper } from "library/api/mappers/EvaluationMapper";
 
-export class EvaluationService
-  extends AbstractAPIService
-  implements EvaluationRepository
-{
+export class EvaluationService extends AbstractCrudService<
+  Evaluation,
+  dto.GetEvaluation,
+  dto.CreateEvaluation,
+  EvaluationFormSchema
+> {
+
+  mapper: EvaluationMapper;
+  getAllUrl: string;
+  createUrl: string;
+
+  constructor() {
+    super();
+    this.mapper = new EvaluationMapper();
+    this.getAllUrl = "/evaluationsinstitutional/1/10";
+    this.createUrl = "evaluationsinstitutional";
+  }
+
+  getDetailUrl(uid: string): string {
+    return "/evaluationsinstitutional/" + uid;
+  };
+  
   getAll(): Promise<Evaluation[]> {
     return new Promise((resolve, reject) => {
       this.client
@@ -44,7 +63,7 @@ export class EvaluationService
       organization: {
         id: result.organismo.id,
         name: result.organismo.orgasnimo,
-        emailDomain: 'map.gob.do',
+        emailDomain: "map.gob.do",
         acronym: result.organismo.siglas,
       },
       dateCreated: result.dateInitial,

@@ -9,6 +9,10 @@ export interface GetEvaluation {
   currentLevel: number;
 }
 
+export interface CreateEvaluation {
+  organismoId: number;
+}
+
 export interface GetPaginatedEvaluation {
   elementostotales: number;
   page: number;

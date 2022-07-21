@@ -31,12 +31,13 @@ export const paths = {
       reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
     },
   },
-  domains: { index: "dominios" },
-  lineaments: { index: "lineamientos" },
-  criterions: { index: "criterios" },
-  levels: { index: "niveles" },
-  choices: { index: "respuestas" },
-  users: { index: "usuarios" },
+  domains: { index: "c/dominios" },
+  lineaments: { index: "c/lineamientos" },
+  criterions: { index: "c/criterios" },
+  levels: { index: "c/niveles" },
+  choices: { index: "c/respuestas" },
+  users: { index: "c/usuarios" },
+  evaluationsCrud: { index: "c/evaluaciones" },
 };
 
 export const keys = {

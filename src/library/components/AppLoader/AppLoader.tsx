@@ -7,7 +7,7 @@ import { Box } from '../Box';
 export default function AppLoader() {
   return (
     <Box className={classes.center}>
-      <Spin size="large" />
+      <Spin size="default" />
     </Box>
   )
 }

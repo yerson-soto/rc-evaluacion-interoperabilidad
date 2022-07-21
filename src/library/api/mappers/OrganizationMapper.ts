@@ -1,5 +1,6 @@
 import { Organization } from "library/models/Organization";
 import { GetOrganizationNested, GetOrganization } from "../dto/organization-dto";
+import { DefaultOptionType } from "antd/lib/select";
 
 export class OrganizationMapper {
   fromAPI(data: GetOrganization): Organization {
@@ -18,5 +19,12 @@ export class OrganizationMapper {
       acronym: data.siglas,
       emailDomain: "",
     };
+  }
+
+  toSelectOption(org: Organization): DefaultOptionType {
+    return {
+      label: org.name,
+      value: org.id,
+    }
   }
 }

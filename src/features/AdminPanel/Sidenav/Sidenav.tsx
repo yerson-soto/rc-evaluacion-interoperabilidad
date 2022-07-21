@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout, Menu, Typography } from "antd";
+import { Layout, Menu, Popconfirm, Typography } from "antd";
 import { Box } from "library/components/Box";
-
 
 import {
   SignalFilled,
@@ -15,13 +14,16 @@ import {
   LeftOutlined,
   FormOutlined,
   AimOutlined,
-  UsergroupAddOutlined
+  LogoutOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
-import { paths } from 'library/common/constants';
+import { keys, paths } from "library/common/constants";
 
 import classnames from "classnames";
 import classes from "./Sidenav.module.css";
+import { useAppDispatch } from "redux/hooks";
+import { logoutDone } from "redux/slices/authSlice";
 
 interface SidenavProps {
   isCompacted: boolean;
@@ -34,6 +36,8 @@ interface SidenavProps {
 }
 
 export default function Sidenav(props: SidenavProps) {
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   const {
     isCompacted,
@@ -66,11 +70,39 @@ export default function Sidenav(props: SidenavProps) {
       getItem("Usuarios", "2", paths.users.index, <UsergroupAddOutlined />),
       getItem("Evaluaciones", "3", "/evaluaciones", <AppstoreFilled />),
       getItem("Dominios", "4", paths.domains.index, <AimOutlined />),
-      getItem("Lineamientos", "5", paths.lineaments.index, <AlignLeftOutlined />),
+      getItem(
+        "Lineamientos",
+        "5",
+        paths.lineaments.index,
+        <AlignLeftOutlined />
+      ),
       getItem("Criterios", "6", paths.criterions.index, <CompressOutlined />),
       getItem("Niveles", "7", paths.levels.index, <SignalFilled />),
       getItem("Respuestas", "8", paths.choices.index, <FormOutlined />),
-      getItem("Iniciar Sesión", "9", paths.auth.login.reverse(), <LoginOutlined />),
+      getItem("Evaluaciones (Crud)", "9", paths.evaluations.index, <FormOutlined />),
+      getItem(
+        "Iniciar Sesión",
+        "10",
+        paths.auth.login.reverse(),
+        <LoginOutlined />
+      ),
+      {
+        key: "10",
+        icon: <LogoutOutlined />,
+        label: (
+          <Popconfirm
+            title="Deseas cerrar sesion?"
+            onConfirm={() => {
+              localStorage.removeItem(keys.tokenLocalStorage);
+              dispatch(logoutDone());
+            }}
+            okText="Si"
+            cancelText="No"
+          >
+            <a href="#">Cerrar Sesion</a>
+          </Popconfirm>
+        ),
+      },
     ];
   };
 
@@ -95,7 +127,9 @@ export default function Sidenav(props: SidenavProps) {
     >
       <Box className={classes.logo}>
         <AppstoreOutlined className={classes.logoIcon} />
-        <Typography.Text className={classes.logoText}>Evaluaci&oacute;n</Typography.Text>
+        <Typography.Text className={classes.logoText}>
+          Evaluaci&oacute;n
+        </Typography.Text>
       </Box>
       <Menu
         className={classes.menu}

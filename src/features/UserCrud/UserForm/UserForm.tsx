@@ -22,7 +22,7 @@ export default function UserForm(props: UserFormProps) {
   const { t } = useTranslation();
   const { 
     form, 
-    organizations, 
+    orgOptions, 
     domainNotFound, 
     emailDomain, 
     changeDomain, 
@@ -44,8 +44,9 @@ export default function UserForm(props: UserFormProps) {
   const onFinish = () => {
     form.validateFields().then((values) => {
       const email = values.email + emailDomain;
+      const identification = values.identification.replaceAll('-', '');
 
-      onSave({ ...values, email }).then(onHide);
+      onSave({ ...values, identification, email }).then(onHide);
     });
   };
 
@@ -99,16 +100,8 @@ export default function UserForm(props: UserFormProps) {
               placeholder={t("placeholders.select_organization")}
               optionFilterProp="children"
               onChange={changeDomain}
-            >
-              {organizations.map((organization) => (
-                <Select.Option 
-                  key={organization.id} 
-                  value={organization.id}
-                >
-                  {organization.name}
-                </Select.Option>
-              ))}
-            </Select>
+              options={orgOptions}
+            />
           </Form.Item>
 
           {domainNotFound && (

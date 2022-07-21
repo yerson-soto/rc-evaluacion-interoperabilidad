@@ -28,7 +28,7 @@ const initialState: AuthState = {
   token: defaultToken,
   isLoadingUser: true,
   isLogged: false,
-  isLoading: true,
+  isLoading: false,
   hasError: false,
   errorMessage: "",
 };
@@ -43,6 +43,9 @@ export const authSlice = createSlice({
     userLoading: (state) => {
       state.isLoadingUser = true;
     },
+    cancelUserLoading: (state) => {
+      state.isLoadingUser = false;
+    },
     loginDone: (state, action: PayloadAction<Token>) => {
       state.token = action.payload.value;
       state.isLoading = false;
@@ -53,6 +56,14 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.hasError = true;
       state.errorMessage = action.payload;
+    },
+    logoutDone: (state) => {
+      state.token = "";
+      state.user = initialState.user;
+      state.isLogged = false
+      state.isLoading = false;
+      state.hasError = false;
+      state.errorMessage = "";
     },
 
     loadUserSuccess: (state, action: PayloadAction<AuthUser>) => {
@@ -76,8 +87,10 @@ export const authSlice = createSlice({
 export const {
   authLoading,
   userLoading,
+  cancelUserLoading,
   loginDone,
   loginFailed,
+  logoutDone,
   loadUserSuccess,
   loadUserFailed,
 } = authSlice.actions;

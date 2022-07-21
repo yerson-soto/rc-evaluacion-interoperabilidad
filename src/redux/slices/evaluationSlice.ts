@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { CommonState } from "library/common/interfaces";
 import { ErrorMessage } from "library/common/types";
 import { Evaluation } from "library/models/Evaluation";
+import { createCrudSlice } from 'redux/actions/sliceCreator';
 
 interface EvaluationState extends CommonState {
   results: Evaluation[];
@@ -14,10 +15,11 @@ const initialState: EvaluationState = {
   errorMessage: "",
 };
 
-export const evaluationSlice = createSlice({
+export const evaluationSlice = createCrudSlice<Evaluation, EvaluationState, "evaluations">({
   name: "evaluations",
+  idSource: 'uid',
   initialState,
-  reducers: {
+  extend: {
     evaluationsLoad: (state) => {
       state.isLoading = true
     },
@@ -49,7 +51,7 @@ export const {
   evaluationsLoad,
   evaluationsListed,
   evaluationsNotListed,
-
+  
   evaluationCreated,
   evaluationNotCreated
 } = evaluationSlice.actions;

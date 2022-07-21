@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-interface OptionGroup<T> {
+export interface OptionGroup<T> {
   id: number;
   name: string;
   options: T[];
