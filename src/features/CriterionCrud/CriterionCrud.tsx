@@ -8,7 +8,7 @@ import { CriterionForm } from "./CriterionForm";
 import { CriterionFormSchema } from "./CriterionForm/CriterionFormSchema";
 import { Criterion } from "library/models/Criterion";
 import { CriterionService } from "library/api/services/CriterionService";
-import { criterionSlice } from "main/store/slices/criterionSlice";
+import { criterionSlice } from "redux/slices/criterionSlice";
 import { getText } from "i18n";
 
 const columns: ColumnsType<Criterion> = [

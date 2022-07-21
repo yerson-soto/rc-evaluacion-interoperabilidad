@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
+import { RootState } from 'redux/types';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { CrudReducer } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
-import { useDebouncedCallback} from 'use-debounce';
-import { useFetchDebounced } from '../../library/hooks/useFetchDebounced';
+import { useFetchDebounced } from 'library/hooks/useFetchDebounced';
 
 interface ListAction<T> {
   service: CrudRepository<T, any>;

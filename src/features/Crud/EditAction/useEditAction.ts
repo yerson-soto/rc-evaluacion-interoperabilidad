@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/types';
 import { CrudReducer } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { ID } from "library/common/types";

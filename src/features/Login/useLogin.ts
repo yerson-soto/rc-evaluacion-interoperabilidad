@@ -1,8 +1,8 @@
 import { message } from 'antd';
-import { useAppSelector, useAppDispatch } from "main/store/index";
+import { useAppSelector, useAppDispatch } from "redux/hooks";
 import { AuthService } from "library/api/services/AuthService";
-import * as actions from "main/store/slices/authSlice";
 import { keys } from 'library/common/constants';
+import * as actions from "redux/slices/authSlice";
 
 const { loginDone, loginFailed, authLoading } = actions;
 

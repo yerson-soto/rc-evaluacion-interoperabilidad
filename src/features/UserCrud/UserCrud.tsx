@@ -5,7 +5,7 @@ import { UserForm } from "./UserForm";
 import { UserFormSchema } from "./UserForm/UserFormSchema";
 import { User } from 'library/models/User';
 import { UserService } from 'library/api/services/UserService';
-import { userSlice } from 'main/store/slices/userSlice';
+import { userSlice } from 'redux/slices/userSlice';
 import { Crud } from "features/Crud";
 import { getText } from "i18n";
 

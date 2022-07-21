@@ -1,8 +1,8 @@
-import { useAppDispatch, useAppSelector } from "main/store/index";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { CommonRepository } from "library/api/repositories/CommonRepository";
 import { ErrorMessage } from "library/common/types";
 import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
-import { RootState } from 'main/store/index';
+import { RootState } from 'redux/types';
 import { useFetchList } from './useFetchList';
 
 interface Actions<T> {

@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "antd";
-import { RootState } from 'main/store/index';
-import { useToogleAction } from "../useToggleAction";
 import { PlusOutlined } from "@ant-design/icons";
+import { RootState } from 'redux/types';
+import { useToogleAction } from "../useToggleAction";
 import { useCreateAction } from "./useCreateAction";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { CrudReducer } from "library/common/interfaces";

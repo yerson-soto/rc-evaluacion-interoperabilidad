@@ -1,10 +1,96 @@
-import { BrowserRouter, useRoutes } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { paths } from "library/common/constants";
 
-import routes from "./routes";
+import { AuthPanel } from 'features/AuthPanel';
+import { ForgotPassword } from 'features/ForgotPassword';
+import { PasswordReset } from 'features/PasswordReset';
+import { Login } from 'features/Login';
+
+import { AdminPanel } from 'features/AdminPanel';
+import { Dashboard } from 'features/Dashboard';
+import { EvaluationList } from 'features/EvaluationList';
+import { EvaluationDetail } from 'features/EvaluationDetail';
+import { EvaluationInit } from 'features/EvaluationInit';
+import { DomainCrud } from 'features/DomainCrud';
+import { UserCrud } from 'features/UserCrud';
+import { ChoiceCrud } from "features/ChoiceCrud";
+import { LevelCrud } from "features/LevelCrud";
+import { CriterionCrud } from "features/CriterionCrud";
+import { LineamentCrud } from "features/LineamentCrud";
+import { NotFound } from 'features/NotFound';
 
 export default function Router() {
-  const router = useRoutes(routes);
+ 
   const basename = process.env.PUBLIC_URL;
 
-  return <BrowserRouter basename={basename}>{router}</BrowserRouter>;
+  return (
+    <BrowserRouter basename={basename}>
+      <Routes>
+        <Route path={paths.auth.index} element={<AuthPanel />}>
+          <Route
+            path={paths.auth.login.index} 
+            element={<Login />} 
+          />
+          <Route
+            path={paths.auth.forgotPassword.index}
+            element={<ForgotPassword />}
+          />
+          <Route
+            path={paths.auth.passwordReset.index}
+            element={<PasswordReset />}
+          />
+        </Route>
+
+        <Route path={paths.admin} element={<AdminPanel />}>
+          <Route 
+            path={paths.dashboard} 
+            element={<Dashboard />} 
+          />
+          <Route 
+            path={paths.users.index} 
+            element={<UserCrud />} 
+          />
+          <Route 
+            path={paths.domains.index} 
+            element={<DomainCrud />} 
+          />
+          <Route 
+            path={paths.lineaments.index} 
+            element={<LineamentCrud />} 
+          />
+          <Route 
+            path={paths.criterions.index} 
+            element={<CriterionCrud />} 
+          />
+          <Route 
+            path={paths.levels.index} 
+            element={<LevelCrud />} 
+          />
+          <Route 
+            path={paths.choices.index} 
+            element={<ChoiceCrud />} 
+          />
+          
+          <Route path={paths.evaluations.index}>
+            <Route 
+              index
+              element={<EvaluationList />} 
+            />
+            <Route
+              path={paths.evaluations.detail.index}
+              element={<EvaluationDetail />}
+            />
+            <Route
+              path={paths.evaluations.init.index}
+              element={<EvaluationInit />}
+            />
+          </Route>
+
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }

@@ -7,7 +7,7 @@ import { ColumnsType } from "antd/lib/table";
 import { CrudReducer } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { useListAction } from "./useListAction";
-import { RootState } from "main/store";
+import { RootState } from "redux/types";
 
 interface UseCrudOptions<T, FormSchema> {
   idSource: keyof T;

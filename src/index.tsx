@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import { store } from "main/store";
 
 // Above so that it takes priority 
 import "./index.css";
+
+import { Provider } from "react-redux";
 import App from "./main/App";
+import store from "redux/store";
 
 import "./i18n";
 

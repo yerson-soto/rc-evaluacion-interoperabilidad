@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Space, Card, Button } from "antd";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { CrudReducer } from "library/common/interfaces";
-import { RootState } from "main/store";
+import { RootState } from "redux/types";
 import { RenderDetail } from "./DetailAction";
 import { RenderEdit } from "./EditAction";
 import { CreateAction, RenderCreate } from "./CreateAction";

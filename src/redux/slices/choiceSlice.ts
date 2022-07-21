@@ -1,6 +1,6 @@
 import { CrudState } from "library/common/interfaces";
 import { Choice } from "library/models/Choice";
-import { createCrudSlice } from "./sliceCreator";
+import { createCrudSlice } from "redux/actions/sliceCreator";
 
 export interface ChoiceState extends CrudState<Choice> {}
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { UserType } from 'library/common/enums';
-import { useAppSelector } from 'main/store';
+import { useAppSelector } from 'redux/hooks';
 
 
 interface PermissionOptions {

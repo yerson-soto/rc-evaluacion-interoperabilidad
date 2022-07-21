@@ -1,6 +1,6 @@
-import { useAppDispatch } from 'main/store/index';
+import { useAppDispatch } from 'redux/hooks';
 import { EvaluationService } from 'library/api/services/EvaluationService';
-import { evaluationCreated, evaluationNotCreated } from "main/store/slices/evaluationSlice";
+import { evaluationCreated, evaluationNotCreated } from "redux/slices/evaluationSlice";
 
 export function useAddEvaluation() {
   const dispatch = useAppDispatch();

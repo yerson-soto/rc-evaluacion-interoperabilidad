@@ -3,7 +3,7 @@ import { LineamentFormSchema } from "./LineamentFormSchema";
 import { useListAction } from "features/Crud/useListAction";
 import { DomainService } from "library/api/services/DomainService";
 import { Domain } from "library/models/Domain";
-import { domainSlice } from "main/store/slices/domainSlice";
+import { domainSlice } from "redux/slices/domainSlice";
 
 export function useLineamentForm() {
   const [form] = Form.useForm<LineamentFormSchema>();

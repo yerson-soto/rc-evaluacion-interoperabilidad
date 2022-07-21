@@ -9,6 +9,7 @@ interface AuthState extends CommonState {
   user: AuthUser;
   token: string;
   isLogged: boolean;
+  isLoadingUser: boolean;
 }
 
 const defaultToken = localStorage.getItem(keys.tokenLocalStorage) || "";
@@ -25,6 +26,7 @@ const initialState: AuthState = {
     organization: null,
   },
   token: defaultToken,
+  isLoadingUser: true,
   isLogged: false,
   isLoading: true,
   hasError: false,
@@ -37,6 +39,9 @@ export const authSlice = createSlice({
   reducers: {
     authLoading: (state) => {
       state.isLoading = true;
+    },
+    userLoading: (state) => {
+      state.isLoadingUser = true;
     },
     loginDone: (state, action: PayloadAction<Token>) => {
       state.token = action.payload.value;
@@ -54,11 +59,13 @@ export const authSlice = createSlice({
       state.user = action.payload
       state.isLogged = true;
       state.isLoading = false;
+      state.isLoadingUser = false;
       state.hasError = false;
       state.errorMessage = "";
     },
     loadUserFailed: (state, action: PayloadAction<ErrorMessage>) => {
       state.isLoading = false;
+      state.isLoadingUser = false;
       state.hasError = true;
       state.token = "";
       state.errorMessage = action.payload;
@@ -68,6 +75,7 @@ export const authSlice = createSlice({
 
 export const {
   authLoading,
+  userLoading,
   loginDone,
   loginFailed,
   loadUserSuccess,

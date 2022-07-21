@@ -1,5 +1,6 @@
-import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
-import { CrudReducer, CrudState } from "library/common/interfaces";
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/types';
+import { CrudReducer } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { ID } from "library/common/types";
 

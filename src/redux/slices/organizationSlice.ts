@@ -1,6 +1,6 @@
 import { CrudState } from "library/common/interfaces";
 import { Organization } from "library/models/Organization";
-import { createCrudSlice } from "./sliceCreator";
+import { createCrudSlice } from "redux/actions/sliceCreator";
 
 export interface OrganizationState extends CrudState<Organization> {}
 

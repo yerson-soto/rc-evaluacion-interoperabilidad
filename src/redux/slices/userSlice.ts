@@ -1,6 +1,6 @@
 import { CrudState } from "library/common/interfaces";
 import { User } from "library/models/User";
-import { createCrudSlice } from "./sliceCreator";
+import { createCrudSlice } from "redux/actions/sliceCreator";
 
 export interface UserState extends CrudState<User> {}
 

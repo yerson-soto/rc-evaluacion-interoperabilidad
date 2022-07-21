@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import { useToogleAction } from "../useToggleAction";
 import { EditOutlined } from "@ant-design/icons";
-import { RootState } from 'main/store/index';
+import { RootState } from 'redux/types';
 import { useEditAction } from "./useEditAction";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { CrudReducer } from "library/common/interfaces";

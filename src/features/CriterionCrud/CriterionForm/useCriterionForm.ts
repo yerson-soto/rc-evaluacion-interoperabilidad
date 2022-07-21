@@ -2,7 +2,7 @@ import { useListAction } from 'features/Crud/useListAction';
 import { Form } from "antd";
 import { CriterionFormSchema } from "./CriterionFormSchema";
 import { useOptionGroup } from "library/hooks/useOptionGroup";
-import { lineamentSlice } from "main/store/slices/lineamentSlice";
+import { lineamentSlice } from "redux/slices/lineamentSlice";
 import { LineamentService } from "library/api/services/LineamentService";
 import { Lineament } from 'library/models/Lineament';
 

@@ -1,6 +1,6 @@
 import { CrudState } from "library/common/interfaces";
 import { Level } from "library/models/Level";
-import { createCrudSlice } from "./sliceCreator";
+import { createCrudSlice } from "redux/actions/sliceCreator";
 
 export interface LevelState extends CrudState<Level> {}
 

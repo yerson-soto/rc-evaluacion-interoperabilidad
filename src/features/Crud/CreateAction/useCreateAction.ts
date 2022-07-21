@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import { Slice } from "@reduxjs/toolkit";
-import { RootState, useAppDispatch, useAppSelector } from 'main/store/index';
+import { RootState } from 'redux/types';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { CrudCaseReducers, CrudState } from "library/common/interfaces";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { useTranslation } from 'react-i18next';

@@ -1,6 +1,6 @@
 import { EvaluationService } from "library/api/services/EvaluationService";
 import { useLoadList } from "library/hooks/useLoadList";
-import * as actions from "main/store/slices/evaluationSlice";
+import * as actions from "redux/slices/evaluationSlice";
 
 export function useEvaluationList() {
   const { isLoading, results: evaluations } = useLoadList({

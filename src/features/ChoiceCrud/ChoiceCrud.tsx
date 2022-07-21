@@ -6,7 +6,7 @@ import { ChoiceForm } from "./ChoiceForm";
 import { ChoiceFormSchema } from "./ChoiceForm/ChoiceFormSchema";
 import { Choice } from 'library/models/Choice';
 import { ChoiceService } from 'library/api/services/ChoiceService';
-import { choiceSlice } from 'main/store/slices/choiceSlice';
+import { choiceSlice } from 'redux/slices/choiceSlice';
 import { Crud } from "features/Crud";
 import { getText } from "i18n";
 

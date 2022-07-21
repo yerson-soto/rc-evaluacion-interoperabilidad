@@ -3,7 +3,7 @@ import { Button, Popconfirm } from "antd";
 import { useTranslation } from "react-i18next";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useDeleteAction } from "./useDeleteAction";
-import { RootState } from "main/store";
+import { RootState } from "redux/types";
 import { CrudRepository } from "library/api/repositories/CrudRepository";
 import { CrudReducer } from "library/common/interfaces";
 

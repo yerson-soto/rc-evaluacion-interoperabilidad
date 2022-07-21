@@ -1,18 +1,11 @@
 import React from "react";
 import { Layout, Row, Col } from "antd";
-import { Navigate, Outlet } from "react-router-dom";
-import { useAppSelector } from 'main/store';
-import { paths } from "library/common/constants";
+import { Outlet } from "react-router-dom";
 
 import classes from "./AuthPanel.module.css";
 
 export default function AuthPanel() {
   const currentYear = new Date().getFullYear();
-  // const isLogged = useAppSelector((state) => state.auth.isLogged);
-  // const isLoading = useAppSelector(state => state.auth.isLoading);
-
-  // if (isLoading) return <div>Loading...</div>
-  // if (isLogged) return <Navigate to={paths.admin} />;
 
   return (
     <Layout className={classes.layout}>

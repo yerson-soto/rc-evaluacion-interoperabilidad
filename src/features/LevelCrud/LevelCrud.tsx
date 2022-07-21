@@ -6,7 +6,7 @@ import { LevelForm } from "./LevelForm";
 import { LevelFormSchema } from "./LevelForm/LevelFormSchema";
 import { Level } from 'library/models/Level';
 import { LevelService } from 'library/api/services/LevelService';
-import { levelSlice } from 'main/store/slices/levelSlice';
+import { levelSlice } from 'redux/slices/levelSlice';
 import { Crud } from "features/Crud";
 import { getText } from "i18n";
 

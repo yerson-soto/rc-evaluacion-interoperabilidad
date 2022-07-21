@@ -1,8 +1,8 @@
 import { useListAction } from 'features/Crud/useListAction';
 import { Form } from "antd";
 import { ChoiceFormSchema } from "./ChoiceFormSchema";
-import { levelSlice } from "main/store/slices/levelSlice";
-import { criterionSlice } from 'main/store/slices/criterionSlice';
+import { levelSlice } from "redux/slices/levelSlice";
+import { criterionSlice } from 'redux/slices/criterionSlice';
 import { LevelService } from "library/api/services/LevelService";
 import { CriterionService } from "library/api/services/CriterionService";
 import { Criterion } from 'library/models/Criterion';

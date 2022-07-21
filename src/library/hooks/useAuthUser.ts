@@ -1,18 +1,17 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from 'main/store/index';
 import { useFetchDebounced } from './useFetchDebounced';
 import { AuthService } from 'library/api/services/AuthService';
-import { useAppSelector } from 'main/store/index';
-import * as actions from 'main/store/slices/authSlice';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import * as actions from 'redux/slices/authSlice';
 
 export function useAuthUser() {
   const service = new AuthService();
-  
-  const token = useAppSelector(state => state.auth.token);
   const dispatch = useAppDispatch();
+  const token = useAppSelector(state => state.auth.token);
+  const isLoading = useAppSelector(state => state.auth.isLoading);
 
   const fetchUser = useFetchDebounced((authToken: string) => {
-    dispatch(actions.authLoading());
+    dispatch(actions.userLoading());
     
     service.getAuthUser(authToken)
     .then(user => {
@@ -27,6 +26,8 @@ export function useAuthUser() {
     if (token) fetchUser(token);
   
   }, [token])
+
+  return { isLoading };
 }
 
 

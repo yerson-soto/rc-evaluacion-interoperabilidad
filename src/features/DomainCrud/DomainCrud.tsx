@@ -4,7 +4,7 @@ import { Crud } from "features/Crud";
 import { DomainService } from "library/api/services/DomainService";
 import { AppDrawer } from "library/components/AppDrawer";
 import { Domain } from "library/models/Domain";
-import { domainSlice } from "main/store/slices/domainSlice";
+import { domainSlice } from "redux/slices/domainSlice";
 import { DomainForm } from "./DomainForm";
 import { DomainFormSchema } from "./DomainForm/DomainFormSchema";
 import { getText } from 'i18n';

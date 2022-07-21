@@ -6,7 +6,7 @@ import { LineamentForm } from "./LineamentForm";
 import { LineamentFormSchema } from "./LineamentForm/LineamentFormSchema";
 import { Lineament } from 'library/models/Lineament';
 import { LineamentService } from 'library/api/services/LineamentService';
-import { lineamentSlice } from 'main/store/slices/lineamentSlice';
+import { lineamentSlice } from 'redux/slices/lineamentSlice';
 import { Crud } from "features/Crud";
 import { getText } from "i18n";
 
