@@ -31,7 +31,7 @@ const columns: ColumnsType<Criterion> = [
       const total = lineaments.length;
       const showResponsiveTag = total > 2;
       const showLineaments = showResponsiveTag
-        ? lineaments.slice(0, 1)
+        ? lineaments.slice(0, 2)
         : lineaments;
 
       return (

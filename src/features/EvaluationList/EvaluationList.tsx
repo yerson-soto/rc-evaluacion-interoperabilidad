@@ -10,7 +10,6 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Evaluation } from "library/models/Evaluation";
 import { useTranslation } from "react-i18next";
 import { PaginationFooter } from "library/components/PaginationFooter";
-import { AddEvaluation } from "./AddEvaluation";
 import { EvaluationFilter } from "./EvaluationFilter";
 
 const { useBreakpoint } = Grid;
@@ -80,21 +79,12 @@ const { useBreakpoint } = Grid;
 
 export default function EvaluationList() {
   const navigate = useNavigate();
-  const [visible, setVisible] = useState(false);
 
   const { xl } = useBreakpoint();
 
   const { t } = useTranslation();
 
   const { isLoading, evaluations } = useEvaluationList();
-
-  const showModal = () => {
-    setVisible(true);
-  };
-
-  const closeModal = () => {
-    setVisible(false);
-  };
 
   return (
     <Space direction="vertical" size="large" style={{ width: "100%" }}>
@@ -109,12 +99,9 @@ export default function EvaluationList() {
             size="large"
             shape="circle"
             icon={<PlusOutlined />}
-            onClick={showModal}
           />
         }
       />
-
-      <AddEvaluation isOpen={visible} onClose={closeModal} />
 
       {evaluations.length > 0 && (
         <ActiveEvaluation evaluation={evaluations[0]} />

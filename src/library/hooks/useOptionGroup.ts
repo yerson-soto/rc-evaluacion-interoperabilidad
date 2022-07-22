@@ -16,7 +16,7 @@ export function useOptionGroup<T>({
   options,
   selectGroupId,
   selectGroupName,
-}: Config<T>): OptionGroup<T>[] {
+}: Config<T>) {
   const optionGroup = useMemo(() => {
     const groupOptions = (options: T[]) => {
       const groups: OptionGroup<T>[] = [];
@@ -43,5 +43,5 @@ export function useOptionGroup<T>({
     return groupOptions(options);
   }, [options]);
 
-  return optionGroup;
+  return { optionGroup };
 }

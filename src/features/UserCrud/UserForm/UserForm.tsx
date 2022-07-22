@@ -22,10 +22,10 @@ export default function UserForm(props: UserFormProps) {
   const { t } = useTranslation();
   const { 
     form, 
-    orgOptions, 
+    institutionOptions, 
     domainNotFound, 
     emailDomain, 
-    changeDomain, 
+    changeEmailDomain, 
     resetForm 
   } = useUserForm();
 
@@ -98,9 +98,9 @@ export default function UserForm(props: UserFormProps) {
             <Select
               showSearch
               placeholder={t("placeholders.select_organization")}
-              optionFilterProp="children"
-              onChange={changeDomain}
-              options={orgOptions}
+              optionFilterProp="label"
+              onChange={changeEmailDomain}
+              options={institutionOptions}
             />
           </Form.Item>
 

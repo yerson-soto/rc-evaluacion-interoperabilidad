@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useFetchDebounced } from "./useFetchDebounced";
+import { useFetchDebounced } from "library/hooks/useFetchDebounced";
 import { AuthService } from "library/api/services/AuthService";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
 import * as actions from "redux/slices/authSlice";

@@ -1,23 +1,27 @@
+// Above so that it takes priority
+import "./index.css";
+import "./i18n";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-
-// Above so that it takes priority 
-import "./index.css";
-
-import { Provider } from "react-redux";
-import App from "./main/App";
 import store from "redux/store";
-
-import "./i18n";
+import { App } from "./main/App";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const basename = process.env.PUBLIC_URL;
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter basename={basename}>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

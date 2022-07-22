@@ -1,10 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Form, Select } from "antd";
+import { Button, Form } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { LineamentFormSchema, rules } from "./LineamentFormSchema";
 import { useLineamentForm } from "./useLineamentForm";
 import { TextArea } from "library/components/TextArea";
+import { DomainSelect } from "../DomainSelect";
 
 interface LineamentFormProps {
   show: boolean;
@@ -16,7 +17,7 @@ interface LineamentFormProps {
 }
 
 export default function LineamentForm(props: LineamentFormProps) {
-  const { form, domains, resetForm } = useLineamentForm();
+  const { form, resetForm } = useLineamentForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
@@ -71,20 +72,9 @@ export default function LineamentForm(props: LineamentFormProps) {
             label={t("fields.domain")}
             rules={rules.domainId}
           >
-            <Select
-              showSearch
-              placeholder={t("placeholders.select_domain")}
-              optionFilterProp="children"
-            >
-              {domains.map((domain) => (
-                <Select.Option 
-                  key={domain.id} 
-                  value={domain.id}
-                >
-                  {domain.name} ({domain.acronym})
-                </Select.Option>
-              ))}
-            </Select>
+            <DomainSelect 
+              placeholder={t("placeholders.select_domain")} 
+            />
           </Form.Item>
 
           <Form.Item

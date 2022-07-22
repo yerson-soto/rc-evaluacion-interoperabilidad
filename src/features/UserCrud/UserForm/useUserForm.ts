@@ -1,23 +1,18 @@
 import { useState } from "react";
 import { Form } from "antd";
 import { UserFormSchema } from "./UserFormSchema";
-import { useOrganizationList } from "../../EvaluationList/AddEvaluation/useOrganizacionList";
-import { OrganizationMapper } from 'library/api/mappers/OrganizationMapper';
+import { useInstitutionOptions } from 'library/components/InstitutionSelect/useInstitutionOptions';
 
+// Refactor useInstitutionOptions
 export function useUserForm() {
   const [form] = Form.useForm<UserFormSchema>();
   const [emailDomain, setEmailDomain] = useState("");
+  const { institutionOptions } = useInstitutionOptions();
 
-  
   const domainNotFound = Boolean(Form.useWatch("organizationId", form) && !emailDomain);
   
-  const { organizations } = useOrganizationList();
-  
-  const orgMapper = new OrganizationMapper();
-  const orgOptions = organizations.map(orgMapper.toSelectOption);
-
-  const changeDomain = (orgId: number): void => {
-    const currentOrg = organizations.find((org) => org.id === orgId);
+  const changeEmailDomain = (orgId: number): void => {
+    const currentOrg = institutionOptions.find((org) => org.value === orgId);
 
     if (currentOrg?.emailDomain) {
       setEmailDomain(currentOrg.emailDomain);
@@ -32,10 +27,10 @@ export function useUserForm() {
 
   return {
     form,
-    orgOptions,
+    institutionOptions,
     domainNotFound,
     emailDomain,
-    changeDomain,
+    changeEmailDomain,
     resetForm,
   };
 }

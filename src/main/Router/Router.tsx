@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 import { paths } from "library/common/constants";
 
 import { AuthPanel } from 'features/AuthPanel';
@@ -25,85 +25,77 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 
 export default function Router() {
- 
-  const basename = process.env.PUBLIC_URL;
-
   return (
-    <BrowserRouter basename={basename}>
-      <Routes>
-        <Route element={<PublicRoute />}>
-          <Route path={paths.auth.index} element={<AuthPanel />}>
-            <Route
-              path={paths.auth.login.index} 
-              element={<Login />} 
+    <Routes>
+      <Route element={<PublicRoute />}>
+        <Route path={paths.auth.index} element={<AuthPanel />}>
+          <Route
+            path={paths.auth.login.index} 
+            element={<Login />} 
+          />
+          <Route
+            path={paths.auth.forgotPassword.index}
+            element={<ForgotPassword />}
+          />
+          <Route
+            path={paths.auth.passwordReset.index}
+            element={<PasswordReset />}
+          />
+        </Route>
+      </Route>
+
+      <Route element={<PrivateRoute />}>
+        <Route path={paths.admin} element={<AdminPanel />}>
+          <Route
+            path={paths.dashboard} 
+            element={<Dashboard />} 
+          />
+          <Route 
+            path={paths.users.index} 
+            element={<UserCrud />} 
+          />
+          <Route 
+            path={paths.domains.index} 
+            element={<DomainCrud />} 
+          />
+          <Route 
+            path={paths.lineaments.index} 
+            element={<LineamentCrud />} 
+          />
+          <Route 
+            path={paths.criterions.index} 
+            element={<CriterionCrud />} 
+          />
+          <Route 
+            path={paths.levels.index} 
+            element={<LevelCrud />} 
+          />
+          <Route 
+            path={paths.choices.index} 
+            element={<ChoiceCrud />} 
+          />
+          <Route 
+            path={paths.evaluationsCrud.index} 
+            element={<EvaluationCrud />} 
+          />
+          
+          <Route path={paths.evaluations.index}>
+            <Route 
+              index
+              element={<EvaluationList />} 
             />
             <Route
-              path={paths.auth.forgotPassword.index}
-              element={<ForgotPassword />}
+              path={paths.evaluations.detail.index}
+              element={<EvaluationDetail />}
             />
             <Route
-              path={paths.auth.passwordReset.index}
-              element={<PasswordReset />}
+              path={paths.evaluations.init.index}
+              element={<EvaluationInit />}
             />
           </Route>
         </Route>
-
-        <Route element={<PrivateRoute />}>
-          <Route path={paths.admin} element={<AdminPanel />}>
-            <Route
-              path={paths.dashboard} 
-              element={<Dashboard />} 
-            />
-            <Route 
-              path={paths.users.index} 
-              element={<UserCrud />} 
-            />
-            <Route 
-              path={paths.domains.index} 
-              element={<DomainCrud />} 
-            />
-            <Route 
-              path={paths.lineaments.index} 
-              element={<LineamentCrud />} 
-            />
-            <Route 
-              path={paths.criterions.index} 
-              element={<CriterionCrud />} 
-            />
-            <Route 
-              path={paths.levels.index} 
-              element={<LevelCrud />} 
-            />
-            <Route 
-              path={paths.choices.index} 
-              element={<ChoiceCrud />} 
-            />
-            <Route 
-              path={paths.evaluationsCrud.index} 
-              element={<EvaluationCrud />} 
-            />
-            
-            <Route path={paths.evaluations.index}>
-              <Route 
-                index
-                element={<EvaluationList />} 
-              />
-              <Route
-                path={paths.evaluations.detail.index}
-                element={<EvaluationDetail />}
-              />
-              <Route
-                path={paths.evaluations.init.index}
-                element={<EvaluationInit />}
-              />
-            </Route>
-          </Route>
-        </Route>
-
-        
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }

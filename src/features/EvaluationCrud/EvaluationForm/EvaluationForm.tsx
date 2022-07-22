@@ -4,6 +4,7 @@ import { Button, DatePicker, Form, Input, Select } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { EvaluationFormSchema, rules } from "./EvaluationFormSchema";
 import { useEvaluationForm } from './useEvaluationForm';
+import { InstitutionSelect } from "library/components/InstitutionSelect";
 
 
 interface EvaluationFormProps {
@@ -19,7 +20,7 @@ export default function EvaluationForm(props: EvaluationFormProps) {
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
-  const {  form, orgOptions, resetForm } = useEvaluationForm();
+  const {  form, resetForm } = useEvaluationForm();
 
   const title = isEdit 
     ? t("headings.edit_evaluation"): 
@@ -72,11 +73,8 @@ export default function EvaluationForm(props: EvaluationFormProps) {
             label={t("fields.organization")}
             rules={rules.organizationId}
           >
-            <Select
-              showSearch
+            <InstitutionSelect 
               placeholder={t("placeholders.select_organization")}
-              optionFilterProp="children"
-              options={orgOptions}
             />
           </Form.Item>
           

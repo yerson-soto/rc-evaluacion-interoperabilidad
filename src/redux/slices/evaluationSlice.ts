@@ -1,4 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import { CaseReducer, PayloadAction, SliceCaseReducers } from "@reduxjs/toolkit";
 import { CommonState } from "library/common/interfaces";
 import { ErrorMessage } from "library/common/types";
 import { Evaluation } from "library/models/Evaluation";
@@ -15,7 +15,15 @@ const initialState: EvaluationState = {
   errorMessage: "",
 };
 
-export const evaluationSlice = createCrudSlice<Evaluation, EvaluationState, "evaluations">({
+export interface EvaluationReducers extends SliceCaseReducers<EvaluationState> {
+  evaluationsLoad: CaseReducer<EvaluationState>;
+  evaluationsListed: CaseReducer<EvaluationState, PayloadAction<Evaluation[]>>;
+  evaluationsNotListed: CaseReducer<EvaluationState, PayloadAction<ErrorMessage>>;
+  evaluationCreated: CaseReducer<EvaluationState, PayloadAction<Evaluation>>;
+  evaluationNotCreated: CaseReducer<EvaluationState, PayloadAction<ErrorMessage>>;
+}
+
+export const evaluationSlice = createCrudSlice<Evaluation, EvaluationState, "evaluations", EvaluationReducers>({
   name: "evaluations",
   idSource: 'uid',
   initialState,

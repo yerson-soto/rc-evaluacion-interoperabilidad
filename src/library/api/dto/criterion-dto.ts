@@ -9,7 +9,7 @@ export interface CreateCriterion {
 export interface GetCriterion {
   id: number;
   description: string;
-  lineaments: GetLineament[];
+  lineamentsResponses: GetLineament[];
   responses: GetChoice[];
 }
 

@@ -79,7 +79,7 @@ export default function Sidenav(props: SidenavProps) {
       getItem("Criterios", "6", paths.criterions.index, <CompressOutlined />),
       getItem("Niveles", "7", paths.levels.index, <SignalFilled />),
       getItem("Respuestas", "8", paths.choices.index, <FormOutlined />),
-      getItem("Evaluaciones (Crud)", "9", paths.evaluations.index, <FormOutlined />),
+      getItem("Evaluaciones (Crud)", "9", paths.evaluationsCrud.index, <FormOutlined />),
       getItem(
         "Iniciar Sesión",
         "10",
@@ -87,7 +87,7 @@ export default function Sidenav(props: SidenavProps) {
         <LoginOutlined />
       ),
       {
-        key: "10",
+        key: "11",
         icon: <LogoutOutlined />,
         label: (
           <Popconfirm

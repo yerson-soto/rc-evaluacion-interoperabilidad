@@ -4,36 +4,21 @@ import { Layout } from "antd";
 import { Header } from "./Header";
 import { Sidenav } from "./Sidenav";
 import { Main } from "./Main";
+import { useAdminPanel } from './useAdminPanel';
 
 import classes from "./AdminPanel.module.css";
 
+// TODO: Set footer
 export default function AdminPanel() {
-  const [collapsed, setCollapsed] = React.useState(true);
-  const [broken, setBroken] = React.useState(true);
-
-  const siderWidth = "var(--sider-w)";
-  const collapsedWidth = broken ? "0" : "var(--sider-collapsed-w)";
-  const contentOffset = broken
-    ? "0"
-    : collapsed
-    ? "var(--sider-collapsed-w)"
-    : siderWidth;
-
-  React.useEffect(() => {
-    function adjustSidebar() {
-      if (!broken) setCollapsed(false);
-    }
-
-    adjustSidebar();
-  }, [broken]);
-
-  const onChangeCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const handleToggle = (): void => setCollapsed(!collapsed);
-  const handleCollapse = (): void => setCollapsed(true);
-  const handleLayoutChange = (broken: boolean): void => setBroken(broken);
+  const {
+    collapsed,
+    contentOffset,
+    siderWidth,
+    collapsedWidth,
+    onToggle,
+    onCollapse,
+    onLayoutChange
+  } = useAdminPanel();
 
   return (
     <Layout hasSider className={classes.wrapper}>
@@ -41,18 +26,14 @@ export default function AdminPanel() {
         isCompacted={collapsed}
         baseWidth={siderWidth}
         compactedWidth={collapsedWidth}
-        onToggle={handleToggle}
-        onCollapse={handleCollapse}
-        onLayoutChange={handleLayoutChange}
+        onToggle={onToggle}
+        onCollapse={onCollapse}
+        onLayoutChange={onLayoutChange}
       />
-      <Layout
-        className={classes.content}
-        style={{ marginLeft: contentOffset }}
-      >
-        <Header onToggleSidenav={onChangeCollapsed} />
-        <Main>
-          <Outlet />
-        </Main>
+      <Layout className={classes.content} style={{ marginLeft: contentOffset }}>
+        <Header onToggleSidenav={onToggle} />
+
+        <Main><Outlet /></Main>
         {/* <Layout.Footer style={{ textAlign: "center" }}>
           Ant Design ©2018 Created by Ant UED
         </Layout.Footer> */}

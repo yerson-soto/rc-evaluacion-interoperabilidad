@@ -1,10 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Form, Select } from "antd";
+import { Button, Form } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { ChoiceFormSchema, rules } from "./ChoiceFormSchema";
 import { useChoiceForm } from "./useChoiceForm";
 import { TextArea } from "library/components/TextArea";
+import { CriterionSelect } from "../CriterionSelect";
+import { LevelSelect } from "../LevelSelect";
 
 interface ChoiceFormProps {
   show: boolean;
@@ -16,7 +18,7 @@ interface ChoiceFormProps {
 }
 
 export default function ChoiceForm(props: ChoiceFormProps) {
-  const { form, levels, criterions, resetForm } = useChoiceForm();
+  const { form, resetForm } = useChoiceForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
@@ -71,20 +73,9 @@ export default function ChoiceForm(props: ChoiceFormProps) {
             label={t("fields.level")}
             rules={rules.levelId}
           >
-            <Select
-              showSearch
+            <LevelSelect 
               placeholder={t("placeholders.select_level")}
-              optionFilterProp="children"
-            >
-              {levels.map((level) => (
-                <Select.Option 
-                  key={level.id} 
-                  value={level.id}
-                >
-                  {t("fields.level")} {level.value} ({level.name})
-                </Select.Option>
-              ))}
-            </Select>
+            />
           </Form.Item>
 
           <Form.Item
@@ -92,20 +83,9 @@ export default function ChoiceForm(props: ChoiceFormProps) {
             label={t("fields.criterion")}
             rules={rules.criterionId}
           >
-            <Select
-              showSearch
+            <CriterionSelect 
               placeholder={t("placeholders.select_criterion")}
-              optionFilterProp="children"
-            >
-              {criterions.map((criterion) => (
-                <Select.Option 
-                  key={criterion.id} 
-                  value={criterion.id}
-                >
-                  {criterion.name}
-                </Select.Option>
-              ))}
-            </Select>
+            />
           </Form.Item>
 
           <Form.Item

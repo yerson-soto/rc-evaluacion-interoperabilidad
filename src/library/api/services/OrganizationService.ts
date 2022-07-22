@@ -4,6 +4,7 @@ import { OrganizationRepository } from 'library/api/repositories/OrganizationRep
 import { Organization } from "library/models/Organization";
 import { GetOrganization } from 'library/api/dto/organization-dto';
 
+// TODO: Refactor this
 export class OrganizationService extends AbstractAPIService implements OrganizationRepository {
   
   // TODO: DRY
@@ -11,8 +12,8 @@ export class OrganizationService extends AbstractAPIService implements Organizat
     return new Promise((resolve, reject) => {
       this.client.get<APIResponse<GetOrganization[]>>('/institutions')
         .then(res => {
-          const domains = res.data.result.map(this.mapResult)
-          resolve(domains);
+          const organizations = res.data.result.map(this.mapResult)
+          resolve(organizations);
         })
         .catch(() => reject('No se pudo cargar los dominios'))
     });

@@ -5,6 +5,7 @@ import { Button, Form, Input, Select } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { CriterionFormSchema, rules } from "./CriterionFormSchema";
 import { useCriterionForm } from "./useCriterionForm";
+import { LineamentSelect } from "../LineamentSelect";
 
 interface CriterionFormProps {
   show: boolean;
@@ -16,7 +17,7 @@ interface CriterionFormProps {
 }
 
 export default function CriterionForm(props: CriterionFormProps) {
-  const { form, optionGroup, changeOption, resetForm } = useCriterionForm();
+  const { form, resetForm, changeLineaments } = useCriterionForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
@@ -78,37 +79,18 @@ export default function CriterionForm(props: CriterionFormProps) {
             />
           </Form.Item>
 
-
           <Form.Item
             name="lineaments"
             label={t("fields.lineaments")}
             rules={rules.lineaments}
           > 
-            <Select
-              style={{ width: '100%' }}
+            <LineamentSelect
               mode="multiple"
+              style={{ width: '100%' }}
               placeholder={t("placeholders.select_lineaments")}
-              optionFilterProp="children"
               maxTagCount="responsive"
-              onChange={changeOption}
-            >
-              {optionGroup.map((group) => (
-                <Select.OptGroup 
-                  key={group.id} 
-                  label={`${t("preffixes.domain")} ${group.name}`}
-                >
-                  {group.options.map(option => (
-                    <Select.Option 
-                      key={option.id} 
-                      value={option.id}
-                    >
-                      {option.nomenclature}
-                    </Select.Option>
-                    ))}
-                </Select.OptGroup>
-                
-              ))}
-            </Select>
+              onChangeLineaments={changeLineaments}
+            />
           </Form.Item>
         </Form>
       )}

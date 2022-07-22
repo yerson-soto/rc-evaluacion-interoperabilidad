@@ -13,7 +13,18 @@ const columns: ColumnsType<Evaluation> = [
   {
     title: getText("fields.evaluation") as string,
     dataIndex: ["organization", "name"],
+    render: () => "EV.20.12"
+  },
+  {
+    title: getText("fields.organization") as string,
+    dataIndex: ["organization", "name"],
     ellipsis: true,
+  },
+  {
+    title: getText("fields.score") as string,
+    dataIndex: "score",
+    ellipsis: true,
+    render: () => "4.5"
   },
 ];
 
