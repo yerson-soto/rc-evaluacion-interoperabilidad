@@ -19,7 +19,7 @@ export function useDeleteAction<T>({
   const dispatch = useAppDispatch();
 
   const deleteOne = async (id: ID): Promise<void> => {
-    dispatch(reducer.actions.setLoading(true));
+    dispatch(reducer.actions.startLoading());
     
     return service.delete(id)
     .then(() => {

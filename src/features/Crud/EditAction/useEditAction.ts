@@ -22,7 +22,7 @@ export function useEditAction<T, FormSchema>({
   const { t } = useTranslation();
 
   const editOne = async (id: ID, data: FormSchema): Promise<void> => {
-    dispatch(reducer.actions.setLoading(true));
+    dispatch(reducer.actions.startLoading());
     
     return service.edit(id, data)
     .then(result => {

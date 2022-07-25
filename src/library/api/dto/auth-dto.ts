@@ -12,6 +12,7 @@ export interface GetAuthUser {
   fullName:  string;
   email:     string;
   organismo: GetOrganizationNested;
+  userType: number;
   tokenUser: null;
 }
 

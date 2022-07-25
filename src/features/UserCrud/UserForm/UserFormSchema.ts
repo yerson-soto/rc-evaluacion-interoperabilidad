@@ -15,7 +15,7 @@ export const rules: Record<keyof UserFormSchema, Rule[]> = {
       message: getText("rules.required", {
         field: getText("fields.identification"),
       }),
-    },
+    }
   ],
   email: [
     {

@@ -6,13 +6,17 @@ export interface User {
   identification: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   email: string;
   type: UserType;
-
-  // TODO: Remove this field
-  organizationId: number;
+  organization: Organization;
 }
 
-export interface AuthUser extends User {
-  organization: Organization | null;
+export interface AuthUser extends User {}
+
+export interface UserIdentity {
+  card: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
 }

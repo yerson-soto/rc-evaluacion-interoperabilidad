@@ -19,6 +19,7 @@ import { LevelCrud } from "features/LevelCrud";
 import { CriterionCrud } from "features/CriterionCrud";
 import { LineamentCrud } from "features/LineamentCrud";
 import { NotFound } from 'features/NotFound';
+import { Settings } from 'features/Settings';
 import { EvaluationCrud } from 'features/EvaluationCrud';
 
 import { PrivateRoute } from "./PrivateRoute";
@@ -53,6 +54,10 @@ export default function Router() {
           <Route 
             path={paths.users.index} 
             element={<UserCrud />} 
+          />
+          <Route 
+            path={paths.settings.index}
+            element={<Settings />}
           />
           <Route 
             path={paths.domains.index} 

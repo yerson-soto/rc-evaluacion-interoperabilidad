@@ -22,7 +22,7 @@ export function useCreateAction<T, FormSchema>({
   const { t } = useTranslation();
 
   const createOne = async (data: FormSchema): Promise<void> => {
-    dispatch(reducer.actions.setLoading(true));
+    dispatch(reducer.actions.startLoading());
     
     return service.create(data)
       .then(result => {

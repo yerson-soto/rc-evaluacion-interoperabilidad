@@ -20,10 +20,15 @@ const initialState: AuthState = {
     identification: "",
     firstName: "",
     lastName: "",
+    fullName: "",
     email: "",
     type: 0,
-    organizationId: 0,
-    organization: null,
+    organization: {
+      id: 0,
+      name: "",
+      acronym: "",
+      emailDomain: "",
+    },
   },
   token: defaultToken,
   isLoadingUser: true,
@@ -60,14 +65,14 @@ export const authSlice = createSlice({
     logoutDone: (state) => {
       state.token = "";
       state.user = initialState.user;
-      state.isLogged = false
+      state.isLogged = false;
       state.isLoading = false;
       state.hasError = false;
       state.errorMessage = "";
     },
 
     loadUserSuccess: (state, action: PayloadAction<AuthUser>) => {
-      state.user = action.payload
+      state.user = action.payload;
       state.isLogged = true;
       state.isLoading = false;
       state.isLoadingUser = false;

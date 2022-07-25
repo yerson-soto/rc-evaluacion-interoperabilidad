@@ -8,6 +8,7 @@ import { UserService } from 'library/api/services/UserService';
 import { userSlice } from 'redux/slices/userSlice';
 import { Crud } from "features/Crud";
 import { getText } from "i18n";
+import { RoleTag } from "./RoleTag";
 
 const columns: ColumnsType<User> = [
   {
@@ -26,7 +27,11 @@ const columns: ColumnsType<User> = [
     title: getText("fields.email") as string,
     dataIndex: "email",
     ellipsis: true,
-    
+  },
+  {
+    title: getText("fields.user_type") as string,
+    dataIndex: "type",
+    render: (value) => <RoleTag role={value} />
   }
 ];
 
@@ -57,7 +62,10 @@ export default function UserCrud() {
           isLoading={loading}
           onSave={onSave}
           onHide={onClose}
-          defaults={record}
+          defaults={{
+            ...record,
+            organizationId: record.organization.id
+          }}
           isEdit
         />
       )}

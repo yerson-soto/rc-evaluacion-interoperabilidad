@@ -1,3 +1,6 @@
+import { UserType } from './enums';
+import { getText } from 'i18n';
+
 export const paths = {
   auth: {
     index: "auth",
@@ -31,16 +34,29 @@ export const paths = {
       reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
     },
   },
-  domains: { index: "c/dominios" },
-  lineaments: { index: "c/lineamientos" },
-  criterions: { index: "c/criterios" },
-  levels: { index: "c/niveles" },
-  choices: { index: "c/respuestas" },
-  users: { index: "c/usuarios" },
-  evaluationsCrud: { index: "c/evaluaciones" },
+  domains: { index: "/admin/dominios" },
+  lineaments: { index: "/admin/lineamientos" },
+  criterions: { index: "/admin/criterios" },
+  levels: { index: "/admin/niveles" },
+  choices: { index: "/admin/respuestas" },
+  users: { index: "/admin/usuarios" },
+  settings: { index: "/settings" },
+  evaluationsCrud: { index: "admin/evaluaciones" },
 };
 
 export const keys = {
   resetTokenParam: 'token',
   tokenLocalStorage: 'mdmitkn'
+}
+
+export const roleLabels = {
+  [UserType.Admin]: getText("roles.admin"),
+  [UserType.Role2]: getText("roles.role2"),
+  [UserType.Role3]: getText("roles.role3"),
+}
+
+export const roleColors = {
+  [UserType.Admin]: "blue",
+  [UserType.Role2]: "orange",
+  [UserType.Role3]: "green",
 }

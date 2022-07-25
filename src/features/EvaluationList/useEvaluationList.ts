@@ -6,7 +6,7 @@ export function useEvaluationList() {
   const { isLoading, results: evaluations } = useLoadList({
     selectLoading: (state) => state.evaluations.isLoading,
     selectResults: (state) => state.evaluations.results,
-    service: EvaluationService,
+    service: new EvaluationService(),
     actions: {
       start: actions.evaluationsLoad,
       success: actions.evaluationsListed,

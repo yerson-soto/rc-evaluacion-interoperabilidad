@@ -17,12 +17,11 @@ export class LineamentMapper
 
   fromAPI(data: GetLineament): Lineament {
     const domainMapper = new DomainMapper();
-    
     return {
       id: data.id,
       nomenclature: data.description,
       description: data.definictionLineament,
-      domain: domainMapper.fromAPI(data.domain)
+      domain: domainMapper.fromAPI(data.domainResponse),
     };
   }
 
@@ -30,7 +29,7 @@ export class LineamentMapper
     return {
       id: data.id,
       nomenclature: data.description,
-      description: data.definictionLineament
+      description: data.definictionLineament,
     };
   }
 }

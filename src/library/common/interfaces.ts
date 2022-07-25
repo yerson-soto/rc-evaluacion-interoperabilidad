@@ -19,7 +19,7 @@ export interface CrudState<T> extends CommonState {
 }
 
 export interface CrudCaseReducers<T, State extends CrudState<T>> extends SliceCaseReducers<State> {
-  setLoading: CaseReducer<State, PayloadAction<boolean>>;
+  startLoading: CaseReducer<State>;
   getSuccess: CaseReducer<State, PayloadAction<T[]>>;
   getFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
   createSuccess: CaseReducer<State, PayloadAction<T>>;

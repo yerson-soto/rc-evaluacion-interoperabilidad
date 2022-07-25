@@ -8,7 +8,7 @@ export function useDomainList() {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   useFetchList({
-    service: DomainService,
+    service: new DomainService(),
     onStart: () => setLoading(true),
     onFinish: () => setLoading(false),
     onSuccess: setDomains,

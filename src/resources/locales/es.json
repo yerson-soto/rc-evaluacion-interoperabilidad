@@ -84,7 +84,8 @@
     "max_length": "{{ field }} debe contener un máximo de {{ length }} caracteres",
     "length": "{{ field }} debe ser de {{ length }} caracteres",
     "match_password": "Passwords must match",
-    "invalid_username": "Agregue un usuario válido"
+    "invalid_username": "Agregue un usuario válido",
+    "invalid_identity_card": "La cédula ingresada no existe"
   },
   "hints": {
     "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.",
@@ -102,7 +103,8 @@
     "reset_password_failed": "No se ha podido cambiar la contraseña",
     "reset_password_success": "Su contraseña ha sido restablecida con éxito",
     "reset_link_invalid": "El enlace de recuperación es inválido o ha expirado",
-    "item_created": "El registro se ha creado con éxito"
+    "item_created": "El registro se ha creado con éxito",
+    "identity_card_not_found": "La cédula ingresa no existe"
   },
   "buttons": {
     "upload": "Subir",
@@ -144,5 +146,11 @@
   },
   "preffixes": {
     "domain":"Dominio"
+  },
+  "roles": {
+    "admin": "Administrador",
+    "role2": "Role 2",
+    "role3": "Role 3"
+
   }
 }

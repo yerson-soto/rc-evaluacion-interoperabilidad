@@ -30,8 +30,8 @@ export function createCrudSlice<
     name,
     initialState,
     reducers: {
-      setLoading: (state, action: PayloadAction<boolean>) => {
-        state.isLoading = action.payload;
+      startLoading: (state) => {
+        state.isLoading = true;
       },
       getSuccess: (state, action: PayloadAction<State["results"]>) => {
         state.results = action.payload as Draft<T>[];

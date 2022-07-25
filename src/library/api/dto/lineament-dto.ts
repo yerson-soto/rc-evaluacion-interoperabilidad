@@ -4,7 +4,7 @@ export interface GetLineament {
   id: number;
   description: string;
   definictionLineament: string;
-  domain: GetDomain;
+  domainResponse: GetDomain;
 }
 
 export interface CreateLineament {

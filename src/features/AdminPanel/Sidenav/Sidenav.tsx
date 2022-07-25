@@ -16,6 +16,7 @@ import {
   AimOutlined,
   LogoutOutlined,
   UsergroupAddOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
 import { keys, paths } from "library/common/constants";
@@ -80,14 +81,15 @@ export default function Sidenav(props: SidenavProps) {
       getItem("Niveles", "7", paths.levels.index, <SignalFilled />),
       getItem("Respuestas", "8", paths.choices.index, <FormOutlined />),
       getItem("Evaluaciones (Crud)", "9", paths.evaluationsCrud.index, <FormOutlined />),
+      getItem("Mi Cuenta", "10", paths.settings.index, <SettingOutlined />),
       getItem(
         "Iniciar Sesión",
-        "10",
+        "11",
         paths.auth.login.reverse(),
         <LoginOutlined />
       ),
       {
-        key: "11",
+        key: "12",
         icon: <LogoutOutlined />,
         label: (
           <Popconfirm

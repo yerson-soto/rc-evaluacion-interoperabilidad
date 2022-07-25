@@ -1,12 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Button, Form, Input, Select } from "antd";
-import { IdcardOutlined, MailOutlined } from "@ant-design/icons";
+import { Alert, Button, Form, Input } from "antd";
+import { IdcardOutlined, LoadingOutlined } from "@ant-design/icons";
 import { AppDrawer } from "library/components/AppDrawer";
 import { UserFormSchema, rules } from "./UserFormSchema";
 import { useUserForm } from "./useUserForm";
 import { MaskedInput } from 'antd-mask-input';
-import { UserType } from '../../../library/common/enums';
+import { InstitutionSelect } from "library/components/InstitutionSelect";
+import { RoleSelect } from "../RoleSelect";
 
 interface UserFormProps {
   show: boolean;
@@ -21,11 +22,14 @@ export default function UserForm(props: UserFormProps) {
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
   const { 
-    form, 
-    institutionOptions, 
+    form,
     domainNotFound, 
     emailDomain, 
     changeEmailDomain, 
+    onIdentityChange,
+    isVerifying,
+    isInvalid,
+    identity,
     resetForm 
   } = useUserForm();
 
@@ -40,6 +44,14 @@ export default function UserForm(props: UserFormProps) {
   const formName = isEdit 
     ? "edit_user" 
     : "create_user";
+
+  const identityCardIcon = isVerifying 
+    ? <LoadingOutlined /> 
+    : <IdcardOutlined />;
+
+  const identityHelp = isInvalid 
+    ? t("rules.invalid_identity_card") 
+    : identity?.fullName
 
   const onFinish = () => {
     form.validateFields().then((values) => {
@@ -82,11 +94,14 @@ export default function UserForm(props: UserFormProps) {
             name="identification"
             label={t("fields.identification")}
             rules={rules.identification}
+            validateStatus={isInvalid ? "error" : "success"}
+            help={identityHelp}
           >
             <MaskedInput 
               size="large" 
-              suffix={<IdcardOutlined />} 
-              mask="000-0000000-0" 
+              mask="000-0000000-0"
+              suffix={identityCardIcon} 
+              onChange={onIdentityChange}
             />
           </Form.Item>
 
@@ -95,12 +110,9 @@ export default function UserForm(props: UserFormProps) {
             label={t("fields.organization")}
             rules={rules.organizationId}
           >
-            <Select
-              showSearch
+            <InstitutionSelect
               placeholder={t("placeholders.select_organization")}
-              optionFilterProp="label"
-              onChange={changeEmailDomain}
-              options={institutionOptions}
+              onInstitutionChange={changeEmailDomain}
             />
           </Form.Item>
 
@@ -129,21 +141,9 @@ export default function UserForm(props: UserFormProps) {
             label={t("fields.user_type")}
             rules={rules.type}
           >
-            <Select
-              showSearch
+            <RoleSelect 
               placeholder={t("placeholders.select_user_type")}
-              optionFilterProp="children"
-            >
-              <Select.Option key="1" value={UserType.Admin}>
-                Administrador
-              </Select.Option>
-              <Select.Option key="2" value={UserType.Role2}>
-                Técnico
-              </Select.Option>
-              <Select.Option key="3" value={UserType.Role3}>
-                Analista
-              </Select.Option>
-            </Select>
+            />
           </Form.Item>
         </Form>
       )}

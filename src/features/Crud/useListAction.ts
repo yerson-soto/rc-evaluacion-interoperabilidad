@@ -23,7 +23,7 @@ export function useListAction<T>({
   const dispatch = useAppDispatch();
 
   const fetchResults = useFetchDebounced(() => {
-    dispatch(reducer.actions.setLoading(true));
+    dispatch(reducer.actions.startLoading());
       
     service.getAll()
     .then(results => {

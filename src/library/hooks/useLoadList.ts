@@ -13,7 +13,7 @@ interface Actions<T> {
 
 interface UseListParams<T> {
   actions: Actions<T>;
-  service: new () => CommonRepository<T>;
+  service: CommonRepository<T>;
   selectResults: (state: RootState) => T[];
   selectLoading: (state: RootState) => boolean;
 }

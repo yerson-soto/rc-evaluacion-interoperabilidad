@@ -39,6 +39,7 @@ export default function ResetPassword(props: ResetPasswordProps) {
 
         <Form.Item
           name="confirm_password"
+          dependencies={['password']}
           rules={[
             {
               required: true,

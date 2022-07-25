@@ -1,9 +1,24 @@
 import React, { forwardRef } from "react";
-import { Select, SelectProps } from "antd";
+import { Select } from "antd";
 import { useInstitutionOptions } from "./useInstitutionOptions";
+import { SelectProps, DefaultOptionType } from "antd/lib/select";
+import { Organization } from "library/models/Organization";
 
-export default forwardRef<any, SelectProps>((props, ref) => {
-  const { isLoading, institutionOptions } = useInstitutionOptions();
+interface CustomSelectProps extends SelectProps {
+  onInstitutionChange?: (value: number, institutions: Organization[]) => void;
+}
+
+export default forwardRef<any, CustomSelectProps>((props, ref) => {
+  const { isLoading, institutions, institutionOptions } = useInstitutionOptions();
+  const { onInstitutionChange, onChange, ...extraProps } = props;
+
+  const handleChange = (
+    value: number,
+    option: DefaultOptionType | DefaultOptionType[]
+  ): void => {
+    if (onChange) onChange(value, option);
+    if (onInstitutionChange) onInstitutionChange(value, institutions);
+  };
 
   return (
     <Select
@@ -12,7 +27,8 @@ export default forwardRef<any, SelectProps>((props, ref) => {
       loading={isLoading}
       optionFilterProp="label"
       options={institutionOptions}
-      {...props}
+      onChange={handleChange}
+      {...extraProps}
     />
   );
 });

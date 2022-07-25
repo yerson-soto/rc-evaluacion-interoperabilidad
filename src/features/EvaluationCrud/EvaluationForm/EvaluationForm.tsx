@@ -73,7 +73,7 @@ export default function EvaluationForm(props: EvaluationFormProps) {
             label={t("fields.organization")}
             rules={rules.organizationId}
           >
-            <InstitutionSelect 
+            <InstitutionSelect
               placeholder={t("placeholders.select_organization")}
             />
           </Form.Item>
