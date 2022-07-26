@@ -3,7 +3,7 @@ import { User } from "library/models/User";
 import { UserFormSchema } from "features/UserCrud/UserForm/UserFormSchema";
 import { GetUser, CreateUser, GetUserIdentity } from '../dto/user-dto';
 import { UserIdentity } from 'library/models/User';
-import { paths } from "library/common/constants";
+import { keys, paths } from "library/common/constants";
 import { OrganizationMapper } from './OrganizationMapper';
 
 export class UserMapper
@@ -11,7 +11,10 @@ export class UserMapper
     Mapper<User, GetUser, CreateUser, UserFormSchema>
 {
   formSchemaToAPI(schema: UserFormSchema): CreateUser {
-    const loginUrl = process.env.REACT_APP_BASE_URL + paths.auth.login.reverse();
+    const loginUrl = process.env.REACT_APP_BASE_URL +
+      paths.auth.confirmEmail.reverse() +
+      `?${keys.linkTokenParam}=`
+    ;
     
     return {
       document: schema.identification,

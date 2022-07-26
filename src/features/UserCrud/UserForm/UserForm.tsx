@@ -96,6 +96,7 @@ export default function UserForm(props: UserFormProps) {
             rules={rules.identification}
             validateStatus={isInvalid ? "error" : "success"}
             help={identityHelp}
+            hasFeedback
           >
             <MaskedInput 
               size="large" 

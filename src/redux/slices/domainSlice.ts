@@ -13,8 +13,8 @@ const initialState: DomainState = {
 
 export const domainSlice = createCrudSlice<Domain, DomainState, "domains">({
   name: "domains",
-  initialState,
   idSource: "id",
+  initialState,
 });
 
 export const { ...actions } = domainSlice.actions;

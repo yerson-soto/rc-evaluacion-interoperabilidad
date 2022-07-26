@@ -1,13 +1,18 @@
 import React from 'react'
-import { Spin } from 'antd'
-
-import classes from './AppLoader.module.css';
+import { Spin, Typography } from 'antd';
 import { Box } from '../Box';
 
-export default function AppLoader() {
+import classes from './AppLoader.module.css';
+
+interface AppLoaderProps {
+  text?: string;
+}
+
+export default function AppLoader({ text }: AppLoaderProps) {
   return (
     <Box className={classes.center}>
-      <Spin size="default" />
+      <Spin size="large" />
+      {text && <Typography.Text>{text}</Typography.Text>}
     </Box>
   )
 }

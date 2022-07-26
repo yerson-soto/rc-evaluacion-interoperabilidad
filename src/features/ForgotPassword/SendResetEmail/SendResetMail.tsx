@@ -24,7 +24,10 @@ export default function SendResetMail(props: SendResetMailProps) {
     <Form size="large" name="reset_password" onFinish={onFinish}>
       <Form.Item
         name="email"
-        rules={[{ required: true, message: "Please input your Email!" }]}
+        rules={[{ 
+          required: true, 
+          message: t("rules.required", { field: t("fields.email")}) 
+        }]}
       >
         <Input
           prefix={<MailOutlined />}

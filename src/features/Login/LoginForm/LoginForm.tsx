@@ -34,7 +34,7 @@ export default function LoginForm(props: LoginFormProps) {
       <Space 
         className={classes.space} 
         direction="vertical" 
-        size="small"
+        size="middle"
       >
         <Form.Item
           name="username"

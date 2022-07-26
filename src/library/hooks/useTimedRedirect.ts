@@ -1,24 +1,22 @@
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { paths } from "library/common/constants";
 import useCountDown from "react-countdown-hook";
 
-const initialTime = 10 * 1000;
 
-export function useSuccessResult() {
-  const [timeLeft, { start }] = useCountDown(initialTime, 1000);
-
+export function useTimedRedirect(seconds: number, path: string) {
+  const initialTime = seconds * 1000;
+  const [timeLeft, { start }] = useCountDown(initialTime, 1000); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const redirectToLogin = () => {
+    const redirectToPath = () => {
       setTimeout(() => {
-        navigate(paths.auth.login.reverse())
+        navigate(path)
       }, initialTime)
     }
     
     start();
-    redirectToLogin();
+    redirectToPath();
     
     // eslint-disable-next-line
   }, []);

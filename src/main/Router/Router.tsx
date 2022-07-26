@@ -5,6 +5,7 @@ import { paths } from "library/common/constants";
 import { AuthPanel } from 'features/AuthPanel';
 import { ForgotPassword } from 'features/ForgotPassword';
 import { PasswordReset } from 'features/PasswordReset';
+import { ConfirmEmail } from "features/ConfirmEmail";
 import { Login } from 'features/Login';
 
 import { AdminPanel } from 'features/AdminPanel';
@@ -24,82 +25,56 @@ import { EvaluationCrud } from 'features/EvaluationCrud';
 
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
+import { PermissionRoute } from "./PermissionRoute";
+import { UserType } from "library/common/enums";
+
+const { auth, admin, admin: { evaluations }, management } = paths;
 
 export default function Router() {
   return (
     <Routes>
+
+      {/* Routes for non authenticated users */}
       <Route element={<PublicRoute />}>
-        <Route path={paths.auth.index} element={<AuthPanel />}>
-          <Route
-            path={paths.auth.login.index} 
-            element={<Login />} 
-          />
-          <Route
-            path={paths.auth.forgotPassword.index}
-            element={<ForgotPassword />}
-          />
-          <Route
-            path={paths.auth.passwordReset.index}
-            element={<PasswordReset />}
-          />
+        <Route path={auth.index} element={<AuthPanel />}>
+          <Route path={auth.login.index}  element={<Login />}  />
+          <Route path={auth.confirmEmail.index} element={<ConfirmEmail />} />
+          <Route path={auth.forgotPassword.index} element={<ForgotPassword />} />
+          <Route path={auth.passwordReset.index} element={<PasswordReset />} />
         </Route>
       </Route>
 
+      {/* Routes for authenticated users */}
       <Route element={<PrivateRoute />}>
-        <Route path={paths.admin} element={<AdminPanel />}>
-          <Route
-            path={paths.dashboard} 
-            element={<Dashboard />} 
-          />
-          <Route 
-            path={paths.users.index} 
-            element={<UserCrud />} 
-          />
-          <Route 
-            path={paths.settings.index}
-            element={<Settings />}
-          />
-          <Route 
-            path={paths.domains.index} 
-            element={<DomainCrud />} 
-          />
-          <Route 
-            path={paths.lineaments.index} 
-            element={<LineamentCrud />} 
-          />
-          <Route 
-            path={paths.criterions.index} 
-            element={<CriterionCrud />} 
-          />
-          <Route 
-            path={paths.levels.index} 
-            element={<LevelCrud />} 
-          />
-          <Route 
-            path={paths.choices.index} 
-            element={<ChoiceCrud />} 
-          />
-          <Route 
-            path={paths.evaluationsCrud.index} 
-            element={<EvaluationCrud />} 
-          />
+        <Route path={admin.index} element={<AdminPanel />}>
           
-          <Route path={paths.evaluations.index}>
-            <Route 
-              index
-              element={<EvaluationList />} 
-            />
-            <Route
-              path={paths.evaluations.detail.index}
-              element={<EvaluationDetail />}
-            />
-            <Route
-              path={paths.evaluations.init.index}
-              element={<EvaluationInit />}
-            />
+          {/* Common routes */}
+          <Route path={admin.settings.index} element={<Settings />} />
+          <Route path={admin.index} element={<Dashboard />} />
+
+          {/* Routes for users */}
+          <Route element={<PermissionRoute for={[UserType.User]} />}>
+            <Route path={admin.evaluations.index}>
+              <Route index element={<EvaluationList />} />
+              <Route path={evaluations.detail.index} element={<EvaluationDetail />} />
+              <Route path={evaluations.init.index} element={<EvaluationInit />} />
+            </Route>
+          </Route>
+
+          {/* Routes for administrators */}
+          <Route element={<PermissionRoute for={[UserType.Admin, UserType.User]} />}>
+            <Route path={management.users.index} element={<UserCrud />} />
+            <Route path={management.domains.index} element={<DomainCrud />} />
+            <Route path={management.lineaments.index} element={<LineamentCrud />} />
+            <Route path={management.criterions.index} element={<CriterionCrud />} />
+            <Route path={management.levels.index} element={<LevelCrud />} />
+            <Route path={management.choices.index} element={<ChoiceCrud />} />
+            <Route path={management.evaluations.index} element={<EvaluationCrud />} />
           </Route>
         </Route>
       </Route>
+
+      {/* Routes for all users */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

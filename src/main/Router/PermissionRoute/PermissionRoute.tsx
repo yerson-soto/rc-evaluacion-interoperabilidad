@@ -1,21 +1,19 @@
 import React from 'react'
-import { UserType } from 'library/common/enums';
+import { Outlet, Navigate } from 'react-router-dom'
 import { useAppSelector } from 'redux/hooks';
+import { UserType } from 'library/common/enums';
+import { paths } from 'library/common/constants';
 
 interface PermissionRouteProps {
-  children: React.ReactNode;
-  allow?: UserType[];
+  for: UserType[];
+  redirectPath?: string;
 }
 
 export default function PermissionRoute(props: PermissionRouteProps) {
-  const auth = useAppSelector(state => state.auth);
-  
-  const { allow, children } = props;
+  const { redirectPath = paths.admin.index, for: allowedRoles } = props;
+  const userType = useAppSelector(state => state.auth.user.type);
 
-  
-  
-  
-  return (
-    <div>PermissionRoute</div>
-  )
+  const isAllowed = allowedRoles.includes(userType);
+
+  return isAllowed ? <Outlet /> : <Navigate to={redirectPath} replace /> 
 }

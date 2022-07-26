@@ -1,27 +1,29 @@
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { AppDrawer } from "library/components/AppDrawer";
 import { UserForm } from "./UserForm";
 import { UserFormSchema } from "./UserForm/UserFormSchema";
-import { User } from 'library/models/User';
-import { UserService } from 'library/api/services/UserService';
-import { userSlice } from 'redux/slices/userSlice';
+import { User } from "library/models/User";
+import { UserService } from "library/api/services/UserService";
+import { userSlice } from "redux/slices/userSlice";
 import { Crud } from "features/Crud";
 import { getText } from "i18n";
 import { RoleTag } from "./RoleTag";
+import { Box } from "library/components/Box";
+import { BankOutlined } from "@ant-design/icons";
 
 const columns: ColumnsType<User> = [
   {
     title: getText("fields.first_name") as string,
     dataIndex: "firstName",
     ellipsis: true,
-    responsive: ['sm']
+    responsive: ["sm"],
   },
   {
     title: getText("fields.last_name") as string,
     dataIndex: "lastName",
     ellipsis: true,
-    responsive: ['md']
+    responsive: ["md"],
   },
   {
     title: getText("fields.email") as string,
@@ -31,14 +33,21 @@ const columns: ColumnsType<User> = [
   {
     title: getText("fields.user_type") as string,
     dataIndex: "type",
-    render: (value) => <RoleTag role={value} />
-  }
+    responsive: ["lg"],
+    render: (value) => <RoleTag role={value} />,
+  },
+  {
+    title: getText("fields.organization") as string,
+    dataIndex: ["organization", "name"],
+    ellipsis: true,
+    responsive: ["xl"]
+  },
 ];
 
 export default function UserCrud() {
   const service = new UserService();
   const { t } = useTranslation();
-  
+
   return (
     <Crud<User, UserFormSchema>
       title={t("headings.user_list")}
@@ -64,17 +73,13 @@ export default function UserCrud() {
           onHide={onClose}
           defaults={{
             ...record,
-            organizationId: record.organization.id
+            organizationId: record.organization.id,
           }}
           isEdit
         />
       )}
       detailModal={({ record, visible, onClose }) => (
-        <AppDrawer 
-          title={record.firstName} 
-          visible={visible} 
-          onClose={onClose}
-        >
+        <AppDrawer title={record.firstName} visible={visible} onClose={onClose}>
           User Detail
         </AppDrawer>
       )}

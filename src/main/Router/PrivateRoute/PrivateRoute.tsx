@@ -7,5 +7,7 @@ import { paths } from 'library/common/constants';
 export default function PrivateRoute() {
   const haveAccess = useAppSelector(state => state.auth.isLogged);
 
-  return haveAccess ? <Outlet /> : <Navigate to={paths.auth.login.reverse()} /> 
+  return haveAccess 
+    ? <Outlet /> 
+    : <Navigate to={paths.auth.login.reverse()} replace /> 
 }

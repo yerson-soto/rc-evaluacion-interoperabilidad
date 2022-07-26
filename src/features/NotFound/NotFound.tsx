@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { Button, Col, Result, Row } from "antd";
 import { paths } from "library/common/constants";
 
-export default function App() {
+export default function NotFound() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const goToHome = () => navigate(paths.dashboard);
+  const goToHome = () => navigate(paths.admin.index);
 
   return (
     <Row align="middle" style={{ height: "100%" }}>

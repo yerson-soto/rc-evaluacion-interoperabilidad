@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import { keys } from 'library/common/constants';
 
-export function useResetToken(): string {
+export function useQueryToken(): string {
   const location = useLocation();
-  const paramName: string = keys.resetTokenParam,
+  const paramName: string = keys.linkTokenParam,
     url: string = location.search,
     urlIncludesParam: boolean = url.includes(paramName);
 

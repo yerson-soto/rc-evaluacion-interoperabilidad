@@ -12,10 +12,10 @@ import { paths } from "library/common/constants";
 // };
 
 const breadcrumbNameMap: Record<string, string> = {
-  [paths.dashboard]: "Inicio",
-  [paths.evaluations.index]: "Evaluaciones",
-  [paths.evaluations.detail.index]: "Detalle",
-  [paths.evaluations.init.index]: "Completar Evaluacion",
+  [paths.admin.index]: "Inicio",
+  [paths.admin.evaluations.index]: "Evaluaciones",
+  [paths.admin.evaluations.detail.index]: "Detalle",
+  [paths.admin.evaluations.init.index]: "Completar Evaluacion",
 };
 
 export default function Breadcrumb() {

@@ -8,7 +8,6 @@ export class AuthMapper {
 
     return {
       ...userMapper.fromAPI(data),
-     
     };
   }
 }

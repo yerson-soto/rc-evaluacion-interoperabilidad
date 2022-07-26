@@ -26,15 +26,20 @@
     "reset_password": "Complete el siguiente formulario para restablecer su contraseña",
     "forgot_password": "Ingrese su correo electrónico en el siguiente formulario para enviarle su correo de recuperación.",
     "reset_mail_sent": "Revise su bandeja de entrada. En caso de que su usuario este registrado, verá un correo de recuperación de contraseña.",
-    "reset_password_success": "Su contraseña fue modificada.",
+    "reset_password_success": "Su contraseña ha sido modificada.",
     "reset_password_redirect": "Será redirigido para que inicie sesión con sus nuevas credenciales ({{ timeLeft }})",
+    "confirm_email_success": "Su correo electrónico ha sigo confirmado.",
+    "confirm_email_failed": "El enlace de confirmación es inválido o ha expirado.",
+    "confirm_email_redirect": "Será redirigido para que inicie sesión con la contraseña enviada a su correo electrónico ({{ timeLeft }})",
     "email_domain_not_found": "La institución seleccionada no esta asociada a ningún dominio de correo electrónico, por favor contacte con el área responsable para configurar su dominio."
   },
   "dividers": {
     "lineaments": "Lineamientos",
     "levels": "Nivel del criterio",
     "justification": "Justificación",
-    "next_steps": "Pasos a seguir"
+    "next_steps": "Pasos a seguir",
+    "or": "O",
+    "options": "Opciones"
   },
   "fields": {
     "name": "Nombre",
@@ -85,7 +90,8 @@
     "length": "{{ field }} debe ser de {{ length }} caracteres",
     "match_password": "Passwords must match",
     "invalid_username": "Agregue un usuario válido",
-    "invalid_identity_card": "La cédula ingresada no existe"
+    "invalid_identity_card": "La cédula ingresada no existe",
+    "password_match": "Las contraseñas no coinciden"
   },
   "hints": {
     "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.",
@@ -103,8 +109,13 @@
     "reset_password_failed": "No se ha podido cambiar la contraseña",
     "reset_password_success": "Su contraseña ha sido restablecida con éxito",
     "reset_link_invalid": "El enlace de recuperación es inválido o ha expirado",
+    "confirm_email_failed": "Al parecer su enlace de confirmacion ya expiró, aqui se mostrara una opcion para volver a enviar",
     "item_created": "El registro se ha creado con éxito",
     "identity_card_not_found": "La cédula ingresa no existe"
+  },
+  "loading": {
+    "validate_access": "Validando acceso",
+    "confirm_email": "Confirmando su correo"
   },
   "buttons": {
     "upload": "Subir",
@@ -134,9 +145,6 @@
     "evaluations": "No hay evaluaciones",
     "domains": "No hay dominios"
   },
-  "operators": {
-    "or": "O"
-  },
   "questions": {
     "delete_item": "¿Eliminar este elemento?"
   },
@@ -149,8 +157,8 @@
   },
   "roles": {
     "admin": "Administrador",
-    "role2": "Role 2",
-    "role3": "Role 3"
+    "support": "Soporte",
+    "user": "Usuario"
 
   }
 }

@@ -68,20 +68,20 @@ export default function Sidenav(props: SidenavProps) {
   const getItems = (): MenuItem[] => {
     return [
       getItem("Dashboard", "1", "/", <PieChartFilled />),
-      getItem("Usuarios", "2", paths.users.index, <UsergroupAddOutlined />),
+      getItem("Usuarios", "2", paths.management.users.index, <UsergroupAddOutlined />),
       getItem("Evaluaciones", "3", "/evaluaciones", <AppstoreFilled />),
-      getItem("Dominios", "4", paths.domains.index, <AimOutlined />),
+      getItem("Dominios", "4", paths.management.domains.index, <AimOutlined />),
       getItem(
         "Lineamientos",
         "5",
-        paths.lineaments.index,
+        paths.management.lineaments.index,
         <AlignLeftOutlined />
       ),
-      getItem("Criterios", "6", paths.criterions.index, <CompressOutlined />),
-      getItem("Niveles", "7", paths.levels.index, <SignalFilled />),
-      getItem("Respuestas", "8", paths.choices.index, <FormOutlined />),
-      getItem("Evaluaciones (Crud)", "9", paths.evaluationsCrud.index, <FormOutlined />),
-      getItem("Mi Cuenta", "10", paths.settings.index, <SettingOutlined />),
+      getItem("Criterios", "6", paths.management.criterions.index, <CompressOutlined />),
+      getItem("Niveles", "7", paths.management.levels.index, <SignalFilled />),
+      getItem("Respuestas", "8", paths.management.choices.index, <FormOutlined />),
+      getItem("Evaluaciones (Crud)", "9", paths.management.evaluations.index, <FormOutlined />),
+      getItem("Mi Cuenta", "10", paths.admin.settings.index, <SettingOutlined />),
       getItem(
         "Iniciar Sesión",
         "11",
@@ -93,6 +93,7 @@ export default function Sidenav(props: SidenavProps) {
         icon: <LogoutOutlined />,
         label: (
           <Popconfirm
+            placement="bottomLeft"
             title="Deseas cerrar sesion?"
             onConfirm={() => {
               localStorage.removeItem(keys.tokenLocalStorage);

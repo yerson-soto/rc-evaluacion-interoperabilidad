@@ -7,7 +7,6 @@ import { paths } from "library/common/constants";
 
 export default function Login() {
   const { t } = useTranslation();
-  console.log('is running from another page')
   const { login, isLoading } = useLogin();
 
   return (

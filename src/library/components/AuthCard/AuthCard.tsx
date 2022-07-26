@@ -29,7 +29,7 @@ export default function AuthCard(props: AuthCardProps) {
     }>
       {children}
 
-      <Divider orientation="center">{t("operators.or")}</Divider>
+      <Divider orientation="center">{t("dividers.or")}</Divider>
 
       <Box className={classes.redirectSuggestion}>
         <Link to={redirectPath}>

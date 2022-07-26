@@ -48,9 +48,9 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
 
   const { uid, organization, dateCreated, score } = evaluation;
 
-  const goToDetail = () => navigate(paths.evaluations.detail.reverse({ uid }));
+  const goToDetail = () => navigate(paths.admin.evaluations.detail.reverse({ uid }));
   const goToEvaluation = (): void =>
-    navigate(paths.evaluations.init.reverse({ uid }));
+    navigate(paths.admin.evaluations.init.reverse({ uid }));
 
   return (
     <List.Item

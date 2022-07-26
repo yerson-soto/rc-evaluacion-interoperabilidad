@@ -4,7 +4,7 @@ import { GetAuthUser, GetToken } from "library/api/dto/auth-dto";
 import { Token } from "library/models/Token";
 import { APIResponse } from "library/common/interfaces";
 import { getText } from "i18n";
-import { paths } from "library/common/constants";
+import { paths, keys } from "library/common/constants";
 import { AuthUser } from "library/models/User";
 import { AuthMapper } from "../mappers/AuthMapper";
 
@@ -20,7 +20,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
     return (
       process.env.REACT_APP_BASE_URL +
       paths.auth.passwordReset.reverse() +
-      "?token="
+      `?${keys.linkTokenParam}=`
     );
   }
 
@@ -35,6 +35,15 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
         })
         .catch(() => reject(getText("alerts.login_failed")));
     });
+  }
+
+  confirmEmail(userId: string, token: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.client
+        .post("confirm", { userId, token })
+        .then(() => resolve())
+        .catch(() => reject(getText("alerts.confirm_email_failed")))
+    })
   }
 
   getAuthUser(token: string): Promise<AuthUser> {
@@ -60,10 +69,10 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
     });
   }
 
-  resetPassword(password: string): Promise<void> {
+  resetPassword(password: string, token: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client
-        .post("/reset-password", { password })
+        .post("/rest", { password, token })
         .then(() => resolve())
         .catch(() => reject(getText("alerts.reset_password_failed")));
     });
@@ -72,7 +81,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
   validateResetLink(link: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client
-        .post("/validate-link", { link })
+        .post("/validateToken", { link })
         .then(() => resolve())
         .catch(() => reject(getText("alerts.reset_link_invalid")));
     });

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { paths } from "library/common/constants";
 
-export default function InvalidLink() {
+export default function ForbiddenLink() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const goToLogin = () => navigate(paths.auth.login.reverse());

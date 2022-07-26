@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { AuthService } from "library/api/services/AuthService";
 import { useTranslation } from 'react-i18next';
-import { useResetToken } from './useResetToken';
+import { useQueryToken } from 'library/hooks/useQueryToken';
 
 type Status = 'initial' | 'success' | 'error' | 'forbidden';
 
 export function useResetPassword() {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [status, setStatus] = useState<Status>('forbidden');
-  const resetToken = useResetToken();
+  const resetToken = useQueryToken();
 
   const { t } = useTranslation();
 
@@ -18,17 +18,17 @@ export function useResetPassword() {
   const authService = new AuthService();
 
   useEffect(() => { 
-    const checkHaveAccess = () => {
-      console.log(resetToken);
-
+    const checkHaveAccess = async () => {
       if (resetToken) {
-        authService.validateResetLink(resetToken)
+        await authService.validateResetLink(resetToken)
           .then(() => setStatus('initial'))
           .catch(() => setStatus('forbidden'))
           
       } else {
         setStatus('forbidden');
       }
+
+      setLoading(false);
     }
 
     checkHaveAccess();
@@ -39,7 +39,7 @@ export function useResetPassword() {
   const resetPassword = async (password: string): Promise<void> => {
     setLoading(true);
     
-    authService.resetPassword(password)
+    authService.resetPassword(password, resetToken)
       .then(() => {
         setStatus('success');
         success(t("alerts.reset_password_success"))
