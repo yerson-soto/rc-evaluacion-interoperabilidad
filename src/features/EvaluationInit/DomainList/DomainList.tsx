@@ -9,7 +9,7 @@ import { useDomainList } from "./useDomainList";
 import { useMedia } from "use-media";
 
 import classes from "./DomainList.module.css";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 
 const { useBreakpoint } = Grid;
 

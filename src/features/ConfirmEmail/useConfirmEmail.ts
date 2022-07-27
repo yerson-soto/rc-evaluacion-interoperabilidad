@@ -1,43 +1,63 @@
-import { useState, useEffect } from 'react';
-import { AuthService } from "library/api/services/AuthService";
+import { useState, useEffect } from "react";
+import { message } from "antd";
 import { useTranslation } from 'react-i18next';
-import { useQueryToken } from 'library/hooks/useQueryToken';
-import { useSearchParams } from 'react-router-dom';
+import { AuthService } from "library/api/services/AuthService";
+import { useQueryToken } from "library/hooks/useQueryToken";
+import { useSearchParams } from "react-router-dom";
 
-type Status = 'validating' | 'confirmed' | 'error';
+type Status = "validating" | "confirmed" | "error";
 
 export function useConfirmEmail() {
-  const [status, setStatus] = useState<Status>('validating');
+  const [isForwarding, setForwarding] = useState(false);
+  const [status, setStatus] = useState<Status>("validating");
   const [searchParams] = useSearchParams();
 
-  const resetToken = useQueryToken();
-
   const { t } = useTranslation();
-  
+
+  const resetToken = useQueryToken();
   const authService = new AuthService();
+  const userId = searchParams.get("userId");
 
-  useEffect(() => { 
+  useEffect(() => {
     const confirmEmail = async () => {
-      const userId = searchParams.get('userId');
-
       if (userId && resetToken) {
-        await authService.confirmEmail(userId, resetToken)
-          .then(() => setStatus('confirmed'))
-          .catch(() => setStatus('error'))
-          
+        await authService
+          .confirmEmail(userId, resetToken)
+          .then(() => setStatus("confirmed"))
+          .catch(() => setStatus("error"));
       } else {
-        setStatus('error');
+        setStatus("error");
       }
-    }
+    };
 
     confirmEmail();
 
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
-  return { 
-    isLoading: status === 'validating', 
-    isConfirmed: status === 'confirmed', 
-    isInvalid: status === 'error' 
+  const sendConfirmationMail = async (): Promise<void> => {
+    if (userId) {
+      setForwarding(true);
+
+      await authService
+        .sendConfirmLink(userId)
+        .then(() => {
+          setForwarding(false);
+          const successMesage = t("alerts.send_confirmation_mail_success");
+          message.success(successMesage)
+        })
+        .catch((errorMessage) => {
+          setForwarding(false);
+          message.error(errorMessage);
+        });
+    }
+  };
+
+  return {
+    isForwarding,
+    isValidating: status === "validating",
+    isConfirmed: status === "confirmed",
+    isInvalid: status === "error",
+    sendConfirmationMail
   };
 }

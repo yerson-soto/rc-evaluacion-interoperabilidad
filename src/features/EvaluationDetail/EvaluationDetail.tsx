@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PageHeader, Button, Descriptions } from "antd";
 
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 
 import { Badge } from "antd";
 
@@ -12,7 +12,7 @@ export default function EvaluationDetail() {
   const navigate = useNavigate();
 
   return (
-    <Box>
+    <AppBox>
       <PageHeader
         style={{ padding: 0 }}
         onBack={() => navigate("/evaluaciones")}
@@ -61,6 +61,6 @@ export default function EvaluationDetail() {
           </Descriptions.Item>
         </Descriptions>
       </PageHeader>
-    </Box>
+    </AppBox>
   );
 }

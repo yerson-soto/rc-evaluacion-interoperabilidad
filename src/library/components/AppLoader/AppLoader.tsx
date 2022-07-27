@@ -1,6 +1,6 @@
 import React from 'react'
 import { Spin, Typography } from 'antd';
-import { Box } from '../Box';
+import { AppBox } from '../AppBox';
 
 import classes from './AppLoader.module.css';
 
@@ -10,9 +10,9 @@ interface AppLoaderProps {
 
 export default function AppLoader({ text }: AppLoaderProps) {
   return (
-    <Box className={classes.center}>
+    <AppBox className={classes.center}>
       <Spin size="large" />
       {text && <Typography.Text>{text}</Typography.Text>}
-    </Box>
+    </AppBox>
   )
 }

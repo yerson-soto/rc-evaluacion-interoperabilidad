@@ -2,20 +2,20 @@ import React from "react";
 import { useTranslation } from 'react-i18next';
 import { ExportOutlined } from "@ant-design/icons";
 import { Button, Space, Card } from "antd";
-import { Box } from "library/components/Box";
-import { CreateAction } from "../CreateAction";
+import { AppBox } from "library/components/AppBox";
 
 import classes from "./CrudHeader.module.css";
 
+// TODO: Delete this
 export default function CrudHeader() {
   const { t } = useTranslation();
   
   return (
     <Card style={{ marginBottom: 30 }}>
-      <Box className={classes.box}>
-        <Box className={classes.title}>
+      <AppBox className={classes.box}>
+        <AppBox className={classes.title}>
           {t("headings.domain_list")}
-        </Box>
+        </AppBox>
 
         <Space direction="horizontal">
           <Button 
@@ -25,7 +25,7 @@ export default function CrudHeader() {
           />
           {/* <CreateAction /> */}
         </Space>
-      </Box>
+      </AppBox>
     </Card>
   );
 }

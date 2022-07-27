@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Skeleton, Space, Tag, Tooltip } from "antd";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { Avatar, List } from "antd";
 import { FullCriterion } from "library/models/Criterion";
 import { SectionDivider } from "library/components/SectionDivider";
@@ -104,7 +104,7 @@ export default function QuestionItem(props: QuestionItemProps) {
         </Space>
 
       <SectionDivider text={t("dividers.justification")} />
-      <Box className={classes.section}>
+      <AppBox className={classes.section}>
         <Alert
           className={classes.alert}
           message={t("hints.upload_evidence")}
@@ -112,10 +112,10 @@ export default function QuestionItem(props: QuestionItemProps) {
         />
 
         <AddEvidence />
-      </Box>
+      </AppBox>
 
       <SectionDivider text={t("dividers.next_steps")} />
-      <Box className={classes.section}>Pasos a seguir</Box>
+      <AppBox className={classes.section}>Pasos a seguir</AppBox>
     </List.Item>
   );
 }

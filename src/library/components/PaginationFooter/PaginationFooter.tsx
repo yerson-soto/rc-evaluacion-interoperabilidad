@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from 'library/components/Box';
+import { AppBox } from 'library/components/AppBox';
 
 interface PaginationFooterProps {
   total: number;
@@ -10,8 +10,8 @@ export default function PaginationFooter(props: PaginationFooterProps) {
   const { total, label } = props;
 
   return (
-    <Box>
+    <AppBox>
       <b>{total}</b> {label}
-    </Box>
+    </AppBox>
   );
 }

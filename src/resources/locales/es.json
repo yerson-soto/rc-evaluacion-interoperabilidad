@@ -23,14 +23,14 @@
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
     "signup": "Bievenido al Sistema de Madurez de Interabilidad",
+    "confirm_email": "Confirme su correo para acceder al sistema",
     "reset_password": "Complete el siguiente formulario para restablecer su contraseña",
     "forgot_password": "Ingrese su correo electrónico en el siguiente formulario para enviarle su correo de recuperación.",
     "reset_mail_sent": "Revise su bandeja de entrada. En caso de que su usuario este registrado, verá un correo de recuperación de contraseña.",
     "reset_password_success": "Su contraseña ha sido modificada.",
     "reset_password_redirect": "Será redirigido para que inicie sesión con sus nuevas credenciales ({{ timeLeft }})",
-    "confirm_email_success": "Su correo electrónico ha sigo confirmado.",
-    "confirm_email_failed": "El enlace de confirmación es inválido o ha expirado.",
     "confirm_email_redirect": "Será redirigido para que inicie sesión con la contraseña enviada a su correo electrónico ({{ timeLeft }})",
+    "confirm_email_failed": "Al parecer su enlace de confirmacion ya expiró, haga click en el botón de abajo para reenviar su correo de confirmación.",
     "email_domain_not_found": "La institución seleccionada no esta asociada a ningún dominio de correo electrónico, por favor contacte con el área responsable para configurar su dominio."
   },
   "dividers": {
@@ -109,7 +109,10 @@
     "reset_password_failed": "No se ha podido cambiar la contraseña",
     "reset_password_success": "Su contraseña ha sido restablecida con éxito",
     "reset_link_invalid": "El enlace de recuperación es inválido o ha expirado",
-    "confirm_email_failed": "Al parecer su enlace de confirmacion ya expiró, aqui se mostrara una opcion para volver a enviar",
+    "confirm_email_failed": "Enlace de confirmación inválido",
+    "confirm_email_success": "Su correo electrónico ha sido confirmado.",
+    "send_confirmation_mail_failed": "Error al enviar el correo de confirmación",
+    "send_confirmation_mail_success": "El enlace de confirmación se ha enviado a su correo",
     "item_created": "El registro se ha creado con éxito",
     "identity_card_not_found": "La cédula ingresa no existe"
   },
@@ -124,7 +127,7 @@
     "send_reset_email": "Enviar correo",
     "reset_password": "Restablecer",
     "resend_mail": "Reenviar correo",
-    "resend_mail_wait": "Reenviar en {{ timeLeft }} segundos",
+    "retry_wait": "Reintentar en {{ seconds }} segundos",
     "create": "Crear",
     "save": "Guardar",
     "yes": "Si",
@@ -153,7 +156,7 @@
     "domain_slug_aready_exists": "El slug del dominio ya existe"
   },
   "preffixes": {
-    "domain":"Dominio"
+    "domain": "Dominio"
   },
   "roles": {
     "admin": "Administrador",

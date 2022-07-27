@@ -18,42 +18,11 @@ export const paths = {
     },
     forgotPassword: {
       index: "verificar",
-      reverse: () => "/auth/verificar",
+      reverse: () => "/auth/recuperar",
     },
     passwordReset: {
       index: "restablecer",
       reverse: () => "/auth/restablecer",
-    },
-  },
-  management: {
-    index: "mat",
-    domains: {
-      index: "dominios",
-      reverse: () => "/mat/dominios",
-    },
-    lineaments: {
-      index: "lineamientos",
-      reverse: () => "/mat/lineamientos",
-    },
-    criterions: {
-      index: "criterios",
-      reverse: () => "/mat/criterios",
-    },
-    levels: {
-      index: "niveles",
-      reverse: () => "/mat/niveles",
-    },
-    choices: {
-      index: "respuestas",
-      reverse: () => "/mat/respuestas",
-    },
-    users: {
-      index: "usuarios",
-      reverse: () => "/mat/usuarios",
-    },
-    evaluations: {
-      index: "evaluaciones",
-      reverse: () => "/mat/evaluaciones",
     },
   },
   admin: {
@@ -69,6 +38,36 @@ export const paths = {
         index: ":uid/iniciar",
         reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
       },
+    },
+  },
+  management: {
+    domains: {
+      index: "dominios",
+      reverse: () => "/dominios",
+    },
+    lineaments: {
+      index: "lineamientos",
+      reverse: () => "/lineamientos",
+    },
+    criterions: {
+      index: "criterios",
+      reverse: () => "/criterios",
+    },
+    levels: {
+      index: "niveles",
+      reverse: () => "/niveles",
+    },
+    choices: {
+      index: "respuestas",
+      reverse: () => "/respuestas",
+    },
+    users: {
+      index: "usuarios",
+      reverse: () => "/usuarios",
+    },
+    evaluations: {
+      index: "m/evaluaciones",
+      reverse: () => "/m/evaluaciones",
     },
   },
 };

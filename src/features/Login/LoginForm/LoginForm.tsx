@@ -3,7 +3,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Space } from "antd";
 import { Link } from "react-router-dom";
 import { paths } from "library/common/constants";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { useTranslation } from "react-i18next";
 import { LoginFormSchema, rules } from './LoginFormSchema';
 
@@ -28,7 +28,6 @@ export default function LoginForm(props: LoginFormProps) {
     <Form
       size="large"
       name="login"
-      initialValues={{ remember: true }}
       onFinish={onFinish}
     >
       <Space 
@@ -59,7 +58,7 @@ export default function LoginForm(props: LoginFormProps) {
       </Space>
       
       <Form.Item>
-        <Box className={classes.forgotWrapper}>
+        <AppBox className={classes.forgotWrapper}>
           <Form.Item 
             name="remember" 
             valuePropName="checked" 
@@ -74,7 +73,7 @@ export default function LoginForm(props: LoginFormProps) {
           >
             {t("links.forgot_password")}
           </Link>
-        </Box>
+        </AppBox>
       </Form.Item>
 
       <Form.Item>

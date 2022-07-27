@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation, Location } from "react-router-dom";
 import { Layout, PageHeader } from "antd";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { Breadcrumb } from "library/components/Breadcrumb";
 
 import classes from "./Main.module.css";
@@ -16,7 +16,7 @@ export default function Main({ children }: MainProps) {
 
   return (
     <Layout.Content className={classes.main}>
-      <Box>
+      <AppBox>
         {/* <Breadcrumb /> */}
         {/* <Breadcrumb className={classes.breadcrumb}>
           <Breadcrumb.Item>User</Breadcrumb.Item>
@@ -27,7 +27,7 @@ export default function Main({ children }: MainProps) {
           onBack={() => navigate("/")}
           title={'headings.complete_evaluation'}
         /> */}
-      </Box>
+      </AppBox>
 
       {children}
     </Layout.Content>

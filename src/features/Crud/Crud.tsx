@@ -6,7 +6,7 @@ import { RootState } from "redux/types";
 import { RenderDetail } from "./DetailAction";
 import { RenderEdit } from "./EditAction";
 import { CreateAction, RenderCreate } from "./CreateAction";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { ExportOutlined } from "@ant-design/icons";
 import { useCrud } from "./useCrud";
 import type { ColumnsType } from "antd/lib/table";
@@ -57,8 +57,8 @@ export default function Crud<T, FormSchema>(props: CrudProps<T, FormSchema>) {
   return (
     <React.Fragment>
       <Card style={{ marginBottom: 30 }}>
-        <Box className={classes.header}>
-          <Box className={classes.title}>{title}</Box>
+        <AppBox className={classes.header}>
+          <AppBox className={classes.title}>{title}</AppBox>
 
           <Space direction="horizontal">
             {/* <Button shape="round" icon={<ExportOutlined />} block /> */}
@@ -69,7 +69,7 @@ export default function Crud<T, FormSchema>(props: CrudProps<T, FormSchema>) {
               selectLoading={selectLoading}
             />
           </Space>
-        </Box>
+        </AppBox>
       </Card>
 
       <Table<any>

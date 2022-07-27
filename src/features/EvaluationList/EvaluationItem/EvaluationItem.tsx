@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Col, List, Row, Typography } from "antd";
 import { Evaluation } from "library/models/Evaluation";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { Score } from "library/components/Score";
 
 import classes from "./EvaluationItem.module.css";
@@ -73,12 +73,12 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         </Col>
 
         <Col>
-          <Box>
+          <AppBox>
             <Typography.Text className={classes.title}>
               {organization.name}
             </Typography.Text>
             <Typography.Text>{dateCreated}</Typography.Text>
-          </Box>
+          </AppBox>
         </Col>
       </Row>
     </List.Item>

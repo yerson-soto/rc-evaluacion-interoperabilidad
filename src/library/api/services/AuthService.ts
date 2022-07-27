@@ -24,6 +24,14 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
     );
   }
 
+  private get confirmationLink(): string {
+    return (
+      process.env.REACT_APP_BASE_URL +
+      paths.auth.confirmEmail.reverse() +
+      `?${keys.linkTokenParam}=`
+    );
+  }
+
   createToken(username: string, password: string): Promise<Token> {
     return new Promise((resolve, reject) => {
       const body = { username, password };
@@ -44,6 +52,17 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
         .then(() => resolve())
         .catch(() => reject(getText("alerts.confirm_email_failed")))
     })
+  }
+
+  sendConfirmLink(userId: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const body = { userId, urlBase: this.confirmationLink };
+
+      this.client
+        .post("/restSendEmail", body)
+        .then(() => resolve())
+        .catch(() => reject(getText("alerts.send_confirmation_mail_failed")));
+    });
   }
 
   getAuthUser(token: string): Promise<AuthUser> {

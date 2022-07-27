@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 
 import classes from "./Score.module.css";
 import chroma from "chroma-js";
@@ -13,8 +13,8 @@ export default function Score({ value }: ScoreProps) {
   const color = value ? colors[Number(value.toFixed())] : 'gray';
 
   return (
-    <Box className={classes.shape} style={{ backgroundColor: color }}>
-      <Box className={classes.score}>{value || '-'}</Box>
-    </Box>
+    <AppBox className={classes.shape} style={{ backgroundColor: color }}>
+      <AppBox className={classes.score}>{value || '-'}</AppBox>
+    </AppBox>
   );
 }

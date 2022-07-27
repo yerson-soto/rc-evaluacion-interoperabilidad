@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { PageHeader } from "antd";
 import { DomainList } from "./DomainList";
 import { Questionary } from "./Questionary";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { useEvaluationInit } from "./useEvaluationInit";
 import { withIfDirective } from "library/hocs/withIfDirective";
 import { QuestionaryProps } from "./Questionary/Questionary";
@@ -17,7 +17,7 @@ export default function EvaluationInit() {
   const navigate = useNavigate();
 
   return (
-    <Box>
+    <AppBox>
       <PageHeader
         onBack={() => navigate("/evaluaciones")}
         title={t("headings.complete_evaluation")}
@@ -32,6 +32,6 @@ export default function EvaluationInit() {
         onClose={setClose}
         onCloseEnd={afterClosed}
       />
-    </Box>
+    </AppBox>
   );
 }

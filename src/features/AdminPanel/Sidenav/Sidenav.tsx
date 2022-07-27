@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Menu, Popconfirm, Typography } from "antd";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 
 import {
   SignalFilled,
@@ -68,19 +68,19 @@ export default function Sidenav(props: SidenavProps) {
   const getItems = (): MenuItem[] => {
     return [
       getItem("Dashboard", "1", "/", <PieChartFilled />),
-      getItem("Usuarios", "2", paths.management.users.index, <UsergroupAddOutlined />),
+      getItem("Usuarios", "2", paths.management.users.reverse(), <UsergroupAddOutlined />),
       getItem("Evaluaciones", "3", "/evaluaciones", <AppstoreFilled />),
-      getItem("Dominios", "4", paths.management.domains.index, <AimOutlined />),
+      getItem("Dominios", "4", paths.management.domains.reverse(), <AimOutlined />),
       getItem(
         "Lineamientos",
         "5",
-        paths.management.lineaments.index,
+        paths.management.lineaments.reverse(),
         <AlignLeftOutlined />
       ),
-      getItem("Criterios", "6", paths.management.criterions.index, <CompressOutlined />),
-      getItem("Niveles", "7", paths.management.levels.index, <SignalFilled />),
-      getItem("Respuestas", "8", paths.management.choices.index, <FormOutlined />),
-      getItem("Evaluaciones (Crud)", "9", paths.management.evaluations.index, <FormOutlined />),
+      getItem("Criterios", "6", paths.management.criterions.reverse(), <CompressOutlined />),
+      getItem("Niveles", "7", paths.management.levels.reverse(), <SignalFilled />),
+      getItem("Respuestas", "8", paths.management.choices.reverse(), <FormOutlined />),
+      getItem("Evaluaciones (Crud)", "9", paths.management.evaluations.reverse(), <FormOutlined />),
       getItem("Mi Cuenta", "10", paths.admin.settings.index, <SettingOutlined />),
       getItem(
         "Iniciar Sesión",
@@ -128,12 +128,12 @@ export default function Sidenav(props: SidenavProps) {
       onBreakpoint={onBreakpoint}
       className={getClassNames()}
     >
-      <Box className={classes.logo}>
+      <AppBox className={classes.logo}>
         <AppstoreOutlined className={classes.logoIcon} />
         <Typography.Text className={classes.logoText}>
           Evaluaci&oacute;n
         </Typography.Text>
-      </Box>
+      </AppBox>
       <Menu
         className={classes.menu}
         theme="dark"
@@ -142,9 +142,9 @@ export default function Sidenav(props: SidenavProps) {
         items={getItems()}
       />
 
-      <Box onClick={onToggle} className={classes.trigger}>
+      <AppBox onClick={onToggle} className={classes.trigger}>
         <LeftOutlined />
-      </Box>
+      </AppBox>
     </Layout.Sider>
   );
 }

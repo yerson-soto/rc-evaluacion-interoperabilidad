@@ -1,6 +1,6 @@
 import React from "react";
 import { Choice } from "library/models/Choice";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { AnswerRadio } from "features/EvaluationInit/AnswerRadio";
 import { Badge } from "antd";
 
@@ -17,7 +17,7 @@ export default function Response(props: ResponseProps) {
   const { choice, color, isSelected, onChange } = props;
 
   return (
-    <Box className={classes.choice}>
+    <AppBox className={classes.choice}>
       <Badge.Ribbon
         placement="start"
         color={color}
@@ -32,6 +32,6 @@ export default function Response(props: ResponseProps) {
           label={choice.details}
         />
       </Badge.Ribbon>
-    </Box>
+    </AppBox>
   );
 }

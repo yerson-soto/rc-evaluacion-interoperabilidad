@@ -9,7 +9,7 @@ import { userSlice } from "redux/slices/userSlice";
 import { Crud } from "features/Crud";
 import { getText } from "i18n";
 import { RoleTag } from "./RoleTag";
-import { Box } from "library/components/Box";
+import { AppBox } from "library/components/AppBox";
 import { BankOutlined } from "@ant-design/icons";
 
 const columns: ColumnsType<User> = [

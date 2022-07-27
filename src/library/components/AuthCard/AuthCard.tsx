@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Card, Divider, Typography } from 'antd'
-import { Box } from 'library/components/Box';
+import { AppBox } from 'library/components/AppBox';
 import { TitledLogo } from 'library/components/TitledLogo';
 
 import classes from './AuthCard.module.css';
@@ -20,22 +20,22 @@ export default function AuthCard(props: AuthCardProps) {
 
   return (
     <Card className={classes.card} cover={
-      <Box className={classes.cardCover}>
+      <AppBox className={classes.cardCover}>
         <TitledLogo />
         <Typography.Paragraph className={classes.cardSubtitle}>
           {text}
         </Typography.Paragraph>
-      </Box>
+      </AppBox>
     }>
       {children}
 
       <Divider orientation="center">{t("dividers.or")}</Divider>
 
-      <Box className={classes.redirectSuggestion}>
+      <AppBox className={classes.redirectSuggestion}>
         <Link to={redirectPath}>
           {redirectSuggestion}
         </Link>
-      </Box>
+      </AppBox>
     </Card>
   )
 }

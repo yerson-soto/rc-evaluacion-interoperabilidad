@@ -11,7 +11,7 @@ export default function AuthPanel() {
     <Layout className={classes.layout}>
       <Layout.Content className={classes.content}>
         <Row className={classes.row}>
-          <Col span={24} sm={18} md={12} lg={10} xl={8} xxl={6}>
+          <Col span={24} sm={18} md={14} lg={10} xl={8} xxl={6}>
             <Outlet />
           </Col>
         </Row>
