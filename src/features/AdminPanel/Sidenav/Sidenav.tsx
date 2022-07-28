@@ -25,6 +25,7 @@ import classnames from "classnames";
 import classes from "./Sidenav.module.css";
 import { useAppDispatch } from "redux/hooks";
 import { logoutDone } from "redux/slices/authSlice";
+import { useTranslation } from "react-i18next";
 
 interface SidenavProps {
   isCompacted: boolean;
@@ -38,6 +39,7 @@ interface SidenavProps {
 
 export default function Sidenav(props: SidenavProps) {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const {
@@ -67,23 +69,23 @@ export default function Sidenav(props: SidenavProps) {
 
   const getItems = (): MenuItem[] => {
     return [
-      getItem("Dashboard", "1", "/", <PieChartFilled />),
-      getItem("Usuarios", "2", paths.management.users.reverse(), <UsergroupAddOutlined />),
-      getItem("Evaluaciones", "3", "/evaluaciones", <AppstoreFilled />),
-      getItem("Dominios", "4", paths.management.domains.reverse(), <AimOutlined />),
+      getItem(t("nav.dashboard"), "1", "/", <PieChartFilled />),
+      getItem(t("nav.users"), "2", paths.management.users.reverse(), <UsergroupAddOutlined />),
+      getItem(t("nav.evaluations"), "3", "/evaluaciones", <AppstoreFilled />),
+      getItem(t("nav.domains"), "4", paths.management.domains.reverse(), <AimOutlined />),
       getItem(
-        "Lineamientos",
+        t("nav.lineaments"),
         "5",
         paths.management.lineaments.reverse(),
         <AlignLeftOutlined />
       ),
-      getItem("Criterios", "6", paths.management.criterions.reverse(), <CompressOutlined />),
-      getItem("Niveles", "7", paths.management.levels.reverse(), <SignalFilled />),
-      getItem("Respuestas", "8", paths.management.choices.reverse(), <FormOutlined />),
-      getItem("Evaluaciones (Crud)", "9", paths.management.evaluations.reverse(), <FormOutlined />),
-      getItem("Mi Cuenta", "10", paths.admin.settings.index, <SettingOutlined />),
+      getItem(t("nav.criterions"), "6", paths.management.criterions.reverse(), <CompressOutlined />),
+      getItem(t("nav.levels"), "7", paths.management.levels.reverse(), <SignalFilled />),
+      getItem(t("nav.answers"), "8", paths.management.choices.reverse(), <FormOutlined />),
+      getItem(t("nav.evaluations_crud"), "9", paths.management.evaluations.reverse(), <FormOutlined />),
+      getItem(t("nav.my_account"), "10", paths.admin.settings.index, <SettingOutlined />),
       getItem(
-        "Iniciar Sesión",
+        t("nav.login"),
         "11",
         paths.auth.login.reverse(),
         <LoginOutlined />
@@ -102,7 +104,7 @@ export default function Sidenav(props: SidenavProps) {
             okText="Si"
             cancelText="No"
           >
-            <a href="#">Cerrar Sesion</a>
+            <a href="#">{t("nav.logout")}</a>
           </Popconfirm>
         ),
       },

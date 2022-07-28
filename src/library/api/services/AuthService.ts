@@ -100,7 +100,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
   validateResetLink(link: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client
-        .post("/validateToken", { link })
+        .post("/validateToken", { token: link })
         .then(() => resolve())
         .catch(() => reject(getText("alerts.reset_link_invalid")));
     });

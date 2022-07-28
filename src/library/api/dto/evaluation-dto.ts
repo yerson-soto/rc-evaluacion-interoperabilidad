@@ -1,12 +1,24 @@
 export interface GetEvaluation {
   id: string;
   dateInitial: string;
+  currentLevel: number;
+
+  // dateSend: null;
+  // dateEnd: null;
+  // states: null;
+  // isActive: true;
+  // user: null;
+  
   organismo: {
     id: number;
     orgasnimo: string;
     siglas: string;
   };
-  currentLevel: number;
+  resultLevel: {
+    id: string;
+    resultFinallly: string;
+    evaluationInstitutionalId: string;
+  };
 }
 
 export interface CreateEvaluation {

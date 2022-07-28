@@ -88,7 +88,6 @@
     "min_length": "{{ field }} debe contener un mínimo de {{ length }} caracteres",
     "max_length": "{{ field }} debe contener un máximo de {{ length }} caracteres",
     "length": "{{ field }} debe ser de {{ length }} caracteres",
-    "match_password": "Passwords must match",
     "invalid_username": "Agregue un usuario válido",
     "invalid_identity_card": "La cédula ingresada no existe",
     "password_match": "Las contraseñas no coinciden"
@@ -105,6 +104,7 @@
   "alerts": {
     "page_not_found": "Lo sentimos, la página que visitaste no existe",
     "login_failed": "Email o contraseña incorrectos",
+    "send_reset_mail_info": "Revise su bandeja de entrada",
     "send_reset_mail_failed": "Introduzca un correo válido",
     "reset_password_failed": "No se ha podido cambiar la contraseña",
     "reset_password_success": "Su contraseña ha sido restablecida con éxito",
@@ -139,11 +139,6 @@
     "back_login": "Volver al Inicio de Sesión",
     "back_home": "Volver a Inicio"
   },
-  "nav": {
-    "home": "Home",
-    "pubs": "Publications",
-    "login": "Sign In"
-  },
   "empty": {
     "evaluations": "No hay evaluaciones",
     "domains": "No hay dominios"
@@ -153,7 +148,8 @@
   },
   "backend": {
     "domain_already_exists": "El dominio ingresado ya existe",
-    "domain_slug_aready_exists": "El slug del dominio ya existe"
+    "domain_slug_aready_exists": "El slug ingresado ya existe",
+    "domain_abbreviation_aready_exists": "La abreviatura ingresada ya existe"
   },
   "preffixes": {
     "domain": "Dominio"
@@ -162,6 +158,19 @@
     "admin": "Administrador",
     "support": "Soporte",
     "user": "Usuario"
-
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Usuarios",
+    "evaluations": "Evaluaciones",
+    "domains": "Dominios",    
+    "lineaments": "Lineamientos",
+    "criterions": "Criterios",
+    "levels": "Niveles",
+    "answers":  "Respuestas",
+    "evaluations_crud":  "Evaluaciones (CRUD)",
+    "my_account":  "Mi Cuenta",  
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión"
   }
 }

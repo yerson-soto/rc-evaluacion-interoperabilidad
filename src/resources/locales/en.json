@@ -1,0 +1,177 @@
+{
+  "headings": {
+    "complete_evaluation": "Complete Evaluation",
+    "create_domain": "Create new domain",
+    "edit_domain": "Edit domain",
+    "domain_list": "Domain List",
+    "create_lineament": "Create new lineament",
+    "edit_lineament": "Edit lineament",
+    "lineament_list": "Lineament list",
+    "create_criterion": "Create new criterion",
+    "edit_criterion": "Edit criterion",
+    "criterion_list": "Criterion List",
+    "create_level": "Create new level",
+    "edit_level": "Edit level",
+    "level_list": "Level List",
+    "create_choice": "Create new answer",
+    "edit_choice": "Edit answer",
+    "choice_list": "Answer List",
+    "create_user": "Create new user",
+    "edit_user": "Edit user",
+    "user_list": "User List"
+  },
+  "texts": {
+    "login": "Welcome! Login with your credentials",
+    "signup": "Welcome to Interoperability Mature System",
+    "confirm_email": "Confirm your email address to access the system",
+    "reset_password": "Complete the following form to reset your password",
+    "forgot_password": "Enter your email in the form below to send your recovery email.",
+    "reset_mail_sent": "Check your inbox. If your user is registered, you will see a password recovery email.",
+    "reset_password_success": "Your password has been changed.",
+    "reset_password_redirect": "You will be redirected to login with your new credentials ({{ timeLeft }}).",
+    "confirm_email_redirect": "You will be redirected to login with the password sent to your email ({{ timeLeft }})",
+    "confirm_email_failed": "It looks like your confirmation link has already expired, click the button below to resend your confirmation email.",
+    "email_domain_not_found": "La institución seleccionada no esta asociada a ningún dominio de correo electrónico, por favor contacte con el área responsable para configurar su dominio.The selected institution is not associated with any email domain, please contact the responsible area to configure your domain."
+  },
+  "dividers": {
+    "lineaments": "Lineaments",
+    "levels": "Criterion level",
+    "justification": "Evidences",
+    "next_steps": "Next steps",
+    "or": "Or",
+    "options": "Options"
+  },
+  "fields": {
+    "name": "Name",
+    "identification": "Identity card",
+    "user_type": "Role",
+    "username": "Username",
+    "first_name": "Firstname",
+    "last_name": "Lastname",
+    "email": "Email address",
+    "password": "Password",
+    "confirm_password": "Confirm password",
+    "remember": "Remember me",
+    "domain": "Domain",
+    "slug": "Slug",
+    "domain_acronym": "Abbreviation",
+    "description": "Description",
+    "nomenclature": "Nomenclature",
+    "criterion": "Criterion",
+    "lineaments": "Lineaments",
+    "level": "Level",
+    "response": "Answer",
+    "organization": "Organization"
+  },
+  "placeholders": {
+    "first_name": "Introduce firstname",
+    "last_name": "Introduce lastname",
+    "email": "Introduce email address",
+    "select_organization": "Select organization",
+    "select_user_type": "Select role",
+    "domain": "Domain title",
+    "slug": "Domain identifier",
+    "domain_acronym": "Domain short name",
+    "select_domain": "Select a domain",
+    "lineament_description": "Lineament definition",
+    "criterion": "Criterion name",
+    "select_lineaments": "Select lineaments",
+    "level_name": "Level name",
+    "level_description": "Level definition",
+    "level_value": "Level value",
+    "choice_description": "Answer description",
+    "select_criterion": "Seleccionar criterio",
+    "select_level": "Seleccionar nivel"
+  },
+  "rules": {
+    "required": "{{ field }} is a required field!",
+    "min_length": "{{ field }} must be at least {{ length }} characters",
+    "max_length": "{{ field }} must have a maximum of {{ length }} characters",
+    "length": "{{ field }} must be {{ length }} characters long",
+    "match_password": "Passwords must match",
+    "invalid_username": "Add a valid username",
+    "invalid_identity_card": "This identity card doesn't exists",
+    "password_match": "Passwords do not match"
+  },
+  "hints": {
+    "upload_evidence": "Use documents, minutes, evaluations, and in general any type of evidence that supports the evaluation.",
+    "slug": "This text is used as human-readable identifier for the domain.",
+    "domain_acronym": "The abbreviation is used to form the code of the lineaments."
+  },
+  "pagination": {
+    "evaluations": "Evaluation(es)",
+    "domains": "Domain(s)"
+  },
+  "alerts": {
+    "page_not_found": "Sorry, the page you visited does not exist",
+    "login_failed": "Wrong email or password",
+    "send_reset_mail_success": "Check your inbox",
+    "send_reset_mail_failed": "Please, introduce a valid email",
+    "reset_password_failed": "Failed to change password",
+    "reset_password_success": "Your password has been successfully reset",
+    "reset_link_invalid": "The recovery link is invalid or has expired",
+    "confirm_email_failed": "Invalid confirmation link",
+    "confirm_email_success": "Your email has been confirmed.",
+    "send_confirmation_mail_failed": "Error sending confirmation email",
+    "send_confirmation_mail_success": "The confirmation link has been sent to your email",
+    "item_created": "The record has been created successfully",
+    "identity_card_not_found": "The entered ID does not exist"
+  },
+  "loading": {
+    "validate_access": "Validating access",
+    "confirm_email": "Confirming your email"
+  },
+  "buttons": {
+    "upload": "Upload",
+    "evaluate": "Evaluate",
+    "login": "Login",
+    "send_reset_email": "Send mail",
+    "reset_password": "Reset",
+    "resend_mail": "Resend mail",
+    "retry_wait": "Retry in {{ seconds }} seconds",
+    "create": "Create",
+    "save": "Save",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "links": {
+    "forgot_password": "Forgot your password?",
+    "register_now": "Signup now",
+    "back_login": "Back to Login",
+    "back_home": "Back Home"
+  },
+  "empty": {
+    "evaluations": "There are no evaluations",
+    "domains": "There are no domains"
+  },
+  "questions": {
+    "delete_item": "Delete this element?"
+  },
+  "backend": {
+    "domain_already_exists": "The entered domain already exists",
+    "domain_slug_aready_exists": "The entered slug already exists",
+    "domain_abbreviation_aready_exists": "The entered abbreviation already exists"
+  },
+  "preffixes": {
+    "domain": "Domain"
+  },
+  "roles": {
+    "admin": "Admin",
+    "support": "Support",
+    "user": "User"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "evaluations": "Evaluations",
+    "domains": "Domains",    
+    "lineaments": "Lineaments",
+    "criterions": "Criterions",
+    "levels": "Levels",
+    "answers":  "Answers",
+    "evaluations_crud":  "Evaluations (CRUD)",
+    "my_account":  "My Account",  
+    "login": "Login",
+    "logout": "Logout"
+  }
+}

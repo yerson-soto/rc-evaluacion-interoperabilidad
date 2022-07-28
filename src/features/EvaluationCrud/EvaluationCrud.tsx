@@ -12,7 +12,7 @@ import { getText } from 'i18n';
 const columns: ColumnsType<Evaluation> = [
   {
     title: getText("fields.evaluation") as string,
-    dataIndex: ["organization", "name"],
+    dataIndex: "uid",
     render: () => "EV.20.12"
   },
   {

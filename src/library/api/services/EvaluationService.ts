@@ -35,38 +35,24 @@ export class EvaluationService extends AbstractCrudService<
         )
         .then((res) => {
           const results = res.data.result.evaluations;
-          const evaluations = results.map(this.mapResult);
+          const evaluations = results.map(this.mapper.fromAPI);
           resolve(evaluations);
         })
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
   }
 
-  createNew(organization: number): Promise<Evaluation> {
-    return new Promise((resolve, reject) => {
-      this.client
-        .post<APIResponse<dto.GetEvaluation>>("/evaluationsinstitutional", {
-          organismoId: organization,
-        })
-        .then((res) => {
-          const evaluation = this.mapResult(res.data.result);
-          resolve(evaluation);
-        })
-        .catch(() => reject("Error al crear la evaluación"));
-    });
-  }
-
-  mapResult(result: dto.GetEvaluation): Evaluation {
-    return {
-      uid: result.id,
-      score: Number(result.currentLevel.toFixed(2)),
-      organization: {
-        id: result.organismo.id,
-        name: result.organismo.orgasnimo,
-        emailDomain: "map.gob.do",
-        acronym: result.organismo.siglas,
-      },
-      dateCreated: result.dateInitial,
-    };
-  }
+  // createNew(organization: number): Promise<Evaluation> {
+  //   return new Promise((resolve, reject) => {
+  //     this.client
+  //       .post<APIResponse<dto.GetEvaluation>>("/evaluationsinstitutional", {
+  //         organismoId: organization,
+  //       })
+  //       .then((res) => {
+  //         const evaluation = this.mapResult(res.data.result);
+  //         resolve(evaluation);
+  //       })
+  //       .catch(() => reject("Error al crear la evaluación"));
+  //   });
+  // }
 }

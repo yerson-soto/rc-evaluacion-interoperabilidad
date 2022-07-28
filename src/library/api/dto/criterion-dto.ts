@@ -10,7 +10,7 @@ export interface GetCriterion {
   id: number;
   description: string;
   lineamentsResponses: GetLineament[];
-  responses: GetChoice[];
+  responseResponses: GetChoice[];
 }
 
 export interface ChangeLevel {

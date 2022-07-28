@@ -5,8 +5,8 @@ import { Criterion } from "library/models/Criterion";
 import { AbstractCrudService } from "./AbstractCrudService";
 import { CriterionMapper } from "library/api/mappers/CriterionMapper";
 import { CriterionFormSchema } from "features/CriterionCrud/CriterionForm/CriterionFormSchema";
-import { GetChoice } from "../dto/choice-dto";
-import { ChoiceMapper } from '../mappers/ChoiceMapper';
+import { GetChoice } from "library/api/dto/choice-dto";
+import { ChoiceMapper } from 'library/api/mappers/ChoiceMapper';
 import * as dto from "library/api/dto/criterion-dto";
 
 export class CriterionService extends AbstractCrudService<
@@ -32,7 +32,7 @@ export class CriterionService extends AbstractCrudService<
 
   getByDomain(domainId: number): Promise<FullCriterion[]> {
     return new Promise((resolve, reject) => {
-      const url = this.getDetailUrl(domainId);
+      const url = "/criterions/" + domainId.toString();
       
       this.client
         .get<APIResponse<dto.GetCriterion[]>>(url)

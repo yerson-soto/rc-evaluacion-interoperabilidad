@@ -78,14 +78,14 @@ export default function EvaluationForm(props: EvaluationFormProps) {
             />
           </Form.Item>
           
-          <Form.Item
+          {/* <Form.Item
             name="startDate"
             label={t("fields.startDate")}
             extra={t("hints.startDate")}
             rules={rules.startDate}
           >
             <DatePicker.RangePicker />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       )}
     </AppDrawer>

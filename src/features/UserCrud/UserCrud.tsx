@@ -1,5 +1,5 @@
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { AppDrawer } from "library/components/AppDrawer";
 import { UserForm } from "./UserForm";
 import { UserFormSchema } from "./UserForm/UserFormSchema";
@@ -7,42 +7,41 @@ import { User } from "library/models/User";
 import { UserService } from "library/api/services/UserService";
 import { userSlice } from "redux/slices/userSlice";
 import { Crud } from "features/Crud";
-import { getText } from "i18n";
 import { RoleTag } from "./RoleTag";
-import { AppBox } from "library/components/AppBox";
-import { BankOutlined } from "@ant-design/icons";
+
 
 const columns: ColumnsType<User> = [
   {
-    title: getText("fields.first_name") as string,
+    title: () => <Trans i18nKey="fields.first_name" />,
     dataIndex: "firstName",
     ellipsis: true,
     responsive: ["sm"],
   },
   {
-    title: getText("fields.last_name") as string,
+    title: () => <Trans i18nKey="fields.last_name" />,
     dataIndex: "lastName",
     ellipsis: true,
     responsive: ["md"],
   },
   {
-    title: getText("fields.email") as string,
+    title: () => <Trans i18nKey="fields.email" />,
     dataIndex: "email",
     ellipsis: true,
   },
   {
-    title: getText("fields.user_type") as string,
+    title: () => <Trans i18nKey="fields.user_type" />,
     dataIndex: "type",
     responsive: ["lg"],
     render: (value) => <RoleTag role={value} />,
   },
   {
-    title: getText("fields.organization") as string,
+    title: () => <Trans i18nKey="fields.organization" />,
     dataIndex: ["organization", "name"],
     ellipsis: true,
     responsive: ["xl"]
   },
 ];
+
 
 export default function UserCrud() {
   const service = new UserService();

@@ -1,45 +1,32 @@
-import i18n, { Resource } from 'i18next';
-import { initReactI18next } from 'react-i18next';
-
-import es from './resources/locales/es.json';
-
-const spanish = JSON.parse(JSON.stringify(es));
+import i18n, { Resource } from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import spanish from "resources/locales/es.json";
+import english from "resources/locales/en.json";
 
 const resources: Resource = {
   es: {
-    translation: spanish
-  }
-}
-
-
-// import Backend from 'i18next-http-backend';
-// import LanguageDetector from 'i18next-browser-languagedetector';
-// don't want to use this?
-// have a look at the Quick start guide 
-// for passing in lng and translations on init
+    translation: spanish,
+  },
+  en: {
+    translation: english,
+  },
+};
 
 i18n
-  // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
-  // learn more: https://github.com/i18next/i18next-http-backend
-  // want your translations to be loaded from a professional CDN? => https://github.com/locize/react-tutorial#step-2---use-the-locize-cdn
-// .use(Backend)
-  // detect user language
-  // learn more: https://github.com/i18next/i18next-browser-languageDetector
-// .use(LanguageDetector)
-  // pass the i18n instance to react-i18next.
+  .use(LanguageDetector)
   .use(initReactI18next)
-  // init i18next
-  // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
+    fallbackLng: "es",
     resources,
-    lng: 'es',
-    debug: process.env.NODE_ENV === 'development',
-
+    debug: process.env.NODE_ENV === "development",
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
-    }
+    },
+    react: {
+      useSuspense: true,
+    },
   });
-
 
 export const { t: getText } = i18n;
 

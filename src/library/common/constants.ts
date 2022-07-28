@@ -17,7 +17,7 @@ export const paths = {
       reverse: () => "/auth/confirmar-correo"
     },
     forgotPassword: {
-      index: "verificar",
+      index: "recuperar",
       reverse: () => "/auth/recuperar",
     },
     passwordReset: {
