@@ -29,6 +29,7 @@ export default function LoginForm(props: LoginFormProps) {
       size="large"
       name="login"
       onFinish={onFinish}
+      initialValues={{ remember: true }}
     >
       <Space 
         className={classes.space} 

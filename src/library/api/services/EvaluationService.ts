@@ -19,7 +19,7 @@ export class EvaluationService extends AbstractCrudService<
   constructor() {
     super();
     this.mapper = new EvaluationMapper();
-    this.getAllUrl = "/evaluationsinstitutional/1/10";
+    this.getAllUrl = `/evaluationsinstitutional/1/10`;
     this.createUrl = "evaluationsinstitutional";
   }
 
@@ -40,6 +40,10 @@ export class EvaluationService extends AbstractCrudService<
         })
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
+  }
+
+  pagination(page: number, pageSize: number): void {
+    this.getAllUrl = `/evaluationsinstitutional/${page}/${pageSize}`;
   }
 
   // createNew(organization: number): Promise<Evaluation> {

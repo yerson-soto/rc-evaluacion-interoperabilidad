@@ -3,13 +3,20 @@ import { CommonState } from "library/common/interfaces";
 import { ErrorMessage } from "library/common/types";
 import { Evaluation } from "library/models/Evaluation";
 import { createCrudSlice } from 'redux/actions/sliceCreator';
+import { CrudState } from 'library/common/interfaces';
 
-interface EvaluationState extends CommonState {
-  results: Evaluation[];
+interface EvaluationState extends CrudState<Evaluation> {
+  // total: number;
+  // page: number;
+  // pageSize: number;
+
 }
 
 const initialState: EvaluationState = {
   results: [],
+  // total: 0,
+  // page: 0,
+  // pageSize: 10,
   hasError: false,
   isLoading: false,
   errorMessage: "",
@@ -50,7 +57,7 @@ export const evaluationSlice = createCrudSlice<Evaluation, EvaluationState, "eva
       state.isLoading = false
       state.hasError = true
       state.errorMessage = action.payload
-    }
+    },
   },
 });
 

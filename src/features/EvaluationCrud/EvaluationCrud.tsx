@@ -1,5 +1,5 @@
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Crud } from "features/Crud";
 import { EvaluationService } from "library/api/services/EvaluationService";
 import { AppDrawer } from "library/components/AppDrawer";
@@ -11,20 +11,20 @@ import { getText } from 'i18n';
 
 const columns: ColumnsType<Evaluation> = [
   {
-    title: getText("fields.evaluation") as string,
+    title: <Trans key="fields.evaluation" />,
     dataIndex: "uid",
     render: () => "EV.20.12"
   },
   {
-    title: getText("fields.organization") as string,
+    title: <Trans key="fields.organization" />,
     dataIndex: ["organization", "name"],
     ellipsis: true,
   },
   {
-    title: getText("fields.score") as string,
+    title: <Trans key="fields.score" />,
     dataIndex: "score",
     ellipsis: true,
-    render: () => "4.5"
+    // render: () => "4.5"
   },
 ];
 

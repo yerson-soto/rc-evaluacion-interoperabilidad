@@ -7,7 +7,7 @@ export class AuthMapper {
     const userMapper = new UserMapper();
 
     return {
-      ...userMapper.fromAPI(data),
+      ...userMapper.fromAPI(data)
     };
   }
 }
