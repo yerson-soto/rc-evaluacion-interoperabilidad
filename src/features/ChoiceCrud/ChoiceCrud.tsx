@@ -1,18 +1,17 @@
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from 'react-i18next';
 import { Tag } from "antd";
-import { AppDrawer } from "library/components/AppDrawer";
-import { ChoiceForm } from "./ChoiceForm";
+import { Trans, useTranslation } from 'react-i18next';
 import { ChoiceFormSchema } from "./ChoiceForm/ChoiceFormSchema";
 import { Choice } from 'library/models/Choice';
 import { ChoiceService } from 'library/api/services/ChoiceService';
-import { choiceSlice } from 'redux/slices/choiceSlice';
+import { AppDrawer } from "library/components/AppDrawer";
 import { Crud } from "features/Crud";
-import { getText } from "i18n";
+import { choiceSlice, ChoiceState } from 'redux/slices/choiceSlice';
+import { ChoiceForm } from "./ChoiceForm";
 
 const columns: ColumnsType<Choice> = [
   {
-    title: getText("fields.response") as string,
+    title: <Trans key="fields.response" />,
     dataIndex: "details",
     ellipsis: true,
     // sorter: (a, b) => {
@@ -22,13 +21,13 @@ const columns: ColumnsType<Choice> = [
     // },
   },
   {
-    title: getText("fields.level") as string,
+    title: <Trans key="fields.level" />,
     dataIndex: ["level", "name"],
     responsive: ["lg"],
     render: (value) => <Tag color="magenta">{value}</Tag>,
   },
   {
-    title: getText("fields.criterion") as string,
+    title: <Trans key="fields.criterion" />,
     dataIndex: ["criterion", "name"],
     ellipsis: true,
     responsive: ["lg"],
@@ -40,7 +39,11 @@ export default function ChoiceCrud() {
   const { t } = useTranslation();
   
   return (
-    <Crud<Choice, ChoiceFormSchema>
+    <Crud<
+      Choice,
+      ChoiceFormSchema, 
+      ChoiceState
+    >
       title={t("headings.choice_list")}
       idSource="id"
       columns={columns}

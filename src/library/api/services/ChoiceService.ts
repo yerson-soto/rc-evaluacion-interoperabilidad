@@ -5,12 +5,16 @@ import { ChoiceMapper } from "library/api/mappers/ChoiceMapper";
 import { ChoiceFormSchema } from "features/ChoiceCrud/ChoiceForm/ChoiceFormSchema";
 import { APIResponse } from "library/common/interfaces";
 
+export interface ChoiceRepository {
+  getByCriterion: (criterionId: number) => Promise<Choice[]>;
+}
+
 export class ChoiceService extends AbstractCrudService<
   Choice,
   GetChoice,
   CreateChoice,
   ChoiceFormSchema
-> {
+> implements ChoiceRepository {
   mapper: ChoiceMapper;
   getAllUrl: string;
   createUrl: string;

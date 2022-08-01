@@ -8,6 +8,7 @@ import { UserService } from "library/api/services/UserService";
 import { userSlice } from "redux/slices/userSlice";
 import { Crud } from "features/Crud";
 import { RoleTag } from "./RoleTag";
+import { UserState } from 'redux/slices/userSlice';
 
 
 const columns: ColumnsType<User> = [
@@ -48,7 +49,11 @@ export default function UserCrud() {
   const { t } = useTranslation();
 
   return (
-    <Crud<User, UserFormSchema>
+    <Crud<
+      User, 
+      UserFormSchema, 
+      UserState
+    >
       title={t("headings.user_list")}
       idSource="uid"
       columns={columns}

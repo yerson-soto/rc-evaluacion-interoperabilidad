@@ -1,24 +1,23 @@
 import React from "react";
-import { Table, Space, Card, Button } from "antd";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
-import { CrudReducer } from "library/common/interfaces";
+import { Table, Space, Card } from "antd";
+import { CrudRepository } from "library/api/services/AbstractCrudService";
+import { CrudReducer, CrudState } from 'library/common/interfaces';
 import { RootState } from "redux/types";
 import { RenderDetail } from "./DetailAction";
 import { RenderEdit } from "./EditAction";
 import { CreateAction, RenderCreate } from "./CreateAction";
 import { AppBox } from "library/components/AppBox";
-import { ExportOutlined } from "@ant-design/icons";
 import { useCrud } from "./useCrud";
 import type { ColumnsType } from "antd/lib/table";
 
 import classes from "./Crud.module.css";
 
-interface CrudProps<T, FormSchema> {
+interface CrudProps<T, FormSchema, State extends CrudState<T>> {
   title: string;
   columns: ColumnsType<T>;
   idSource: keyof T;
   service: CrudRepository<T, FormSchema>;
-  reducer: CrudReducer<T>;
+  reducer: CrudReducer<T, State>;
 
   createModal: (args: RenderCreate<FormSchema>) => React.ReactNode;
   editModal: (args: RenderEdit<T, FormSchema>) => React.ReactNode;
@@ -27,7 +26,9 @@ interface CrudProps<T, FormSchema> {
   selectResults: (state: RootState) => T[];
 }
 
-export default function Crud<T, FormSchema>(props: CrudProps<T, FormSchema>) {
+export default function Crud<T, FormSchema, State extends CrudState<T>>(
+  props: CrudProps<T, FormSchema, State>
+) {
   const {
     title,
     columns,
@@ -41,10 +42,13 @@ export default function Crud<T, FormSchema>(props: CrudProps<T, FormSchema>) {
     detailModal,
   } = props;
 
-  const { results, isLoading, onChange, actionColumns, rowSelection } = useCrud<
-    T,
-    FormSchema
-  >({
+  const { 
+    results, 
+    isLoading, 
+    onChange, 
+    actionColumns, 
+    rowSelection 
+  } = useCrud<T, FormSchema, State>({
     idSource,
     service,
     reducer,
@@ -62,7 +66,7 @@ export default function Crud<T, FormSchema>(props: CrudProps<T, FormSchema>) {
 
           <Space direction="horizontal">
             {/* <Button shape="round" icon={<ExportOutlined />} block /> */}
-            <CreateAction<T, FormSchema>
+            <CreateAction<T, FormSchema, State>
               service={service}
               reducer={reducer}
               render={createModal}

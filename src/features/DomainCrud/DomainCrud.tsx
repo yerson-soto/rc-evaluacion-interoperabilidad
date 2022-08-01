@@ -1,18 +1,17 @@
+import { Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Crud } from "features/Crud";
 import { DomainService } from "library/api/services/DomainService";
 import { AppDrawer } from "library/components/AppDrawer";
 import { Domain } from "library/models/Domain";
-import { domainSlice } from "redux/slices/domainSlice";
+import { domainSlice, DomainState } from "redux/slices/domainSlice";
 import { DomainForm } from "./DomainForm";
 import { DomainFormSchema } from "./DomainForm/DomainFormSchema";
-import { getText } from 'i18n';
-import { Tag } from "antd";
 
 const columns: ColumnsType<Domain> = [
   {
-    title: getText("fields.domain") as string,
+    title: <Trans key="fields.domain" />,
     dataIndex: "name",
     ellipsis: true,
     sorter: (a, b) => {
@@ -22,12 +21,12 @@ const columns: ColumnsType<Domain> = [
     },
   },
   {
-    title: getText("fields.slug") as string,
+    title: <Trans key="fields.slug" />,
     dataIndex: "slug",
     responsive: ["lg"],
   },
   {
-    title: getText("fields.domain_acronym") as string,
+    title: <Trans key="fields.domain_acronym" />,
     dataIndex: "acronym",
     responsive: ["lg"],
     render: (value) => <Tag color="#d46b08">{value}</Tag>,
@@ -39,7 +38,11 @@ export default function DomainCrud() {
   const { t } = useTranslation();
   
   return (
-    <Crud<Domain, DomainFormSchema>
+    <Crud<
+      Domain, 
+      DomainFormSchema, 
+      DomainState
+    >
       title={t("headings.domain_list")}
       idSource="id"
       columns={columns}

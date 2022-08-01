@@ -1,72 +1,59 @@
 import { CaseReducer, PayloadAction, SliceCaseReducers } from "@reduxjs/toolkit";
-import { CommonState } from "library/common/interfaces";
+import { Pagination } from "library/common/interfaces";
 import { ErrorMessage } from "library/common/types";
 import { Evaluation } from "library/models/Evaluation";
-import { createCrudSlice } from 'redux/actions/sliceCreator';
-import { CrudState } from 'library/common/interfaces';
+import { createCrudSlice } from "redux/actions/sliceCreator";
+import { CrudState } from "library/common/interfaces";
 
-interface EvaluationState extends CrudState<Evaluation> {
-  // total: number;
-  // page: number;
-  // pageSize: number;
-
+export interface EvaluationState extends CrudState<Evaluation> {
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 const initialState: EvaluationState = {
   results: [],
-  // total: 0,
-  // page: 0,
-  // pageSize: 10,
+  total: 0,
+  page: 1,
+  pageSize: 10,
   hasError: false,
   isLoading: false,
   errorMessage: "",
 };
 
 export interface EvaluationReducers extends SliceCaseReducers<EvaluationState> {
-  evaluationsLoad: CaseReducer<EvaluationState>;
-  evaluationsListed: CaseReducer<EvaluationState, PayloadAction<Evaluation[]>>;
-  evaluationsNotListed: CaseReducer<EvaluationState, PayloadAction<ErrorMessage>>;
-  evaluationCreated: CaseReducer<EvaluationState, PayloadAction<Evaluation>>;
-  evaluationNotCreated: CaseReducer<EvaluationState, PayloadAction<ErrorMessage>>;
+  getPageSuccess: CaseReducer<EvaluationState, PayloadAction<Pagination<Evaluation>>>;
+  getPageFailed: CaseReducer<EvaluationState, PayloadAction<ErrorMessage>>;
 }
 
-export const evaluationSlice = createCrudSlice<Evaluation, EvaluationState, "evaluations", EvaluationReducers>({
+export const evaluationSlice = createCrudSlice<
+  Evaluation,
+  EvaluationState,
+  "evaluations",
+  EvaluationReducers
+>({
   name: "evaluations",
-  idSource: 'uid',
+  idSource: "uid",
   initialState,
   extend: {
-    evaluationsLoad: (state) => {
-      state.isLoading = true
+    getPageSuccess: (state, action: PayloadAction<Pagination<Evaluation>>) => {
+      state.page = action.payload.page;
+      state.pageSize = action.payload.pageSize;
+      state.total = action.payload.total;
+      
+      state.results = action.payload.results;
+      state.isLoading = false;
     },
-    evaluationsListed: (state, action: PayloadAction<Evaluation[]>) => {
-      state.isLoading = false
-      state.results = action.payload
-    },
-    evaluationsNotListed: (state, action: PayloadAction<ErrorMessage>) => {
-      state.results = []
-      state.isLoading = false
-      state.hasError = true
-      state.errorMessage = action.payload
-    },
+    getPageFailed: (state, action: PayloadAction<ErrorMessage>) => {
+      state.results = [];
+      state.page = 0;
+      state.total = 0;
 
-    evaluationCreated: (state, action: PayloadAction<Evaluation>) => {
-      state.isLoading = false
-      state.results.unshift({...action.payload, score: null})
-    },
-    evaluationNotCreated: (state, action: PayloadAction<ErrorMessage>) => {
-      state.isLoading = false
-      state.hasError = true
-      state.errorMessage = action.payload
+      state.isLoading = false;
+      state.hasError = true;
+      state.errorMessage = action.payload;
     },
   },
 });
 
-
-export const {
-  evaluationsLoad,
-  evaluationsListed,
-  evaluationsNotListed,
-  
-  evaluationCreated,
-  evaluationNotCreated
-} = evaluationSlice.actions;
+export const actions = evaluationSlice.actions;

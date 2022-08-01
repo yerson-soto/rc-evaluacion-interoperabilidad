@@ -1,5 +1,5 @@
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Tag } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { LevelForm } from "./LevelForm";
@@ -8,16 +8,16 @@ import { Level } from 'library/models/Level';
 import { LevelService } from 'library/api/services/LevelService';
 import { levelSlice } from 'redux/slices/levelSlice';
 import { Crud } from "features/Crud";
-import { getText } from "i18n";
+import { LevelState } from 'redux/slices/levelSlice';
 
 const columns: ColumnsType<Level> = [
   {
-    title: getText("fields.level") as string,
+    title: <Trans i18nKey="fields.level" />,
     dataIndex: "value",
     responsive: ["lg"]
   },
   {
-    title: getText("fields.name") as string,
+    title: <Trans i18nKey="fields.name" />,
     dataIndex: "name",
     ellipsis: true,
     render: (value) => <Tag color="magenta">{value}</Tag>,
@@ -28,7 +28,7 @@ const columns: ColumnsType<Level> = [
     // },
   },
   {
-    title: getText("fields.description") as string,
+    title: <Trans i18nKey="fields.description" />,
     dataIndex: "description",
     ellipsis: true,
     responsive: ["lg"],
@@ -40,7 +40,11 @@ export default function LevelCrud() {
   const { t } = useTranslation();
   
   return (
-    <Crud<Level, LevelFormSchema>
+    <Crud<
+      Level, 
+      LevelFormSchema, 
+      LevelState
+    >
       title={t("headings.level_list")}
       idSource="id"
       columns={columns}

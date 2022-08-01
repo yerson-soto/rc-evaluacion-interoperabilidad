@@ -2,21 +2,21 @@ import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/types';
-import { CrudReducer } from "library/common/interfaces";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
+import { CrudReducer, CrudState } from "library/common/interfaces";
+import { CrudRepository } from "library/api/services/AbstractCrudService";
 import { ID } from "library/common/types";
 
-interface EditAction<T, FormSchema> {
+interface EditAction<T, FormSchema, State extends CrudState<T>> {
   service: CrudRepository<T, FormSchema>;
-  reducer: CrudReducer<T>;
+  reducer: CrudReducer<T, State>;
   selectLoading: (state: RootState) => boolean;
 }
 
-export function useEditAction<T, FormSchema>({
+export function useEditAction<T, FormSchema, State extends CrudState<T>>({
   service,
   selectLoading,
   reducer,
-}: EditAction<T, FormSchema>) {
+}: EditAction<T, FormSchema, State>) {
   const isLoading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

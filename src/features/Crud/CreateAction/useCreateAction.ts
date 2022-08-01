@@ -3,20 +3,20 @@ import { Slice } from "@reduxjs/toolkit";
 import { RootState } from 'redux/types';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { CrudCaseReducers, CrudState } from "library/common/interfaces";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
+import { CrudRepository } from "library/api/services/AbstractCrudService";
 import { useTranslation } from 'react-i18next';
 
-interface CreateAction<T, FormSchema> {
+interface CreateAction<T, FormSchema, State extends CrudState<T>> {
   service: CrudRepository<T, FormSchema>;
-  reducer: Slice<CrudState<T>, CrudCaseReducers<T, CrudState<T>>>;
+  reducer: Slice<State, CrudCaseReducers<T, State>>;
   selectLoading: (state: RootState) => boolean;
 }
 
-export function useCreateAction<T, FormSchema>({
+export function useCreateAction<T, FormSchema, State extends CrudState<T>>({
   service,
   reducer,
   selectLoading
-}: CreateAction<T, FormSchema>) {
+}: CreateAction<T, FormSchema, State>) {
   const isLoading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

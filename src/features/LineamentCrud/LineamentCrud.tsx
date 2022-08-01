@@ -1,18 +1,17 @@
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Tag } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { LineamentForm } from "./LineamentForm";
 import { LineamentFormSchema } from "./LineamentForm/LineamentFormSchema";
 import { Lineament } from 'library/models/Lineament';
 import { LineamentService } from 'library/api/services/LineamentService';
-import { lineamentSlice } from 'redux/slices/lineamentSlice';
+import { lineamentSlice, LineamentState } from 'redux/slices/lineamentSlice';
 import { Crud } from "features/Crud";
-import { getText } from "i18n";
 
 const columns: ColumnsType<Lineament> = [
   {
-    title: getText("fields.nomenclature") as string,
+    title: <Trans i18nKey="fields.nomenclature" />,
     dataIndex: "nomenclature",
     ellipsis: true,
     render: (value) => <Tag color="magenta">{value}</Tag>,
@@ -23,12 +22,12 @@ const columns: ColumnsType<Lineament> = [
     // },
   },
   {
-    title: getText("fields.domain") as string,
+    title: <Trans i18nKey="fields.domain" />,
     dataIndex: ["domain", "name"],
     responsive: ["lg"],
   },
   {
-    title: getText("fields.description") as string,
+    title: <Trans i18nKey="fields.description" />,
     dataIndex: "description",
     ellipsis: true,
     responsive: ["lg"],
@@ -40,7 +39,11 @@ export default function LineamentCrud() {
   const { t } = useTranslation();
   
   return (
-    <Crud<Lineament, LineamentFormSchema>
+    <Crud<
+      Lineament, 
+      LineamentFormSchema, 
+      LineamentState
+    >
       title={t("headings.lineament_list")}
       idSource="id"
       columns={columns}

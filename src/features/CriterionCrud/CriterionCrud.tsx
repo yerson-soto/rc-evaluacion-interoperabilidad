@@ -1,6 +1,6 @@
 import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { Crud } from "features/Crud";
 import { AppDrawer } from "library/components/AppDrawer";
 import { LightLineament } from "library/models/Lineament";
@@ -9,11 +9,11 @@ import { CriterionFormSchema } from "./CriterionForm/CriterionFormSchema";
 import { Criterion } from "library/models/Criterion";
 import { CriterionService } from "library/api/services/CriterionService";
 import { criterionSlice } from "redux/slices/criterionSlice";
-import { getText } from "i18n";
+import { CriterionState } from 'redux/slices/criterionSlice';
 
 const columns: ColumnsType<Criterion> = [
   {
-    title: getText("fields.name") as string,
+    title: <Trans i18nKey="fields.name" />,
     dataIndex: "name",
     ellipsis: true,
     // sorter: (a, b) => {
@@ -23,7 +23,7 @@ const columns: ColumnsType<Criterion> = [
     // },
   },
   {
-    title: getText("fields.lineaments") as string,
+    title: <Trans i18nKey="fields.lineaments" />,
     dataIndex: "lineaments",
     ellipsis: true,
     responsive: ["lg"],
@@ -61,7 +61,11 @@ export default function CriterionCrud() {
   const { t } = useTranslation();
 
   return (
-    <Crud<Criterion, CriterionFormSchema>
+    <Crud<
+      Criterion, 
+      CriterionFormSchema, 
+      CriterionState
+    >
       title={t("headings.criterion_list")}
       idSource="id"
       columns={columns}

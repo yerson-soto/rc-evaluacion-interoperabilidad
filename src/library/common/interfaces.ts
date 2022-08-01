@@ -14,6 +14,14 @@ export interface CommonState {
   errorMessage: string;
 }
 
+export interface Pagination<T> {
+  totalPages: number;
+  total: number;
+  page: number;
+  pageSize: number;
+  results: T[]
+}
+
 export interface CrudState<T> extends CommonState {
   results: T[];
 }
@@ -30,7 +38,7 @@ export interface CrudCaseReducers<T, State extends CrudState<T>> extends SliceCa
   deleteFailed: CaseReducer<State, PayloadAction<ErrorMessage>>;
 }
 
-export interface CrudReducer<T> extends Slice<CrudState<T>, CrudCaseReducers<T, CrudState<T>>> {};
+export interface CrudReducer<T, State extends CrudState<T>> extends Slice<State, CrudCaseReducers<T, State>> {};
 
 export interface LocationState<T> extends Location {
   state: T;

@@ -3,11 +3,12 @@ import { lineamentSlice } from "redux/slices/lineamentSlice";
 import { LineamentService } from "library/api/services/LineamentService";
 import { Lineament } from "library/models/Lineament";
 import { useOptionGroup } from "library/hooks/useOptionGroup";
+import { LineamentState } from 'redux/slices/lineamentSlice';
 
 export function useLineamentOptions() {
   const lineamentService = new LineamentService();
 
-  const { isLoading, results: lineaments } = useListAction<Lineament>({
+  const { isLoading, results: lineaments } = useListAction<Lineament, LineamentState>({
     selectLoading: (state) => state.lineaments.isLoading,
     selectResults: (state) => state.lineaments.results,
     reducer: lineamentSlice,

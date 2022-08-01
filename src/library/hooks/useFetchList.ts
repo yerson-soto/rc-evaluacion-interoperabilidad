@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { CommonRepository } from "library/api/repositories/CommonRepository";
+import { ListRepository } from 'library/api/services/AbstractListService';
 
 interface UseFetchListParams<T> {
-  service: CommonRepository<T>;
+  service: ListRepository<T>;
   onSuccess: (results: T[]) => void;
   onFailure: (message: string) => void;
   onStart?: () => void;

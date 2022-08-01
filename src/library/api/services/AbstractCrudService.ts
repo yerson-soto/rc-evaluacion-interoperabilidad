@@ -2,14 +2,18 @@ import { AbstractAPIService } from "./AbstractApiService";
 import { APIResponse, Mapper } from "library/common/interfaces";
 import { ID } from "library/common/types";
 import { getText } from "i18n";
+import { ListRepository } from "./AbstractListService";
+import { CreateRepository } from "./AbstractCreateService";
+import { EditRepository } from "./AbstractEditService";
+import { DeleteRepository } from "./AbstractDeleteService";
+import { RetrieveRepository } from "./AbstractRetrieveService";
 
-export interface CrudRepository<T, FormSchema> {
-  getAll: () => Promise<T[]>;
-  getById: () => Promise<T>;
-  create: (formSchema: FormSchema) => Promise<T>;
-  edit: (id: ID, formSchema: FormSchema) => Promise<T>;
-  delete: (id: ID) => Promise<void>;
-}
+export interface CrudRepository<T, FormSchema>
+  extends ListRepository<T>,
+    RetrieveRepository<T>,
+    CreateRepository<T, FormSchema>,
+    EditRepository<T, FormSchema>,
+    DeleteRepository<T, FormSchema> {}
 
 export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
   extends AbstractAPIService
@@ -41,7 +45,7 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
   create(schema: FormSchema): Promise<T> {
     return new Promise((resolve, reject) => {
       const data = this.mapper.formSchemaToAPI(schema);
-      
+
       this.client
         .post<APIResponse<DataReceived>>(this.createUrl, data)
         .then((res) => {
@@ -68,7 +72,7 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
         })
         .catch((err) => {
           const errorMessage = getText(err.response.data.message);
-          reject(errorMessage)
+          reject(errorMessage);
         });
     });
   }

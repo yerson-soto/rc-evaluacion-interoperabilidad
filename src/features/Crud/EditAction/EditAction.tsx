@@ -4,8 +4,8 @@ import { useToogleAction } from "../useToggleAction";
 import { EditOutlined } from "@ant-design/icons";
 import { RootState } from 'redux/types';
 import { useEditAction } from "./useEditAction";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
-import { CrudReducer } from "library/common/interfaces";
+import { CrudRepository } from "library/api/services/AbstractCrudService";
+import { CrudReducer, CrudState } from "library/common/interfaces";
 
 export interface RenderEdit<T, FormSchema> {
   record: T;
@@ -15,17 +15,17 @@ export interface RenderEdit<T, FormSchema> {
   onSave: (data: FormSchema) => Promise<void>;
 }
 
-export interface EditActionProps<T, FormSchema> {
+export interface EditActionProps<T, FormSchema, State extends CrudState<T>> {
   record: T;
   idSource: keyof T;
   service: CrudRepository<T, FormSchema>;
-  reducer: CrudReducer<T>;
+  reducer: CrudReducer<T, State>;
   render: (params: RenderEdit<T, FormSchema>) => React.ReactNode;
   selectLoading: (state: RootState) => boolean;
 }
 
-export default function EditAction<T, FormSchema>(
-  props: EditActionProps<T, FormSchema>
+export default function EditAction<T, FormSchema, State extends CrudState<T>>(
+  props: EditActionProps<T, FormSchema, State>
 ) {
   const { record, service, reducer, idSource, render, selectLoading } = props;
   const { isOpen, onOpen, onCloseEnd } = useToogleAction<T>({
@@ -34,7 +34,7 @@ export default function EditAction<T, FormSchema>(
     state: record,
   });
 
-  const { editOne, isLoading } = useEditAction<T, FormSchema>({
+  const { editOne, isLoading } = useEditAction<T, FormSchema, State>({
     selectLoading,
     service,
     reducer,

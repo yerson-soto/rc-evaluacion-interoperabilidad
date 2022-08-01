@@ -1,5 +1,4 @@
 import { AbstractAPIService } from "./AbstractApiService";
-import { AuthRepository } from "library/api/repositories/AuthRepository";
 import { GetAuthUser, GetToken } from "library/api/dto/auth-dto";
 import { Token } from "library/models/Token";
 import { APIResponse } from "library/common/interfaces";
@@ -7,6 +6,16 @@ import { getText } from "i18n";
 import { paths, keys } from "library/common/constants";
 import { AuthUser } from "library/models/User";
 import { AuthMapper } from "../mappers/AuthMapper";
+
+export interface AuthRepository {
+  createToken: (username: string, password: string) => Promise<Token>;
+  getAuthUser: (token: string) => Promise<AuthUser>
+  confirmEmail: (userId: string, confirmToken: string) => Promise<void>;
+  sendConfirmLink: (userId: string) => Promise<void>;
+  sendResetLink: (email: string) => Promise<void>;
+  validateResetLink: (link: string) => Promise<void>;
+  resetPassword: (password: string, resetToken: string) => Promise<void>;
+}
 
 export class AuthService extends AbstractAPIService implements AuthRepository {
   private mapper!: AuthMapper;

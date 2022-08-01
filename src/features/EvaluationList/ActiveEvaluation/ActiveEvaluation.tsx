@@ -4,7 +4,7 @@ import { Button, Typography, Row, Col, Card, Tag } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Evaluation } from "library/models/Evaluation";
 
-interface ActiveEvaluationProps {
+export interface ActiveEvaluationProps {
   evaluation: Evaluation;
 }
 

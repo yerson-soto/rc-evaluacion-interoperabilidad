@@ -1,8 +1,9 @@
-import { Mapper } from "library/common/interfaces";
+import { Mapper, Pagination } from "library/common/interfaces";
 import { Evaluation } from "library/models/Evaluation";
 import { GetEvaluation, CreateEvaluation } from "library/api/dto/evaluation-dto";
 import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
 import { OrganizationMapper } from './OrganizationMapper';
+import { GetPaginatedEvaluation } from '../dto/evaluation-dto';
 
 export class EvaluationMapper
   implements Mapper<Evaluation, GetEvaluation, CreateEvaluation, EvaluationFormSchema>
@@ -24,5 +25,17 @@ export class EvaluationMapper
       dateCreated: data.dateInitial,
       score: 0,
     };
+  }
+
+  fromAPIPaginated(data: GetPaginatedEvaluation): Pagination<Evaluation> {
+    const evaluations = data.evaluations.map(this.fromAPI);
+    
+    return {
+      total: data.elementostotales,
+      totalPages: data.paginastotales,
+      pageSize: data.rows,
+      page: data.page,
+      results: evaluations
+    }
   }
 }

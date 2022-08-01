@@ -4,24 +4,23 @@ import { Crud } from "features/Crud";
 import { EvaluationService } from "library/api/services/EvaluationService";
 import { AppDrawer } from "library/components/AppDrawer";
 import { Evaluation } from "library/models/Evaluation";
-import { evaluationSlice } from "redux/slices/evaluationSlice";
+import { evaluationSlice, EvaluationState } from "redux/slices/evaluationSlice";
 import { EvaluationForm } from "./EvaluationForm";
 import { EvaluationFormSchema } from "./EvaluationForm/EvaluationFormSchema";
-import { getText } from 'i18n';
 
 const columns: ColumnsType<Evaluation> = [
   {
-    title: <Trans key="fields.evaluation" />,
+    title: <Trans i18nKey="fields.evaluation" />,
     dataIndex: "uid",
     render: () => "EV.20.12"
   },
   {
-    title: <Trans key="fields.organization" />,
+    title: <Trans i18nKey="fields.organization" />,
     dataIndex: ["organization", "name"],
     ellipsis: true,
   },
   {
-    title: <Trans key="fields.score" />,
+    title: <Trans i18nKey="fields.score" />,
     dataIndex: "score",
     ellipsis: true,
     // render: () => "4.5"
@@ -33,8 +32,12 @@ export default function EvaluationCrud() {
   const { t } = useTranslation();
   
   return (
-    <Crud<Evaluation, EvaluationFormSchema>
-      title={t("headings.Evaluation_list")}
+    <Crud<
+      Evaluation, 
+      EvaluationFormSchema, 
+      EvaluationState
+    >
+      title={t("headings.evaluation_list")}
       idSource="uid"
       columns={columns}
       service={service}

@@ -4,8 +4,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import { RootState } from 'redux/types';
 import { useToogleAction } from "../useToggleAction";
 import { useCreateAction } from "./useCreateAction";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
-import { CrudReducer } from "library/common/interfaces";
+import { CrudRepository } from "library/api/services/AbstractCrudService";
+import { CrudReducer, CrudState } from "library/common/interfaces";
 
 export interface RenderCreate<FormSchema> {
   visible: boolean;
@@ -14,15 +14,15 @@ export interface RenderCreate<FormSchema> {
   onSave: (data: FormSchema) => Promise<void>;
 }
 
-export interface CreateActionProps<T, FormSchema> {
+export interface CreateActionProps<T, FormSchema, State extends CrudState<T>> {
   service: CrudRepository<T, FormSchema>;
-  reducer: CrudReducer<T>;
+  reducer: CrudReducer<T, State>;
   render: (params: RenderCreate<FormSchema>) => React.ReactNode;
   selectLoading: (state: RootState) => boolean;
 }
 
-export default function CreateAction<T, FormSchema>(
-  props: CreateActionProps<T, FormSchema>
+export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
+  props: CreateActionProps<T, FormSchema, State>
 ) {
   const { service, reducer, selectLoading, render } = props;
 
@@ -30,7 +30,7 @@ export default function CreateAction<T, FormSchema>(
     action: "create",
   });
 
-  const { createOne, isLoading } = useCreateAction<T, FormSchema>({
+  const { createOne, isLoading } = useCreateAction<T, FormSchema, State>({
     selectLoading,
     service,
     reducer,

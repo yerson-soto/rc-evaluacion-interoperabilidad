@@ -9,12 +9,17 @@ import { GetChoice } from "library/api/dto/choice-dto";
 import { ChoiceMapper } from 'library/api/mappers/ChoiceMapper';
 import * as dto from "library/api/dto/criterion-dto";
 
+export interface CriterionRepository {
+  getByDomain: (domainId: number) => Promise<FullCriterion[]>;
+  changeLevel: (data: dto.ChangeLevel) => Promise<Choice>;
+}
+
 export class CriterionService extends AbstractCrudService<
   Criterion,
   dto.GetCriterion,
   dto.CreateCriterion,
   CriterionFormSchema
-> {
+> implements CriterionRepository {
   mapper: CriterionMapper;
   getAllUrl: string;
   createUrl: string;

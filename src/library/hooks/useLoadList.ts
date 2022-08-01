@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { CommonRepository } from "library/api/repositories/CommonRepository";
 import { ErrorMessage } from "library/common/types";
 import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
 import { RootState } from 'redux/types';
 import { useFetchList } from './useFetchList';
+import { ListRepository } from 'library/api/services/AbstractListService';
 
 interface Actions<T> {
   start: ActionCreatorWithoutPayload;
@@ -13,7 +13,7 @@ interface Actions<T> {
 
 interface UseListParams<T> {
   actions: Actions<T>;
-  service: CommonRepository<T>;
+  service: ListRepository<T>;
   selectResults: (state: RootState) => T[];
   selectLoading: (state: RootState) => boolean;
 }

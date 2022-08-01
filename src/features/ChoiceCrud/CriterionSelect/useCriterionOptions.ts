@@ -4,11 +4,12 @@ import { criterionSlice } from "redux/slices/criterionSlice";
 import { Criterion } from 'library/models/Criterion';
 import { CriterionService } from 'library/api/services/CriterionService';
 import { CriterionMapper } from 'library/api/mappers/CriterionMapper';
+import { CriterionState } from 'redux/slices/criterionSlice';
 
 export function useCriterionOptions() {
   const criterionService = new CriterionService();
 
-  const { isLoading, results: criterions } = useListAction<Criterion>({
+  const { isLoading, results: criterions } = useListAction<Criterion, CriterionState>({
     selectLoading: (state) => state.criterions.isLoading,
     selectResults: (state) => state.criterions.results,
     reducer: criterionSlice,

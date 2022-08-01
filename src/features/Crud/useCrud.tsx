@@ -4,15 +4,15 @@ import { DeleteAction } from "./DeleteAction";
 import { EditAction, RenderEdit } from "./EditAction";
 import { DetailAction, RenderDetail } from "./DetailAction";
 import { ColumnsType } from "antd/lib/table";
-import { CrudReducer } from "library/common/interfaces";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
+import { CrudReducer, CrudState } from 'library/common/interfaces';
+import { CrudRepository } from "library/api/services/AbstractCrudService";
 import { useListAction } from "./useListAction";
 import { RootState } from "redux/types";
 
-interface UseCrudOptions<T, FormSchema> {
+interface UseCrudOptions<T, FormSchema, State extends CrudState<T>> {
   idSource: keyof T;
   service: CrudRepository<T, FormSchema>;
-  reducer: CrudReducer<T>;
+  reducer: CrudReducer<T, State>;
 
   editModal: (args: RenderEdit<T, FormSchema>) => React.ReactNode;
   detailModal: (args: RenderDetail<T>) => React.ReactNode;
@@ -20,7 +20,9 @@ interface UseCrudOptions<T, FormSchema> {
   selectResults: (state: RootState) => T[];
 }
 
-export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
+export function useCrud<T, FormSchema, State extends CrudState<T>>(
+  options: UseCrudOptions<T, FormSchema, State>
+) {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const {
@@ -33,7 +35,7 @@ export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
     selectResults,
   } = options;
 
-  const { results, isLoading } = useListAction<T>({
+  const { results, isLoading } = useListAction<T, State>({
     selectLoading,
     selectResults,
     service,
@@ -77,7 +79,7 @@ export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
               renderDismissible={detailModal}
             />
 
-            <EditAction<T, FormSchema>
+            <EditAction<T, FormSchema, State>
               key="edit"
               record={record}
               idSource={idSource}
@@ -87,7 +89,7 @@ export function useCrud<T, FormSchema>(options: UseCrudOptions<T, FormSchema>) {
               selectLoading={selectLoading}
             />
 
-            <DeleteAction<T>
+            <DeleteAction<T, State>
               key="delete"
               record={record}
               idSource={idSource}

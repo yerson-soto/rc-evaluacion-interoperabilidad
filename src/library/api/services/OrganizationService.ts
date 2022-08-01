@@ -1,30 +1,18 @@
-import { AbstractAPIService } from './AbstractApiService';
-import { APIResponse } from "library/common/interfaces";
-import { OrganizationRepository } from 'library/api/repositories/OrganizationRepository';
 import { Organization } from "library/models/Organization";
-import { GetOrganization } from 'library/api/dto/organization-dto';
+import { GetOrganization } from "library/api/dto/organization-dto";
+import { AbstractListService } from "./AbstractListService";
+import { OrganizationMapper } from "../mappers/OrganizationMapper";
 
-// TODO: Refactor this
-export class OrganizationService extends AbstractAPIService implements OrganizationRepository {
-  
-  // TODO: DRY
-  getAll(): Promise<Organization[]> {
-    return new Promise((resolve, reject) => {
-      this.client.get<APIResponse<GetOrganization[]>>('/institutions')
-        .then(res => {
-          const organizations = res.data.result.map(this.mapResult)
-          resolve(organizations);
-        })
-        .catch(() => reject('No se pudo cargar los dominios'))
-    });
-  }
+export class OrganizationService extends AbstractListService<
+  Organization,
+  GetOrganization
+> {
+  mapper: OrganizationMapper;
+  getAllUrl: string;
 
-  mapResult(result: GetOrganization): Organization {
-    return {
-      id: result.id,
-      name: result.name,
-      emailDomain: result.email,
-      acronym: result.acroyn
-    };
+  constructor() {
+    super();
+    this.mapper = new OrganizationMapper();
+    this.getAllUrl = "/institutions";
   }
 }

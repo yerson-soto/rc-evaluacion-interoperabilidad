@@ -1,20 +1,20 @@
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/types';
-import { CrudReducer } from "library/common/interfaces";
-import { CrudRepository } from "library/api/repositories/CrudRepository";
+import { CrudReducer, CrudState } from "library/common/interfaces";
+import { CrudRepository } from "library/api/services/AbstractCrudService";
 import { ID } from "library/common/types";
 
-interface DeleteAction<T> {
+interface DeleteAction<T, State extends CrudState<T>> {
   service: CrudRepository<T, any>;
-  reducer: CrudReducer<T>;
+  reducer: CrudReducer<T, State>;
   selectLoading: (state: RootState) => boolean;
 }
 
-export function useDeleteAction<T>({
+export function useDeleteAction<T, State extends CrudState<T>>({
   service,
   selectLoading,
   reducer,
-}: DeleteAction<T>) {
+}: DeleteAction<T, State>) {
   const isLoading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
 
