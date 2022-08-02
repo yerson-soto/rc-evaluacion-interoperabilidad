@@ -1,12 +1,12 @@
 import { Evaluation } from "library/models/Evaluation";
-import { APIResponse, Pagination } from "library/common/interfaces";
+import { APIResponse, FilterValues, Pagination } from "library/common/interfaces";
 import { AbstractCrudService } from "./AbstractCrudService";
 import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
 import { EvaluationMapper } from "library/api/mappers/EvaluationMapper";
 import * as dto from "library/api/dto/evaluation-dto";
 
 export interface EvaluationRepository {
-  getPage: (page: number) => Promise<Pagination<Evaluation>>
+  filter: (page: number, values: FilterValues<Evaluation>) => Promise<Pagination<Evaluation>>
 }
 
 export class EvaluationService extends AbstractCrudService<
@@ -43,13 +43,14 @@ export class EvaluationService extends AbstractCrudService<
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
   }
-
-  getPage(page: number): Promise<Pagination<Evaluation>> {
+  
+  filter(page: number, values: FilterValues<Evaluation>): Promise<Pagination<Evaluation>> {
     return new Promise((resolve, reject) => {
       const url = `/evaluationsinstitutional/${page}/5`;
+      const params = this.mapper.fromFilterToQueryParams(values);
       
       this.client
-        .get<APIResponse<dto.GetPaginatedEvaluation>>(url)
+        .get<APIResponse<dto.GetPaginatedEvaluation>>(url, { params })
         .then((res) => {
           const pagination = this.mapper.fromAPIPaginated(res.data.result);
           resolve(pagination);

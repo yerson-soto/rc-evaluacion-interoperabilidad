@@ -61,7 +61,15 @@
     "lineaments": "Lineamientos",
     "level": "Nivel",
     "response": "Respuesta",
-    "organization": "Institución"
+    "organization": "Institución",
+    "sort": "Ordenar por"
+  },
+  "options": {
+    "date_created": "Fecha de Creación",
+    "organization": "Institución",
+    "score": "Puntuación",
+    "asc": "Ascendente",
+    "desc": "Descendente"
   },
   "placeholders": {
     "first_name": "Introduce el nombre",
@@ -81,7 +89,8 @@
     "level_value": "Valor del nivel",
     "choice_description": "Descripción de la respuesta",
     "select_criterion": "Seleccionar criterio",
-    "select_level": "Seleccionar nivel"
+    "select_level": "Seleccionar nivel",
+    "search_evaluations": "Buscar evaluaciones..."
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",

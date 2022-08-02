@@ -1,56 +1,66 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import { Card, Input, Select } from "antd";
-import classes from "./EvaluationFilter.module.css";
+import { useDebouncedCallback } from 'use-debounce';
+import { SortType } from "library/common/types";
+import { FilterValues } from "library/common/interfaces";
+import { Evaluation } from "library/models/Evaluation";
 
 interface EvaluationFilterProps {
-  onSearch: (value: string) => Promise<void>;
-  // onFilter: () => Promise<void>;
-
+  onChange: (filter: FilterValues<Evaluation>) => void;
+  defaults: FilterValues<Evaluation>;
 }
 
-export default function EvaluationFilter(props: EvaluationFilterProps) {
-  const { onSearch } = props;
+export default function EvaluationFilter({ onChange, defaults }: EvaluationFilterProps) {
+  const { t } = useTranslation();
+
+  const handleSearch = useDebouncedCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const search = event.target.value;
+      onChange({ ...defaults, search });
+    }, 
+    300
+  );
+
+  const handleSortBy = (sortBy: keyof Evaluation) => {
+    onChange({ ...defaults, sortBy });
+  }
+
+  const handleSortType = (sortType: SortType) => {
+    onChange({ ...defaults, sortType });
+  }
   
   return (
     <Card bodyStyle={{
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      columnGap: '10px'
+      columnGap: 10
     }}>
       <Select
-        // size="large"
-        defaultValue="jack"
+        defaultValue={defaults.sortBy}
         style={{ width: 180 }}
-        onChange={console.log}
+        onChange={handleSortBy}
       >
-        <Select.Option value="jack">COMPLETADA</Select.Option>
-        <Select.Option value="lucy">PENDIENTE</Select.Option>
-        <Select.Option value="disabled" disabled>
-          Disabled
-        </Select.Option>
-        <Select.Option value="Yiminghe">CREADA</Select.Option>
+        <Select.Option value="dateCreated">{t("options.date_created")}</Select.Option>
+        <Select.Option value="organization">{t("options.organization")}</Select.Option>
+        <Select.Option value="score">{t("options.score")}</Select.Option>
       </Select>
 
       <Select
-        // size="large"
-        defaultValue="lucy"
-        style={{ width: 180, marginRight: 'auto' }}
-        onChange={console.log}
+        defaultValue={defaults.sortType}
+        style={{ width: 180 }}
+        onChange={handleSortType}
       >
-        <Select.Option value="jack">Codigo</Select.Option>
-        <Select.Option value="lucy">Nombre</Select.Option>
-        <Select.Option value="disabled" disabled>
-          Disabled
-        </Select.Option>
-        <Select.Option value="Yiminghe">CREADA</Select.Option>
+        <Select.Option value="asc">{t("options.asc")}</Select.Option>
+        <Select.Option value="desc">{t("options.desc")}</Select.Option>
       </Select>
 
       <Input.Search
-        // size="large"
         style={{ marginLeft: "auto", maxWidth: 300 }}
-        placeholder="input search text"
-        onSearch={onSearch}
+        defaultValue={defaults.search}
+        placeholder={t("placeholders.search_evaluations")}
+        onChange={handleSearch}
         enterButton
       />
     </Card>

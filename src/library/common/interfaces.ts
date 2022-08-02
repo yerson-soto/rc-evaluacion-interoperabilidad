@@ -1,6 +1,6 @@
 import { CaseReducer, PayloadAction, Slice, SliceCaseReducers } from "@reduxjs/toolkit";
 import { Location } from "react-router-dom";
-import { ErrorMessage, ID } from './types';
+import { ErrorMessage, ID, SortType } from './types';
 
 export interface APIResponse<T> {
   result: T;
@@ -20,6 +20,12 @@ export interface Pagination<T> {
   page: number;
   pageSize: number;
   results: T[]
+}
+
+export interface FilterValues<T> {
+  search?: string;
+  sortType?: SortType;
+  sortBy?: keyof T;
 }
 
 export interface CrudState<T> extends CommonState {

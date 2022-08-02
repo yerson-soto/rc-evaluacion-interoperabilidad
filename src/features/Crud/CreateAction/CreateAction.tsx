@@ -51,7 +51,7 @@ export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
         block
         icon={<PlusOutlined />}
         onClick={onOpen}
-      ></Button>
+      />
 
       {renderCreate()}
     </React.Fragment>

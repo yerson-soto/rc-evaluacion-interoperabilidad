@@ -25,6 +25,12 @@ export interface CreateEvaluation {
   organismoId: number;
 }
 
+export interface GetEvaluationParams {
+  search?: string;
+  typeOrder?: 'asc' | 'desc';
+  orderBy?: 'Date' | 'Organismo' | 'CurrentLevel';
+}
+
 export interface GetPaginatedEvaluation {
   elementostotales: number;
   page: number;

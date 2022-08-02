@@ -1,6 +1,6 @@
-import { Mapper, Pagination } from "library/common/interfaces";
+import { FilterValues, Mapper, Pagination } from "library/common/interfaces";
 import { Evaluation } from "library/models/Evaluation";
-import { GetEvaluation, CreateEvaluation } from "library/api/dto/evaluation-dto";
+import { GetEvaluation, CreateEvaluation, GetEvaluationParams } from "library/api/dto/evaluation-dto";
 import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
 import { OrganizationMapper } from './OrganizationMapper';
 import { GetPaginatedEvaluation } from '../dto/evaluation-dto';
@@ -37,5 +37,19 @@ export class EvaluationMapper
       page: data.page,
       results: evaluations
     }
+  }
+
+  fromFilterToQueryParams(filter: FilterValues<Evaluation>): GetEvaluationParams {
+    const fields: Record<string, GetEvaluationParams['orderBy']> = {
+      organization: 'Organismo',
+      dateCreated: 'Date',
+      score: 'CurrentLevel'
+    }
+
+    return {
+      search: filter.search,
+      typeOrder: filter.sortType,
+      orderBy: filter.sortBy && fields[filter.sortBy]
+    };
   }
 }
