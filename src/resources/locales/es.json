@@ -1,24 +1,26 @@
 {
   "headings": {
     "complete_evaluation": "Completar Evaluación",
-    "create_domain": "Crear nuevo dominio",
+    "create_domain": "Crear dominio",
     "edit_domain": "Editar dominio",
     "domain_list": "Lista de Dominios",
-    "create_lineament": "Crear nuevo lineamiento",
+    "create_lineament": "Crear lineamiento",
     "edit_lineament": "Editar lineamiento",
     "lineament_list": "Lista de Lineamientos",
-    "create_criterion": "Crear nuevo criterio",
+    "create_criterion": "Crear criterio",
     "edit_criterion": "Editar criterio",
     "criterion_list": "Lista de Criterios",
-    "create_level": "Crear nuevo nivel",
+    "create_level": "Crear nivel",
     "edit_level": "Editar nivel",
     "level_list": "Lista de Niveles",
-    "create_choice": "Crear nueva respuesta",
+    "create_choice": "Crear respuesta",
     "edit_choice": "Editar respuesta",
     "choice_list": "Lista de Respuestas",
-    "create_user": "Crear nuevo usuario",
+    "create_user": "Crear usuario",
     "edit_user": "Editar usuario",
-    "user_list": "Lista de Usuarios"
+    "user_list": "Lista de Usuarios",
+    "evaluation_list": "Evaluaciones",
+    "create_evaluation": "Crear evaluación"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -140,7 +142,9 @@
     "create": "Crear",
     "save": "Guardar",
     "yes": "Si",
-    "no": "No"
+    "no": "No",
+    "new": "Nuevo",
+    "add": "Agregar"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",

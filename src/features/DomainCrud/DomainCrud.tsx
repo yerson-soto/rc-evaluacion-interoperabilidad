@@ -11,7 +11,7 @@ import { DomainFormSchema } from "./DomainForm/DomainFormSchema";
 
 const columns: ColumnsType<Domain> = [
   {
-    title: <Trans key="fields.domain" />,
+    title: <Trans i18nKey="fields.domain" />,
     dataIndex: "name",
     ellipsis: true,
     sorter: (a, b) => {
@@ -21,12 +21,12 @@ const columns: ColumnsType<Domain> = [
     },
   },
   {
-    title: <Trans key="fields.slug" />,
+    title: <Trans i18nKey="fields.slug" />,
     dataIndex: "slug",
     responsive: ["lg"],
   },
   {
-    title: <Trans key="fields.domain_acronym" />,
+    title: <Trans i18nKey="fields.domain_acronym" />,
     dataIndex: "acronym",
     responsive: ["lg"],
     render: (value) => <Tag color="#d46b08">{value}</Tag>,

@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Drawer, List, Grid, Badge, Pagination, Button } from "antd";
+import { List, Grid, Badge, Pagination, Button } from "antd";
 import { QuestionItem } from "features/EvaluationInit/QuestionItem";
 import { FullCriterion } from "library/models/Criterion";
-import { useCriterionList } from "./useCriterionList";
 import { PaginationProps } from "antd/es/pagination";
 import { Domain } from "library/models/Domain";
 
 import classes from "./Questionary.module.css";
 import { useQuestionary } from "./useQuestionary";
 import { Question } from "library/models/Question";
-import { Choice } from "library/models/Choice";
+import { LightChoice } from "library/models/Choice";
 import { AppDrawer } from "library/components/AppDrawer";
 
 // const fakeData: Criterion[] = [
@@ -96,7 +95,7 @@ export default function Questionary(props: QuestionaryProps) {
     handleNotFound();
   }, []);
 
-  const onResponseChange = (criterion: FullCriterion, choice: Choice): void => {
+  const onResponseChange = (criterion: FullCriterion, choice: LightChoice): void => {
     changeResponse({
       evaluationInstitutionalId: uid as string,
       criterionId: criterion.id,

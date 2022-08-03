@@ -1,10 +1,10 @@
 import { AbstractAPIService } from "./AbstractApiService";
-import { APIResponse, Mapper } from "library/common/interfaces";
+import { Mapper } from "library/common/interfaces";
 import { ID } from "library/common/types";
 
 
 export interface RetrieveRepository<T> {
-  getById: () => Promise<T>;
+  getById: (id: ID) => Promise<T>;
 }
 
 export abstract class AbstractRetrieveService<T, DataReceived>

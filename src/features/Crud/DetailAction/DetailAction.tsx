@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "antd";
-import { useToogleAction } from "../useToggleAction";
+import { useToogleAction } from "library/hooks/useToggleAction";
 import { EyeOutlined } from "@ant-design/icons";
 
 export interface RenderDetail<T> {

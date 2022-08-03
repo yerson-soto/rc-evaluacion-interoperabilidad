@@ -68,7 +68,7 @@ export const paths = {
     evaluations: {
       index: "m/evaluaciones",
       reverse: () => "/m/evaluaciones",
-    },
+    }
   },
 };
 

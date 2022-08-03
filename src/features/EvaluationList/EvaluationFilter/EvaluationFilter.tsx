@@ -5,6 +5,9 @@ import { useDebouncedCallback } from 'use-debounce';
 import { SortType } from "library/common/types";
 import { FilterValues } from "library/common/interfaces";
 import { Evaluation } from "library/models/Evaluation";
+import { AppBox } from "library/components/AppBox";
+
+import classes from './EvaluationFilter.module.css';
 
 interface EvaluationFilterProps {
   onChange: (filter: FilterValues<Evaluation>) => void;
@@ -31,15 +34,11 @@ export default function EvaluationFilter({ onChange, defaults }: EvaluationFilte
   }
   
   return (
-    <Card bodyStyle={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      columnGap: 10
-    }}>
+    <Card>
+      <AppBox className={classes.wrapper}>
       <Select
         defaultValue={defaults.sortBy}
-        style={{ width: 180 }}
+        className={classes.select}
         onChange={handleSortBy}
       >
         <Select.Option value="dateCreated">{t("options.date_created")}</Select.Option>
@@ -49,7 +48,7 @@ export default function EvaluationFilter({ onChange, defaults }: EvaluationFilte
 
       <Select
         defaultValue={defaults.sortType}
-        style={{ width: 180 }}
+        className={classes.select}
         onChange={handleSortType}
       >
         <Select.Option value="asc">{t("options.asc")}</Select.Option>
@@ -57,12 +56,13 @@ export default function EvaluationFilter({ onChange, defaults }: EvaluationFilte
       </Select>
 
       <Input.Search
-        style={{ marginLeft: "auto", maxWidth: 300 }}
+        className={classes.search}
         defaultValue={defaults.search}
         placeholder={t("placeholders.search_evaluations")}
         onChange={handleSearch}
         enterButton
       />
+        </AppBox>
     </Card>
   );
 }

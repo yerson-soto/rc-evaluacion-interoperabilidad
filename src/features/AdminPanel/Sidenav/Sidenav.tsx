@@ -108,6 +108,7 @@ export default function Sidenav(props: SidenavProps) {
           </Popconfirm>
         ),
       },
+      getItem("Modelo de Madurez", "13", '/modelo', <SettingOutlined />),
     ];
   };
 

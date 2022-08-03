@@ -27,6 +27,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import { PermissionRoute } from "./PermissionRoute";
 import { UserType } from "library/common/enums";
+import { ModelPreview } from 'features/ModelPreview';
 
 const { auth, admin, admin: { evaluations }, management } = paths;
 
@@ -70,6 +71,7 @@ export default function Router() {
             <Route path={management.levels.index} element={<LevelCrud />} />
             <Route path={management.choices.index} element={<ChoiceCrud />} />
             <Route path={management.evaluations.index} element={<EvaluationCrud />} />
+            <Route path="modelo" element={<ModelPreview />} />
           </Route>
         </Route>
       </Route>

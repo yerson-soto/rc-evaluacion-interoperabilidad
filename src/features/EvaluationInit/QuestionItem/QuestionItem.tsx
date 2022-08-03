@@ -8,7 +8,7 @@ import { SectionDivider } from "library/components/SectionDivider";
 import { AddEvidence } from "features/EvaluationInit/AddEvidence";
 import { Response } from "features/EvaluationInit/Response";
 import { useChoiceList } from "./useChoiceList";
-import { Choice } from "library/models/Choice";
+import { LightChoice } from "library/models/Choice";
 import { Question } from "library/models/Question";
 
 import classes from "./QuestionItem.module.css";
@@ -44,7 +44,7 @@ import chroma from "chroma-js";
 interface QuestionItemProps {
   number: number;
   question: Question;
-  onLevelChange: (choice: Choice) => void;
+  onLevelChange: (choice: LightChoice) => void;
   onEvidenceAdd: () => void;
   onEvidenceDelete: () => void;
 }
@@ -58,7 +58,7 @@ export default function QuestionItem(props: QuestionItemProps) {
 
   const handleEvidenceChange = (): void => {};
 
-  const handleLevelChange = (choice: Choice): void => {
+  const handleLevelChange = (choice: LightChoice): void => {
     onLevelChange(choice);
   };
 

@@ -46,7 +46,7 @@ export class EvaluationService extends AbstractCrudService<
   
   filter(page: number, values: FilterValues<Evaluation>): Promise<Pagination<Evaluation>> {
     return new Promise((resolve, reject) => {
-      const url = `/evaluationsinstitutional/${page}/5`;
+      const url = `/evaluationsinstitutional/${page}/10`;
       const params = this.mapper.fromFilterToQueryParams(values);
       
       this.client

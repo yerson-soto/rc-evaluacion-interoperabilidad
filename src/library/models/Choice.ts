@@ -7,3 +7,9 @@ export interface Choice {
   level: Level;
   criterion: Criterion;
 }
+
+export interface LightChoice {
+  id: number;
+  details: string;
+  level: Level;
+}

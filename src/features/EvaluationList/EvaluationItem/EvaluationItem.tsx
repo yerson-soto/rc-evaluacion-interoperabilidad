@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Col, List, Row, Typography } from "antd";
+import { Button, Col, List, Progress, Row, Typography } from "antd";
 import { Evaluation } from "library/models/Evaluation";
 import { AppBox } from "library/components/AppBox";
 import { Score } from "library/components/Score";
@@ -67,9 +67,10 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         <Button danger>Eliminar</Button>,
       ]}
     >
-      <Row gutter={20} wrap={false}>
+      <Row align="middle" gutter={20} wrap={false}>
         <Col>
-          <Score value={score} />
+          {/* <Score value={score} /> */}
+          <Progress width={60} type="circle" percent={67} format={() => '3.4'} />
         </Col>
 
         <Col>

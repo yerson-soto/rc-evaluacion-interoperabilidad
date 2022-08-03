@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "antd";
-import { useToogleAction } from "../useToggleAction";
+import { useToogleAction } from "library/hooks/useToggleAction";
 import { EditOutlined } from "@ant-design/icons";
 import { RootState } from 'redux/types';
 import { useEditAction } from "./useEditAction";

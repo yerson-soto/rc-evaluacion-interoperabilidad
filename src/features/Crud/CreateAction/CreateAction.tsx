@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { RootState } from 'redux/types';
-import { useToogleAction } from "../useToggleAction";
+import { useToogleAction } from "library/hooks/useToggleAction";
 import { useCreateAction } from "./useCreateAction";
 import { CrudRepository } from "library/api/services/AbstractCrudService";
 import { CrudReducer, CrudState } from "library/common/interfaces";
@@ -17,6 +17,7 @@ export interface RenderCreate<FormSchema> {
 export interface CreateActionProps<T, FormSchema, State extends CrudState<T>> {
   service: CrudRepository<T, FormSchema>;
   reducer: CrudReducer<T, State>;
+  title?: string;
   render: (params: RenderCreate<FormSchema>) => React.ReactNode;
   selectLoading: (state: RootState) => boolean;
 }
@@ -24,7 +25,7 @@ export interface CreateActionProps<T, FormSchema, State extends CrudState<T>> {
 export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
   props: CreateActionProps<T, FormSchema, State>
 ) {
-  const { service, reducer, selectLoading, render } = props;
+  const { title, service, reducer, selectLoading, render } = props;
 
   const { isOpen, onOpen, onCloseEnd } = useToogleAction({
     action: "create",
@@ -48,11 +49,10 @@ export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
       <Button
         type="primary"
         shape="round"
-        block
         icon={<PlusOutlined />}
         onClick={onOpen}
-      />
-
+        block
+      >{title}</Button>
       {renderCreate()}
     </React.Fragment>
   );

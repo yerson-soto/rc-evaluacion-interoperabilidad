@@ -23,7 +23,7 @@ export class EvaluationMapper
       uid: data.id,
       organization,
       dateCreated: data.dateInitial,
-      score: 0,
+      score: data.currentLevel,
     };
   }
 

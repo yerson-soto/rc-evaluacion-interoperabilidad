@@ -1,12 +1,12 @@
 import { AbstractAPIService } from "./AbstractApiService";
 import { APIResponse, Mapper } from "library/common/interfaces";
-import { ID } from "library/common/types";
-import { getText } from "i18n";
 import { ListRepository } from "./AbstractListService";
 import { CreateRepository } from "./AbstractCreateService";
 import { EditRepository } from "./AbstractEditService";
 import { DeleteRepository } from "./AbstractDeleteService";
 import { RetrieveRepository } from "./AbstractRetrieveService";
+import { getText } from "i18n";
+import { ID } from "library/common/types";
 
 export interface CrudRepository<T, FormSchema>
   extends ListRepository<T>,
@@ -38,8 +38,18 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
     });
   }
 
-  getById(): Promise<T> {
-    return new Promise((resolve, reject) => {});
+  getById(id: ID): Promise<T> {
+    return new Promise((resolve, reject) => {
+      const url = this.getDetailUrl(id);
+      
+      this.client
+        .get<APIResponse<DataReceived>>(url)
+        .then((res) => {
+          const result = this.mapper.fromAPI(res.data.result);
+          resolve(result);
+        })
+        .catch(() => reject("No se pudo obtener el registro"));
+    });
   }
 
   create(schema: FormSchema): Promise<T> {

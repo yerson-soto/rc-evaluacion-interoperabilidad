@@ -1,0 +1,13 @@
+.card {
+  position: sticky;
+  top: 0;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  /* background: linear-gradient(113.58893008880955deg, rgba(244, 72, 105,1) 4.927083333333334%,rgba(159, 1, 234,1) 97.84374999999999%); */
+}

@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 10px;
+  flex-direction: column;
+}
+
+.select {
+  width: 100%;
+}
+
+.search {
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .wrapper {
+    flex-direction: row;
+    column-gap: 10px;
+  }
+
+  .select {
+    width: 120px;
+  }
+
+  .search {
+    max-width: 300px;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .select {
+    min-width: 180px;
+  }
+}

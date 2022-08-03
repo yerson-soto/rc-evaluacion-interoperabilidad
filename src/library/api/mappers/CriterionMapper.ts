@@ -37,7 +37,7 @@ export class CriterionMapper
       id: data.id,
       name: data.description,
       categories: data.lineamentsResponses.map(lineamentMapper.fromAPILighweight),
-      choices: data.responseResponses.map((response) => choiceMapper.fromAPI(response)),
+      choices: data.responseResponses.map((response) => choiceMapper.fromAPILight(response)),
     };
   }
 

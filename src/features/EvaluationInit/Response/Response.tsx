@@ -1,5 +1,5 @@
 import React from "react";
-import { Choice } from "library/models/Choice";
+import { LightChoice } from "library/models/Choice";
 import { AppBox } from "library/components/AppBox";
 import { AnswerRadio } from "features/EvaluationInit/AnswerRadio";
 import { Badge } from "antd";
@@ -7,7 +7,7 @@ import { Badge } from "antd";
 import classes from "./Response.module.css";
 
 interface ResponseProps {
-  choice: Choice;
+  choice: LightChoice;
   color: string;
   isSelected?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
