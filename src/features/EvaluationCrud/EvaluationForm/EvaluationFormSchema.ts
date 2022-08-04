@@ -5,6 +5,7 @@ export interface EvaluationFormSchema {
   organizationId: number;
   startDate: string;
   endDate: string;
+  userId: string;
 }
 
 export const rules: Record<keyof EvaluationFormSchema, Rule[]> = {
@@ -32,4 +33,5 @@ export const rules: Record<keyof EvaluationFormSchema, Rule[]> = {
       })
     },
   ],
+  userId: []
 }

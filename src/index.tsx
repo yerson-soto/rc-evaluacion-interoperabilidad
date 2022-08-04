@@ -1,6 +1,6 @@
 // Above so that it takes priority
-import "./index.css";
 import "./i18n";
+import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom/client";

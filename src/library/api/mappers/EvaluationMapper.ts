@@ -4,6 +4,7 @@ import { GetEvaluation, CreateEvaluation, GetEvaluationParams } from "library/ap
 import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
 import { OrganizationMapper } from './OrganizationMapper';
 import { GetPaginatedEvaluation } from '../dto/evaluation-dto';
+import { UserMapper } from "./UserMapper";
 
 export class EvaluationMapper
   implements Mapper<Evaluation, GetEvaluation, CreateEvaluation, EvaluationFormSchema>
@@ -11,19 +12,25 @@ export class EvaluationMapper
 
   formSchemaToAPI(schema: EvaluationFormSchema): CreateEvaluation {
     return {
-      organismoId: schema.organizationId
+      organismoId: schema.organizationId,
+      userId: schema.userId
     };
   }
 
   fromAPI(data: GetEvaluation): Evaluation {
     const orgMapper = new OrganizationMapper();
-    const organization = orgMapper.fromAPINested(data.organismo);
-    
+    const userMapper = new UserMapper();
+
+    const organization = orgMapper.fromAPINested(data.organismo),
+      user = userMapper.fromAPI(data.userResponse),
+      score = Number(data.resultLevelResponse.resultFinallly.toFixed(2));
+
     return {
       uid: data.id,
-      organization,
       dateCreated: data.dateInitial,
-      score: data.currentLevel,
+      organization,
+      user,
+      score
     };
   }
 

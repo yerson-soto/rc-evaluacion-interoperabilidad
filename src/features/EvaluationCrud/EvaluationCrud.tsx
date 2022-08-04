@@ -58,12 +58,13 @@ export default function EvaluationCrud() {
           isLoading={loading}
           onSave={onSave}
           onHide={onClose}
-          defaults={({
+          defaults={{
             // TODO: Refactor
+            userId: record.user.uid,
             startDate: record.dateCreated,
             endDate: record.dateCreated,
             organizationId: record.organization.id
-          })}
+          }}
           isEdit
         />
       )}

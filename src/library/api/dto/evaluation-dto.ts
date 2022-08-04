@@ -1,28 +1,25 @@
+import { GetUser } from './user-dto';
+import { GetOrganizationNested } from './organization-dto';
+
 export interface GetEvaluation {
   id: string;
   dateInitial: string;
-  currentLevel: number;
-
-  // dateSend: null;
-  // dateEnd: null;
-  // states: null;
-  // isActive: true;
-  // user: null;
-  
-  organismo: {
+  userResponse: GetUser,
+  organismo: GetOrganizationNested;
+  resultLevelResponse: {
     id: number;
-    orgasnimo: string;
-    siglas: string;
-  };
-  resultLevel: {
-    id: string;
-    resultFinallly: string;
+    resultFinallly: number;
     evaluationInstitutionalId: string;
   };
+  statesResponse: {
+    id: number;
+    description: string;
+  },
 }
 
 export interface CreateEvaluation {
   organismoId: number;
+  userId: string;
 }
 
 export interface GetEvaluationParams {

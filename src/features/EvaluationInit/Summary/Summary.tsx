@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Card, Descriptions, Progress, Tabs } from "antd";
+import { Badge, Card, Descriptions, Progress, Space, Tabs, Tag } from "antd";
 import { AppBox } from "library/components/AppBox";
 
 import classes from "./Summary.module.css";
@@ -14,31 +14,25 @@ export default function Summary(props: SummaryProps) {
 
   return (
     <Card>
-      <Descriptions title={evaluation.organization.name}>
-        <Descriptions.Item label="Puntuacion">
-          {evaluation.score}
-        </Descriptions.Item>
-        <Descriptions.Item label="Creada en">
-          {evaluation.dateCreated}
-        </Descriptions.Item>
-        <Descriptions.Item label="Dominios">4</Descriptions.Item>
-        <Descriptions.Item label="Remark">empty</Descriptions.Item>
-        <Descriptions.Item label="Address">
-          No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-        </Descriptions.Item>
-      </Descriptions>
-
-      <Tabs defaultActiveKey="1" onChange={() => {}}>
-        <Tabs.TabPane tab="Tab 1" key="1">
-          Content of Tab Pane 1
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Tab 2" key="2">
-          Content of Tab Pane 2
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Tab 3" key="3">
-          Content of Tab Pane 3
-        </Tabs.TabPane>
-      </Tabs>
+      <Space size="large">
+        <Progress type="circle" 
+          percent={evaluation.score * 100 / 5} 
+          format={() => evaluation.score} 
+        />
+        <Descriptions title={evaluation.organization.name}>
+          <Descriptions.Item label="Puntuacion">
+            {evaluation.score}
+          </Descriptions.Item>
+          <Descriptions.Item label="Creada en">
+            {evaluation.dateCreated}
+          </Descriptions.Item>
+          <Descriptions.Item label="Estado">
+          <Badge status="processing" /> Pendiente
+          </Descriptions.Item>
+          <Descriptions.Item label="Usuario">{evaluation.user.fullName}</Descriptions.Item>
+          <Descriptions.Item label="Cantidad de Dominios">4</Descriptions.Item>
+        </Descriptions>
+      </Space>
     </Card>
   );
 }

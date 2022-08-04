@@ -5,6 +5,7 @@ import { AppDrawer } from "library/components/AppDrawer";
 import { EvaluationFormSchema, rules } from "./EvaluationFormSchema";
 import { useEvaluationForm } from './useEvaluationForm';
 import { InstitutionSelect } from "library/components/InstitutionSelect";
+import { useAppSelector } from '../../../redux/hooks';
 
 
 interface EvaluationFormProps {
@@ -20,11 +21,14 @@ export default function EvaluationForm(props: EvaluationFormProps) {
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
+  // Todo: Refactor source of userId. Should be from select field.
+  const userId = useAppSelector(state => state.auth.user.uid);
+
   const {  form, resetForm } = useEvaluationForm();
 
   const title = isEdit 
     ? t("headings.edit_evaluation"): 
-    t("headings.create_evaluation");
+      t("headings.create_evaluation");
 
   const btnText = isEdit 
     ? t("buttons.save") 
@@ -36,14 +40,14 @@ export default function EvaluationForm(props: EvaluationFormProps) {
 
   const onFinish = () => {
     form.validateFields().then((values) => {
-      onSave(values).then(onHide);
+      onSave({ ...values, userId }).then(onHide);
     });
   };
-
+  
   return (
     <AppDrawer
-      title={title}
       placement="right"
+      title={title}
       onClose={onHide}
       visible={show}
       onCloseEnd={resetForm}

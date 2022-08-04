@@ -3,3 +3,12 @@
     padding: 16px 0!important;
   }
 }
+
+.itemCard {
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.itemCard:hover {
+  transform: scale(1.01);
+}

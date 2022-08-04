@@ -59,18 +59,16 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="setting" icon={SettingOutlined} />,
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
-        evaluation.score ? (
-          <Button onClick={goToDetail}>Ver</Button>
-        ) : (
-          <Button onClick={goToEvaluation}>Iniciar</Button>
-        ),
+        
+        <Button onClick={goToEvaluation}>Ver</Button>,
+       
         <Button danger>Eliminar</Button>,
       ]}
     >
       <Row align="middle" gutter={20} wrap={false}>
         <Col>
           {/* <Score value={score} /> */}
-          <Progress width={60} type="circle" percent={67} format={() => '3.4'} />
+          <Progress width={60} type="circle" percent={score * 100 / 5} format={() => score} />
         </Col>
 
         <Col>

@@ -19,7 +19,7 @@ const initialState: EvaluationState = {
   page: 1,
   pageSize: 10,
   filter: {
-    sortType: 'asc',
+    sortType: 'desc',
     sortBy: 'dateCreated',
     search: '',
   },
