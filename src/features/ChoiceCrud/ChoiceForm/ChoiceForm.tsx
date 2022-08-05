@@ -1,12 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Form } from "antd";
+import { Button, Checkbox, Form, Input, Select, Space } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { ChoiceFormSchema, rules } from "./ChoiceFormSchema";
 import { useChoiceForm } from "./useChoiceForm";
 import { TextArea } from "library/components/TextArea";
 import { CriterionSelect } from "../CriterionSelect";
 import { LevelSelect } from "../LevelSelect";
+
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 interface ChoiceFormProps {
   show: boolean;
@@ -16,6 +18,18 @@ interface ChoiceFormProps {
   onSave: (values: ChoiceFormSchema) => Promise<void>;
   onHide: () => void;
 }
+
+const areas = [
+  { label: 'Beijing', value: 'Beijing' },
+  { label: 'Shanghai', value: 'Shanghai' },
+];
+
+const sights = {
+  Beijing: ['Tiananmen', 'Great Wall'],
+  Shanghai: ['Oriental Pearl', 'The Bund'],
+};
+
+type SightsKeys = keyof typeof sights;
 
 export default function ChoiceForm(props: ChoiceFormProps) {
   const { form, resetForm } = useChoiceForm();
@@ -36,8 +50,13 @@ export default function ChoiceForm(props: ChoiceFormProps) {
 
   const onFinish = () => {
     form.validateFields().then((values) => {
+      console.log(values);
       onSave(values).then(onHide);
     });
+  };
+
+  const handleChange = () => {
+    // form.setFieldsValue({ sights: [] });
   };
 
   return (
@@ -100,6 +119,78 @@ export default function ChoiceForm(props: ChoiceFormProps) {
               showCount
             />
           </Form.Item>
+
+
+
+
+
+
+
+
+
+
+          <Form.Item>
+            <Form.Item name="addEvidences" valuePropName="checked" noStyle>
+              <Checkbox>Esta respuesta require justificacion?</Checkbox>
+            </Form.Item>
+          </Form.Item>
+
+        <Form.Item
+        noStyle
+        shouldUpdate={(prevValues, currentValues) => prevValues.addEvidences !== currentValues.addEvidences}
+      >
+        {({ getFieldValue }) =>
+          getFieldValue('addEvidences') ? (
+            <Form.List name="evidences">
+        {(fields, { add, remove }) => (
+          <>
+            {fields.map(field => (
+              <Space key={field.key} align="baseline">
+                <Form.Item
+                  {...field}
+                  label="Tipo"
+                  name={[field.name, 'type']}
+                  rules={[{ required: true, message: 'Missing sight' }]}
+                >
+                  <Select style={{ width: 130 }}>
+                    <Select.Option key="1" value="image">
+                      Imagen
+                    </Select.Option>
+                    <Select.Option key="2" value="sheets">
+                      Hoja de calculo
+                    </Select.Option>
+                    <Select.Option key="1" value="word">
+                      Documento de Word
+                    </Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  {...field}
+                  label="Titulo"
+                  name={[field.name, 'title']}
+                  rules={[{ required: true, message: 'Missing price' }]}
+                >
+                  <Input />
+                </Form.Item>
+
+                <MinusCircleOutlined onClick={() => remove(field.name)} />
+              </Space>
+            ))}
+
+            <Form.Item>
+              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                Add sights
+              </Button>
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
+          ) : null
+        }
+      </Form.Item>
+
+        
+      
         </Form>
       )}
     </AppDrawer>

@@ -10,6 +10,6 @@ export interface Criterion {
 export interface FullCriterion {
   id: number;
   name: string;
-  categories: LightLineament[];
+  lineaments: LightLineament[];
   choices: LightChoice[];
 }

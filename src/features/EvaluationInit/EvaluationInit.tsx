@@ -55,7 +55,7 @@ export default function EvaluationInit() {
   const navigate = useNavigate();
   const { uid } = useParams();
 
-  const { fetchEvaluation, evaluation } = useEvaluation();
+  const { fetchEvaluation, fakeIncrementScore, evaluation } = useEvaluation();
 
   React.useEffect(() => {
     fetchEvaluation(uid as any);
@@ -166,6 +166,7 @@ export default function EvaluationInit() {
         domain={domain}
         onClose={setClose}
         onCloseEnd={afterClosed}
+        onChangeLevel={fakeIncrementScore}
       />
     </AppBox>
   );

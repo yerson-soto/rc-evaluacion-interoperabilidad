@@ -12,5 +12,12 @@ export function useEvaluation() {
     
   }
 
-  return { fetchEvaluation, evaluation };
+  const fakeIncrementScore = (value: number) => {
+    if (evaluation) {
+      const evalu = { ...evaluation, score: evaluation.score + value };
+      setEvaluation(evalu);
+    }
+  }
+
+  return { fetchEvaluation, fakeIncrementScore, evaluation };
 }

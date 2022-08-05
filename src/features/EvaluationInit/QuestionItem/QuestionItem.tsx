@@ -89,7 +89,7 @@ export default function QuestionItem(props: QuestionItemProps) {
 
       <SectionDivider text={t("dividers.lineaments")} />
       <Space className={classes.section} size={[0, 10]} wrap>
-        {criterion.categories.map((category) => (
+        {criterion.lineaments.map((category) => (
           <Tooltip key={category.id} title={category.description}>
             <Tag color="orange" className={classes.tag}>
               {category.nomenclature}

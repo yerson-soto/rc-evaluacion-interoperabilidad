@@ -77,6 +77,8 @@ export interface QuestionaryProps {
   // This is used to keep domain during transition
   onClose: (keepDomain: Domain) => void;
   onCloseEnd: () => void;
+
+  onChangeLevel: (value: number) => void;
 }
 
 export default function Questionary(props: QuestionaryProps) {
@@ -84,7 +86,7 @@ export default function Questionary(props: QuestionaryProps) {
   const [current, setCurrent] = useState(1);
 
   const { uid } = useParams<Record<"uid", string>>();
-  const { isOpen, domain, onClose, onCloseEnd } = props;
+  const { isOpen, domain, onClose, onCloseEnd, onChangeLevel } = props;
   const { isLoading, questions, changeResponse } = useQuestionary(domain.id);
 
   React.useEffect(() => {
@@ -101,11 +103,13 @@ export default function Questionary(props: QuestionaryProps) {
       criterionId: criterion.id,
       responsesId: choice.id,
     });
-
+    
+    onChangeLevel(.5);
     const newScore = {
       ...score,
       [criterion.id]: choice.level.value,
     };
+
 
     setScore(newScore);
   };
@@ -145,7 +149,7 @@ export default function Questionary(props: QuestionaryProps) {
       title={domain.name}
       placement="right"
       visible={isOpen}
-      extra={<Badge status="processing" text={getScore()} />}
+      // extra={<Badge status="processing" text={getScore()} />}
       onClose={() => onClose(domain)}
       afterVisibleChange={onVisibilityChange}
       footer={
