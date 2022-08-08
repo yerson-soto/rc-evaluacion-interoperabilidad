@@ -1,5 +1,5 @@
-import { UserType } from "./enums";
 import { getText } from "i18n";
+import { UserType, ContentType } from "./enums";
 
 export const paths = {
   auth: {
@@ -87,4 +87,15 @@ export const roleColors = {
   [UserType.User]: "orange",
   [UserType.Support]: "green",
   [UserType.Admin]: "blue",
+};
+
+export const contentTypeLabels = {
+  [ContentType.TEXT]: getText('contentTypes.plain_text'),
+  [ContentType.JPG]: getText('contentTypes.jpg'),
+  [ContentType.PNG]: getText('contentTypes.png'),
+  [ContentType.JPEG]: getText('contentTypes.jpeg'),
+  [ContentType.CSV]: getText('contentTypes.csv'),
+  [ContentType.PDF]: getText('contentTypes.pdf'),
+  [ContentType.WORD]: getText('contentTypes.word'),
+  [ContentType.EXCEL]: getText('contentTypes.excel'),
 };

@@ -1,10 +1,28 @@
 import { getText } from "i18n";
 import { Rule } from "antd/lib/form";
 
+interface EvidenceFormSchema {
+  contentType: string[];
+  title: string;
+}
+
 export interface ChoiceFormSchema {
   levelId: number;
   criterionId: number;
   details: string;
+  isEvidenceRequired: boolean;
+  requiredEvidences: EvidenceFormSchema[];
+}
+
+export const evidenceRules: Record<keyof EvidenceFormSchema, Rule[]> = {
+  contentType: [{
+    required: true,
+    message: "",
+  }],
+  title: [{
+    required: true,
+    message: "",
+  }],
 }
 
 export const rules: Record<keyof ChoiceFormSchema, Rule[]> = {
@@ -31,5 +49,7 @@ export const rules: Record<keyof ChoiceFormSchema, Rule[]> = {
         field: getText("fields.response")
       })
     }
-  ]
+  ],
+  isEvidenceRequired: [],
+  requiredEvidences: []
 }

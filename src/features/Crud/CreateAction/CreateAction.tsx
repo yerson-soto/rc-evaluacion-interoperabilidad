@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from 'react-i18next';
 import { RootState } from 'redux/types';
 import { useToogleAction } from "library/hooks/useToggleAction";
 import { useCreateAction } from "./useCreateAction";
@@ -25,7 +26,8 @@ export interface CreateActionProps<T, FormSchema, State extends CrudState<T>> {
 export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
   props: CreateActionProps<T, FormSchema, State>
 ) {
-  const { title, service, reducer, selectLoading, render } = props;
+  const { t } = useTranslation();
+  const { title = t('buttons.new'), service, reducer, selectLoading, render } = props;
 
   const { isOpen, onOpen, onCloseEnd } = useToogleAction({
     action: "create",

@@ -28,7 +28,7 @@ export function useEditAction<T, FormSchema, State extends CrudState<T>>({
     .then(result => {
       dispatch(reducer.actions.editSuccess(result));
 
-      message.success(t("alerts.item_created"));
+      message.success(t("alerts.item_edited"));
     })
     .catch((errorMessage) => {
       dispatch(reducer.actions.editFailed(errorMessage))

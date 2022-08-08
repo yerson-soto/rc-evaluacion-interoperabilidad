@@ -1,14 +1,16 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Checkbox, Form, Input, Select, Space } from "antd";
+import { Button, Checkbox, Divider, Form, Input, Space } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
-import { ChoiceFormSchema, rules } from "./ChoiceFormSchema";
+import { ChoiceFormSchema, rules, evidenceRules } from "./ChoiceFormSchema";
 import { useChoiceForm } from "./useChoiceForm";
 import { TextArea } from "library/components/TextArea";
 import { CriterionSelect } from "../CriterionSelect";
 import { LevelSelect } from "../LevelSelect";
 
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { RecordSelect } from "library/components/RecordSelect";
+import { contentTypeLabels } from 'library/common/constants';
 
 interface ChoiceFormProps {
   show: boolean;
@@ -19,20 +21,8 @@ interface ChoiceFormProps {
   onHide: () => void;
 }
 
-const areas = [
-  { label: 'Beijing', value: 'Beijing' },
-  { label: 'Shanghai', value: 'Shanghai' },
-];
-
-const sights = {
-  Beijing: ['Tiananmen', 'Great Wall'],
-  Shanghai: ['Oriental Pearl', 'The Bund'],
-};
-
-type SightsKeys = keyof typeof sights;
-
 export default function ChoiceForm(props: ChoiceFormProps) {
-  const { form, resetForm } = useChoiceForm();
+  const { form, resetForm, onRemoveEvidence } = useChoiceForm();
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
 
@@ -48,15 +38,20 @@ export default function ChoiceForm(props: ChoiceFormProps) {
     ? "edit_choice" 
     : "create_choice";
 
+  const defaultValues = Boolean(defaults) ? { 
+    ...defaults, 
+    requiredEvidences: defaults?.isEvidenceRequired 
+      ? defaults.requiredEvidences 
+      : [{ 
+        contentType: [], 
+        title: ''
+      }]
+  } : {};
+    
   const onFinish = () => {
     form.validateFields().then((values) => {
-      console.log(values);
       onSave(values).then(onHide);
     });
-  };
-
-  const handleChange = () => {
-    // form.setFieldsValue({ sights: [] });
   };
 
   return (
@@ -82,7 +77,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
           name={formName}
           preserve={false}
           onFinish={onFinish}
-          initialValues={defaults}
+          initialValues={defaultValues}
           size="large"
           autoComplete="off"
           layout="vertical"
@@ -119,78 +114,75 @@ export default function ChoiceForm(props: ChoiceFormProps) {
               showCount
             />
           </Form.Item>
-
-
-
-
-
-
-
-
-
-
+ 
           <Form.Item>
-            <Form.Item name="addEvidences" valuePropName="checked" noStyle>
-              <Checkbox>Esta respuesta require justificacion?</Checkbox>
+            <Form.Item 
+              name="isEvidenceRequired" 
+              valuePropName="checked" 
+              noStyle
+            >
+              <Checkbox>{t("fields.isEvidenceRequired")}</Checkbox>
             </Form.Item>
           </Form.Item>
 
-        <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.addEvidences !== currentValues.addEvidences}
-      >
-        {({ getFieldValue }) =>
-          getFieldValue('addEvidences') ? (
-            <Form.List name="evidences">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(field => (
-              <Space key={field.key} align="baseline">
-                <Form.Item
-                  {...field}
-                  label="Tipo"
-                  name={[field.name, 'type']}
-                  rules={[{ required: true, message: 'Missing sight' }]}
-                >
-                  <Select style={{ width: 130 }}>
-                    <Select.Option key="1" value="image">
-                      Imagen
-                    </Select.Option>
-                    <Select.Option key="2" value="sheets">
-                      Hoja de calculo
-                    </Select.Option>
-                    <Select.Option key="1" value="word">
-                      Documento de Word
-                    </Select.Option>
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  {...field}
-                  label="Titulo"
-                  name={[field.name, 'title']}
-                  rules={[{ required: true, message: 'Missing price' }]}
-                >
-                  <Input />
-                </Form.Item>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.isEvidenceRequired !== currentValues.isEvidenceRequired
+            }
+          >
+            {({ getFieldValue }) =>
+              getFieldValue("isEvidenceRequired") ? (
+                <Form.List name="requiredEvidences">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map(({ key, name, ...restField }) => (
+                        <Space key={key} align="baseline" split={<Divider type="horizontal" />}>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "contentType"]}
+                            rules={evidenceRules.contentType}
+                          >
+                            <RecordSelect 
+                              mode="multiple"
+                              showSearch={false}
+                              placeholder={t("placeholders.content_type")}
+                              maxTagCount="responsive"
+                              style={{ width: 150 }} 
+                              records={contentTypeLabels} 
+                            />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            style={{ width: '100%' }}
+                            name={[name, "title"]}
+                            rules={evidenceRules.title}
+                          >
+                            <Input placeholder={t("placeholders.title")} />
+                          </Form.Item>
 
-                <MinusCircleOutlined onClick={() => remove(field.name)} />
-              </Space>
-            ))}
+                          <MinusCircleOutlined 
+                            onClick={() => onRemoveEvidence(name, remove)} 
+                          />
+                        </Space>
+                      ))}
 
-            <Form.Item>
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                Add sights
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
-          ) : null
-        }
-      </Form.Item>
-
-        
-      
+                      <Form.Item>
+                        <Button
+                          type="dashed"
+                          onClick={() => add()}
+                          icon={<PlusOutlined />}
+                          block
+                        >
+                          {t("buttons.add_evidence")}
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              ) : null
+            }
+          </Form.Item>
         </Form>
       )}
     </AppDrawer>

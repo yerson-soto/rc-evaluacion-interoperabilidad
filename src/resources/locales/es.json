@@ -64,7 +64,8 @@
     "level": "Nivel",
     "response": "Respuesta",
     "organization": "Institución",
-    "sort": "Ordenar por"
+    "sort": "Ordenar por",
+    "isEvidenceRequired": "¿Esta respuesta requiere alguna evidencia?"
   },
   "options": {
     "date_created": "Fecha de Creación",
@@ -92,7 +93,9 @@
     "choice_description": "Descripción de la respuesta",
     "select_criterion": "Seleccionar criterio",
     "select_level": "Seleccionar nivel",
-    "search_evaluations": "Buscar evaluaciones..."
+    "search_evaluations": "Buscar evaluaciones...",
+    "content_type": "Tipo",
+    "title": "Título"
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",
@@ -125,6 +128,7 @@
     "send_confirmation_mail_failed": "Error al enviar el correo de confirmación",
     "send_confirmation_mail_success": "El enlace de confirmación se ha enviado a su correo",
     "item_created": "El registro se ha creado con éxito",
+    "item_edited": "El registro se ha editado con éxito",
     "identity_card_not_found": "La cédula ingresa no existe"
   },
   "loading": {
@@ -144,7 +148,8 @@
     "yes": "Si",
     "no": "No",
     "new": "Nuevo",
-    "add": "Agregar"
+    "add": "Agregar",
+    "add_evidence": "Agregar documento"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",
@@ -185,5 +190,15 @@
     "my_account":  "Mi Cuenta",  
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión"
+  },
+  "contentTypes": {
+    "plain_text": "TXT",
+    "excel": "XLSX",
+    "word": "DOCX",
+    "jpg": "JPG",
+    "png": "PNG",
+    "jpeg": "JPEG",
+    "csv": "CSV",
+    "pdf": "PDF"
   }
 }

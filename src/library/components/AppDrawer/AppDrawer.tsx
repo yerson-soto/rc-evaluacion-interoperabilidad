@@ -16,7 +16,7 @@ export default function AppDrawer(props: AppDrawerProps) {
 
   return (
     <Drawer
-      width={isDesktop ? "500" : "100%"}
+      width={isDesktop ? 500 : "100%"}
       afterVisibleChange={handleVisibilityChange}
       forceRender
       destroyOnClose
