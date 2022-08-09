@@ -29,6 +29,7 @@ export class ChoiceMapper
   fromAPI(data: GetChoice): Choice {
     const levelMapper = new LevelMapper();
     const criterionMapper = new CriterionMapper();
+    const requiredEvidences = data.requiredEvidencesResponses || [];
     
     return {
       id: data.responsesId,
@@ -36,7 +37,7 @@ export class ChoiceMapper
       level: levelMapper.fromAPI(data.levelsResponse),
       criterion: criterionMapper.fromAPI(data.criterionResponse),
       isEvidenceRequired: data.isEvidenceRequired,
-      requiredEvidences: data.requiredEvidencesResponses.map(evidence => ({
+      requiredEvidences: requiredEvidences.map(evidence => ({
         title: evidence.title,
         contentType: evidence.contentType.split(',') as ContentType[]
       }))

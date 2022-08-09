@@ -60,7 +60,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
         
-        <Button onClick={goToEvaluation}>Ver</Button>,
+        <Button onClick={goToDetail}>Ver</Button>,
        
         <Button danger>Eliminar</Button>,
       ]}

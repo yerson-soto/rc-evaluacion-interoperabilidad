@@ -38,15 +38,13 @@ export default function ChoiceForm(props: ChoiceFormProps) {
     ? "edit_choice" 
     : "create_choice";
 
-  const defaultValues = Boolean(defaults) ? { 
-    ...defaults, 
-    requiredEvidences: defaults?.isEvidenceRequired 
-      ? defaults.requiredEvidences 
-      : [{ 
-        contentType: [], 
-        title: ''
-      }]
-  } : {};
+  const requiredEvidences = defaults?.isEvidenceRequired 
+    ? defaults.requiredEvidences 
+    : [{ contentType: [], title: '' }];
+    
+  const defaultValues = Boolean(defaults) 
+    ? { ...defaults, requiredEvidences } 
+    : { requiredEvidences };
     
   const onFinish = () => {
     form.validateFields().then((values) => {
@@ -127,6 +125,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
 
           <Form.Item
             noStyle
+            preserve={false}
             shouldUpdate={(prevValues, currentValues) =>
               prevValues.isEvidenceRequired !== currentValues.isEvidenceRequired
             }
@@ -137,7 +136,11 @@ export default function ChoiceForm(props: ChoiceFormProps) {
                   {(fields, { add, remove }) => (
                     <>
                       {fields.map(({ key, name, ...restField }) => (
-                        <Space key={key} align="baseline" split={<Divider type="horizontal" />}>
+                        <Space 
+                          key={key} 
+                          align="center" 
+                          split={<Divider type="horizontal" />
+                        }>
                           <Form.Item
                             {...restField}
                             name={[name, "contentType"]}
@@ -162,6 +165,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
                           </Form.Item>
 
                           <MinusCircleOutlined 
+                            style={{ display: 'block', marginBottom: '24px' }}
                             onClick={() => onRemoveEvidence(name, remove)} 
                           />
                         </Space>

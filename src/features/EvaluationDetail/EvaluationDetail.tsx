@@ -1,66 +1,127 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { PageHeader, Button, Descriptions } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  PieChartOutlined,
+  AccountBookOutlined,
+  AimOutlined,
+  SmileOutlined,
+  LikeOutlined
+} from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
+import {
+  Affix,
+  Button,
+  Card,
+  Col,
+  Row,
+  Statistic,
+  TabsProps,
+  Timeline,
+  Typography,
+} from "antd";
+
 
 import { AppBox } from "library/components/AppBox";
 
-import { Badge } from "antd";
 
-import "./EvaluationDetail.module.css";
+import { Summary } from "./Summary";
+import { useEvaluation } from "./useEvaluation";
+import { Sticky, StickyContainer } from "react-sticky";
+
+import type { RadioChangeEvent } from "antd";
+import { Radio, Tabs } from "antd";
+import { AppLoader } from "library/components/AppLoader";
+import NotFound from '../NotFound/NotFound';
+
+const { TabPane } = Tabs;
+
+const renderTabBar: TabsProps["renderTabBar"] = (props, DefaultTabBar) => (
+  <Sticky topOffset={20}>
+    {({ style }) => (
+      <DefaultTabBar
+        {...props}
+        className="site-custom-tab-bar"
+        style={{ ...style, zIndex: 1, background: "#fff" }}
+      />
+    )}
+  </Sticky>
+);
 
 export default function EvaluationDetail() {
   const navigate = useNavigate();
+  
+  const { t } = useTranslation();
+  const { evaluation, isLoading } = useEvaluation();
+
+  if (isLoading) return <AppLoader text={t("loading.fetching_data")} />
+  if (!evaluation) return <NotFound />
 
   return (
     <AppBox>
-      <PageHeader
-        style={{ padding: 0 }}
-        onBack={() => navigate("/evaluaciones")}
-        title="Detalle de Evaluacion"
-        subTitle="Este dominio evalúa las habilidades..."
-        extra={[
-          <Button key="2">Evaluar</Button>,
-          <Button key="1" type="primary">
-            Finalizar
-          </Button>,
-        ]}
+      <Summary evaluation={evaluation} />
+
+      <Tabs
+        tabBarStyle={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1,
+          backgroundColor: "#ffffff",
+          padding: "0 16px",
+        }}
+        defaultActiveKey="1"
+        animated
       >
-        <Descriptions bordered>
-          <Descriptions.Item label="Fecha">5 de mayo de 2022</Descriptions.Item>
-          <Descriptions.Item label="Estado">Pendiente</Descriptions.Item>
-          <Descriptions.Item label="Automatic Renewal">YES</Descriptions.Item>
-          <Descriptions.Item label="Order time">
-            2018-04-24 18:00:00
-          </Descriptions.Item>
-          <Descriptions.Item label="Usage Time" span={2}>
-            2019-04-24 18:00:00
-          </Descriptions.Item>
-          <Descriptions.Item label="Estado" span={3}>
-            <Badge status="processing" text="Running" />
-          </Descriptions.Item>
-          <Descriptions.Item label="Negotiated Amount">
-            $80.00
-          </Descriptions.Item>
-          <Descriptions.Item label="Puntuacion">20.00</Descriptions.Item>
-          <Descriptions.Item label="Official Receipts">
-            $60.00
-          </Descriptions.Item>
-          <Descriptions.Item label="Lineamientos">
-            LI.I15D.OG.01
-            <br />
-            LI.I15D.OG.02
-            <br />
-            LI.I15D.OG.03
-            <br />
-            LI.I15D.OG.04
-            <br />
-            LI.I15D.OG.05
-            <br />
-            LI.I15D.OG.01
-            <br />
-          </Descriptions.Item>
-        </Descriptions>
-      </PageHeader>
+        <TabPane
+          tab={
+            <span>
+              <AccountBookOutlined />
+              Detalles
+            </span>
+          }
+          style={{ overflow: 'hidden' }}
+          key="1"
+        >
+          <Card>Detalles</Card>
+        </TabPane>
+        <TabPane
+          tab={
+            <span>
+              <PieChartOutlined />
+              Estadísticas
+            </span>
+          }
+          key="2"
+        >
+          <Row gutter={16}>
+            <Col span={12}>
+              <Statistic
+                title="Feedback"
+                value={1128}
+                prefix={<LikeOutlined />}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic title="Unmerged" value={93} suffix="/ 100" />
+            </Col>
+          </Row>
+        </TabPane>
+        <TabPane
+          style={{
+            padding: "16px 0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          tab={
+            <span>
+              <AimOutlined />
+              Dominios
+            </span>
+          }
+          key="3"
+        >
+          Domain List
+        </TabPane>
+      </Tabs>
     </AppBox>
   );
 }

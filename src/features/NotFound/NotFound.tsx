@@ -16,7 +16,7 @@ export default function NotFound() {
         <Result
           status="404"
           title="404"
-          subTitle={t("alerts.page_not_found")}
+          subTitle={t("alerts.resource_not_found")}
           extra={
             <Button type="primary" onClick={goToHome}>
               {t("links.back_home")}

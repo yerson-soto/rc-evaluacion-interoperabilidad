@@ -116,7 +116,7 @@
     "domains": "Dominio(s)"
   },
   "alerts": {
-    "page_not_found": "Lo sentimos, la página que visitaste no existe",
+    "resource_not_found": "Lo sentimos, el recurso solicitado no existe",
     "login_failed": "Email o contraseña incorrectos",
     "send_reset_mail_info": "Revise su bandeja de entrada",
     "send_reset_mail_failed": "Introduzca un correo válido",
@@ -133,7 +133,8 @@
   },
   "loading": {
     "validate_access": "Validando acceso",
-    "confirm_email": "Confirmando su correo"
+    "confirm_email": "Confirmando su correo",
+    "fetching_data": "Cargando recurso"
   },
   "buttons": {
     "upload": "Subir",
@@ -149,7 +150,7 @@
     "no": "No",
     "new": "Nuevo",
     "add": "Agregar",
-    "add_evidence": "Agregar documento"
+    "add_evidence": "Nuevo documento"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",

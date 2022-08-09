@@ -1,0 +1,16 @@
+.card {
+  position: sticky;
+  top: 0;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.progressCol {
+  display: flex;
+  justify-content: center;
+}
