@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   PieChartOutlined,
-  AccountBookOutlined,
+  EyeFilled,
   AimOutlined,
   SmileOutlined,
   LikeOutlined
@@ -32,6 +32,7 @@ import type { RadioChangeEvent } from "antd";
 import { Radio, Tabs } from "antd";
 import { AppLoader } from "library/components/AppLoader";
 import NotFound from '../NotFound/NotFound';
+import { EyeOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
@@ -74,8 +75,8 @@ export default function EvaluationDetail() {
         <TabPane
           tab={
             <span>
-              <AccountBookOutlined />
-              Detalles
+              <AimOutlined />
+              Dominios
             </span>
           }
           style={{ overflow: 'hidden' }}
@@ -113,8 +114,8 @@ export default function EvaluationDetail() {
           }}
           tab={
             <span>
-              <AimOutlined />
-              Dominios
+              <EyeFilled />
+              Detalles
             </span>
           }
           key="3"

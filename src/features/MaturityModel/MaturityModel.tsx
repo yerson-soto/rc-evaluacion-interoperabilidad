@@ -3,13 +3,13 @@ import { ColumnsType } from "antd/lib/table";
 import { SettingOutlined } from "@ant-design/icons";
 import { Badge, Card, Collapse, Grid, Space, Tabs, Tag, Typography } from "antd";
 import { Trans, useTranslation } from "react-i18next";
-import { ChoiceFormSchema } from "./ChoiceForm/ChoiceFormSchema";
+import { ChoiceFormSchema } from "features/ChoiceCrud/ChoiceForm/ChoiceFormSchema";
 import { Choice } from "library/models/Choice";
 import { ChoiceService } from "library/api/services/ChoiceService";
 import { AppDrawer } from "library/components/AppDrawer";
 import { Crud } from "features/Crud";
 import { choiceSlice, ChoiceState } from "redux/slices/choiceSlice";
-import { ChoiceForm } from "./ChoiceForm";
+import { ChoiceForm } from "features/ChoiceCrud/ChoiceForm";
 
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
@@ -30,7 +30,7 @@ import { AppBox } from "library/components/AppBox";
 import { LevelService } from "library/api/services/LevelService";
 import { Level } from "library/models/Level";
 import { levelSlice, LevelState } from "redux/slices/levelSlice";
-import { MaturityModel } from "features/MaturityModel";
+import { DomainTabs } from "./DomainTabs";
 
 export default function ChoiceCrud() {
   const domainService = new DomainService();
@@ -48,7 +48,29 @@ export default function ChoiceCrud() {
   });
 
   return (
-    <MaturityModel />
+    <Space direction="vertical" size={30} style={{ width: "100%" }}>
+      <Toolbar
+        title={t("headings.choice_list")}
+        actions={
+          <CreateAction<Choice, ChoiceFormSchema, ChoiceState>
+            reducer={choiceSlice}
+            service={choiceService}
+            selectLoading={(state) => state.auth.isLoading}
+            render={({ visible, loading, onClose, onSave }) => (
+              <ChoiceForm
+                show={visible}
+                isLoading={loading}
+                onHide={onClose}
+                onSave={onSave}
+              />
+            )}
+          />
+        }
+      />
+      <Card>
+        <DomainTabs />
+      </Card>
+    </Space>
   );
 }
 

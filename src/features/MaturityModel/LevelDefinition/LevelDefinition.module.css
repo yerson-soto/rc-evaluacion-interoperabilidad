@@ -1,0 +1,36 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  column-gap: 10px;
+}
+
+.level {
+  /* flex: 1; */
+  width: 90px;
+  text-align: center;
+  font-size: 16px;
+  padding: 9px 15px;
+}
+
+.choice {
+  flex: 1;
+  /* width: 100%; */
+  padding: 6.4px 15px;
+  font-size: 16px;
+  background: #ffffff;
+  color: #096dd9;
+  
+  border: 1px dashed #91d5ff;
+}
+
+.choice:hover {
+  cursor: pointer;
+  
+}

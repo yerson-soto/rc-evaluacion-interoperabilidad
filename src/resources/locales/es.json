@@ -43,6 +43,9 @@
     "or": "O",
     "options": "Opciones"
   },
+  "labels": {
+      "level": "Nivel"
+  },
   "fields": {
     "name": "Nombre",
     "identification": "Cédula",
