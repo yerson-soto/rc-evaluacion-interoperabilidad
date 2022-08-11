@@ -12,25 +12,36 @@
 }
 
 .level {
-  /* flex: 1; */
   width: 90px;
   text-align: center;
   font-size: 16px;
-  padding: 9px 15px;
+  padding: 8px 15px;
 }
 
 .choice {
   flex: 1;
-  /* width: 100%; */
   padding: 6.4px 15px;
   font-size: 16px;
   background: #ffffff;
   color: #096dd9;
-  
   border: 1px dashed #91d5ff;
+  position: relative;
 }
 
 .choice:hover {
   cursor: pointer;
-  
+}
+
+.deleteIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #ff4d4f;
+  z-index: 1;
 }

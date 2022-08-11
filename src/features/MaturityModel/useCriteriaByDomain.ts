@@ -7,6 +7,7 @@ export function useCriteriaByDomain(domainId: number) {
   const [criterions, setCriterions] = useState<FullCriterion[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
 
+  // TODO: Remove duplicates call
   useEffect(() => {
     const fetchCriteria = async () => {
       setLoading(true);

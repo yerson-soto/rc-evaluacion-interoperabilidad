@@ -14,7 +14,7 @@ export function useToogleAction<T>({ action, state, keyFrom }: ToggleAction<T>) 
 
   const checkIsOpen = (): boolean => {
     const actionMatch = action === params.get("action");
-    
+ 
     if (keyFrom && state) {
       const stateMatch =
         !!currentState && state[keyFrom] === currentState[keyFrom];
@@ -26,6 +26,9 @@ export function useToogleAction<T>({ action, state, keyFrom }: ToggleAction<T>) 
 
   const onOpen = (): void => {
     setQueryParams({ action }, { state });
+
+      console.log(state);
+    
   };
 
   const onCloseStart = (): void => {

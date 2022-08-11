@@ -19,13 +19,14 @@ interface ChoiceFormProps {
   isEdit?: boolean;
   onSave: (values: ChoiceFormSchema) => Promise<void>;
   onHide: () => void;
+  hiddenFields?: (keyof ChoiceFormSchema)[];
 }
 
 export default function ChoiceForm(props: ChoiceFormProps) {
   const { form, resetForm, onRemoveEvidence } = useChoiceForm();
-  const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
+  const { show, isEdit, isLoading, defaults, onHide, onSave, hiddenFields } = props;
   const { t } = useTranslation();
-
+  
   const title = isEdit
     ? t("headings.edit_choice")
     : t("headings.create_choice");
@@ -48,6 +49,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
     
   const onFinish = () => {
     form.validateFields().then((values) => {
+      console.log(values);
       onSave(values).then(onHide);
     });
   };
@@ -84,6 +86,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
             name="levelId"
             label={t("fields.level")}
             rules={rules.levelId}
+            hidden={hiddenFields?.includes('levelId')}
           >
             <LevelSelect 
               placeholder={t("placeholders.select_level")}
@@ -94,6 +97,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
             name="criterionId"
             label={t("fields.criterion")}
             rules={rules.criterionId}
+            hidden={hiddenFields?.includes('criterionId')}
           >
             <CriterionSelect 
               placeholder={t("placeholders.select_criterion")}
@@ -104,6 +108,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
             name="details"
             label={t("fields.response")}
             rules={rules.details}
+            hidden={hiddenFields?.includes('details')}
           >
             <TextArea
               placeholder={t("placeholders.choice_description")}
@@ -117,6 +122,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
             <Form.Item 
               name="isEvidenceRequired" 
               valuePropName="checked" 
+              hidden={hiddenFields?.includes('isEvidenceRequired')}
               noStyle
             >
               <Checkbox>{t("fields.isEvidenceRequired")}</Checkbox>

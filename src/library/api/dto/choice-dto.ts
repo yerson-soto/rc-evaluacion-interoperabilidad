@@ -2,6 +2,13 @@ import { GetLevel } from './level-dto';
 import { GetCriterion } from './criterion-dto';
 
 interface CreateRequiredEvidence {
+  id?: string;
+  title: string;
+  contentType: string;
+}
+
+interface GetRequiredEvidence {
+  id: string;
   title: string;
   contentType: string;
 }
@@ -18,7 +25,7 @@ export interface GetChoice {
   responsesId: number;
   responseDecription: string;
   isEvidenceRequired: boolean;
-  requiredEvidencesResponses: CreateRequiredEvidence[];
+  requiredEvidencesResponses: GetRequiredEvidence[];
   levelsResponse: GetLevel;
   criterionResponse: GetCriterion;
 }

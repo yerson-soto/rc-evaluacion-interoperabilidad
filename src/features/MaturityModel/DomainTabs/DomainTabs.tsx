@@ -21,6 +21,7 @@ export default function ChoiceCrud() {
     <Tabs 
       defaultActiveKey="1" 
       tabPosition={lg ? "left" : "top"}
+     
       // tabBarExtraContent={{
       //   left: <Typography.Text>Dominios: </Typography.Text>,
       // }}
@@ -28,7 +29,7 @@ export default function ChoiceCrud() {
       {domains.map((domain) => (
         <Tabs.TabPane
           key={domain.id}
-          tab={domain.name}
+          tab={'Dominio ' + domain.name}
           destroyInactiveTabPane
         >
           <CriterionPanel domain={domain} />

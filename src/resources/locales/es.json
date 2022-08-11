@@ -13,9 +13,10 @@
     "create_level": "Crear nivel",
     "edit_level": "Editar nivel",
     "level_list": "Lista de Niveles",
-    "create_choice": "Crear respuesta",
+    "create_choice": "Agregar respuesta",
     "edit_choice": "Editar respuesta",
     "choice_list": "Lista de Respuestas",
+    "choice_config": "Configurar Respuestas",
     "create_user": "Crear usuario",
     "edit_user": "Editar usuario",
     "user_list": "Lista de Usuarios",
@@ -153,7 +154,8 @@
     "no": "No",
     "new": "Nuevo",
     "add": "Agregar",
-    "add_evidence": "Nuevo documento"
+    "add_evidence": "Nuevo documento",
+    "add_choice": "Agregar respuesta"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",

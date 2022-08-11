@@ -35,6 +35,7 @@ export default function EvaluationList() {
             EvaluationFormSchema, 
             EvaluationState
           >
+            toggleKey="create-evaluation"
             title={t("buttons.new")}
             reducer={evaluationSlice}
             service={evaluationService}

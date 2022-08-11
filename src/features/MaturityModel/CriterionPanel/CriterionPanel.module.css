@@ -1,0 +1,36 @@
+.panel {
+  background-color: #ffffff;
+  border-bottom-color: #f0f0f0!important;
+}
+
+.panel .ant-collapse-header {
+  background: red;
+}
+
+.panelHeader {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.panelBox {
+  padding: 16px;
+  background-color: #f3f3f3;
+}
+
+@media (min-width: 768px) {
+  .panel {
+    padding: 10px;
+  }
+  
+  .panelHeader {
+    flex-direction: row;
+    column-gap: 10px;
+  }
+
+  .panelBox {
+    margin-left: 20px;
+    padding: 24px;
+  }
+}
+

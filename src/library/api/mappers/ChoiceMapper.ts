@@ -13,6 +13,7 @@ export class ChoiceMapper
   formSchemaToAPI(schema: ChoiceFormSchema): CreateChoice {
     const evidenceList = schema.requiredEvidences || [];
     const requiredEvidences = evidenceList.map(evidence => ({
+      id: evidence.id,
       title: evidence.title,
       contentType: evidence.contentType.join(',')
     }))
@@ -23,6 +24,16 @@ export class ChoiceMapper
       responseDecription: schema.details,
       isEvidenceRequired: schema.isEvidenceRequired,
       requiredEvidencesRequests: requiredEvidences
+    };
+  }
+
+  modelToFormSchema(model: Choice): ChoiceFormSchema {
+    return {
+      levelId: model.level.id,
+      criterionId: model.criterion.id,
+      details: model.details,
+      isEvidenceRequired: model.isEvidenceRequired,
+      requiredEvidences: model.requiredEvidences,
     };
   }
 
@@ -38,6 +49,7 @@ export class ChoiceMapper
       criterion: criterionMapper.fromAPI(data.criterionResponse),
       isEvidenceRequired: data.isEvidenceRequired,
       requiredEvidences: requiredEvidences.map(evidence => ({
+        id: evidence.id,
         title: evidence.title,
         contentType: evidence.contentType.split(',') as ContentType[]
       }))

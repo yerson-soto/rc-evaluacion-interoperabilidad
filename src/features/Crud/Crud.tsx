@@ -67,6 +67,7 @@ export default function Crud<T, FormSchema, State extends CrudState<T>>(
           <Space direction="horizontal">
             {/* <Button shape="round" icon={<ExportOutlined />} block /> */}
             <CreateAction<T, FormSchema, State>
+              toggleKey="crud-create"
               service={service}
               reducer={reducer}
               render={createModal}

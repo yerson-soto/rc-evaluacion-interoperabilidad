@@ -53,6 +53,7 @@ export default function ChoiceCrud() {
         title={t("headings.choice_list")}
         actions={
           <CreateAction<Choice, ChoiceFormSchema, ChoiceState>
+          toggleKey="create-choice"
             reducer={choiceSlice}
             service={choiceService}
             selectLoading={(state) => state.auth.isLoading}

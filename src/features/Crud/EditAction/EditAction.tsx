@@ -20,14 +20,17 @@ export interface EditActionProps<T, FormSchema, State extends CrudState<T>> {
   idSource: keyof T;
   service: CrudRepository<T, FormSchema>;
   reducer: CrudReducer<T, State>;
-  render: (params: RenderEdit<T, FormSchema>) => React.ReactNode;
   selectLoading: (state: RootState) => boolean;
+
+  // TODO: Change render to renderForm
+  render: (params: RenderEdit<T, FormSchema>) => React.ReactNode;
+  renderTrigger?: (trigger: () => void) => void;
 }
 
 export default function EditAction<T, FormSchema, State extends CrudState<T>>(
   props: EditActionProps<T, FormSchema, State>
 ) {
-  const { record, service, reducer, idSource, render, selectLoading } = props;
+  const { record, service, reducer, idSource, selectLoading, render, renderTrigger } = props;
   const { isOpen, onOpen, onCloseEnd } = useToogleAction<T>({
     action: "edit",
     keyFrom: idSource,
@@ -53,16 +56,20 @@ export default function EditAction<T, FormSchema, State extends CrudState<T>>(
   })
 
   return (
-    <React.Fragment>
-      <Button
-        size="small"
-        type="link"
-        shape="round"
-        icon={<EditOutlined />}
-        onClick={onOpen}
-      ></Button>
-
+    <>
+      {renderTrigger ? (
+        renderTrigger(onOpen)
+      ) : (
+        <Button
+          size="small"
+          type="link"
+          shape="round"
+          icon={<EditOutlined />}
+          onClick={onOpen}
+        ></Button>
+      )}
+      
       {renderEdit()}
-    </React.Fragment>
+    </>
   );
 }
