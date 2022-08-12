@@ -9,15 +9,12 @@ import {
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import {
-  Affix,
-  Button,
+
   Card,
   Col,
   Row,
   Statistic,
-  TabsProps,
   Timeline,
-  Typography,
 } from "antd";
 import { DomainList } from "./DomainList";
 import { Questionary } from "./Questionary";
@@ -27,24 +24,9 @@ import { withIfDirective } from "library/hocs/withIfDirective";
 import { QuestionaryProps } from "./Questionary/Questionary";
 import { Summary } from "./Summary";
 import { useEvaluation } from "./useEvaluation";
-import { Sticky, StickyContainer } from "react-sticky";
-
-import type { RadioChangeEvent } from "antd";
-import { Radio, Tabs } from "antd";
+import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
-
-const renderTabBar: TabsProps["renderTabBar"] = (props, DefaultTabBar) => (
-  <Sticky topOffset={20}>
-    {({ style }) => (
-      <DefaultTabBar
-        {...props}
-        className="site-custom-tab-bar"
-        style={{ ...style, zIndex: 1, background: "#fff" }}
-      />
-    )}
-  </Sticky>
-);
 
 const QuestionaryIf = withIfDirective<QuestionaryProps>(Questionary);
 
@@ -77,6 +59,22 @@ export default function EvaluationInit() {
         defaultActiveKey="1"
       >
         <TabPane
+          style={{
+            padding: "16px 0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          tab={
+            <span>
+              <AimOutlined />
+              Dominios
+            </span>
+          }
+          key="1"
+        >
+          <DomainList />
+        </TabPane>
+        <TabPane
           tab={
             <span>
               <AccountBookOutlined />
@@ -84,7 +82,7 @@ export default function EvaluationInit() {
             </span>
           }
           style={{ overflow: 'hidden' }}
-          key="1"
+          key="2"
         >
           <Card>
           <Timeline>
@@ -127,7 +125,7 @@ export default function EvaluationInit() {
               Estadísticas
             </span>
           }
-          key="2"
+          key="3"
         >
           <Row gutter={16}>
             <Col span={12}>
@@ -142,22 +140,6 @@ export default function EvaluationInit() {
             </Col>
           </Row>
         </TabPane>
-        <TabPane
-          style={{
-            padding: "16px 0",
-            display: "flex",
-            justifyContent: "center",
-          }}
-          tab={
-            <span>
-              <AimOutlined />
-              Dominios
-            </span>
-          }
-          key="3"
-        >
-          <DomainList onEvaluate={setOpen} onReset={() => {}} />
-        </TabPane>
       </Tabs>
 
       <QuestionaryIf
@@ -166,7 +148,6 @@ export default function EvaluationInit() {
         domain={domain}
         onClose={setClose}
         onCloseEnd={afterClosed}
-        onChangeLevel={fakeIncrementScore}
       />
     </AppBox>
   );

@@ -18,11 +18,11 @@ export default function Response(props: ResponseProps) {
 
   return (
     <AppBox className={classes.choice}>
-      <Badge.Ribbon
+      {/* <Badge.Ribbon
         placement="start"
         color={color}
         text={choice.level.value}
-      >
+      > */}
         <AnswerRadio
           value={choice.level.value}
           name="choice"
@@ -31,7 +31,7 @@ export default function Response(props: ResponseProps) {
           defaultChecked={isSelected}
           label={choice.details}
         />
-      </Badge.Ribbon>
+      {/* </Badge.Ribbon> */}
     </AppBox>
   );
 }

@@ -78,7 +78,7 @@ export interface QuestionaryProps {
   onClose: (keepDomain: Domain) => void;
   onCloseEnd: () => void;
 
-  onChangeLevel: (value: number) => void;
+  // onChangeLevel: (value: number) => void;
 }
 
 export default function Questionary(props: QuestionaryProps) {
@@ -86,7 +86,7 @@ export default function Questionary(props: QuestionaryProps) {
   const [current, setCurrent] = useState(1);
 
   const { uid } = useParams<Record<"uid", string>>();
-  const { isOpen, domain, onClose, onCloseEnd, onChangeLevel } = props;
+  const { isOpen, domain, onClose, onCloseEnd } = props;
   const { isLoading, questions, changeResponse } = useQuestionary(domain.id);
 
   React.useEffect(() => {
@@ -104,7 +104,7 @@ export default function Questionary(props: QuestionaryProps) {
       responsesId: choice.id,
     });
     
-    onChangeLevel(.5);
+    // onChangeLevel(.5);
     const newScore = {
       ...score,
       [criterion.id]: choice.level.value,

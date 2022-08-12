@@ -28,6 +28,7 @@ export class EvaluationMapper
     return {
       uid: data.id,
       dateCreated: data.dateInitial,
+      status: data.statesResponse.id,
       organization,
       user,
       score

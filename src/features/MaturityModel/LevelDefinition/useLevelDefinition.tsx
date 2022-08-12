@@ -40,7 +40,7 @@ export function useLevelDefinition(criterionId: number) {
 
         const associationList: LevelDefinition[] = levels.map((level, idx) => {
           const choice = choices.find((choice) => choice.level.id === level.id);
-          const hexColor = colorRange[idx];
+          const hexColor: string = colorRange[idx];
 
           return { level, choice, hexColor };
         });

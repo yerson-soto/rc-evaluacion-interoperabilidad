@@ -14,3 +14,9 @@ export enum ContentType {
   WORD = 'application/msword',
   EXCEL = 'application/vnd.ms-excel',
 }
+
+export enum EvaluationStatus {
+  Created = 1,
+  Pending = 2,
+  Completed = 3
+}

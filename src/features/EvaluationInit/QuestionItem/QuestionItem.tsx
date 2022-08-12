@@ -53,7 +53,7 @@ export default function QuestionItem(props: QuestionItemProps) {
   const { number: count, question, onLevelChange } = props;
   // const { isLoading, choices } = useChoiceList(criterion.id);
   const { t } = useTranslation();
-
+  console.log(question.response)
   const { criterion } = question;
 
   const handleEvidenceChange = (): void => {};
@@ -103,19 +103,23 @@ export default function QuestionItem(props: QuestionItemProps) {
           {renderResponses()}
         </Space>
 
-      <SectionDivider text={t("dividers.justification")} />
-      <AppBox className={classes.section}>
-        <Alert
-          className={classes.alert}
-          message={t("hints.upload_evidence")}
-          type="info"
-        />
+      {question.response?.isEvidenceRequired && (
+        <>
+          <SectionDivider text={t("dividers.justification")} />
+          <AppBox className={classes.section}>
+            <Alert
+              className={classes.alert}
+              message={t("hints.upload_evidence")}
+              type="info"
+            />
 
-        <AddEvidence />
-      </AppBox>
+            <AddEvidence />
+          </AppBox>
+        </>
+      )}
 
-      <SectionDivider text={t("dividers.next_steps")} />
-      <AppBox className={classes.section}>Pasos a seguir</AppBox>
+      {/* <SectionDivider text={t("dividers.next_steps")} />
+      <AppBox className={classes.section}>Pasos a seguir</AppBox> */}
     </List.Item>
   );
 }

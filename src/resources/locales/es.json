@@ -21,7 +21,8 @@
     "edit_user": "Editar usuario",
     "user_list": "Lista de Usuarios",
     "evaluation_list": "Evaluaciones",
-    "create_evaluation": "Crear evaluación"
+    "create_evaluation": "Crear evaluación",
+    "domain_criteria_list": "Criterios del Dominio {{ domain }}"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -45,7 +46,13 @@
     "options": "Opciones"
   },
   "labels": {
-      "level": "Nivel"
+      "level": "Nivel",
+      "domain": "Dominio",
+      "score": "Puntuación",
+      "status": "Estado",
+      "created_date": "Fecha de Creación",
+      "manager": "A cargo de",
+      "domain_quantity": "Cantidad de Dominios"
   },
   "fields": {
     "name": "Nombre",
@@ -165,7 +172,8 @@
   },
   "empty": {
     "evaluations": "No hay evaluaciones",
-    "domains": "No hay dominios"
+    "domains": "No hay dominios",
+    "criteria": "No hay criterios"
   },
   "questions": {
     "delete_item": "¿Eliminar este elemento?"
@@ -206,5 +214,10 @@
     "jpeg": "JPEG",
     "csv": "CSV",
     "pdf": "PDF"
+  },
+  "status": {
+    "created": "Iniciada",
+    "pending": "En proceso",
+    "completed": "Completada"
   }
 }

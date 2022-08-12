@@ -14,3 +14,14 @@
   display: flex;
   justify-content: center;
 }
+
+.title {
+  text-align: center;
+  margin-bottom: 0!important;
+}
+
+@media (min-width: 992px) {
+  .title {
+    text-align: left;
+  }
+}

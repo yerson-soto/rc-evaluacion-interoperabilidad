@@ -1,5 +1,5 @@
 import { getText } from "i18n";
-import { UserType, ContentType } from "./enums";
+import { UserType, ContentType, EvaluationStatus } from "./enums";
 
 export const paths = {
   auth: {
@@ -99,3 +99,15 @@ export const contentTypeLabels = {
   [ContentType.WORD]: getText('contentTypes.word'),
   [ContentType.EXCEL]: getText('contentTypes.excel'),
 };
+
+export const evaluationStatusLabels = {
+  [EvaluationStatus.Created]: getText('status.created'),
+  [EvaluationStatus.Pending]: getText('status.pending'),
+  [EvaluationStatus.Completed]: getText('status.Completada'),
+}
+
+export const evaluationStatusType = {
+  [EvaluationStatus.Created]: "warning",
+  [EvaluationStatus.Pending]: "processing",
+  [EvaluationStatus.Completed]: "success",
+}

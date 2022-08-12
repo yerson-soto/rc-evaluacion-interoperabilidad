@@ -1,18 +1,15 @@
 import React from "react";
-import {
-  Badge,
-  Card,
-  Col,
-  Descriptions,
-  Progress,
-  Row,
-  Space,
-  Tag,
-} from "antd";
-import { AppBox } from "library/components/AppBox";
-
-import classes from "./Summary.module.css";
+import { Badge, Descriptions, Typography } from "antd";
+import { useTranslation } from "react-i18next";
+import { Row, Col } from "antd/lib/grid";
 import { Evaluation } from "library/models/Evaluation";
+import {
+  evaluationStatusLabels,
+  evaluationStatusType,
+} from "library/common/constants";
+import Card from "antd/lib/card/Card";
+import Progress from "antd/es/progress";
+import classes from "./Summary.module.css";
 
 interface SummaryProps {
   evaluation: Evaluation;
@@ -20,43 +17,71 @@ interface SummaryProps {
 
 export default function Summary(props: SummaryProps) {
   const { evaluation } = props;
+  const { t } = useTranslation();
 
+  const status = evaluationStatusLabels[evaluation.status];
+  const statusType = evaluationStatusType[evaluation.status];
+
+  // TODO: Increment score when user selects response
   return (
-    <Card>
-      <Row 
-      // gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-      >
-        <Col xs={{ span: 10, offset: 7 }} lg={{ span: 4, offset: 0 }} className={classes.progressCol}>
+    <Card bordered={false}>
+      <Row gutter={[16, 16]}>
+        <Col
+          className={classes.progressCol}
+          xs={{ span: 10, offset: 7 }}
+          lg={{ span: 6, offset: 0 }}
+          xl={{ span: 4 }}
+        >
           <Progress
             type="circle"
             percent={(evaluation.score * 100) / 5}
             format={() => evaluation.score}
           />
         </Col>
-        
-        {/* <Col span={24} className={classes.progressCol}>
-          <Progress
-            type="circle"
-            percent={(evaluation.score * 100) / 5}
-            format={() => evaluation.score}
-          />
-        </Col> */}
-        <Col xs={{ span: 24 }} lg={{ span: 20 }}>
-          <Descriptions title={evaluation.organization.name}>
-            <Descriptions.Item label="Puntuacion">
-              {evaluation.score}
+
+        <Col 
+          xs={{ span: 24 }} 
+          lg={{ span: 18 }} 
+          xl={{ span: 16 }}
+        >
+          <Descriptions
+            column={{ xs: 1, sm: 2, md: 3, lg: 2, xl: 3 }}
+            title={
+              <Typography.Title level={5} className={classes.title}>
+                {evaluation.organization.name}
+              </Typography.Title>
+            }
+          >
+            <Descriptions.Item
+              labelStyle={{ fontWeight: "bold" }}
+              label={t("labels.score")}
+            >
+              {evaluation.score} / 5
             </Descriptions.Item>
-            <Descriptions.Item label="Creada en">
-              {evaluation.dateCreated}
+
+            <Descriptions.Item
+              labelStyle={{ fontWeight: "bold" }}
+              label={t("labels.domain_quantity")}
+            >
+              4
             </Descriptions.Item>
-            <Descriptions.Item label="Estado">
-              <Badge status="processing" /> Pendiente
+            <Descriptions.Item
+              labelStyle={{ fontWeight: "bold" }}
+              label={t("labels.status")}
+            >
+              <Badge status={statusType as any} /> {status}
             </Descriptions.Item>
-            <Descriptions.Item label="Usuario">
+            <Descriptions.Item
+              labelStyle={{ fontWeight: "bold" }}
+              label={t("labels.manager")}
+            >
               {evaluation.user.fullName}
             </Descriptions.Item>
-            <Descriptions.Item label="Cantidad de Dominios">
-              4
+            <Descriptions.Item
+              labelStyle={{ fontWeight: "bold" }}
+              label={t("labels.created_date")}
+            >
+              {evaluation.dateCreated}
             </Descriptions.Item>
           </Descriptions>
         </Col>

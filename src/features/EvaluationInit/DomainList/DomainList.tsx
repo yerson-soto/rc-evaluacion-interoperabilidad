@@ -10,6 +10,11 @@ import { useMedia } from "use-media";
 
 import classes from "./DomainList.module.css";
 import { AppBox } from "library/components/AppBox";
+import { useDomainToggle } from './useDomainToggle';
+import { withIfDirective } from "library/hocs/withIfDirective";
+import { Questionary, QuestionaryProps } from "../Questionary";
+
+const QuestionaryIf = withIfDirective<QuestionaryProps>(Questionary);
 
 const { useBreakpoint } = Grid;
 
@@ -37,19 +42,25 @@ const { useBreakpoint } = Grid;
 // ];
 
 interface DomainListProps {
-  onEvaluate: (domain: Domain) => void;
-  onReset: (domain: Domain) => void;
+  // onEvaluate: (domain: Domain) => void;
 }
 
 export default function DomainList(props: DomainListProps) {
-  const { onEvaluate, onReset } = props;
+  // const { onEvaluate } = props;
   const { isLoading, domains } = useDomainList();
   const { t } = useTranslation();
+  const { isOpen, domain, setOpen, setClose, afterClosed } =
+    useDomainToggle();
 
   const isSmall = useMedia({ maxWidth: 768 });
   console.log("small", isSmall);
+
+  const handleEvaluate = (domain: Domain) => {
+
+  }
   return (
     // <Card>
+    <React.Fragment>
       <List
         loading={isLoading}
         dataSource={domains}
@@ -70,7 +81,7 @@ export default function DomainList(props: DomainListProps) {
         }
         style={{ maxWidth: '70%' }}
         renderItem={(domain) => (
-          <List.Item onClick={() => onEvaluate(domain)}>
+          <List.Item onClick={() => setOpen(domain)}>
             <Card
               className={classes.itemCard}
               cover={
@@ -92,7 +103,7 @@ export default function DomainList(props: DomainListProps) {
                       fontWeight: "bold",
                     }}
                   >
-                    {domain.name}
+                    Dominio {domain.name}
                   </Typography.Text>
                 </AppBox>
               }
@@ -179,6 +190,15 @@ export default function DomainList(props: DomainListProps) {
           // </ListItem>
         )}
       />
+      <QuestionaryIf
+        if={!!domain}
+        isOpen={isOpen}
+        domain={domain}
+        onClose={setClose}
+        onCloseEnd={afterClosed}
+        // onChangeLevel={fakeIncrementScore}
+      />
+      </React.Fragment>
     // </Card>
   );
 }
