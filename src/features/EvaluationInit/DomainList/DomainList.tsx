@@ -13,41 +13,25 @@ import { AppBox } from "library/components/AppBox";
 import { useDomainToggle } from './useDomainToggle';
 import { withIfDirective } from "library/hocs/withIfDirective";
 import { Questionary, QuestionaryProps } from "../Questionary";
+import { useListAction } from 'features/Crud/useListAction';
+import { domainSlice } from 'redux/slices/domainSlice';
+import { DomainService } from 'library/api/services/DomainService';
 
 const QuestionaryIf = withIfDirective<QuestionaryProps>(Questionary);
 
 const { useBreakpoint } = Grid;
 
-// const domains: Domain[] = [
-//   {
-//     id: 1,
-//     name: "Organizacional",
-//     slug: 'organizacional'
-//   },
-//   {
-//     id: 2,
-//     name: "Semantico",
-//     slug: 'semantico'
-//   },
-//   {
-//     id: 3,
-//     name: "Politico Legal",
-//     slug: 'politico-legal'
-//   },
-//   {
-//     id: 4,
-//     name: "Semantico Legal",
-//     slug: 'semantico-legal'
-//   },
-// ];
+export default function DomainList() {
+  const domainService = new DomainService()
 
-interface DomainListProps {
-  // onEvaluate: (domain: Domain) => void;
-}
-
-export default function DomainList(props: DomainListProps) {
-  // const { onEvaluate } = props;
-  const { isLoading, domains } = useDomainList();
+  const { isLoading, results: domains } = useListAction({
+    selectLoading: (state) => state.domains.isLoading,
+    selectResults: (state) => state.domains.results,
+    reducer: domainSlice,
+    service: domainService
+  });
+  
+  
   const { t } = useTranslation();
   const { isOpen, domain, setOpen, setClose, afterClosed } =
     useDomainToggle();
@@ -58,6 +42,8 @@ export default function DomainList(props: DomainListProps) {
   const handleEvaluate = (domain: Domain) => {
 
   }
+
+
   return (
     // <Card>
     <React.Fragment>

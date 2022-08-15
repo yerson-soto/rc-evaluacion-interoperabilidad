@@ -29,12 +29,5 @@ export function useEvaluation() {
     // eslint-disable-next-line
   }, [uid]);
 
-  const fakeIncrementScore = (value: number) => {
-    if (evaluation) {
-      const evalu = { ...evaluation, score: evaluation.score + value };
-      setEvaluation(evalu);
-    }
-  }
-
-  return { fakeIncrementScore, evaluation, isLoading };
+  return { evaluation, isLoading };
 }

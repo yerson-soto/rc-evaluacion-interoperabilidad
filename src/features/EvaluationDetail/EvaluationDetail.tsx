@@ -39,10 +39,8 @@ export default function EvaluationDetail() {
             </span>
           }
           key="1"
-        >
-          <Card>
-            <DomainList />
-          </Card>
+        >         
+          <DomainList />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={

@@ -22,35 +22,11 @@ export default function EvaluationList() {
     isLoading, onFilterChange, onPageChange,
   } = useEvaluationList();
 
-  const evaluationService = new EvaluationService();
   const paginationConfig = { pageSize, total, onChange: onPageChange };
 
   return (
     <Space direction="vertical" size="large" style={{ width: "100%" }}>
-      <Toolbar
-        title={t("headings.evaluation_list")}
-        actions={
-          <CreateAction<
-            Evaluation, 
-            EvaluationFormSchema, 
-            EvaluationState
-          >
-            toggleKey="create-evaluation"
-            title={t("buttons.new")}
-            reducer={evaluationSlice}
-            service={evaluationService}
-            selectLoading={state => state.auth.isLoading}
-            render={({ visible, loading, onClose, onSave }) => (
-              <EvaluationForm
-                show={visible}
-                isLoading={loading}
-                onHide={onClose}
-                onSave={onSave}
-              />
-            )}
-          />
-        }
-      />
+      <EvaluationToolbar />
 
       <EvaluationFilter
         onChange={onFilterChange}
@@ -74,4 +50,39 @@ export default function EvaluationList() {
       </Card>
     </Space>
   );
+}
+
+
+function EvaluationToolbar() {
+  const evaluationService = new EvaluationService();
+  const { t } = useTranslation();
+
+  const renderCreateAction = () => (
+    <CreateAction<
+      Evaluation, 
+      EvaluationFormSchema, 
+      EvaluationState
+    >
+      toggleKey="create-evaluation"
+      title={t("buttons.new")}
+      reducer={evaluationSlice}
+      service={evaluationService}
+      selectLoading={state => state.auth.isLoading}
+      render={({ visible, loading, onClose, onSave }) => (
+        <EvaluationForm
+          show={visible}
+          isLoading={loading}
+          onHide={onClose}
+          onSave={onSave}
+        />
+      )}
+    />
+  )
+  
+  return (
+    <Toolbar
+        title={t("headings.evaluation_list")}
+        actions={renderCreateAction()}
+      />
+  )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { List, Grid, Badge, Pagination, Button } from "antd";
 import { QuestionItem } from "features/EvaluationInit/QuestionItem";
@@ -6,62 +6,12 @@ import { FullCriterion } from "library/models/Criterion";
 import { PaginationProps } from "antd/es/pagination";
 import { Domain } from "library/models/Domain";
 
-import classes from "./Questionary.module.css";
 import { useQuestionary } from "./useQuestionary";
 import { Question } from "library/models/Question";
 import { LightChoice } from "library/models/Choice";
 import { AppDrawer } from "library/components/AppDrawer";
 
-// const fakeData: Criterion[] = [
-//   {
-//     id: 3,
-//     name: "Adecuación de procesos",
-//     categories: [
-//       {
-//         id: 1,
-//         nomenclature: "LI.I15D.OG.01",
-//         description:
-//           "El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.",
-//       },
-//       {
-//         id: 2,
-//         nomenclature: "LI.I15D.OG.02",
-//         description:
-//           "El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.",
-//       },
-//       {
-//         id: 3,
-//         nomenclature: "LI.I15D.OG.03",
-//         description:
-//           "El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.",
-//       },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     name: "Liderazgo del Marco de Interoperabilidad",
-//     categories: [
-//       {
-//         id: 4,
-//         nomenclature: "LI.I15D.OG.04",
-//         description:
-//           "El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.",
-//       },
-//     ],
-//   },
-//   {
-//     id: 3,
-//     name: "Cultura organizacional",
-//     categories: [
-//       {
-//         id: 5,
-//         nomenclature: "LI.I15D.OG.05",
-//         description:
-//           "El modelo de madurez del Marco de Interoperabilidad permite que las entidades realicen un diagnóstico interno sobre el avance en la implementación de los lineamientos de cada uno de los dominios y definan las acciones que deben ejecutar para avanzar en la adopción de los lineamientos.",
-//       },
-//     ],
-//   },
-// ];
+import classes from "./Questionary.module.css";
 
 const { useBreakpoint } = Grid;
 
@@ -87,9 +37,11 @@ export default function Questionary(props: QuestionaryProps) {
 
   const { uid } = useParams<Record<"uid", string>>();
   const { isOpen, domain, onClose, onCloseEnd } = props;
+  
+  
   const { isLoading, questions, changeResponse } = useQuestionary(domain.id);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleNotFound = () => {
       if (!domain) onCloseEnd();
     };
