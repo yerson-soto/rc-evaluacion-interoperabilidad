@@ -18,6 +18,7 @@
 .title {
   text-align: center;
   margin-bottom: 0!important;
+  white-space: break-spaces;
 }
 
 @media (min-width: 992px) {

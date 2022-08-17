@@ -10,7 +10,7 @@ export function useDomainToggle() {
   const { state: domain } = useLocation() as LocationState<Domain>;
 
   const setOpen = (domain: Domain) => {
-    const params = { dominio: domain.slug },
+    const params = { dominio: domain.id.toString() },
       options = { state: domain };
 
     setQueryParams(params, options);

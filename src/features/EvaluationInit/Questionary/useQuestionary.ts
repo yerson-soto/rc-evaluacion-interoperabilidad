@@ -3,13 +3,13 @@ import { CriterionService } from "library/api/services/CriterionService";
 import { Question } from "library/models/Question";
 import { ChangeLevel } from "library/api/dto/criterion-dto";
 
-export function useQuestionary(domainId: number) {
+export function useQuestionary(domainId?: number) {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
   const criterionService = new CriterionService();
 
   useEffect(() => {
-    const fetchResults = async () => {
+    const fetchResults = async (domainId: number) => {
       setLoading(true);
 
       try {
@@ -29,7 +29,7 @@ export function useQuestionary(domainId: number) {
       setLoading(false);
     };
 
-    fetchResults();
+    if (domainId) fetchResults(domainId);
 
     // eslint-disable-next-line
   }, [domainId]);

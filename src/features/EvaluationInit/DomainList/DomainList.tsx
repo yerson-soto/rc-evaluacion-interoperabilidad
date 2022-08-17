@@ -17,7 +17,6 @@ import { useListAction } from 'features/Crud/useListAction';
 import { domainSlice } from 'redux/slices/domainSlice';
 import { DomainService } from 'library/api/services/DomainService';
 
-const QuestionaryIf = withIfDirective<QuestionaryProps>(Questionary);
 
 const { useBreakpoint } = Grid;
 
@@ -30,7 +29,6 @@ export default function DomainList() {
     reducer: domainSlice,
     service: domainService
   });
-  
   
   const { t } = useTranslation();
   const { isOpen, domain, setOpen, setClose, afterClosed } =
@@ -50,7 +48,16 @@ export default function DomainList() {
       <List
         loading={isLoading}
         dataSource={domains}
-        grid={{ gutter: 16, column: 3, }}
+        className={classes.container}
+        grid={{
+          gutter: 20,
+          xs: 1,
+          sm: 2,
+          md: 2,
+          lg: 3,
+          xl: 3,
+          xxl: 3,
+        }}
         // itemLayout={isSmall ? "vertical" : "horizontal"}
         size="large"
         pagination={{
@@ -65,21 +72,21 @@ export default function DomainList() {
             label={t("pagination.domains")}
           />
         }
-        style={{ maxWidth: '70%' }}
         renderItem={(domain) => (
-          <List.Item onClick={() => setOpen(domain)}>
+          <List.Item className={classes.item} onClick={() => setOpen(domain)}>
             <Card
               className={classes.itemCard}
               cover={
                 <AppBox
                   style={{
                     height: "150px",
-                    backgroundColor:" #0093E9",
-                    backgroundImage: "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)",
+                    backgroundColor:"#0093E9",
+                    // backgroundImage: "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)",
 
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    padding: "0 16px"
                   }}
                 >
                   <Typography.Text
@@ -87,6 +94,7 @@ export default function DomainList() {
                       color: "#ffffff",
                       fontSize: 20,
                       fontWeight: "bold",
+                      textAlign: "center"
                     }}
                   >
                     Dominio {domain.name}
@@ -114,7 +122,7 @@ export default function DomainList() {
                 //   percent={40}
                 // />
               }
-              title="2 preguntas completadas de 6"
+              title="2 criterios completados de 6"
               description={<Progress percent={30} />}
               // description={
               //   <Progress  percent={30} />
@@ -176,10 +184,9 @@ export default function DomainList() {
           // </ListItem>
         )}
       />
-      <QuestionaryIf
-        if={!!domain}
+      <Questionary
         isOpen={isOpen}
-        domain={domain}
+        // domain={domain}
         onClose={setClose}
         onCloseEnd={afterClosed}
         // onChangeLevel={fakeIncrementScore}

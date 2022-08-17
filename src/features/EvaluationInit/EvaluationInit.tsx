@@ -145,7 +145,7 @@ export default function EvaluationInit() {
       <QuestionaryIf
         if={!!domain}
         isOpen={isOpen}
-        domain={domain}
+        // domain={domain}
         onClose={setClose}
         onCloseEnd={afterClosed}
       />

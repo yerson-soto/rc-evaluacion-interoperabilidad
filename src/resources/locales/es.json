@@ -52,7 +52,8 @@
       "status": "Estado",
       "created_date": "Fecha de Creación",
       "manager": "A cargo de",
-      "domain_quantity": "Cantidad de Dominios"
+      "domain_quantity": "Cantidad de Dominios",
+      "not_found": "No Encontrado"
   },
   "fields": {
     "name": "Nombre",
@@ -143,6 +144,7 @@
     "identity_card_not_found": "La cédula ingresa no existe"
   },
   "loading": {
+    "text": "Cargando",
     "validate_access": "Validando acceso",
     "confirm_email": "Confirmando su correo",
     "fetching_data": "Cargando recurso"
@@ -162,7 +164,8 @@
     "new": "Nuevo",
     "add": "Agregar",
     "add_evidence": "Nuevo documento",
-    "add_choice": "Agregar respuesta"
+    "add_choice": "Agregar respuesta",
+    "close": "Cerrar"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",

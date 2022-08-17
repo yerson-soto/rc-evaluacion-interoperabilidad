@@ -1,34 +1,31 @@
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { RootState } from 'redux/types';
-import { CrudReducer, CrudState } from "library/common/interfaces";
+import { useState } from "react";
 import { CrudRepository } from "library/api/services/AbstractCrudService";
 import { ID } from "library/common/types";
 
-interface DetailAction<T, State extends CrudState<T>> {
+interface DetailAction<T> {
   service: CrudRepository<T, any>;
-  reducer: CrudReducer<T, State>;
-  selectLoading: (state: RootState) => boolean;
 }
 
-export function useDetailAction<T, State extends CrudState<T>>({
-  service,
-  selectLoading,
-  reducer,
-}: DetailAction<T, State>) {
-  const isLoading = useAppSelector(selectLoading);
-  const dispatch = useAppDispatch();
+type DetailState = "initial" | "loading" | "error";
+
+export function useDetailAction<T>({ service }: DetailAction<T>) {
+  const [status, setStatus] = useState<DetailState>("initial");
+  const [record, setRecord] = useState<T | null>(null);
 
   const getById = async (id: ID): Promise<void> => {
-    dispatch(reducer.actions.startLoading());
-    
-    return service.getById(id)
-    .then(record => {
-      dispatch(reducer.actions.deleteSuccess(id))
-    })
-    .catch((message) => {
-      dispatch(reducer.actions.deleteFailed(message))
-    })  
+    setStatus("loading");
+
+    await service
+      .getById(id)
+      .then((record) => {
+        setRecord(record);
+        setStatus("initial");
+      })
+      .catch(() => {
+        setRecord(null);
+        setStatus("error");
+      })      
   };
 
-  // return { isLoading, deleteOne };
+  return { record, status, getById };
 }
