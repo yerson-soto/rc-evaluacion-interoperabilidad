@@ -1,82 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { List, Grid, Badge, Pagination, Button, Skeleton } from "antd";
-import { QuestionItem } from "features/EvaluationInit/QuestionItem";
-import { FullCriterion } from "library/models/Criterion";
-import { PaginationProps } from "antd/es/pagination";
-import { Domain } from "library/models/Domain";
-
-import { useQuestionary } from "./useQuestionary";
-import { Question } from "library/models/Question";
-import { LightChoice } from "library/models/Choice";
-import { AppDrawer } from "library/components/AppDrawer";
-
-import classes from "./Questionary.module.css";
-import { useDetailAction } from "../../Crud/DetailAction/useDetailAction";
-import { DomainService } from "library/api/services/DomainService";
-import { AppLoader } from "library/components/AppLoader";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { Pagination, Button, Skeleton } from "antd";
+import { PaginationProps } from "antd/es/pagination";
+import { AppDrawer } from "library/components/AppDrawer";
 import { NotFound } from "features/NotFound";
-import {useToggleQuestionary} from "./useToggleQuestionary";
-import {useDomain} from "./useDomain";
+import { QuestionList } from "../QuestionList";
+import { useToggleQuestionary } from "./useToggleQuestionary";
+import { useDomain } from "./useDomain";
+import { useQuestionary } from "./useQuestionary";
 
-const { useBreakpoint } = Grid;
-
-interface CriterionScore {
-  [id: number]: number;
-}
-
-export interface QuestionaryProps {
-  isOpen: boolean;
-
-  // This is used to keep domain during transition
-  onClose: (keepDomain: Domain) => void;
-  onCloseEnd: () => void;
-
-  // onChangeLevel: (value: number) => void;
-}
-
-export default function Questionary(props: QuestionaryProps) {
-  const [score, setScore] = useState<CriterionScore>([]);
-  const [current, setCurrent] = useState(1);
-
+export default function Questionary() {
   const { visible, close } = useToggleQuestionary();
-  const { isLoading, isError, domain, domainTitle } = useDomain();
+  const { isFetching, isError, domain, domainTitle, flushDomain } = useDomain();
+  const { isLoading, questionary, currentQuestion, changeCurrentQuestion, flushQuestions } = useQuestionary(domain?.id);
   const { t } = useTranslation();
-
-
-
-  const { uid } = useParams();
-
-  const { isLoading: questionsLoading, questions, changeResponse } = useQuestionary(domain?.id);
-
-  const onResponseChange = (
-    criterion: FullCriterion,
-    choice: LightChoice
-  ): void => {
-    changeResponse({
-      evaluationInstitutionalId: uid as string,
-      criterionId: criterion.id,
-      responsesId: choice.id,
-    });
-
-    // onChangeLevel(.5);
-    const newScore = {
-      ...score,
-      [criterion.id]: choice.level.value,
-    };
-
-    setScore(newScore);
-  };
-
-  const getScore = (): number => {
-    const total: number = Object.values(score).reduce(
-      (prev, current) => prev + current,
-      0
-    );
-
-    return Number((total / questions.length).toFixed(2)) || 0;
-  };
 
   const renderPaginationItem: PaginationProps["itemRender"] = (
     _,
@@ -91,68 +28,55 @@ export default function Questionary(props: QuestionaryProps) {
     return buttons[type] || originalElement;
   };
 
-  const onPageChange = (page: number): void => {
-    setCurrent(page);
+  const changeQuestion = (page: number): void => {
+    changeCurrentQuestion(page);
   };
+
+  const renderPagination = (): React.ReactNode =>
+    questionary.length > 0 ? (
+      <Pagination
+        pageSize={1}
+        total={questionary.length}
+        itemRender={renderPaginationItem}
+        onChange={changeQuestion}
+        current={currentQuestion}
+      />
+    ) : null;
+
+  const hideQuestionary = (): void => {
+    flushDomain();
+    flushQuestions();
+    close();
+  }
 
   return (
     <AppDrawer
       placement="right"
       title={domainTitle}
       visible={visible}
-      // extra={<Badge status="processing" text={getScore()} />}
-      onClose={close}
-      // afterVisibleChange={onVisibilityChange}
-      footer={
-        <Pagination
-          pageSize={1}
-          total={questions.length}
-          itemRender={renderPaginationItem}
-          onChange={onPageChange}
-          current={current}
-        />
-      }
+      onClose={hideQuestionary}
+      footer={renderPagination()}
       forceRender
       destroyOnClose
     >
-      {isError ? (
-        <NotFound 
-          fallbackLabel={t("buttons.close")} 
-          onFallback={close} 
-        />
-      ) : (
+      {visible && (
         <Skeleton
           paragraph={{ rows: 7 }}
-          loading={isLoading}
+          loading={isLoading || isFetching}
           active
           avatar
         >
-          <List<Question>
-            itemLayout="vertical"
-            size="large"
-            loading={questionsLoading}
-            pagination={{
-              pageSize: 1,
-              current: current,
-              style: {
-                display: "none",
-              },
-            }}
-            split={false}
-            dataSource={questions}
-            renderItem={(question) => (
-              <QuestionItem
-                key={question.criterion.id}
-                question={question}
-                onLevelChange={(choice) =>
-                  onResponseChange(question.criterion, choice)
-                }
-                onEvidenceDelete={() => {}}
-                onEvidenceAdd={() => {}}
-                number={current}
-              />
-            )}
-          />
+          {isError ? (
+            <NotFound 
+              fallbackLabel={t("buttons.close")} 
+              onFallback={hideQuestionary} 
+            />
+          ) : (
+            <QuestionList 
+              questions={questionary} 
+              activeQuestion={currentQuestion} 
+            />
+          )}
         </Skeleton>
       )}
     </AppDrawer>

@@ -1,3 +1,2 @@
-import Questionary, { QuestionaryProps } from "./Questionary";
+import Questionary from "./Questionary";
 export { Questionary };
-export type { QuestionaryProps };

@@ -4,16 +4,16 @@ import { AppBox } from "library/components/AppBox";
 import { AnswerRadio } from "features/EvaluationInit/AnswerRadio";
 import { Badge } from "antd";
 
-import classes from "./Response.module.css";
+import classes from "./Answer.module.css";
 
-interface ResponseProps {
+interface AnswerProps {
   choice: LightChoice;
   color: string;
   isSelected?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function Response(props: ResponseProps) {
+export default function Answer(props: AnswerProps) {
   const { choice, color, isSelected, onChange } = props;
 
   return (

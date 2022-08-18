@@ -1,8 +1,10 @@
 import { FullCriterion } from "./Criterion";
+import { RequiredEvidence } from "./RequiredEvidence";
 import { Choice } from "./Choice";
 
 export interface Question {
+  number: number;
   criterion: FullCriterion;
-  response: Choice | null;
-  evidences: null;
+  selectedAnswer: Choice | null;
+  providedEvidences: RequiredEvidence[];
 }

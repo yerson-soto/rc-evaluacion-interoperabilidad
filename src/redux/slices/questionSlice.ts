@@ -1,0 +1,61 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CommonState } from "library/common/interfaces";
+import { ErrorMessage } from "library/common/types";
+import { Question } from "library/models/Question";
+import { Choice } from "library/models/Choice";
+
+export interface QuestionState extends CommonState {
+  questionary: Question[];
+  score: number;
+  current: number;
+}
+
+const initialState: QuestionState = {
+  questionary: [],
+  score: 0,
+  current: 0,
+  isLoading: false,
+  hasError: false,
+  errorMessage: "",
+};
+
+export const questionSlice = createSlice({
+  name: "questions",
+  initialState,
+  reducers: {
+    startLoading: (state) => {
+      state.isLoading = true;
+    },
+    getSuccess: (state, action: PayloadAction<Question[]>) => {
+      state.questionary = action.payload;
+      state.isLoading = false;
+      state.hasError = false;
+      state.errorMessage = "";
+    },
+    getFailed: (state, action: PayloadAction<ErrorMessage>) => {
+      state.isLoading = false;
+      state.hasError = true;
+      state.errorMessage = action.payload;
+    },
+    changeAnswerSuccess: (state, action: PayloadAction<Choice>) => {
+      const question = state.questionary.find(
+        (question) => question.criterion.id === action.payload.criterion.id
+      );
+
+      if (question) {
+        question.selectedAnswer = action.payload;
+      }
+    },
+    questionPrevNext: (state, action: PayloadAction<number>) => {
+      state.current = action.payload;
+    },
+    questionsFlushed: (state) => {
+      state.questionary = [];
+      state.current = 0;
+      state.errorMessage = "";
+      state.hasError = false;
+    }
+  },
+});
+
+export const actions = questionSlice.actions;

@@ -44,7 +44,7 @@ export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
     keyFrom: 'id',
     state: { id: toggleKey }
   });
-  console.log('actual key', toggleKey)
+
   const { createOne, isLoading } = useCreateAction<T, FormSchema, State>({
     selectLoading,
     service,

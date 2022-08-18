@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { Alert, Skeleton, Space, Tag, Tooltip } from "antd";
 import { AppBox } from "library/components/AppBox";
 import { Avatar, List } from "antd";
-import { FullCriterion } from "library/models/Criterion";
+import { Criterion, FullCriterion } from "library/models/Criterion";
 import { SectionDivider } from "library/components/SectionDivider";
 import { AddEvidence } from "features/EvaluationInit/AddEvidence";
-import { Response } from "features/EvaluationInit/Response";
+import { Answer } from "features/EvaluationInit/Answer";
 import { useChoiceList } from "./useChoiceList";
 import { LightChoice } from "library/models/Choice";
 import { Question } from "library/models/Question";
@@ -42,24 +42,23 @@ import chroma from "chroma-js";
 // });
 
 interface QuestionItemProps {
-  number: number;
   question: Question;
-  onLevelChange: (choice: LightChoice) => void;
+  onAnswerChange: (criterion: Criterion, choice: LightChoice) => void;
   onEvidenceAdd: () => void;
   onEvidenceDelete: () => void;
 }
 
 export default function QuestionItem(props: QuestionItemProps) {
-  const { number: count, question, onLevelChange } = props;
+  const { question, onAnswerChange } = props;
   // const { isLoading, choices } = useChoiceList(criterion.id);
   const { t } = useTranslation();
-  console.log(question.response)
-  const { criterion } = question;
+
+  const { criterion, number: count } = question;
 
   const handleEvidenceChange = (): void => {};
 
-  const handleLevelChange = (choice: LightChoice): void => {
-    onLevelChange(choice);
+  const selectAnswer = (choice: LightChoice): void => {
+    onAnswerChange(criterion, choice);
   };
 
   const renderResponses = (): React.ReactNode => {
@@ -70,12 +69,12 @@ export default function QuestionItem(props: QuestionItemProps) {
       .colors(choices.length);
       
     return choices.map((choice, index) => (
-      <Response
+      <Answer
         key={choice.id}
         choice={choice}
         color={colors[index]}
-        isSelected={choice.id === question.response?.id}
-        onChange={() => handleLevelChange(choice)}
+        isSelected={choice.id === question.selectedAnswer?.id}
+        onChange={() => selectAnswer(choice)}
       />
     ))
   }
@@ -103,7 +102,7 @@ export default function QuestionItem(props: QuestionItemProps) {
           {renderResponses()}
         </Space>
 
-      {question.response?.isEvidenceRequired && (
+      {question.selectedAnswer?.isEvidenceRequired && (
         <>
           <SectionDivider text={t("dividers.justification")} />
           <AppBox className={classes.section}>

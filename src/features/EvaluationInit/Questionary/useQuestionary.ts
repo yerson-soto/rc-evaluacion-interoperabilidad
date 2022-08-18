@@ -1,52 +1,47 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { CriterionService } from "library/api/services/CriterionService";
 import { Question } from "library/models/Question";
-import { ChangeLevel } from "library/api/dto/criterion-dto";
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { actions } from 'redux/slices/questionSlice';
 
 export function useQuestionary(domainId?: number) {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const { isLoading, questionary, current } = useAppSelector(state => state.questions);
   const criterionService = new CriterionService();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchResults = async (domainId: number) => {
-      setLoading(true);
-
+    const fetchQuestions = async (domain: number) => {
+      dispatch(actions.startLoading())
+      
       try {
-        const results = await criterionService.getByDomain(domainId);
+        const criteria = await criterionService.getByDomain(domain);
 
-        const questions: Question[] = results.map((result) => ({
-          criterion: result,
-          response: null,
-          evidences: null,
+        const questions: Question[] = criteria.map((criterion, key) => ({
+          number: key + 1,
+          criterion,
+          selectedAnswer: null,
+          providedEvidences: []
         }));
 
-        setQuestions(questions);
+        dispatch(actions.getSuccess(questions));
       } catch (message) {
-        setQuestions([]);
+        dispatch(actions.getFailed(message as string));
       }
-
-      setLoading(false);
     };
 
-    if (domainId) fetchResults(domainId);
-
+    if (domainId) fetchQuestions(domainId);
+    
     // eslint-disable-next-line
   }, [domainId]);
 
-  const changeResponse = (data: ChangeLevel) => {
-    criterionService.changeLevel(data).then((choice) => {
-      const questionIdx = questions.findIndex(
-        (question) => question.criterion.id === data.criterionId
-      );
 
-      if (questionIdx !== -1) {
-        const newQuestions = [...questions];
-        newQuestions[questionIdx].response = choice;
-        setQuestions(newQuestions);
-      }
-    });
-  };
+  const changeCurrentQuestion = (current: number) => {
+    dispatch(actions.questionPrevNext(current));
+  }
 
-  return { isLoading, questions, changeResponse };
+  const flushQuestions = (): void => {
+    dispatch(actions.questionsFlushed());
+  }
+
+  return { isLoading, questionary, currentQuestion: current, changeCurrentQuestion, flushQuestions };
 }

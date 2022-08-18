@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { CrudRepository } from "library/api/services/AbstractCrudService";
+import { useFetchDebounced } from 'library/hooks/useFetchDebounced';
 import { ID } from "library/common/types";
 
 interface DetailAction<T> {
   service: CrudRepository<T, any>;
+  defaultLoading?: boolean;
 }
 
 type DetailState = "initial" | "loading" | "error";
 
-export function useDetailAction<T>({ service }: DetailAction<T>) {
-  const [status, setStatus] = useState<DetailState>("initial");
+export function useDetailAction<T>({ service, defaultLoading }: DetailAction<T>) {
+  const defaultStatus: DetailState = defaultLoading ? "loading" : "initial";
+  const [status, setStatus] = useState<DetailState>(defaultStatus);
   const [record, setRecord] = useState<T | null>(null);
 
-  const getById = async (id: ID): Promise<void> => {
+  const getById = useFetchDebounced(async (id: ID): Promise<void> => {
     setStatus("loading");
 
     await service
@@ -25,7 +28,12 @@ export function useDetailAction<T>({ service }: DetailAction<T>) {
         setRecord(null);
         setStatus("error");
       })      
-  };
+  });
 
-  return { record, status, getById };
+  const flush = (): void => {
+    setRecord(null);
+    setStatus("initial");
+  }
+
+  return { record, status, getById, flush };
 }

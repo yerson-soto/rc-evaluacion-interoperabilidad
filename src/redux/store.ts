@@ -9,6 +9,7 @@ import { criterionSlice } from './slices/criterionSlice';
 import { levelSlice } from "./slices/levelSlice";
 import { choiceSlice } from "./slices/choiceSlice";
 import { organizationSlice } from "./slices/organizationSlice";
+import { questionSlice } from "./slices/questionSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     [criterionSlice.name]: criterionSlice.reducer,
     [levelSlice.name]: levelSlice.reducer,
     [choiceSlice.name]: choiceSlice.reducer,
+    [questionSlice.name]: questionSlice.reducer,
     [organizationSlice.name]: organizationSlice.reducer,
   },
 });

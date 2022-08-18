@@ -11,7 +11,7 @@ import * as dto from "library/api/dto/criterion-dto";
 
 export interface CriterionRepository {
   getByDomain: (domainId: number) => Promise<FullCriterion[]>;
-  changeLevel: (data: dto.ChangeLevel) => Promise<Choice>;
+  changeAnswer: (data: dto.ChangeAnswer) => Promise<Choice>;
 }
 
 export class CriterionService extends AbstractCrudService<
@@ -37,7 +37,7 @@ export class CriterionService extends AbstractCrudService<
 
   getByDomain(domainId: number): Promise<FullCriterion[]> {
     return new Promise((resolve, reject) => {
-      const url = "/criterions/" + domainId.toString();
+      const url = "/criterions/" + domainId;
       
       this.client
         .get<APIResponse<dto.GetCriterion[]>>(url)
@@ -49,7 +49,7 @@ export class CriterionService extends AbstractCrudService<
     });
   }
 
-  changeLevel(data: dto.ChangeLevel): Promise<Choice> {
+  changeAnswer(data: dto.ChangeAnswer): Promise<Choice> {
     return new Promise((resolve, reject) => {
       this.client
         .post<APIResponse<GetChoice>>("/evaluationtechnics", data)

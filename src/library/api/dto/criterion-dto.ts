@@ -13,7 +13,7 @@ export interface GetCriterion {
   responseResponses: GetChoice[];
 }
 
-export interface ChangeLevel {
+export interface ChangeAnswer {
   evaluationInstitutionalId: string;
   criterionId: number;
   responsesId: number;

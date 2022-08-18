@@ -20,15 +20,11 @@ import { DomainList } from "./DomainList";
 import { Questionary } from "./Questionary";
 import { AppBox } from "library/components/AppBox";
 import { useEvaluationInit } from "./useEvaluationInit";
-import { withIfDirective } from "library/hocs/withIfDirective";
-import { QuestionaryProps } from "./Questionary/Questionary";
 import { Summary } from "./Summary";
 import { useEvaluation } from "./useEvaluation";
 import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
-
-const QuestionaryIf = withIfDirective<QuestionaryProps>(Questionary);
 
 export default function EvaluationInit() {
   const { isOpen, domain, setOpen, setClose, afterClosed } =
@@ -141,14 +137,6 @@ export default function EvaluationInit() {
           </Row>
         </TabPane>
       </Tabs>
-
-      <QuestionaryIf
-        if={!!domain}
-        isOpen={isOpen}
-        // domain={domain}
-        onClose={setClose}
-        onCloseEnd={afterClosed}
-      />
     </AppBox>
   );
 }

@@ -11,8 +11,7 @@ import { useMedia } from "use-media";
 import classes from "./DomainList.module.css";
 import { AppBox } from "library/components/AppBox";
 import { useDomainToggle } from './useDomainToggle';
-import { withIfDirective } from "library/hocs/withIfDirective";
-import { Questionary, QuestionaryProps } from "../Questionary";
+import { Questionary } from "../Questionary";
 import { useListAction } from 'features/Crud/useListAction';
 import { domainSlice } from 'redux/slices/domainSlice';
 import { DomainService } from 'library/api/services/DomainService';
@@ -35,7 +34,6 @@ export default function DomainList() {
     useDomainToggle();
 
   const isSmall = useMedia({ maxWidth: 768 });
-  console.log("small", isSmall);
 
   const handleEvaluate = (domain: Domain) => {
 
@@ -184,13 +182,7 @@ export default function DomainList() {
           // </ListItem>
         )}
       />
-      <Questionary
-        isOpen={isOpen}
-        // domain={domain}
-        onClose={setClose}
-        onCloseEnd={afterClosed}
-        // onChangeLevel={fakeIncrementScore}
-      />
+      <Questionary />
       </React.Fragment>
     // </Card>
   );

@@ -13,8 +13,9 @@ export function useDomain() {
 
   const domainService = new DomainService();
 
-  const { record: domain, getById, status } = useDetailAction<Domain>({
-    service: domainService
+  const { record: domain, status, getById, flush } = useDetailAction<Domain>({
+    service: domainService,
+    defaultLoading: true
   });
 
   useEffect(() => {
@@ -27,10 +28,11 @@ export function useDomain() {
         : `${t("labels.domain")} ${domainName}`;
 
   return { 
-    isLoading: status === "loading", 
+    isFetching: status === "loading", 
     isError: status === "error", 
     domain, 
-    domainTitle 
+    domainTitle,
+    flushDomain: flush
   };
 
 }
