@@ -42,26 +42,26 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
     return new Promise((resolve, reject) => {
       const url = this.getDetailUrl(id);
 
-      this.getAll()
-        .then((records) => {
-          const record = records.find((record: any) => record?.id === Number(id) || record?.uid === id)
-          if (record) {
-            resolve(record);
-          } else {
-            reject("error")
+      // this.getAll()
+      //   .then((records) => {
+      //     const record = records.find((record: any) => record?.id === Number(id) || record?.uid === id)
+      //     if (record) {
+      //       resolve(record);
+      //     } else {
+      //       reject("error")
 
-            throw new Error('Error al obtener un registro')
-          }
-        })
-        .catch(() => reject("No se pudo obtener el registro"));
-      
-      // this.client
-      //   .get<APIResponse<DataReceived>>(url)
-      //   .then((res) => {
-      //     const result = this.mapper.fromAPI(res.data.result);
-      //     resolve(result);
+      //       throw new Error('Error al obtener un registro')
+      //     }
       //   })
       //   .catch(() => reject("No se pudo obtener el registro"));
+      
+      this.client
+        .get<APIResponse<DataReceived>>(url)
+        .then((res) => {
+          const result = this.mapper.fromAPI(res.data.result);
+          resolve(result);
+        })
+        .catch(() => reject("No se pudo obtener el registro"));
     });
   }
 

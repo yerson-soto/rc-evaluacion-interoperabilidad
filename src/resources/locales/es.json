@@ -48,6 +48,9 @@
   "labels": {
       "level": "Nivel",
       "domain": "Dominio",
+      "domains": "Dominios",
+      "details": "Detalles",
+      "statistics": "Estadísticas",
       "score": "Puntuación",
       "status": "Estado",
       "created_date": "Fecha de Creación",

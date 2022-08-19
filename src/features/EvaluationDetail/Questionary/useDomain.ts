@@ -4,10 +4,11 @@ import { useDetailAction } from "features/Crud/DetailAction/useDetailAction";
 import { useSearchParams } from "react-router-dom";
 import { DomainService } from "library/api/services/DomainService";
 import { useTranslation } from "react-i18next";
+import { keys } from '../../../library/common/constants';
 
 export function useDomain() {
   const [queryParams] = useSearchParams();
-  const domainId = queryParams.get("dominio");
+  const domainId = queryParams.get(keys.domainParamName);
 
   const { t } = useTranslation();
 

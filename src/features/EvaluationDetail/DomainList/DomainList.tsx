@@ -1,20 +1,18 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, List, Typography, Card, Empty, Avatar } from "antd";
-import { Progress, Grid, Popconfirm } from "antd";
+import { List, Typography, Card, Empty, Avatar } from "antd";
+import { Progress, Grid } from "antd";
 import { Domain } from "library/models/Domain";
-import { ListItem } from "library/components/ListItem";
 import { PaginationFooter } from "library/components/PaginationFooter";
-import { useDomainList } from "./useDomainList";
 import { useMedia } from "use-media";
 
 import classes from "./DomainList.module.css";
 import { AppBox } from "library/components/AppBox";
-import { useDomainToggle } from './useDomainToggle';
 import { Questionary } from "../Questionary";
 import { useListAction } from 'features/Crud/useListAction';
 import { domainSlice } from 'redux/slices/domainSlice';
 import { DomainService } from 'library/api/services/DomainService';
+import { useToggleQuestionary } from '../Questionary/useToggleQuestionary';
 
 
 const { useBreakpoint } = Grid;
@@ -30,8 +28,7 @@ export default function DomainList() {
   });
   
   const { t } = useTranslation();
-  const { isOpen, domain, setOpen, setClose, afterClosed } =
-    useDomainToggle();
+  const { open } = useToggleQuestionary();
 
   const isSmall = useMedia({ maxWidth: 768 });
 
@@ -71,7 +68,7 @@ export default function DomainList() {
           />
         }
         renderItem={(domain) => (
-          <List.Item className={classes.item} onClick={() => setOpen(domain)}>
+          <List.Item className={classes.item} onClick={() => open(domain)}>
             <Card
               className={classes.itemCard}
               cover={

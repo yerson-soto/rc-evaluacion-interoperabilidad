@@ -12,7 +12,6 @@ import { AdminPanel } from 'features/AdminPanel';
 import { Dashboard } from 'features/Dashboard';
 import { EvaluationList } from 'features/EvaluationList';
 import { EvaluationDetail } from 'features/EvaluationDetail';
-import { EvaluationInit } from 'features/EvaluationInit';
 import { DomainCrud } from 'features/DomainCrud';
 import { UserCrud } from 'features/UserCrud';
 import { ChoiceCrud } from "features/ChoiceCrud";
@@ -57,7 +56,6 @@ export default function Router() {
             <Route path={admin.evaluations.index}>
               <Route index element={<EvaluationList />} />
               <Route path={evaluations.detail.index} element={<EvaluationDetail />} />
-              <Route path={evaluations.init.index} element={<EvaluationInit />} />
             </Route>
           </Route>
 

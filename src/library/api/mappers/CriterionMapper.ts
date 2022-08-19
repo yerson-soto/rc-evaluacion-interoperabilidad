@@ -19,13 +19,14 @@ export class CriterionMapper
 
   fromAPI(data: GetCriterion): Criterion {
     const lineamentMapper = new LineamentMapper();
-
+    const lineaments = data.lineamentsResponses 
+      ? data.lineamentsResponses?.map(lineamentMapper.fromAPILighweight)
+      : [];
+      
     return {
       id: data.id,
       name: data.description,
-      lineaments: data.lineamentsResponses.map(
-        lineamentMapper.fromAPILighweight
-      ),
+      lineaments
     };
   }
 
@@ -37,7 +38,7 @@ export class CriterionMapper
       id: data.id,
       name: data.description,
       lineaments: data.lineamentsResponses.map(lineamentMapper.fromAPILighweight),
-      choices: data.responseResponses.map((response) => choiceMapper.fromAPILight(response)),
+      choices: data.responseResponses.map((response) => choiceMapper.fromAPI(response)),
     };
   }
 

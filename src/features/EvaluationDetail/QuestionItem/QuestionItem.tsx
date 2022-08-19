@@ -1,64 +1,40 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Skeleton, Space, Tag, Tooltip } from "antd";
 import { AppBox } from "library/components/AppBox";
 import { Avatar, List } from "antd";
-import { Criterion, FullCriterion } from "library/models/Criterion";
 import { SectionDivider } from "library/components/SectionDivider";
-import { AddEvidence } from "features/EvaluationInit/AddEvidence";
-import { Answer } from "features/EvaluationInit/Answer";
-import { useChoiceList } from "./useChoiceList";
-import { LightChoice } from "library/models/Choice";
+import { AddEvidence } from "features/EvaluationDetail/AddEvidence";
+import { Answer } from "features/EvaluationDetail/Answer";
+import { Choice } from "library/models/Choice";
 import { Question } from "library/models/Question";
+import { CSSTransition } from "react-transition-group";
 
 import classes from "./QuestionItem.module.css";
 
 import chroma from "chroma-js";
 
-// const choices = [
-//   "No existe un responsable de los servicios de intercambio de información",
-//   "Existen varias personas responsables de los servicios de intercambio de información",
-//   "Existe un único responsable de intercambio de información pero no es formal",
-//   "Existe un responsable de los servicios de intercambio de información y es reconocido por toda la entidad",
-//   "Existe un responsable de los servicios de intercambio de información y lidera a toda la organización en la implementación del Marco de interoperabilidad",
-// ];
-
-// const colors = chroma
-//   .scale(["#ef8269", "#fba31e", "#2ac158"])
-//   .colors(choices.length);
-// const isLoading = true;
-// const fakeChoices: Choice[] = choices.map((text, idx) => {
-//   const number = idx + 1;
-//   return {
-//     id: number,
-//     hexColor: colors[idx],
-//     details: text,
-//     level: {
-//       id: number,
-//       value: number,
-//       name: "Ausente",
-//     },
-//   };
-// });
 
 interface QuestionItemProps {
   question: Question;
-  onAnswerChange: (criterion: Criterion, choice: LightChoice) => void;
+  onAnswerChange: (choice: Choice) => void;
   onEvidenceAdd: () => void;
   onEvidenceDelete: () => void;
 }
 
 export default function QuestionItem(props: QuestionItemProps) {
   const { question, onAnswerChange } = props;
-  // const { isLoading, choices } = useChoiceList(criterion.id);
+  const { criterion, number: count, selectedAnswer } = question;
   const { t } = useTranslation();
+  const nodeRef = useRef(null);
 
-  const { criterion, number: count } = question;
+  const showEvidences = selectedAnswer?.isEvidenceRequired;
+
 
   const handleEvidenceChange = (): void => {};
 
-  const selectAnswer = (choice: LightChoice): void => {
-    onAnswerChange(criterion, choice);
+  const selectAnswer = (choice: Choice): void => {
+    onAnswerChange(choice);
   };
 
   const renderResponses = (): React.ReactNode => {
@@ -77,7 +53,18 @@ export default function QuestionItem(props: QuestionItemProps) {
         onChange={() => selectAnswer(choice)}
       />
     ))
-  }
+  };
+
+  const renderEvidences = (): React.ReactNode => (
+    selectedAnswer?.requiredEvidences.map(evidence => (
+      <Space key={evidence.id}>
+        <AddEvidence 
+          title={evidence.title} 
+          accept={evidence.contentType.join(',')} 
+        />
+      </Space>
+    ))
+  )
 
   return (
     <List.Item className={classes.question}>
@@ -102,20 +89,26 @@ export default function QuestionItem(props: QuestionItemProps) {
           {renderResponses()}
         </Space>
 
-      {question.selectedAnswer?.isEvidenceRequired && (
-        <>
-          <SectionDivider text={t("dividers.justification")} />
-          <AppBox className={classes.section}>
-            <Alert
-              className={classes.alert}
-              message={t("hints.upload_evidence")}
-              type="info"
-            />
+        <CSSTransition
+          in={showEvidences}
+          timeout={300}
+          classNames="fade"
+          nodeRef={nodeRef}
+          unmountOnExit
+        >
+            <div ref={nodeRef as any}> 
+              <SectionDivider text={t("dividers.justification")} />
+              <AppBox className={classes.section}>
+                <Alert
+                  className={classes.alert}
+                  message={t("hints.upload_evidence")}
+                  type="info"
+                />
 
-            <AddEvidence />
-          </AppBox>
-        </>
-      )}
+                {renderEvidences()}
+              </AppBox>
+            </div>
+        </CSSTransition>
 
       {/* <SectionDivider text={t("dividers.next_steps")} />
       <AppBox className={classes.section}>Pasos a seguir</AppBox> */}

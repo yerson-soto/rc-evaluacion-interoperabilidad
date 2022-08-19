@@ -13,7 +13,7 @@ export interface QuestionState extends CommonState {
 const initialState: QuestionState = {
   questionary: [],
   score: 0,
-  current: 0,
+  current: 1,
   isLoading: false,
   hasError: false,
   errorMessage: "",

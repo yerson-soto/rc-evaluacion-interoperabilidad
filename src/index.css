@@ -72,18 +72,21 @@ select:-webkit-autofill:focus {
 
 .fade-enter {
   opacity: 0;
+  transform: translateY(10px);
 }
 
-.fade-enter.fade-enter-active {
+.fade-enter-active {
   opacity: 1;
-  transition: opacity 250ms ease-out;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
 }
 
 .fade-exit {
   opacity: 1;
 }
 
-.fade-exit.fade-exit-active {
+.fade-exit-active {
   opacity: 0;
-  transition: opacity 250ms ease-out;
+  transform: translateY(10px);
+  transition: opacity 300ms, transform 300ms;
 }

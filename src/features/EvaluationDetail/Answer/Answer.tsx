@@ -1,13 +1,13 @@
 import React from "react";
-import { LightChoice } from "library/models/Choice";
-import { AppBox } from "library/components/AppBox";
-import { AnswerRadio } from "features/EvaluationInit/AnswerRadio";
 import { Badge } from "antd";
+import { Choice } from "library/models/Choice";
+import { AppBox } from "library/components/AppBox";
+import { AnswerRadio } from "../AnswerRadio";
 
 import classes from "./Answer.module.css";
 
 interface AnswerProps {
-  choice: LightChoice;
+  choice: Choice;
   color: string;
   isSelected?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,11 +18,11 @@ export default function Answer(props: AnswerProps) {
 
   return (
     <AppBox className={classes.choice}>
-      {/* <Badge.Ribbon
+      <Badge.Ribbon
         placement="start"
         color={color}
         text={choice.level.value}
-      > */}
+      >
         <AnswerRadio
           value={choice.level.value}
           name="choice"
@@ -31,7 +31,7 @@ export default function Answer(props: AnswerProps) {
           defaultChecked={isSelected}
           label={choice.details}
         />
-      {/* </Badge.Ribbon> */}
+      </Badge.Ribbon>
     </AppBox>
   );
 }

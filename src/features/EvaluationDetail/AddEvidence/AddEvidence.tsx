@@ -6,7 +6,11 @@ import { useUploadHandler } from "./useAddEvidence";
 
 import classes from "./AddEvidence.module.css";
 
-export default function AddEvidence(props: UploadProps) {
+interface AddEvidenceProps extends UploadProps {
+  title?: string;
+}
+
+export default function AddEvidence(props: AddEvidenceProps) {
   const {
     fileList,
     isPreviewVisible,
@@ -17,10 +21,12 @@ export default function AddEvidence(props: UploadProps) {
     handlePreview,
   } = useUploadHandler();
 
+  const { title = "Subir", ...extraProps } = props;
+
   const uploadButton = (
     <div>
       <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Subir</div>
+      <div style={{ marginTop: 8 }}>{title}</div>
     </div>
   );
 

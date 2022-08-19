@@ -7,7 +7,7 @@ import { Summary } from "./Summary";
 import { useEvaluation } from "./useEvaluation";
 import { AppLoader } from "library/components/AppLoader";
 import { NotFound } from "features/NotFound";
-import { DomainList } from "features/EvaluationInit/DomainList";
+import { DomainList } from "./DomainList";
 
 export default function EvaluationDetail() {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ export default function EvaluationDetail() {
           tab={
             <span>
               <AimOutlined />
-              Dominios
+              {t("labels.domains")}
             </span>
           }
           key="1"
@@ -46,7 +46,7 @@ export default function EvaluationDetail() {
           tab={
             <span>
               <PieChartOutlined />
-              Estadísticas
+              {t("labels.statistics")}
             </span>
           }
           key="2"
@@ -57,7 +57,7 @@ export default function EvaluationDetail() {
           tab={
             <span>
               <FieldTimeOutlined />
-              Detalles
+              {t("labels.details")}
             </span>
           }
           key="3"

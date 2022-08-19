@@ -62,4 +62,3 @@ export class CriterionService extends AbstractCrudService<
     });
   }
 }
-

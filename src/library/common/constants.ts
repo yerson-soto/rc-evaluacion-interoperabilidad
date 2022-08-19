@@ -74,7 +74,8 @@ export const paths = {
 
 export const keys = {
   linkTokenParam: "token",
-  tokenLocalStorage: "mdmitkn",
+  tokenLocalStorage: "jwt",
+  domainParamName: "d"
 };
 
 export const roleLabels = {

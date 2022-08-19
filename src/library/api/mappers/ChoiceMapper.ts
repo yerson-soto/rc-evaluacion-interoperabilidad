@@ -1,10 +1,11 @@
 import { Mapper } from "library/common/interfaces";
-import { Choice, LightChoice } from "library/models/Choice";
+import { Choice } from "library/models/Choice";
 import { GetChoice, CreateChoice } from "../dto/choice-dto";
 import { LevelMapper } from './LevelMapper';
 import { ChoiceFormSchema } from "features/ChoiceCrud/ChoiceForm/ChoiceFormSchema";
 import { CriterionMapper } from './CriterionMapper';
 import { ContentType } from 'library/common/enums';
+import { Criterion } from '../../models/Criterion';
 
 
 export class ChoiceMapper
@@ -41,7 +42,7 @@ export class ChoiceMapper
     const levelMapper = new LevelMapper();
     const criterionMapper = new CriterionMapper();
     const requiredEvidences = data.requiredEvidencesResponses || [];
-    
+
     return {
       id: data.responsesId,
       details: data.responseDecription,
@@ -53,16 +54,6 @@ export class ChoiceMapper
         title: evidence.title,
         contentType: evidence.contentType.split(',') as ContentType[]
       }))
-    };
-  }
-
-  fromAPILight(data: GetChoice): LightChoice {
-    const levelMapper = new LevelMapper();
-    
-    return {
-      id: data.responsesId,
-      details: data.responseDecription,
-      level: levelMapper.fromAPI(data.levelsResponse)
     };
   }
 }

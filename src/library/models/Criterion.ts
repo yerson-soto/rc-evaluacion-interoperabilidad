@@ -1,4 +1,4 @@
-import { LightChoice } from "./Choice";
+import { Choice } from './Choice';
 import { LightLineament } from './Lineament';
 
 export interface Criterion {
@@ -10,6 +10,6 @@ export interface Criterion {
 export interface FullCriterion {
   id: number;
   name: string;
+  choices: Choice[];
   lineaments: LightLineament[];
-  choices: LightChoice[];
 }
