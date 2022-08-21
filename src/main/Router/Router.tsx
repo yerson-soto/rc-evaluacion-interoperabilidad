@@ -26,6 +26,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import { PermissionRoute } from "./PermissionRoute";
 import { UserType } from "library/common/enums";
+import MaturityModelDesign from "features/MaturityModelDesign";
 
 const { auth, admin, admin: { evaluations }, management } = paths;
 
@@ -46,7 +47,7 @@ export default function Router() {
       {/* Routes for authenticated users */}
       <Route element={<PrivateRoute />}>
         <Route path={admin.index} element={<AdminPanel />}>
-          
+
           {/* Common routes */}
           <Route path={admin.settings.index} element={<Settings />} />
           <Route path={admin.index} element={<Dashboard />} />
