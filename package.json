@@ -21,6 +21,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "antd": "4.22.3",
+    "antd-img-crop": "^4.2.4",
     "antd-mask-input": "^2.0.7",
     "axios": "^0.27.2",
     "chroma-js": "^2.4.2",

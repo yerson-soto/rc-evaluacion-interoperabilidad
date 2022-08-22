@@ -55,17 +55,6 @@ export default function QuestionItem(props: QuestionItemProps) {
     ))
   };
 
-  const renderEvidences = (): React.ReactNode => (
-    selectedAnswer?.requiredEvidences.map(evidence => (
-      <Space key={evidence.id}>
-        <AddEvidence 
-          title={evidence.title} 
-          accept={evidence.contentType.join(',')} 
-        />
-      </Space>
-    ))
-  )
-
   return (
     <List.Item className={classes.question}>
       <List.Item.Meta
@@ -96,18 +85,20 @@ export default function QuestionItem(props: QuestionItemProps) {
           nodeRef={nodeRef}
           unmountOnExit
         >
-            <div ref={nodeRef as any}> 
-              <SectionDivider text={t("dividers.justification")} />
-              <AppBox className={classes.section}>
-                <Alert
-                  className={classes.alert}
-                  message={t("hints.upload_evidence")}
-                  type="info"
-                />
+          <div ref={nodeRef as any}> 
+            <SectionDivider text={t("dividers.justification")} />
+            <AppBox className={classes.section}>
+              <Alert
+                className={classes.alert}
+                message={t("hints.upload_evidence")}
+                type="info"
+              />
 
-                {renderEvidences()}
-              </AppBox>
-            </div>
+              <AddEvidence 
+                requiredEvidences={selectedAnswer?.requiredEvidences || []} 
+              />
+            </AppBox>
+          </div>
         </CSSTransition>
 
       {/* <SectionDivider text={t("dividers.next_steps")} />

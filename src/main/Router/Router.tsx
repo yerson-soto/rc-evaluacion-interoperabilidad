@@ -26,7 +26,6 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import { PermissionRoute } from "./PermissionRoute";
 import { UserType } from "library/common/enums";
-import MaturityModelDesign from "features/MaturityModelDesign";
 
 const { auth, admin, admin: { evaluations }, management } = paths;
 

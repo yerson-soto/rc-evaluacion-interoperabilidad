@@ -333,7 +333,7 @@ const columns: ColumnsType<DataType> = [
 
 export default function TableVersion() {
   return (
-    <Table dataSource={dataSource} size="small">
+    <Table dataSource={dataSource} size="small" pagination={false}>
       <Table.Column
       
         key="domain"
