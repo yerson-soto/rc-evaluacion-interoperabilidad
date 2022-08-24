@@ -5,6 +5,7 @@ import { useUploadHandler } from "./useAddEvidence";
 import { UploadOutlined } from "@ant-design/icons";
 import { RequiredEvidence } from "library/models/RequiredEvidence";
 import { Button, message } from "antd";
+import { ContentType } from "library/common/enums";
 import type { RcFile, UploadFile } from "antd/es/upload/interface";
 
 import classes from "./AddEvidence.module.css";
@@ -12,8 +13,9 @@ import { AppBox } from "library/components/AppBox";
 import { useTranslation } from "react-i18next";
 import ImgCrop from "antd-img-crop";
 
-import ExcelPreview from "resources/images/word-preview.svg";
-import { ContentType } from "../../../library/common/enums";
+import WordPreview from "resources/images/word-preview.svg";
+import ExcelPreview from "resources/images/excel-preview.svg";
+import PDFPreview from "resources/images/pdf-preview.svg";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -118,7 +120,17 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
 
   const previewFile: UploadProps<any>["previewFile"] = (file: File | Blob) => {
     return new Promise((resolve, reject) => {
-      resolve(ExcelPreview);
+      const isWord = ContentType.WORD === file.type;
+      const isExcel = ContentType.EXCEL === file.type;
+      const isPdf = ContentType.PDF === file.type;
+
+      if (isWord) {
+        resolve(WordPreview);
+      } else if (isExcel) {
+        resolve(ExcelPreview);
+      } else if (isPdf) {
+        resolve(PDFPreview);
+      }
     });
   };
 
@@ -129,48 +141,48 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
     )
   );
 
+  const upload = (
+    <Upload
+      listType="picture-card"
+      maxCount={1}
+      onRemove={handleRemove}
+      beforeUpload={beforeUpload}
+      onChange={handleChange}
+      previewFile={isImage ? undefined : previewFile}
+      fileList={fileList}
+      {...extraProps}
+    >
+      {fileList.length >= 1 ? null : uploadButton}
+    </Upload>
+  );
+
   return (
     <React.Fragment>
-      {isImage ? (
-        <ImgCrop rotate>
-          <Upload
-            listType="picture-card"
-            maxCount={1}
-            onRemove={handleRemove}
-            beforeUpload={beforeUpload}
-            onChange={handleChange}
-            // previewFile={previewFile}
-            fileList={fileList}
-            locale={{
-              uploading: "Subiendo",
-            }}
-            {...extraProps}
-            // accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          >
-            {fileList.length >= 1 ? null : uploadButton}
-          </Upload>
-        </ImgCrop>
-      ) : (
-        <Upload
-          listType="picture-card"
-          maxCount={1}
-          onRemove={handleRemove}
-          beforeUpload={beforeUpload}
-          onChange={handleChange}
-          // previewFile={previewFile}
-          fileList={fileList}
-          locale={{
-            uploading: "Subiendo",
-          }}
-          {...extraProps}
-          // accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        >
-          {fileList.length >= 1 ? null : uploadButton}
-        </Upload>
-      )}
+      {isImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload}
     </React.Fragment>
   );
 }
+
+// const upload = React.createElement(
+//   Upload,
+//   {
+//     listType: "picture-card",
+//     maxCount: 1,
+//     onRemove: handleRemove,
+//     beforeUpload: beforeUpload,
+//     onChange: handleChange,
+//     previewFile: previewFile,
+//     fileList: fileList,
+//     ...extraProps,
+//   },
+//   [fileList.length >= 1 ? null : uploadButton]
+// );
+
+// return (
+//   <React.Fragment>
+//     {isImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload}
+//   </React.Fragment>
+// );
 
 export function Manually() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);

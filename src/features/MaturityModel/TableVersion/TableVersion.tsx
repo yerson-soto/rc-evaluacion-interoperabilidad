@@ -246,137 +246,115 @@ const dataSource: DataType[] = [
   },
 ]
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Dominio',
-    dataIndex: ["domain", "name"],
-    // onCell: (_, index) => ({
-    //   colSpan: (index as number) < 4 ? 1 : 5,
-    // }),
 
-    onCell: (record, index) => {
-      if (index === 0) {
-        return { rowSpan: 2 };
-      }
-      // These two are merged into above cell
-      if (index === 1) {
-        return { rowSpan: 0 };
-      }
-      // if (index === 4) {
-      //   return { colSpan: 0 };
-      // }
 
-      return {};
-    },
-  },
-  {
-    title: 'Lineamiento',
-    dataIndex: "lineaments",
-    render: (values: Lineament[]) => {
-      return values.map(value => (
-        <p>{value.nomenclature}</p>
-      ))
-    }
-    // onCell: sharedOnCell,
-  },
-  {
-    title: 'Criterio',
-    dataIndex: 'name',
-    // colSpan: 2,
-    // onCell: (_, index) => {
-    //   if (index === 2) {
-    //     return { rowSpan: 2 };
-    //   }
-    //   // These two are merged into above cell
-    //   if (index === 3) {
-    //     return { rowSpan: 0 };
-    //   }
-    //   if (index === 4) {
-    //     return { colSpan: 0 };
-    //   }
-
-    //   return {};
-    // },
-  },
-  // {
-  //   title: 'Phone',
-  //   colSpan: 0,
-  //   dataIndex: 'phone',
-  //   onCell: sharedOnCell as any,
-  // },
-  // {
-  //   title: 'Address',
-  //   dataIndex: 'address',
-  //   onCell: sharedOnCell as any,
-  // },
-  {
-    title: 'Nivel 1',
-    dataIndex: ["choices", 0, "details"],
-  },
-  {
-    title: 'Nivel 2',
-    dataIndex: ["choices", 1, "details"],
-  },
-  {
-    title: 'Nivel 3',
-    dataIndex: ["choices", 2, "details"],
-  },
-  {
-    title: 'Nivel 4',
-    dataIndex: ["choices", 3, "details"],
-  },
-  {
-    title: 'Nivel 5',
-    dataIndex: ["choices", 4, "details"],
-  },
-];
+interface AddedDomain {
+  id: number;
+  children: number;
+}
 
 export default function TableVersion() {
+  const [addedDomains, setAddedDomains] = React.useState<AddedDomain[]>([]);
+  
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Dominio',
+      dataIndex: ["domain", "name"],
+      // onCell: (_, index) => ({
+      //   colSpan: (index as number) < 4 ? 1 : 5,
+      // }),
+  
+      onCell: (record, index) => {
+        const added = addedDomains.filter(domain => domain.id === record.domain.id);
+
+        if (added) {
+          return { rowSpan: 0 };
+        } else {
+          return { rowSpan: 2 };
+        }
+        const key = record.domain.id;
+        const childLen = record.choices.length;
+  
+        if (index === 0) {
+          return { rowSpan: 2 };
+        }
+        // These two are merged into above cell
+        if (index === 1) {
+          return { rowSpan: 0 };
+        }
+        // if (index === 4) {
+        //   return { colSpan: 0 };
+        // }
+  
+        return {};
+      },
+    },
+    {
+      title: 'Lineamiento',
+      dataIndex: "lineaments",
+      render: (values: Lineament[]) => {
+        return values.map(value => (
+          <p>{value.nomenclature}</p>
+        ))
+      }
+      // onCell: sharedOnCell,
+    },
+    {
+      title: 'Criterio',
+      dataIndex: 'name',
+      // colSpan: 2,
+      // onCell: (_, index) => {
+      //   if (index === 2) {
+      //     return { rowSpan: 2 };
+      //   }
+      //   // These two are merged into above cell
+      //   if (index === 3) {
+      //     return { rowSpan: 0 };
+      //   }
+      //   if (index === 4) {
+      //     return { colSpan: 0 };
+      //   }
+  
+      //   return {};
+      // },
+    },
+    // {
+    //   title: 'Phone',
+    //   colSpan: 0,
+    //   dataIndex: 'phone',
+    //   onCell: sharedOnCell as any,
+    // },
+    // {
+    //   title: 'Address',
+    //   dataIndex: 'address',
+    //   onCell: sharedOnCell as any,
+    // },
+    {
+      title: 'Nivel 1',
+      dataIndex: ["choices", 0, "details"],
+    },
+    {
+      title: 'Nivel 2',
+      dataIndex: ["choices", 1, "details"],
+    },
+    {
+      title: 'Nivel 3',
+      dataIndex: ["choices", 2, "details"],
+    },
+    {
+      title: 'Nivel 4',
+      dataIndex: ["choices", 3, "details"],
+    },
+    {
+      title: 'Nivel 5',
+      dataIndex: ["choices", 4, "details"],
+    },
+  ];
+  
+  
+  
+  
   return (
-    <Table dataSource={dataSource} size="small" pagination={false}>
-      <Table.Column
-      
-        key="domain"
-        title={'Dominio'}
-        dataIndex={["domain", "name"]}
-        onCell={(record, index) => {
-          if (index === 0) {
-            return { rowSpan: 2 };
-          }
-          // These two are merged into above cell
-          if (index === 1) {
-            return { rowSpan: 0 };
-          }
-          // if (index === 4) {
-          //   return { colSpan: 0 };
-          // }
-
-          return {};
-        }}
-      />
-
-      <Table.Column
-        key="lineaments"
-        title={'Lineamiento'}
-        dataIndex={"lineaments"}
-        render={(values: Lineament[]) => {
-          return values.map(value => (
-            <p>{value.nomenclature}</p>
-          ))
-        }
-        }
-      />
-      <Table.Column
-        key="criterion"
-        title={'Criterio'}
-        dataIndex={'name'}
-      />
-
-      <Table.Column key="level-1" title={'Nivel 1'} dataIndex={["choices", 0, "details"]}/>
-      <Table.Column key="level-2" title={'Nivel 2'} dataIndex={["choices", 1, "details"]}/>
-      <Table.Column key="level-3" title={'Nivel 4'} dataIndex={["choices", 2, "details"]}/>
-      <Table.Column key="level-4" title={'Nivel 4'} dataIndex={["choices", 3, "details"]}/>
-      <Table.Column key="level-5" title={'Nivel 5'} dataIndex={["choices", 4, "details"]}/>
-    </Table>
+    <Table dataSource={dataSource} columns={columns} size="small" pagination={false} />
   )
 } 
