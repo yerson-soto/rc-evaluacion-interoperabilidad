@@ -5,6 +5,8 @@ import { GetCriterion, CreateCriterion } from "../dto/criterion-dto";
 import { LineamentMapper } from "./LineamentMapper";
 import { ChoiceMapper } from "./ChoiceMapper";
 import { DefaultOptionType } from "antd/lib/select";
+import { DomainMapper } from './DomainMapper';
+import { Domain } from '../../models/Domain';
 
 export class CriterionMapper
   implements
@@ -33,10 +35,12 @@ export class CriterionMapper
   fromAPIFull(data: GetCriterion): FullCriterion {
     const lineamentMapper = new LineamentMapper();
     const choiceMapper = new ChoiceMapper();
+    const domainMapper = new DomainMapper();
 
     return {
       id: data.id,
       name: data.description,
+      domain: data.domainResponse ? domainMapper.fromAPI(data.domainResponse) : {} as Domain,
       lineaments: data.lineamentsResponses.map(lineamentMapper.fromAPILighweight),
       choices: data.responseResponses.map((response) => choiceMapper.fromAPI(response)),
     };

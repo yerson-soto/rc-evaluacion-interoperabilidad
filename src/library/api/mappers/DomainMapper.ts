@@ -19,6 +19,7 @@ export class DomainMapper
   fromAPI(data: GetDomain): Domain {
     return {
       id: data.id,
+      color: data.color || "#e2efdb",
       name: capitalize(data.description),
       slug: data.slug || "",
       acronym: data.acronym || "",

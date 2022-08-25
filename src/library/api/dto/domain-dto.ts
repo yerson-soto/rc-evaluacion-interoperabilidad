@@ -1,6 +1,7 @@
 export interface GetDomain {
   id: number;
   description: string;
+  color: string;
   acronym: string;
   slug: string;
 }

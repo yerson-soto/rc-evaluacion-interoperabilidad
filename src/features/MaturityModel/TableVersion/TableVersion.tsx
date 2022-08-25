@@ -1,10 +1,20 @@
-import React from 'react';
-import { Table, Tag } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { FullCriterion } from 'library/models/Criterion';
-import { Domain } from '../../../library/models/Domain';
-import { Lineament } from '../../../library/models/Lineament';
-
+import { useEffect, useRef, useMemo } from 'react';
+import React from "react";
+import { Table, Tag, Typography } from 'antd';
+import type { ColumnsType } from "antd/es/table";
+import { FullCriterion } from "library/models/Criterion";
+import { Domain } from "../../../library/models/Domain";
+import { Lineament } from "../../../library/models/Lineament";
+import { useListAction } from "../../Crud/useListAction";
+import { DomainService } from "library/api/services/DomainService";
+import { domainSlice } from "redux/slices/domainSlice";
+import { CriterionService } from "../../../library/api/services/CriterionService";
+import { LevelService } from "library/api/services/LevelService";
+import { Level } from "library/models/Level";
+import { levelSlice, LevelState } from "redux/slices/levelSlice";
+import { useTranslation } from 'react-i18next';
+import { Choice } from "library/models/Choice";
+import chroma from 'chroma-js';
 
 // In the fifth row, other columns are merged into first column
 // by setting it's colSpan to be 0
@@ -18,343 +28,203 @@ const sharedOnCell = (_: DataType, index: number) => {
 
 interface DataType extends FullCriterion {
   key: number;
-  domain: Domain;
-  color: string;
+  score: number;
 }
 
-const dataSource: DataType[] = [
-  {
-    id: 1,
-    key: 2,
-    color: "red",
-    name: "Liderazgo del Marco de Interoperabilidad",
-    domain: {
-      id: 2,
-      name: "Dominio Organizacional",
-      slug: "organizacional",
-      acronym: "OG"
+const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
+  console.log('datasource', dataSource);
+  return [
+    {
+      title: "Dominio",
+      dataIndex: ["domain", "name"],
+      align: "center",
+      onCell: (record, key ) => {
+        const recordsByDomain = dataSource.filter(
+          (criterion) => criterion.domain.id === record.domain.id
+        );
+  
+        if (recordsByDomain.length > 0) {
+          const isFirstOfType = recordsByDomain[0].id === record.id;
+  
+          if (isFirstOfType) {
+            return { rowSpan: recordsByDomain.length };
+          } else {
+            return { rowSpan: 0 };
+          }
+        }
+  
+        return { key };
+      },
+      
+      onHeaderCell: (value, record) => {
+        return {
+          style: {
+            backgroundColor: "#b4c6e7",
+          },
+        };
+      },
+      render: (value, record) => {
+        return {
+          props: {
+            style: { background: record.domain.color },
+          },
+          children: value,
+        };
+      },
     },
-    lineaments: [
-      {
-        id: 1,
-        description: "Establecer los instrumentos legales que faciliten el uso o prestación de los servicios de intercambio de información",
-        nomenclature: "LI.IOP.LG.01",
+    {
+      title: (
+        <div>
+          Resultado
+  
+          <div style={{ background: "#ffffff" }}>
+            0
+          </div>
+        </div>
+      ),
+      align: "center",
+      dataIndex: "score",
+      onCell: (record, key) => {
+        const recordsByDomain = dataSource.filter(
+          (criterion) => criterion.domain.id === record.domain.id
+        );
+  
+        if (recordsByDomain.length > 0) {
+          const isFirstOfType = recordsByDomain[0].id === record.id;
+  
+          if (isFirstOfType) {
+            return { rowSpan: recordsByDomain.length };
+          } else {
+            return { rowSpan: 0 };
+          }
+        }
+  
+        return { key };
       },
-      {
-        id: 2,
-        description: "Establecer los instrumentos legales que faciliten el uso o prestación de los servicios de intercambio de información",
-        nomenclature: "LI.IOP.OG.05",
-      }
-    ],
-    choices: [
-      {
-        id: 1,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Liderazgo del Marco de Interoperabilidad"
-        },
-        details: "No existe un responsable de los servicios de intercambio de información",
-        level: {
-          id: 1,
-          description: "La entidad no ha empezado a implementar los lineamientos del Marco de Interoperabilidad del Estado y carece de las capacidades necesarias para implementarlo.",
-          name: "Ausente",
-          value: 1
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
+      onHeaderCell: (value, record) => {
+        return {
+          style: {
+            backgroundColor: "#b4c6e7",
+          },
+        };
       },
-      {
-        id: 2,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Liderazgo del Marco de Interoperabilidad"
-        },
-        details: "Existen varias personas responsables de los servicios de intercambio de información",
-        level: {
-          id: 2,
-          description: "La entidad ha iniciado su proceso de implementación de los lineamientos del Marco de Interoperabilidad.",
-          name: "Inicial",
-          value: 2
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
-      }
-    ]
-  },
-  {
-    id: 2,
-    key: 2,
-    color: "blue",
-    name: "Cultura organizacional",
-    domain: {
-      id: 2,
-      name: "Dominio Organizacional",
-      slug: "organizacional",
-      acronym: "OG"
     },
-    lineaments: [
-      {
-        id: 1,
-        description: "Establecer los instrumentos legales que faciliten el uso o prestación de los servicios de intercambio de información",
-        nomenclature: "LI.IOP.LG.01",
-      }
-    ],
-    choices: [
-      {
-        id: 1,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Cultura organizacional"
-        },
-        details: "La entidad no promueve una cultura de intercambio de información mediante comunicaciones internas, campañas o actividades ni capacita al recurso humano en temas de interoperabilidad",
-        level: {
-          id: 1,
-          description: "La entidad no ha empezado a implementar los lineamientos del Marco de Interoperabilidad del Estado y carece de las capacidades necesarias para implementarlo.",
-          name: "Ausente",
-          value: 1
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
+    {
+      title: "Lineamiento",
+      align: "center",
+      dataIndex: "lineaments",
+      render: (values: Lineament[], record) => {
+        return {
+          props: {
+            style: { background: record.domain.color },
+          },
+          children: values.map((value) => <p>{value.nomenclature}</p>),
+        };
       },
-      {
-        id: 2,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Cultura organizacional"
-        },
-        details: "La entidad capacita al recurso humano en temas de interoperabilidad pero no divulga a las áreas la de la implementación del Marco de Interoperabilidad ",
-        level: {
-          id: 2,
-          description: "La entidad ha iniciado su proceso de implementación de los lineamientos del Marco de Interoperabilidad.",
-          name: "Inicial",
-          value: 2
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
+      onHeaderCell: (value, record) => {
+        return {
+          style: {
+            backgroundColor: "#b4c6e7",
+          },
+        };
       },
-      {
-        id: 3,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Cultura organizacional"
-        },
-        details: "La entidad capacita al recurso humano en temas de interoperabilidad pero no divulga a las áreas la de la implementación del Marco de Interoperabilidad ",
-        level: {
-          id: 2,
-          description: "La entidad ha iniciado su proceso de implementación de los lineamientos del Marco de Interoperabilidad.",
-          name: "Inicial",
-          value: 2
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
-      },
-      {
-        id: 4,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Cultura organizacional"
-        },
-        details: "La entidad capacita al recurso humano en temas de interoperabilidad pero no divulga a las áreas la de la implementación del Marco de Interoperabilidad ",
-        level: {
-          id: 2,
-          description: "La entidad ha iniciado su proceso de implementación de los lineamientos del Marco de Interoperabilidad.",
-          name: "Inicial",
-          value: 2
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
-      },
-      {
-        id: 5,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Cultura organizacional"
-        },
-        details: "La entidad capacita al recurso humano en temas de interoperabilidad pero no divulga a las áreas la de la implementación del Marco de Interoperabilidad ",
-        level: {
-          id: 2,
-          description: "La entidad ha iniciado su proceso de implementación de los lineamientos del Marco de Interoperabilidad.",
-          name: "Inicial",
-          value: 2
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
-      }
-    ]
-  },
-  {
-    id: 3,
-    key: 3,
-    color: "green",
-    name: "Normatividad para el intercambio de información",
-    domain: {
-      id: 3,
-      name: "Dominio Semantico",
-      slug: "semantico",
-      acronym: "SE"
     },
-    lineaments: [
-      {
-        id: 1,
-        description: "Establecer los instrumentos legales que faciliten el uso o prestación de los servicios de intercambio de información",
-        nomenclature: "LI.IOP.LG.01",
-      }
-    ],
-    choices: [
-      {
-        id: 1,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Normatividad para el intercambio de información"
-        },
-        details: "La entidad no promueve una cultura de intercambio de información mediante comunicaciones internas, campañas o actividades ni capacita al recurso humano en temas de interoperabilidad",
-        level: {
-          id: 1,
-          description: "La entidad no intercambia información",
-          name: "Ausente",
-          value: 1
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
+    {
+      title: "Criterio",
+      dataIndex: "name",
+      render: (value, record) => {
+        return {
+          props: {
+            style: { background: record.domain.color },
+          },
+          children: value,
+        };
       },
-      {
-        id: 2,
-        criterion: {
-          id: 1,
-          lineaments: [],
-          name: "Normatividad para el intercambio de información"
-        },
-        details: "La entidad intercambia información pero no existe normatividad asociada a los servicios de intercambio de información",
-        level: {
-          id: 2,
-          description: "La entidad ha iniciado su proceso de implementación de los lineamientos del Marco de Interoperabilidad.",
-          name: "Inicial",
-          value: 2
-        },
-        requiredEvidences: [],
-        isEvidenceRequired: false
-      }
-    ]
-  },
-]
-
-
-
-interface AddedDomain {
-  id: number;
-  children: number;
+      onHeaderCell: (value, record) => {
+        return {
+          style: {
+            backgroundColor: "#b4c6e7",
+          },
+        };
+      },
+    },
+  ]
 }
+
 
 export default function TableVersion() {
-  const [addedDomains, setAddedDomains] = React.useState<AddedDomain[]>([]);
-  
-  const columns: ColumnsType<DataType> = [
-    {
-      title: 'Dominio',
-      dataIndex: ["domain", "name"],
-      // onCell: (_, index) => ({
-      //   colSpan: (index as number) < 4 ? 1 : 5,
-      // }),
-  
-      onCell: (record, index) => {
-        const added = addedDomains.filter(domain => domain.id === record.domain.id);
+  const [columns, setColumns] = React.useState<ColumnsType<DataType>>([]);
+  const [records, setRecords] = React.useState<DataType[]>([]);
 
-        if (added) {
-          return { rowSpan: 0 };
-        } else {
-          return { rowSpan: 2 };
+  const criterionService = new CriterionService();
+  const levelService = new LevelService();
+
+  const { t } = useTranslation();
+ 
+  useEffect(() => {
+    const fetchRecords = async () => {
+      const [criteria, levels] = await Promise.all([
+        criterionService.getDetailed(),
+        levelService.getAll()
+      ]);
+
+      const dataSource: DataType[] = criteria
+          .sort((a, b) => a.domain.id - b.domain.id)
+          .map((criterion) => ({
+            ...criterion,
+            score: 0,
+            key: criterion.id,
+          }));
+
+      const colorRange = chroma
+        .scale(["#fce4d7", "#fff1cf", "#feffd5", "#e2efda", "#c6e0b3"])
+        .colors(levels.length);
+
+      const newColumns: ColumnsType<DataType> = levels.map((level, index) => ({
+        title: `${t("labels.level")} ${level.value}`,
+        onHeaderCell: (value, record) => {
+          return {
+            style: {
+              backgroundColor: colorRange[index],
+            },
+          };
+        },
+        render: (value, record) => {
+          const choice = record.choices.find(choice => choice.level.id === level.id);
+          return choice ? choice.details : 'N/A';
         }
-        const key = record.domain.id;
-        const childLen = record.choices.length;
-  
-        if (index === 0) {
-          return { rowSpan: 2 };
-        }
-        // These two are merged into above cell
-        if (index === 1) {
-          return { rowSpan: 0 };
-        }
-        // if (index === 4) {
-        //   return { colSpan: 0 };
-        // }
-  
-        return {};
-      },
-    },
-    {
-      title: 'Lineamiento',
-      dataIndex: "lineaments",
-      render: (values: Lineament[]) => {
-        return values.map(value => (
-          <p>{value.nomenclature}</p>
-        ))
-      }
-      // onCell: sharedOnCell,
-    },
-    {
-      title: 'Criterio',
-      dataIndex: 'name',
-      // colSpan: 2,
-      // onCell: (_, index) => {
-      //   if (index === 2) {
-      //     return { rowSpan: 2 };
-      //   }
-      //   // These two are merged into above cell
-      //   if (index === 3) {
-      //     return { rowSpan: 0 };
-      //   }
-      //   if (index === 4) {
-      //     return { colSpan: 0 };
-      //   }
-  
-      //   return {};
-      // },
-    },
-    // {
-    //   title: 'Phone',
-    //   colSpan: 0,
-    //   dataIndex: 'phone',
-    //   onCell: sharedOnCell as any,
-    // },
-    // {
-    //   title: 'Address',
-    //   dataIndex: 'address',
-    //   onCell: sharedOnCell as any,
-    // },
-    {
-      title: 'Nivel 1',
-      dataIndex: ["choices", 0, "details"],
-    },
-    {
-      title: 'Nivel 2',
-      dataIndex: ["choices", 1, "details"],
-    },
-    {
-      title: 'Nivel 3',
-      dataIndex: ["choices", 2, "details"],
-    },
-    {
-      title: 'Nivel 4',
-      dataIndex: ["choices", 3, "details"],
-    },
-    {
-      title: 'Nivel 5',
-      dataIndex: ["choices", 4, "details"],
-    },
-  ];
-  
-  
-  
-  
+      }))
+
+      setRecords(dataSource);
+      setColumns(getInitialColumns(dataSource).concat(newColumns).concat([
+        {
+          title: "Nivel Actual",
+          fixed: "right",
+          onHeaderCell: (value, record) => {
+            return {
+              style: {
+                backgroundColor: "#b4c6e7",
+              },
+            };
+          },
+        },
+      ]));
+    };
+
+    fetchRecords();
+  }, []);
+
   return (
-    <Table dataSource={dataSource} columns={columns} size="small" pagination={false} />
-  )
-} 
+    <Table
+      bordered
+      sticky={{
+        offsetHeader: 46,
+      }}
+      dataSource={records}
+      columns={columns}
+      size="small"
+      pagination={false}
+      // scroll={{ x: 1500, y: 300 }}
+    />
+  );
+}

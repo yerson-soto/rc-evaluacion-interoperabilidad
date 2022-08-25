@@ -12,6 +12,7 @@ import { DomainService } from 'library/api/services/DomainService';
 import { useToggleQuestionary } from '../Questionary/useToggleQuestionary';
 
 import classes from "./DomainList.module.css";
+import chroma from "chroma-js";
 
 
 export default function DomainList() {
@@ -26,6 +27,10 @@ export default function DomainList() {
   
   const { t } = useTranslation();
   const { open } = useToggleQuestionary();
+
+  const colorRange = chroma
+        .scale(["#fce4d7", "#fff1cf", "#feffd5", "#e2efda", "#c6e0b3"])
+        .colors(domains.length);
 
   return (
     <React.Fragment>
@@ -55,7 +60,7 @@ export default function DomainList() {
             label={t("pagination.domains")}
           />
         }
-        renderItem={(domain) => (
+        renderItem={(domain, key) => (
           <List.Item 
             className={classes.item} 
             onClick={() => open(domain)}
@@ -66,7 +71,7 @@ export default function DomainList() {
                 <AppBox
                   style={{
                     height: "150px",
-                    backgroundColor:"#0093E9",
+                    backgroundColor: colorRange[key],
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -75,7 +80,7 @@ export default function DomainList() {
                 >
                   <Typography.Text
                     style={{
-                      color: "#ffffff",
+                      // color: "#ffffff",
                       fontSize: 20,
                       fontWeight: "bold",
                       textAlign: "center"

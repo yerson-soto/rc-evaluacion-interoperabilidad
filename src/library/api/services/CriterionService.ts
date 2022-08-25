@@ -8,6 +8,7 @@ import { CriterionFormSchema } from "features/CriterionCrud/CriterionForm/Criter
 import { GetChoice } from "library/api/dto/choice-dto";
 import { ChoiceMapper } from 'library/api/mappers/ChoiceMapper';
 import * as dto from "library/api/dto/criterion-dto";
+import { data } from '../../../features/MaturityModel/TableVersion/data';
 
 export interface CriterionRepository {
   getByDomain: (domainId: number) => Promise<FullCriterion[]>;
@@ -34,6 +35,23 @@ export class CriterionService extends AbstractCrudService<
   getDetailUrl(id: number): string {
     return "/criterion/" + id.toString();
   };
+
+  getDetailed(): Promise<FullCriterion[]> {
+    return new Promise((resolve, reject) => {
+      const results: any = data;
+      const mapper = this.mapper.fromAPIFull.bind(this.mapper);
+      const ret: FullCriterion[] = results.map(mapper);
+      resolve(ret);
+      // this.client
+      //   .get<APIResponse<dto.GetCriterion[]>>(this.getAllUrl)
+      //   .then((res) => {
+      //     const mapper = this.mapper.fromAPIFull.bind(this.mapper);
+      //     const results = res.data.result.map(mapper);
+      //     resolve(results);
+      //   })
+      //   .catch(() => reject("No se pudo cargar los criterios"));
+    });
+  }
 
   getByDomain(domainId: number): Promise<FullCriterion[]> {
     return new Promise((resolve, reject) => {

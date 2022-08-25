@@ -41,20 +41,6 @@ export abstract class AbstractCrudService<T, DataReceived, DataSent, FormSchema>
   getById(id: ID): Promise<T> {
     return new Promise((resolve, reject) => {
       const url = this.getDetailUrl(id);
-
-      // this.getAll()
-      //   .then((records) => {
-      //     const record = records.find((record: any) => record?.id === Number(id) || record?.uid === id)
-      //     if (record) {
-      //       resolve(record);
-      //     } else {
-      //       reject("error")
-
-      //       throw new Error('Error al obtener un registro')
-      //     }
-      //   })
-      //   .catch(() => reject("No se pudo obtener el registro"));
-      
       this.client
         .get<APIResponse<DataReceived>>(url)
         .then((res) => {
