@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Pagination, Button, Skeleton } from "antd";
+import { Pagination, Button, Skeleton, message } from "antd";
 import { PaginationProps } from "antd/es/pagination";
 import { AppDrawer } from "library/components/AppDrawer";
 import { NotFound } from "features/NotFound";
@@ -12,7 +12,13 @@ import { useQuestionary } from "./useQuestionary";
 export default function Questionary() {
   const { visible, close } = useToggleQuestionary();
   const { isFetching, isError, domain, domainTitle, flushDomain } = useDomain();
-  const { isLoading, questionary, currentQuestion, changeCurrentQuestion, flushQuestions } = useQuestionary(domain?.id);
+  const { 
+    isLoading, 
+    questionary, 
+    activeQuestion, 
+    setActiveQuestion, 
+    flushQuestions 
+  } = useQuestionary(domain?.id);
   const { t } = useTranslation();
 
   const renderPaginationItem: PaginationProps["itemRender"] = (
@@ -29,7 +35,13 @@ export default function Questionary() {
   };
 
   const changeQuestion = (page: number): void => {
-    changeCurrentQuestion(page);
+    const currentQuestion = questionary.find(question => question.number === page);
+
+    if (currentQuestion?.isCompleted) {
+      setActiveQuestion(currentQuestion);
+    } else {
+      message.info("Completa toda la informacion para poder avanzar")
+    }
   };
 
   const renderPagination = (): React.ReactNode =>
@@ -39,7 +51,7 @@ export default function Questionary() {
         total={questionary.length}
         itemRender={renderPaginationItem}
         onChange={changeQuestion}
-        current={currentQuestion}
+        current={activeQuestion?.number}
       />
     ) : null;
 
@@ -74,7 +86,7 @@ export default function Questionary() {
           ) : (
             <QuestionList 
               questions={questionary} 
-              activeQuestion={currentQuestion} 
+              activeQuestion={activeQuestion} 
             />
           )}
         </Skeleton>

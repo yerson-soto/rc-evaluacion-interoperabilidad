@@ -8,12 +8,13 @@ import { useCompleteQuestion } from "./useCompleteQuestion";
 
 export interface QuestionaryProps {
   questions: Question[];
-  activeQuestion: number;
+  activeQuestion: Question | null;
 }
 
-export default function QuestionList({ questions, activeQuestion }: QuestionaryProps) {
+export default function QuestionList(props: QuestionaryProps) {
   const { changeAnswer } = useCompleteQuestion();
   const { uid: evaluationId } = useParams<Record<"uid", string>>();
+  const { questions, activeQuestion } = props;
 
   const changeSelectedAnswer = (choice: Choice): void => {
     if (evaluationId) {
@@ -27,7 +28,7 @@ export default function QuestionList({ questions, activeQuestion }: QuestionaryP
       size="large"
       pagination={{
         pageSize: 1,
-        current: activeQuestion,
+        current: activeQuestion?.number,
         style: {
           display: "none",
         },

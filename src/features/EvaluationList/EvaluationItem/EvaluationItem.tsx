@@ -8,6 +8,7 @@ import { Score } from "library/components/Score";
 import classes from "./EvaluationItem.module.css";
 
 import { paths } from "library/common/constants";
+import { EvaluationStatus } from "library/common/enums";
 
 interface EvaluationItemProps {
   evaluation: Evaluation;
@@ -60,9 +61,11 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
         
-        <Button onClick={goToDetail}>Ver</Button>,
+        <Button onClick={goToDetail}>
+          {evaluation.status === EvaluationStatus.Completed ? "Ver" : "Evaluar"}
+        </Button>,
        
-        <Button danger>Eliminar</Button>,
+        // <Button danger>Eliminar</Button>,
       ]}
     >
       <Row align="middle" gutter={20} wrap={false}>

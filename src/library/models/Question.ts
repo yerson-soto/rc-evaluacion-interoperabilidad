@@ -7,4 +7,7 @@ export interface Question {
   criterion: FullCriterion;
   selectedAnswer: Choice | null;
   providedEvidences: RequiredEvidence[];
+
+  // TODO: Remove
+  isCompleted: boolean;
 }

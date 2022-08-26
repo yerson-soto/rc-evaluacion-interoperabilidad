@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { actions } from 'redux/slices/questionSlice';
 
 export function useQuestionary(domainId?: number) {
-  const { isLoading, questionary, current } = useAppSelector(state => state.questions);
+  const { isLoading, questionary, activeQuestion } = useAppSelector(state => state.questions);
   const criterionService = new CriterionService();
   const dispatch = useAppDispatch();
 
@@ -20,7 +20,8 @@ export function useQuestionary(domainId?: number) {
           number: key + 1,
           criterion,
           selectedAnswer: null,
-          providedEvidences: []
+          providedEvidences: [],
+          isCompleted: false
         }));
 
         dispatch(actions.getSuccess(questions));
@@ -35,13 +36,13 @@ export function useQuestionary(domainId?: number) {
   }, [domainId]);
 
 
-  const changeCurrentQuestion = (current: number) => {
-    dispatch(actions.questionPrevNext(current));
+  const setActiveQuestion = (question: Question) => {
+    dispatch(actions.questionPrevNext(question));
   }
 
   const flushQuestions = (): void => {
     dispatch(actions.questionsFlushed());
   }
 
-  return { isLoading, questionary, currentQuestion: current, changeCurrentQuestion, flushQuestions };
+  return { isLoading, questionary, activeQuestion, setActiveQuestion, flushQuestions };
 }

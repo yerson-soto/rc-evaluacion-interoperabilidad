@@ -100,7 +100,7 @@ export default function DomainList() {
                   {domain.acronym}
                 </Avatar>
               }
-              title="2 criterios completados de 6"
+              title={domain.name}
               description={<Progress percent={30} />}
             />
               

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload, Image, Alert, Space, UploadProps } from "antd";
+import { Modal, Upload, Image as AntImage, Alert, Space, UploadProps } from "antd";
 import { useUploadHandler } from "./useAddEvidence";
 import { UploadOutlined } from "@ant-design/icons";
 import { RequiredEvidence } from "library/models/RequiredEvidence";
@@ -16,6 +16,10 @@ import ImgCrop from "antd-img-crop";
 import WordPreview from "resources/images/word-preview.svg";
 import ExcelPreview from "resources/images/excel-preview.svg";
 import PDFPreview from "resources/images/pdf-preview.svg";
+import { Question } from "library/models/Question";
+import { useAppDispatch } from "redux/hooks";
+import { actions } from "redux/slices/questionSlice";
+
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -26,17 +30,28 @@ const getBase64 = (file: RcFile): Promise<string> =>
   });
 
 interface AddEvidenceProps {
-  requiredEvidences: RequiredEvidence[];
+  question: Question;
 }
 
+const getSrcFromFile = (file: any) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file.originFileObj);
+    reader.onload = () => resolve(reader.result);
+  });
+};
+
 export default function AddEvidence(props: AddEvidenceProps) {
-  console.log(props.requiredEvidences);
+  const { question } = props;
   const [isPreviewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewType, setPreviewType] = useState("");
 
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const evidences = question.selectedAnswer?.requiredEvidences || [];
 
   const handleCancel = () => setPreviewVisible(false);
 
@@ -53,15 +68,39 @@ export default function AddEvidence(props: AddEvidenceProps) {
     setPreviewType(file.type || "");
   };
 
+  const completeQuestion: UploadProps["onChange"] = (params) => {
+    const { fileList: newFileList } = params;
+    
+    if (newFileList.length > 0) {
+      dispatch(actions.completeSuccess(question));
+    } else {
+
+    }
+  };
+
+  const onPreview = async (file: any) => {
+    const src = file.url || (await getSrcFromFile(file));
+    const imgWindow = window.open(src);
+
+    if (imgWindow) {
+      const image = new Image();
+      image.src = src;
+      imgWindow.document.write(image.outerHTML);
+    } else {
+      window.location.href = src;
+    }
+  };
+  
   return (
     <React.Fragment>
       <Space wrap>
-        {props.requiredEvidences.map((evidence) => (
+        {evidences.map((evidence) => (
           <EvidenceUpload
             key={evidence.id}
             title={evidence.title}
             accept={evidence.contentType.join(",")}
             onPreview={handlePreview}
+            onChange={completeQuestion}
           />
         ))}
       </Space>
@@ -69,7 +108,7 @@ export default function AddEvidence(props: AddEvidenceProps) {
       {[ContentType.JPEG, ContentType.JPG, ContentType.PNG].includes(
         previewType as ContentType
       ) && (
-        <Image
+        <AntImage
           style={{ display: "none" }}
           preview={{
             visible: isPreviewVisible,
@@ -88,14 +127,19 @@ interface EvidenceUploadProps extends UploadProps {
   title: string;
 }
 
+
+
 export function EvidenceUpload(props: EvidenceUploadProps) {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   // const [uploading, setUploading] = useState(false);
 
-  const { title = "Subir", ...extraProps } = props;
+  const { title = "Subir", onChange, ...extraProps } = props;
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+  const handleChange: UploadProps["onChange"] = (params) => {
+    const { fileList: newFileList } = params;
     setFileList(newFileList);
+
+    if (onChange) onChange(params);
   };
 
   const uploadButton = (
@@ -156,33 +200,8 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
     </Upload>
   );
 
-  return (
-    <React.Fragment>
-      {isImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload}
-    </React.Fragment>
-  );
+  return isImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload;
 }
-
-// const upload = React.createElement(
-//   Upload,
-//   {
-//     listType: "picture-card",
-//     maxCount: 1,
-//     onRemove: handleRemove,
-//     beforeUpload: beforeUpload,
-//     onChange: handleChange,
-//     previewFile: previewFile,
-//     fileList: fileList,
-//     ...extraProps,
-//   },
-//   [fileList.length >= 1 ? null : uploadButton]
-// );
-
-// return (
-//   <React.Fragment>
-//     {isImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload}
-//   </React.Fragment>
-// );
 
 export function Manually() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);

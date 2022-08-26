@@ -94,9 +94,7 @@ export default function QuestionItem(props: QuestionItemProps) {
                 type="info"
               />
 
-              <AddEvidence 
-                requiredEvidences={selectedAnswer?.requiredEvidences || []} 
-              />
+              <AddEvidence question={question} />
             </AppBox>
           </div>
         </CSSTransition>
