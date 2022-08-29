@@ -13,13 +13,14 @@ export class DomainMapper
       description: schema.name,
       acronym: schema.acronym,
       slug: schema.slug,
+      color: schema.color
     };
   }
 
   fromAPI(data: GetDomain): Domain {
     return {
       id: data.id,
-      color: data.color || "#e2efdb",
+      color: data.color,
       name: capitalize(data.description),
       slug: data.slug || "",
       acronym: data.acronym || "",

@@ -1,10 +1,14 @@
 import React from "react";
 import { Form } from "antd";
 import { DomainFormSchema } from "./DomainFormSchema";
+import { Domain } from "library/models/Domain";
 import createSlug from "library/helpers/create-slug";
 
 export function useDomainForm() {
   const [form] = Form.useForm<DomainFormSchema>();
+
+  const namePreview = Form.useWatch('name', form);
+  const colorPreview = Form.useWatch('color', form);
 
   const resetForm = () => {
     form.resetFields();
@@ -32,6 +36,8 @@ export function useDomainForm() {
 
   return {
     form,
+    namePreview,
+    colorPreview,
     resetForm,
     populateSlug,
     normalizeAcronym,

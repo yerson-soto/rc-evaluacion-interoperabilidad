@@ -4,16 +4,3 @@
     margin: 0 auto;
   }
 }
-
-.item {
-  margin-bottom: 50px!important;
-}
-
-.itemCard {
-  cursor: pointer;
-  transition: all .2s;
-}
-
-.itemCard:hover {
-  transform: scale(1.01);
-}

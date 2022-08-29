@@ -38,18 +38,14 @@ export class CriterionService extends AbstractCrudService<
 
   getDetailed(): Promise<FullCriterion[]> {
     return new Promise((resolve, reject) => {
-      const results: any = data;
-      const mapper = this.mapper.fromAPIFull.bind(this.mapper);
-      const ret: FullCriterion[] = results.map(mapper);
-      resolve(ret);
-      // this.client
-      //   .get<APIResponse<dto.GetCriterion[]>>(this.getAllUrl)
-      //   .then((res) => {
-      //     const mapper = this.mapper.fromAPIFull.bind(this.mapper);
-      //     const results = res.data.result.map(mapper);
-      //     resolve(results);
-      //   })
-      //   .catch(() => reject("No se pudo cargar los criterios"));
+      this.client
+        .get<APIResponse<dto.GetCriterion[]>>('/criterions')
+        .then((res) => {
+          const mapper = this.mapper.fromAPIFull.bind(this.mapper);
+          const results = res.data.result.map(mapper);
+          resolve(results);
+        })
+        .catch(() => reject("No se pudo cargar los criterios"));
     });
   }
 

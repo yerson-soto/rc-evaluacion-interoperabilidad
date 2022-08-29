@@ -5,6 +5,7 @@ export interface DomainFormSchema {
   name: string;
   slug: string;
   acronym: string;
+  color: string;
 }
 
 export const rules: Record<keyof DomainFormSchema, Rule[]> = {
@@ -46,4 +47,12 @@ export const rules: Record<keyof DomainFormSchema, Rule[]> = {
       })
     }
   ],
+  color: [
+    {
+      required: true,
+      message: getText("rules.required", {
+        field: getText("fields.color")
+      })
+    }
+  ]
 }

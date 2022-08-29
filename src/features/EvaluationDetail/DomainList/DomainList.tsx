@@ -1,18 +1,15 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { List, Typography, Card, Empty, Avatar } from "antd";
-import { Progress } from "antd";
+import { List, Empty } from "antd";
 import { PaginationFooter } from "library/components/PaginationFooter";
-
-import { AppBox } from "library/components/AppBox";
 import { Questionary } from "../Questionary";
 import { useListAction } from 'features/Crud/useListAction';
 import { domainSlice } from 'redux/slices/domainSlice';
 import { DomainService } from 'library/api/services/DomainService';
 import { useToggleQuestionary } from '../Questionary/useToggleQuestionary';
+import { DomainItem } from '../DomainItem';
 
 import classes from "./DomainList.module.css";
-import chroma from "chroma-js";
 
 
 export default function DomainList() {
@@ -28,10 +25,6 @@ export default function DomainList() {
   const { t } = useTranslation();
   const { open } = useToggleQuestionary();
 
-  const colorRange = chroma
-        .scale(["#fce4d7", "#fff1cf", "#feffd5", "#e2efda", "#c6e0b3"])
-        .colors(domains.length);
-
   return (
     <React.Fragment>
       <List
@@ -39,7 +32,7 @@ export default function DomainList() {
         dataSource={domains}
         className={classes.container}
         grid={{
-          gutter: 20,
+          gutter: 30,
           xs: 1,
           sm: 2,
           md: 2,
@@ -61,52 +54,7 @@ export default function DomainList() {
           />
         }
         renderItem={(domain, key) => (
-          <List.Item 
-            className={classes.item} 
-            onClick={() => open(domain)}
-          >
-            <Card
-              className={classes.itemCard}
-              cover={
-                <AppBox
-                  style={{
-                    height: "150px",
-                    backgroundColor: colorRange[key],
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "0 16px"
-                  }}
-                >
-                  <Typography.Text
-                    style={{
-                      // color: "#ffffff",
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      textAlign: "center"
-                    }}
-                  >
-                    Dominio {domain.name}
-                  </Typography.Text>
-                </AppBox>
-              }
-              bordered={false}
-            >
-              <List.Item.Meta
-                avatar={
-                <Avatar
-                  style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
-                >
-                  {domain.acronym}
-                </Avatar>
-              }
-              title={domain.name}
-              description={<Progress percent={30} />}
-            />
-              
-            </Card>
-          </List.Item>
-  
+          <DomainItem domain={domain} onClick={() => open(domain)} />
         )}
       />
       <Questionary />

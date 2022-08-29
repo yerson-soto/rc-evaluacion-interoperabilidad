@@ -10,4 +10,5 @@ export interface CreateDomain {
   description: string;
   slug: string;
   acronym: string;
+  color: string;
 }

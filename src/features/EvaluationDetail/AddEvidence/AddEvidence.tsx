@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload, Image as AntImage, Alert, Space, UploadProps } from "antd";
+import {
+  Modal,
+  Upload,
+  Image as AntImage,
+  Alert,
+  Space,
+  UploadProps,
+} from "antd";
 import { useUploadHandler } from "./useAddEvidence";
 import { UploadOutlined } from "@ant-design/icons";
 import { RequiredEvidence } from "library/models/RequiredEvidence";
@@ -19,7 +26,6 @@ import PDFPreview from "resources/images/pdf-preview.svg";
 import { Question } from "library/models/Question";
 import { useAppDispatch } from "redux/hooks";
 import { actions } from "redux/slices/questionSlice";
-
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -70,27 +76,13 @@ export default function AddEvidence(props: AddEvidenceProps) {
 
   const completeQuestion: UploadProps["onChange"] = (params) => {
     const { fileList: newFileList } = params;
-    
+
     if (newFileList.length > 0) {
       dispatch(actions.completeSuccess(question));
     } else {
-
     }
   };
 
-  const onPreview = async (file: any) => {
-    const src = file.url || (await getSrcFromFile(file));
-    const imgWindow = window.open(src);
-
-    if (imgWindow) {
-      const image = new Image();
-      image.src = src;
-      imgWindow.document.write(image.outerHTML);
-    } else {
-      window.location.href = src;
-    }
-  };
-  
   return (
     <React.Fragment>
       <Space wrap>
@@ -127,11 +119,8 @@ interface EvidenceUploadProps extends UploadProps {
   title: string;
 }
 
-
-
 export function EvidenceUpload(props: EvidenceUploadProps) {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  // const [uploading, setUploading] = useState(false);
 
   const { title = "Subir", onChange, ...extraProps } = props;
 
@@ -142,13 +131,6 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
     if (onChange) onChange(params);
   };
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>{title}</div>
-    </div>
-  );
-
   const handleRemove = (file: UploadFile<any>) => {
     const index = fileList.indexOf(file);
     const newFileList = fileList.slice();
@@ -157,8 +139,19 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
   };
 
   const beforeUpload = (file: RcFile) => {
-    setFileList([...fileList, file]);
-
+    if (isImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const newFile = file as UploadFile;
+        newFile.url = reader.result as any;
+        setFileList([...fileList, newFile]);
+      };
+    
+    } else {
+      setFileList([...fileList, file]);
+    }
+    
     return false;
   };
 
@@ -185,6 +178,13 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
     )
   );
 
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>{title}</div>
+    </div>
+  );
+
   const upload = (
     <Upload
       listType="picture-card"
@@ -201,66 +201,4 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
   );
 
   return isImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload;
-}
-
-export function Manually() {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [uploading, setUploading] = useState(false);
-
-  const handleUpload = () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("files[]", file as RcFile);
-    });
-    setUploading(true);
-    // You can use any AJAX library you like
-    fetch("https://www.mocky.io/v2/5cc8019d300000980a055e76", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setFileList([]);
-        message.success("upload successfully.");
-      })
-      .catch(() => {
-        message.error("upload failed.");
-      })
-      .finally(() => {
-        setUploading(false);
-      });
-  };
-
-  const props: UploadProps = {
-    listType: "picture-card",
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-    },
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-
-      return false;
-    },
-    fileList,
-  };
-
-  return (
-    <>
-      <Upload {...props}>
-        <Button icon={<UploadOutlined />}>Select File</Button>
-      </Upload>
-      {/* <Button
-        type="primary"
-        onClick={handleUpload}
-        disabled={fileList.length === 0}
-        loading={uploading}
-        style={{ marginTop: 16 }}
-      >
-        {uploading ? 'Uploading' : 'Start Upload'}
-      </Button> */}
-    </>
-  );
 }

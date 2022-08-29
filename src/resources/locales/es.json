@@ -59,6 +59,7 @@
       "not_found": "No Encontrado"
   },
   "fields": {
+    "color": "Color",
     "name": "Nombre",
     "identification": "Cédula",
     "user_type": "Tipo de usuario",
@@ -124,7 +125,8 @@
   "hints": {
     "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.",
     "slug": "Este texto se utiliza como identificador legible del dominio.",
-    "domain_acronym": "La abreviatura se utiliza para formar el código de los lineamientos."
+    "domain_acronym": "La abreviatura se utiliza para formar el código de los lineamientos.",
+    "domain_color": "Este color de utiliza para distinguir el dominio de los demás."
   },
   "pagination": {
     "evaluations": "Evaluación(es)",
