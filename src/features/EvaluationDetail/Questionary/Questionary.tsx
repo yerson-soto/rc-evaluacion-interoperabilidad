@@ -9,6 +9,8 @@ import { useToggleQuestionary } from "./useToggleQuestionary";
 import { useDomain } from "./useDomain";
 import { useQuestionary } from "./useQuestionary";
 
+import classes from './Questionary.module.css';
+
 export default function Questionary() {
   const { visible, close } = useToggleQuestionary();
   const { isFetching, isError, domain, domainTitle, flushDomain } = useDomain();
@@ -27,21 +29,29 @@ export default function Questionary() {
     originalElement
   ) => {
     const buttons: Record<string, any> = {
-      prev: <Button style={{ fontFamily: "Maven Pro" }}>Anterior</Button>,
-      next: <Button style={{ fontFamily: "Maven Pro" }}>Siguiente</Button>,
+      prev: (
+        <Button className={classes.backBtn}>
+          {t("buttons.back")}
+        </Button>
+      ),
+      next: (
+        <Button type="primary" className={classes.saveBtn}>
+          {t("buttons.save")}
+        </Button>
+      ),
     };
 
     return buttons[type] || originalElement;
   };
 
   const changeQuestion = (page: number): void => {
-    const currentQuestion = questionary.find(question => question.number === page);
+    setActiveQuestion(page);
+    // const currentQuestion = questionary.find(question => question.number === page);
 
-    if (currentQuestion?.isCompleted) {
-      setActiveQuestion(currentQuestion);
-    } else {
-      message.info("Completa toda la informacion para poder avanzar")
-    }
+    // if (currentQuestion) {
+    // } else {
+    //   message.info("Completa toda la informacion para poder avanzar")
+    // }
   };
 
   const renderPagination = (): React.ReactNode =>
@@ -51,7 +61,7 @@ export default function Questionary() {
         total={questionary.length}
         itemRender={renderPaginationItem}
         onChange={changeQuestion}
-        current={activeQuestion?.number}
+        current={activeQuestion}
       />
     ) : null;
 
@@ -64,6 +74,7 @@ export default function Questionary() {
   return (
     <AppDrawer
       placement="right"
+      width={570}
       title={domainTitle}
       visible={visible}
       onClose={hideQuestionary}

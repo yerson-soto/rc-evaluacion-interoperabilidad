@@ -6,14 +6,14 @@ import { Choice } from "library/models/Choice";
 
 export interface QuestionState extends CommonState {
   questionary: Question[];
-  activeQuestion: Question | null;
+  activeQuestion: number;
   score: number;
 }
 
 const initialState: QuestionState = {
   questionary: [],
   score: 0,
-  activeQuestion: null,
+  activeQuestion: 1,
   isLoading: false,
   hasError: false,
   errorMessage: "",
@@ -50,15 +50,15 @@ export const questionSlice = createSlice({
       );
 
       if (question) {
-        question.selectedAnswer = action.payload;
+        question.choosenAnswer = action.payload;
       }
     },
-    questionPrevNext: (state, action: PayloadAction<Question>) => {
+    questionPrevNext: (state, action: PayloadAction<number>) => {
       state.activeQuestion = action.payload;
     },
     questionsFlushed: (state) => {
       state.questionary = [];
-      state.activeQuestion = null;
+      state.activeQuestion = 1;
       state.errorMessage = "";
       state.hasError = false;
     }

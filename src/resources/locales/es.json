@@ -170,7 +170,9 @@
     "add": "Agregar",
     "add_evidence": "Nuevo documento",
     "add_choice": "Agregar respuesta",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "back": "Anterior",
+    "next": "Siguiente"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",
@@ -215,8 +217,10 @@
   },
   "contentTypes": {
     "plain_text": "TXT",
-    "excel": "XLSX",
-    "word": "DOCX",
+    "xlsx": "XLSX",
+    "xls": "XLS",
+    "docx": "DOCX",
+    "doc": "DOC",
     "jpg": "JPG",
     "png": "PNG",
     "jpeg": "JPEG",

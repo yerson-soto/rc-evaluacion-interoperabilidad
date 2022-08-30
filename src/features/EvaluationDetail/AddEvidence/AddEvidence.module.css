@@ -17,3 +17,14 @@
   margin-top: 8px;
 }
 
+.pdf path {
+  stroke: #C80A0A;
+}
+
+.txt path {
+  stroke: #688D89;
+}
+
+.csv path {
+  stroke: #0D9048;
+}

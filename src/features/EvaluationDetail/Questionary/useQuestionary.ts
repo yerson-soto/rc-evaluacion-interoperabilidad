@@ -19,8 +19,9 @@ export function useQuestionary(domainId?: number) {
         const questions: Question[] = criteria.map((criterion, key) => ({
           number: key + 1,
           criterion,
-          selectedAnswer: null,
-          providedEvidences: [],
+          choosenAnswer: null,
+          savedEvidences: [],
+          uploadedFiles: [],
           isCompleted: false
         }));
 
@@ -36,8 +37,8 @@ export function useQuestionary(domainId?: number) {
   }, [domainId]);
 
 
-  const setActiveQuestion = (question: Question) => {
-    dispatch(actions.questionPrevNext(question));
+  const setActiveQuestion = (questionNumber: number) => {
+    dispatch(actions.questionPrevNext(questionNumber));
   }
 
   const flushQuestions = (): void => {

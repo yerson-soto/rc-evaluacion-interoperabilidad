@@ -9,8 +9,7 @@ import { useCompleteQuestion } from "./useCompleteQuestion";
 
 export interface QuestionaryProps {
   questions: Question[];
-  // TODO: change active question o number
-  activeQuestion: Question | null;
+  activeQuestion: number;
 }
 
 export default function QuestionList(props: QuestionaryProps) {
@@ -20,16 +19,13 @@ export default function QuestionList(props: QuestionaryProps) {
 
   const paginationConfig: PaginationConfig = {
     pageSize: 1,
+    current: activeQuestion,
     style: {
       display: "none",
     },
   };
 
-  if (activeQuestion) {
-    paginationConfig["current"] = activeQuestion.number;
-  }
-
-  const changeSelectedAnswer = (choice: Choice): void => {
+  const chooseAnswer = (choice: Choice): void => {
     if (evaluationId) {
       changeAnswer(evaluationId, choice);
     }
@@ -46,7 +42,7 @@ export default function QuestionList(props: QuestionaryProps) {
         <QuestionItem
           key={question.number}
           question={question}
-          onAnswerChange={changeSelectedAnswer}
+          onAnswerChange={chooseAnswer}
           onEvidenceDelete={() => {}}
           onEvidenceAdd={() => {}}
         />

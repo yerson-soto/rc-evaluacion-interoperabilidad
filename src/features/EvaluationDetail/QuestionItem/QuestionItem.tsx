@@ -24,18 +24,21 @@ interface QuestionItemProps {
 
 export default function QuestionItem(props: QuestionItemProps) {
   const { question, onAnswerChange } = props;
-  const { criterion, number: count, selectedAnswer } = question;
+  const { criterion, number: count, choosenAnswer } = question;
   const { t } = useTranslation();
   const nodeRef = useRef(null);
 
-  const showEvidences = selectedAnswer?.isEvidenceRequired;
-
+  const showEvidences = choosenAnswer?.isEvidenceRequired;
 
   const handleEvidenceChange = (): void => {};
 
   const selectAnswer = (choice: Choice): void => {
     onAnswerChange(choice);
   };
+
+  const uploadFiles = (files: FileList): void => {
+    
+  }
 
   const renderResponses = (): React.ReactNode => {
     const choices = criterion.choices;
@@ -49,7 +52,7 @@ export default function QuestionItem(props: QuestionItemProps) {
         key={choice.id}
         choice={choice}
         color={colors[index]}
-        isSelected={choice.id === question.selectedAnswer?.id}
+        isSelected={choice.id === question.choosenAnswer?.id}
         onChange={() => selectAnswer(choice)}
       />
     ))
@@ -94,7 +97,7 @@ export default function QuestionItem(props: QuestionItemProps) {
                 type="info"
               />
 
-              <AddEvidence question={question} />
+              <AddEvidence question={question} onChange={console.log} />
             </AppBox>
           </div>
         </CSSTransition>

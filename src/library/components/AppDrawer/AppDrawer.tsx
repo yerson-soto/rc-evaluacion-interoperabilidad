@@ -8,15 +8,17 @@ interface AppDrawerProps extends DrawerProps {
 
 export default function AppDrawer(props: AppDrawerProps) {
   const { md: isDesktop } = Grid.useBreakpoint();
-  const { children, onCloseEnd, ...drawerProps } = props;
+  const { children, onCloseEnd, width, ...drawerProps } = props;
 
+  const drawerWidth = width ? width : 500;
+  
   const handleVisibilityChange = (visible: boolean): void => {
     if (!visible && onCloseEnd) onCloseEnd();
   };
 
   return (
     <Drawer
-      width={isDesktop ? 500 : "100%"}
+      width={isDesktop ? drawerWidth : "100%"}
       afterVisibleChange={handleVisibilityChange}
       forceRender
       destroyOnClose

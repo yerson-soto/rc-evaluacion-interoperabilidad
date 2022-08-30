@@ -11,8 +11,10 @@ export enum ContentType {
   JPEG = 'image/jpeg',
   CSV = 'text/csv',
   PDF = 'application/pdf',
-  WORD = 'application/msword',
-  EXCEL = 'application/vnd.ms-excel',
+  DOC = 'application/msword',
+  DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  XLS = 'application/vnd.ms-excel',
 }
 
 export enum EvaluationStatus {

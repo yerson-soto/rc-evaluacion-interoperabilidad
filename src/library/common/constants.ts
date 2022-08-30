@@ -97,8 +97,10 @@ export const contentTypeLabels = {
   [ContentType.JPEG]: getText('contentTypes.jpeg'),
   [ContentType.CSV]: getText('contentTypes.csv'),
   [ContentType.PDF]: getText('contentTypes.pdf'),
-  [ContentType.WORD]: getText('contentTypes.word'),
-  [ContentType.EXCEL]: getText('contentTypes.excel'),
+  [ContentType.DOC]: getText('contentTypes.doc'),
+  [ContentType.DOCX]: getText('contentTypes.docx'),
+  [ContentType.XLS]: getText('contentTypes.xls'),
+  [ContentType.XLSX]: getText('contentTypes.xlsx'),
 };
 
 export const evaluationStatusLabels = {
