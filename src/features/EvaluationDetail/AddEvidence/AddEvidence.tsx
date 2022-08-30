@@ -7,13 +7,18 @@ import {
   Alert,
   Space,
   UploadProps,
+  Tooltip,
 } from "antd";
 import { useUploadHandler } from "./useAddEvidence";
 import { UploadOutlined } from "@ant-design/icons";
 import { RequiredEvidence } from "library/models/RequiredEvidence";
-import { Button, message } from "antd";
+import { Button, message } from 'antd';
 import { ContentType } from "library/common/enums";
-import type { RcFile, UploadFile } from "antd/es/upload/interface";
+import type { RcFile, UploadFile, UploadListType } from "antd/es/upload/interface";
+
+import { GrDocumentPdf, GrDocumentTxt } from 'react-icons/gr';
+import { SiMicrosoftword, SiMicrosoftexcel } from 'react-icons/si';
+import { AiOutlineFileUnknown } from 'react-icons/ai';
 
 import classes from "./AddEvidence.module.css";
 import { AppBox } from "library/components/AppBox";
@@ -23,6 +28,7 @@ import ImgCrop from "antd-img-crop";
 import WordPreview from "resources/images/word-preview.svg";
 import ExcelPreview from "resources/images/excel-preview.svg";
 import PDFPreview from "resources/images/pdf-preview.svg";
+import {ReactComponent as PDFPreviewIcon} from "resources/images/pdf-preview.svg";
 import { Question } from "library/models/Question";
 import { useAppDispatch } from "redux/hooks";
 import { actions } from "redux/slices/questionSlice";
@@ -39,12 +45,18 @@ interface AddEvidenceProps {
   question: Question;
 }
 
-const getSrcFromFile = (file: any) => {
+const getSrcFromFile = (file: UploadFile): Promise<string> => {
   return new Promise((resolve) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file.originFileObj);
-    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file.originFileObj as Blob);
+    reader.onload = () => resolve(reader.result as string);
   });
+};
+
+const isImage = (contentType: string | ContentType): boolean => {
+  return [ContentType.JPEG, ContentType.JPG, ContentType.PNG].includes(
+    contentType as ContentType
+  );
 };
 
 export default function AddEvidence(props: AddEvidenceProps) {
@@ -85,8 +97,9 @@ export default function AddEvidence(props: AddEvidenceProps) {
 
   return (
     <React.Fragment>
-      <Space wrap>
+      <Space size="middle" wrap>
         {evidences.map((evidence) => (
+          <AppBox className={classes.previewBox}>
           <EvidenceUpload
             key={evidence.id}
             title={evidence.title}
@@ -94,12 +107,11 @@ export default function AddEvidence(props: AddEvidenceProps) {
             onPreview={handlePreview}
             onChange={completeQuestion}
           />
+        </AppBox>
         ))}
       </Space>
 
-      {[ContentType.JPEG, ContentType.JPG, ContentType.PNG].includes(
-        previewType as ContentType
-      ) && (
+      {isImage(previewType) && (
         <AntImage
           style={{ display: "none" }}
           preview={{
@@ -121,8 +133,13 @@ interface EvidenceUploadProps extends UploadProps {
 
 export function EvidenceUpload(props: EvidenceUploadProps) {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-
   const { title = "Subir", onChange, ...extraProps } = props;
+
+  const fileType = fileList[0]?.type || "";
+  const showImagePreview = isImage(fileType);
+
+  const contentTypes = extraProps.accept?.split(",") || [];
+  const isOnlyImage = contentTypes.every(isImage);
 
   const handleChange: UploadProps["onChange"] = (params) => {
     const { fileList: newFileList } = params;
@@ -137,9 +154,9 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
     newFileList.splice(index, 1);
     setFileList(newFileList);
   };
-
-  const beforeUpload = (file: RcFile) => {
-    if (isImage) {
+  
+  const beforeUpload = async (file: RcFile) => {
+    if (isOnlyImage) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -147,11 +164,11 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
         newFile.url = reader.result as any;
         setFileList([...fileList, newFile]);
       };
-    
+      
     } else {
       setFileList([...fileList, file]);
     }
-    
+
     return false;
   };
 
@@ -171,28 +188,40 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
     });
   };
 
-  const contentTypes = extraProps.accept?.split(",") || [];
-  const isImage = contentTypes.some((contentType) =>
-    [ContentType.JPEG, ContentType.JPG, ContentType.PNG].includes(
-      contentType as ContentType
-    )
-  );
+  const renderPreview = (file: UploadFile): React.ReactNode => {
+    const isWord = ContentType.WORD === file.type;
+    const isExcel = ContentType.EXCEL === file.type;
+    const isPdf = ContentType.PDF === file.type;
+    const isTxt = ContentType.TEXT === file.type;
+
+    if (isWord) {
+      return <SiMicrosoftword style={{ color: "#2A5699" }} size={28}/>;
+    } else if (isExcel) {
+      return <SiMicrosoftexcel style={{ color: "#0D9048" }} size={28} />;
+    } else if (isPdf) {
+      return <GrDocumentPdf style={{ color: "#C80A0A" }} size={28} />;
+    } else if (isTxt) {
+      return <GrDocumentTxt style={{ color: "#688D89" }} size={28} />
+    } else {
+      return <AiOutlineFileUnknown style={{ color: "#A4A4A4" }} size={28} />
+    }
+  }
 
   const uploadButton = (
-    <div>
+    <AppBox className={classes.uploadContent}>
       <PlusOutlined />
-      <div style={{ marginTop: 8 }}>{title}</div>
-    </div>
+      <AppBox className={classes.title}>{title}</AppBox>
+    </AppBox>
   );
 
   const upload = (
     <Upload
       listType="picture-card"
       maxCount={1}
+      iconRender={renderPreview}
       onRemove={handleRemove}
       beforeUpload={beforeUpload}
       onChange={handleChange}
-      previewFile={isImage ? undefined : previewFile}
       fileList={fileList}
       {...extraProps}
     >
@@ -200,5 +229,5 @@ export function EvidenceUpload(props: EvidenceUploadProps) {
     </Upload>
   );
 
-  return isImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload;
+  return isOnlyImage ? <ImgCrop rotate>{upload}</ImgCrop> : upload;
 }
