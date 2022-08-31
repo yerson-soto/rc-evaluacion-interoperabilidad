@@ -1,18 +1,13 @@
 import { FullCriterion } from "library/models/Criterion";
 import { APIResponse } from "library/common/interfaces";
-import { Choice } from "library/models/Choice";
 import { Criterion } from "library/models/Criterion";
 import { AbstractCrudService } from "./AbstractCrudService";
 import { CriterionMapper } from "library/api/mappers/CriterionMapper";
 import { CriterionFormSchema } from "features/CriterionCrud/CriterionForm/CriterionFormSchema";
-import { GetChoice } from "library/api/dto/choice-dto";
-import { ChoiceMapper } from 'library/api/mappers/ChoiceMapper';
 import * as dto from "library/api/dto/criterion-dto";
-import { data } from '../../../features/MaturityModel/TableVersion/data';
 
 export interface CriterionRepository {
   getByDomain: (domainId: number) => Promise<FullCriterion[]>;
-  changeAnswer: (data: dto.ChangeAnswer) => Promise<Choice>;
 }
 
 export class CriterionService extends AbstractCrudService<
@@ -60,19 +55,6 @@ export class CriterionService extends AbstractCrudService<
           resolve(criterions);
         })
         .catch(() => reject("No se pudo cargar los criterios"));
-    });
-  }
-
-  changeAnswer(data: dto.ChangeAnswer): Promise<Choice> {
-    return new Promise((resolve, reject) => {
-      this.client
-        .post<APIResponse<GetChoice>>("/evaluationtechnics", data)
-        .then((res) => {
-          const choiceMapper = new ChoiceMapper();
-          const choice: Choice = choiceMapper.fromAPI(res.data.result);
-          resolve(choice);
-        })
-        .catch(() => reject("Error al cambiar el nivel"));
     });
   }
 }

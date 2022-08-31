@@ -74,7 +74,6 @@ export default function Questionary() {
   return (
     <AppDrawer
       placement="right"
-      width={570}
       title={domainTitle}
       visible={visible}
       onClose={hideQuestionary}

@@ -6,6 +6,7 @@ import { QuestionItem } from "features/EvaluationDetail/QuestionItem";
 import { Question } from "library/models/Question";
 import { Choice } from "library/models/Choice";
 import { useCompleteQuestion } from "./useCompleteQuestion";
+import { AnswerEvidence } from "library/models/Question";
 
 export interface QuestionaryProps {
   questions: Question[];
@@ -13,7 +14,7 @@ export interface QuestionaryProps {
 }
 
 export default function QuestionList(props: QuestionaryProps) {
-  const { changeAnswer } = useCompleteQuestion();
+  const { updateAnswer, updateEvidences } = useCompleteQuestion();
   const { uid: evaluationId } = useParams<Record<"uid", string>>();
   const { questions, activeQuestion } = props;
 
@@ -25,10 +26,17 @@ export default function QuestionList(props: QuestionaryProps) {
     },
   };
 
-  const chooseAnswer = (choice: Choice): void => {
+  const changeAnswer = (choice: Choice): void => {
     if (evaluationId) {
-      changeAnswer(evaluationId, choice);
+      updateAnswer(evaluationId, choice);
     }
+  };
+
+  const changeEvidences = (
+    question: Question,
+    evidences: AnswerEvidence[]
+  ): void => {
+    updateEvidences(question, evidences);
   };
 
   return (
@@ -42,9 +50,10 @@ export default function QuestionList(props: QuestionaryProps) {
         <QuestionItem
           key={question.number}
           question={question}
-          onAnswerChange={chooseAnswer}
-          onEvidenceDelete={() => {}}
-          onEvidenceAdd={() => {}}
+          onAnswerChange={changeAnswer}
+          onEvidenceChange={(evidences) => 
+            changeEvidences(question, evidences)
+          }
         />
       )}
     />

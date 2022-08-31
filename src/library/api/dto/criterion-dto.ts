@@ -1,6 +1,6 @@
 import { GetChoice } from "./choice-dto";
 import { GetLineament } from "./lineament-dto";
-import { GetDomain } from './domain-dto';
+import { GetDomain } from "./domain-dto";
 
 export interface CreateCriterion {
   description: string;
@@ -14,10 +14,3 @@ export interface GetCriterion {
   lineamentsResponses: GetLineament[];
   responseResponses: GetChoice[];
 }
-
-export interface ChangeAnswer {
-  evaluationInstitutionalId: string;
-  criterionId: number;
-  responsesId: number;
-}
-

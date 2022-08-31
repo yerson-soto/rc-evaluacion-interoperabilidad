@@ -20,8 +20,7 @@ export function useQuestionary(domainId?: number) {
           number: key + 1,
           criterion,
           choosenAnswer: null,
-          savedEvidences: [],
-          uploadedFiles: [],
+          answerEvidences: [],
           isCompleted: false
         }));
 

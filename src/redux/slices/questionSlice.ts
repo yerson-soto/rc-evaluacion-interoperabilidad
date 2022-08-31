@@ -3,6 +3,7 @@ import { CommonState } from "library/common/interfaces";
 import { ErrorMessage } from "library/common/types";
 import { Question } from "library/models/Question";
 import { Choice } from "library/models/Choice";
+import { AnswerEvidence } from 'library/models/Question';
 
 export interface QuestionState extends CommonState {
   questionary: Question[];
@@ -44,13 +45,24 @@ export const questionSlice = createSlice({
         question.isCompleted = true;
       }
     },
-    changeAnswerSuccess: (state, action: PayloadAction<Choice>) => {
+    updateAnswerSuccess: (state, action: PayloadAction<Choice>) => {
       const question = state.questionary.find(
         (question) => question.criterion.id === action.payload.criterion.id
       );
 
       if (question) {
         question.choosenAnswer = action.payload;
+      }
+    },
+    updateEvidencesSuccess: (state, action: PayloadAction<[Question, AnswerEvidence[]]>) => {
+      const [question, evidences] = action.payload;
+
+      const updateQuestion = state.questionary.find(
+        (q) => q.criterion.id === question.criterion.id
+      );
+      
+      if (updateQuestion) {
+        updateQuestion.answerEvidences = evidences;
       }
     },
     questionPrevNext: (state, action: PayloadAction<number>) => {

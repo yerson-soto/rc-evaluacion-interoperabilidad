@@ -1,23 +1,23 @@
 import { FullCriterion } from "./Criterion";
-import { UploadFile } from "antd/lib/upload";
 import { RequiredEvidence } from "./RequiredEvidence";
 import { Choice } from "./Choice";
 
-interface QuestionEvidence extends RequiredEvidence {
-  evidenceUrl: string;
+export interface EvidenceFile {
+  uid: string;
+  url: string;
+  name: string;
+  type: string;
 }
 
-interface QuestionFile {
-  evidenceId: string;
-  file: UploadFile;
+export interface AnswerEvidence extends RequiredEvidence {
+  file: EvidenceFile;
 }
 
 export interface Question {
   number: number;
   criterion: FullCriterion;
   choosenAnswer: Choice | null;
-  savedEvidences: QuestionEvidence[];
-  uploadedFiles: QuestionFile[];
+  answerEvidences: AnswerEvidence[];
 
   // TODO: Remove
   isCompleted: boolean;

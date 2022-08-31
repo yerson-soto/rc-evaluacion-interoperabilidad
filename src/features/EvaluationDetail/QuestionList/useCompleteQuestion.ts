@@ -2,18 +2,23 @@ import { useState, useEffect } from "react";
 import { message } from "antd";
 import { CriterionService } from "library/api/services/CriterionService";
 import { actions } from "redux/slices/questionSlice";
+import { Question } from "library/models/Question";
 import { useAppDispatch } from "redux/hooks";
-import { ChangeAnswer } from "library/api/dto/criterion-dto";
 import { Choice } from "library/models/Choice";
+import { AnswerEvidence } from "library/models/Question";
 
 export function useCompleteQuestion() {
   const criterionService = new CriterionService();
 
   const dispatch = useAppDispatch();
 
-  const changeAnswer = (evaluationId: string, choice: Choice) => {
-    dispatch(actions.changeAnswerSuccess(choice));
-    
+  const updateAnswer = (
+    evaluationId: string, 
+    choice: Choice
+  ) => {
+    console.log('choosen', choice)
+    dispatch(actions.updateAnswerSuccess(choice));
+
     // const payload: ChangeAnswer = {
     //   evaluationInstitutionalId: evaluationId,
     //   criterionId: choice.criterion.id,
@@ -30,5 +35,13 @@ export function useCompleteQuestion() {
     //   });
   };
 
-  return { changeAnswer };
+  const updateEvidences = (
+    question: Question, 
+    evidences: AnswerEvidence[]
+  ) => {
+    console.log(evidences);
+    dispatch(actions.updateEvidencesSuccess([question, evidences]));
+  };
+
+  return { updateAnswer, updateEvidences };
 }

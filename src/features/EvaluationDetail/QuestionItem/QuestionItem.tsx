@@ -1,45 +1,34 @@
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Skeleton, Space, Tag, Tooltip } from "antd";
+import { CSSTransition } from "react-transition-group";
+import { Alert, Space, Tag, Tooltip } from "antd";
 import { AppBox } from "library/components/AppBox";
 import { Avatar, List } from "antd";
 import { SectionDivider } from "library/components/SectionDivider";
-import { AddEvidence } from "features/EvaluationDetail/AddEvidence";
+import { EvidenceUpload } from "features/EvaluationDetail/EvidenceUpload";
 import { Answer } from "features/EvaluationDetail/Answer";
 import { Choice } from "library/models/Choice";
 import { Question } from "library/models/Question";
-import { CSSTransition } from "react-transition-group";
+import { AnswerEvidence } from 'library/models/Question';
 
 import classes from "./QuestionItem.module.css";
-
 import chroma from "chroma-js";
 
 
 interface QuestionItemProps {
   question: Question;
   onAnswerChange: (choice: Choice) => void;
-  onEvidenceAdd: () => void;
-  onEvidenceDelete: () => void;
+  onEvidenceChange: (evidences: AnswerEvidence[]) => void;
 }
 
 export default function QuestionItem(props: QuestionItemProps) {
-  const { question, onAnswerChange } = props;
+  const { question, onAnswerChange, onEvidenceChange } = props;
   const { criterion, number: count, choosenAnswer } = question;
   const { t } = useTranslation();
   const nodeRef = useRef(null);
 
   const showEvidences = choosenAnswer?.isEvidenceRequired;
-
-  const handleEvidenceChange = (): void => {};
-
-  const selectAnswer = (choice: Choice): void => {
-    onAnswerChange(choice);
-  };
-
-  const uploadFiles = (files: FileList): void => {
-    
-  }
-
+ 
   const renderResponses = (): React.ReactNode => {
     const choices = criterion.choices;
     
@@ -53,7 +42,7 @@ export default function QuestionItem(props: QuestionItemProps) {
         choice={choice}
         color={colors[index]}
         isSelected={choice.id === question.choosenAnswer?.id}
-        onChange={() => selectAnswer(choice)}
+        onChange={() => onAnswerChange(choice)}
       />
     ))
   };
@@ -68,7 +57,10 @@ export default function QuestionItem(props: QuestionItemProps) {
       <SectionDivider text={t("dividers.lineaments")} />
       <Space className={classes.section} size={[0, 10]} wrap>
         {criterion.lineaments.map((category) => (
-          <Tooltip key={category.id} title={category.description}>
+          <Tooltip 
+            key={category.id} 
+            title={category.description}
+          >
             <Tag color="orange" className={classes.tag}>
               {category.nomenclature}
             </Tag>
@@ -77,7 +69,11 @@ export default function QuestionItem(props: QuestionItemProps) {
       </Space>
 
       <SectionDivider text={t("dividers.levels")} />
-        <Space className={classes.section} direction="vertical" size={15}>
+        <Space 
+          className={classes.section} 
+          direction="vertical" 
+          size={15}
+        >
           {renderResponses()}
         </Space>
 
@@ -97,7 +93,10 @@ export default function QuestionItem(props: QuestionItemProps) {
                 type="info"
               />
 
-              <AddEvidence question={question} onChange={console.log} />
+              <EvidenceUpload 
+                question={question} 
+                onChange={onEvidenceChange} 
+              />
             </AppBox>
           </div>
         </CSSTransition>
