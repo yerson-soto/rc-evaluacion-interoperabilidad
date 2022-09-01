@@ -49,7 +49,6 @@ export default function ChoiceForm(props: ChoiceFormProps) {
     
   const onFinish = () => {
     form.validateFields().then((values) => {
-      console.log(values);
       onSave(values).then(onHide);
     });
   };

@@ -4,8 +4,8 @@ import { Question } from "library/models/Question";
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { actions } from 'redux/slices/questionSlice';
 
-export function useQuestionary(domainId?: number) {
-  const { isLoading, questionary, activeQuestion } = useAppSelector(state => state.questions);
+export function useQuestionList(domainId?: number) {
+  const { isLoading, questionary: questions } = useAppSelector(state => state.questions);
   const criterionService = new CriterionService();
   const dispatch = useAppDispatch();
 
@@ -35,14 +35,9 @@ export function useQuestionary(domainId?: number) {
     // eslint-disable-next-line
   }, [domainId]);
 
-
-  const setActiveQuestion = (questionNumber: number) => {
-    dispatch(actions.questionPrevNext(questionNumber));
-  }
-
   const flushQuestions = (): void => {
     dispatch(actions.questionsFlushed());
   }
 
-  return { isLoading, questionary, activeQuestion, setActiveQuestion, flushQuestions };
+  return { isLoading, questions, flushQuestions };
 }

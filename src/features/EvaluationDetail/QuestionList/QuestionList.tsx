@@ -1,48 +1,73 @@
 import React from "react";
-import { List } from "antd";
+import { Button, List } from "antd";
+import { useTranslation } from 'react-i18next';
 import { useParams } from "react-router-dom";
-import { PaginationConfig } from "antd/lib/pagination";
+import { PaginationConfig, PaginationProps } from "antd/lib/pagination";
 import { QuestionItem } from "features/EvaluationDetail/QuestionItem";
 import { Question } from "library/models/Question";
 import { Choice } from "library/models/Choice";
-import { useCompleteQuestion } from "./useCompleteQuestion";
+import { useQuestionControls } from "./useQuestionControls";
 import { AnswerEvidence } from "library/models/Question";
+
+import './QuestionList.css';
+import { CheckOutlined } from '@ant-design/icons';
 
 export interface QuestionaryProps {
   questions: Question[];
-  activeQuestion: number;
 }
 
 export default function QuestionList(props: QuestionaryProps) {
-  const { updateAnswer, updateEvidences } = useCompleteQuestion();
-  const { uid: evaluationId } = useParams<Record<"uid", string>>();
-  const { questions, activeQuestion } = props;
+  const { questions } = props;
+  const { t } = useTranslation()
+  const { 
+    activeQuestion,
+    setActiveQuestion,
+    updateAnswer,
+    updateEvidences,
+  } = useQuestionControls();
+  
+  
+
+  const renderPaginationItem: PaginationProps["itemRender"] = (
+    page,
+    type,
+    originalElement
+  ) => {
+    const buttons: Record<string, any> = {
+      prev: (
+        <Button>
+          {t("buttons.back")}
+        </Button>
+      ),
+      next: (
+        <Button type="primary">
+          {t("buttons.save")}
+        </Button>
+      ),
+    };
+
+    if (type === 'page' && page === activeQuestion) {
+      return <CheckOutlined style={{ color: "#1890ff" }} />
+    }
+
+    return buttons[type] || originalElement;
+  };
 
   const paginationConfig: PaginationConfig = {
     pageSize: 1,
     current: activeQuestion,
-    style: {
-      display: "none",
-    },
-  };
-
-  const changeAnswer = (choice: Choice): void => {
-    if (evaluationId) {
-      updateAnswer(evaluationId, choice);
-    }
-  };
-
-  const changeEvidences = (
-    question: Question,
-    evidences: AnswerEvidence[]
-  ): void => {
-    updateEvidences(question, evidences);
+    total: questions.length,
+    responsive: true,
+    showSizeChanger: false,
+    itemRender: renderPaginationItem,
+    onChange: setActiveQuestion
   };
 
   return (
     <List<Question>
       itemLayout="vertical"
       size="large"
+      className="question-list"
       pagination={paginationConfig}
       split={false}
       dataSource={questions}
@@ -50,9 +75,9 @@ export default function QuestionList(props: QuestionaryProps) {
         <QuestionItem
           key={question.number}
           question={question}
-          onAnswerChange={changeAnswer}
+          onAnswerChange={updateAnswer}
           onEvidenceChange={(evidences) => 
-            changeEvidences(question, evidences)
+            updateEvidences(question, evidences)
           }
         />
       )}

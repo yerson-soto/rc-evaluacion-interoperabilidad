@@ -30,10 +30,10 @@ export function useDetailAction<T>({ service, defaultLoading }: DetailAction<T>)
       })      
   });
 
-  const flush = (): void => {
+  const resetRecord = (): void => {
     setRecord(null);
     setStatus("initial");
   }
 
-  return { record, status, getById, flush };
+  return { record, status, getById, resetRecord };
 }

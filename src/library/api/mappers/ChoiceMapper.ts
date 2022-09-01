@@ -4,7 +4,6 @@ import { LevelMapper } from "./LevelMapper";
 import { ChoiceFormSchema } from "features/ChoiceCrud/ChoiceForm/ChoiceFormSchema";
 import { CriterionMapper } from "./CriterionMapper";
 import { ContentType } from "library/common/enums";
-import { AnswerEvidence } from "library/models/Question";
 import * as dto from "../dto/choice-dto";
 
 export class ChoiceMapper
@@ -54,34 +53,5 @@ export class ChoiceMapper
         contentType: evidence.contentType.split(",") as ContentType[],
       })),
     };
-  }
-
-  answerEvidencesFromAPI(data: dto.GetAnswerEvidence): AnswerEvidence {
-    const { id, title, contentType } = data.requiredEvidence;
-
-    return {
-      id,
-      title,
-      contentType: contentType.split(",") as ContentType[],
-      file: {
-        name: data["nameFile"],
-        type: data["typeDocument"],
-        uid: data["id"],
-        url: data["url"],
-      },
-    };
-  }
-
-  answerEvidencesToFormData(evidences: AnswerEvidence[]): FormData {
-    const formData = new FormData();
-
-    evidences.forEach((evidence, indx) => {
-      const { file } = evidence;
-      const ext = file.name.split('.').pop() || '';
-      const blob = new File([file.url], `${evidence.id}.${ext}`)
-      formData.append(`files[${indx}]`, blob);
-    });
-
-    return formData;
   }
 }

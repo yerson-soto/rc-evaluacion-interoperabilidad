@@ -38,13 +38,6 @@ export const questionSlice = createSlice({
       state.hasError = true;
       state.errorMessage = action.payload;
     },
-    completeSuccess: (state, action: PayloadAction<Question>) => {
-      const question = state.questionary.find(question => question.criterion.id === action.payload.criterion.id);
-
-      if (question) {
-        question.isCompleted = true;
-      }
-    },
     updateAnswerSuccess: (state, action: PayloadAction<Choice>) => {
       const question = state.questionary.find(
         (question) => question.criterion.id === action.payload.criterion.id
@@ -57,12 +50,12 @@ export const questionSlice = createSlice({
     updateEvidencesSuccess: (state, action: PayloadAction<[Question, AnswerEvidence[]]>) => {
       const [question, evidences] = action.payload;
 
-      const updateQuestion = state.questionary.find(
+      const stateQuestion = state.questionary.find(
         (q) => q.criterion.id === question.criterion.id
       );
       
-      if (updateQuestion) {
-        updateQuestion.answerEvidences = evidences;
+      if (stateQuestion) {
+        stateQuestion.answerEvidences = evidences;
       }
     },
     questionPrevNext: (state, action: PayloadAction<number>) => {

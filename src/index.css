@@ -8,6 +8,7 @@
   --sider-w: 260px;
   --sider-collapsed-w: 80px;
   --content-gutter: 24px;
+  --font-family: "Maven Pro", sans-serif;
 }
 
 #root {
@@ -17,7 +18,7 @@
 body {
   margin: 0;
   height: 100%;
-  font-family: 'Maven Pro', sans-serif!important;
+  font-family: var(--font-family)!important;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -67,7 +68,7 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: unset;
   -webkit-box-shadow: 0 0 0px 1000px transparent inset;
   transition: background-color 5000s ease-in-out 0s;
-  font-family: 'Maven Pro'!important;
+  font-family: var(--font-family)!important;
 }
 
 .fade-enter {

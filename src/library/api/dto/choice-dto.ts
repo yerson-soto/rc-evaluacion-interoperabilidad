@@ -29,24 +29,3 @@ export interface GetChoice {
   levelsResponse: GetLevel;
   criterionResponse: GetCriterion;
 }
-
-export interface UpdateAnswer {
-  evaluationInstitutionalId: string;
-  criterionId: number;
-  responsesId: number;
-}
-
-export interface GetAnswerEvidence {
-  id: string;
-  url: string;
-  dateGeneric: string;
-  nameFile: string;
-  typeDocument: string;
-  evaluationTechnicsId: string;
-  requiredEvidence: GetRequiredEvidence;
-}
-
-export interface UpdateEvidencesParams {
-  evaluationTechnicsId: string;
-  responseId: number;
-}

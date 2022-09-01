@@ -2,6 +2,13 @@ import { FullCriterion } from "./Criterion";
 import { RequiredEvidence } from "./RequiredEvidence";
 import { Choice } from "./Choice";
 
+export interface Question {
+  number: number;
+  criterion: FullCriterion;
+  choosenAnswer: Choice | null;
+  answerEvidences: AnswerEvidence[];
+}
+
 export interface EvidenceFile {
   uid: string;
   url: string;
@@ -11,14 +18,4 @@ export interface EvidenceFile {
 
 export interface AnswerEvidence extends RequiredEvidence {
   file: EvidenceFile;
-}
-
-export interface Question {
-  number: number;
-  criterion: FullCriterion;
-  choosenAnswer: Choice | null;
-  answerEvidences: AnswerEvidence[];
-
-  // TODO: Remove
-  isCompleted: boolean;
 }

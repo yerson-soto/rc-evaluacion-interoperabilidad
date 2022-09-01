@@ -14,7 +14,7 @@ export function useDomain() {
 
   const domainService = new DomainService();
 
-  const { record: domain, status, getById, flush } = useDetailAction<Domain>({
+  const { record: domain, status, getById, resetRecord } = useDetailAction<Domain>({
     service: domainService,
     defaultLoading: true
   });
@@ -33,7 +33,7 @@ export function useDomain() {
     isError: status === "error", 
     domain, 
     domainTitle,
-    flushDomain: flush
+    resetDomain: resetRecord
   };
 
 }
