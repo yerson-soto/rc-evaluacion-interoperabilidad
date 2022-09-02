@@ -14,13 +14,7 @@ const getBase64 = (file: RcFile): Promise<string> => {
 }
 
 const createEvidenceFile = (file: UploadFile): EvidenceFile => {
-  const binaryData: BlobPart[] = [];
-  binaryData.push(file as any);
-
-  const url = window.URL.createObjectURL(
-    new Blob(binaryData, { type: "application/zip" })
-  );
-
+  const url = window.URL.createObjectURL(file as any);
   return { uid: file.uid, name: file.name, type: file.type as string, url };
 };
 

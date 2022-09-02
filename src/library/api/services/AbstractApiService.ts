@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 export const backend = axios.create({
-  baseURL: 'https://c1491/Evaluacion_Institucional'
+  baseURL: process.env.REACT_APP_API_URL
 })
 
 export abstract class AbstractAPIService {

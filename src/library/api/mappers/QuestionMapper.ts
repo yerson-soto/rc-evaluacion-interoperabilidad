@@ -18,12 +18,31 @@ export class QuestionMapper {
     };
   }
 
+  async answerEvidencesToFormData(evidences: AnswerEvidence[]): Promise<FormData> {
+    const formData = new FormData();
+    const fetchFiles = evidences.map(e => fetch(e.file.url));
+    const filePromises = await Promise.all(fetchFiles)
+      .then(responses => responses.map(res => res.arrayBuffer()));
+
+    const blobFiles = await Promise.all(filePromises);
+    
+    evidences.forEach(async (evidence, index) => {
+      const { file } = evidence;
+      const ext = file.name.split('.').pop() || '';
+      const fileName = `${evidence.id}.${ext}`;
+      
+      const uploadFile = new File([blobFiles[index]], fileName, { type: file.type })
+      formData.append('files', uploadFile);
+    });
+
+    return formData;
+  }
+
   answerEvidencesFromAPI(data: dto.GetAnswerEvidence): AnswerEvidence {
     const { id, title, contentType } = data.requiredEvidences;
-    // const baseUrl = process.env.REACT_APP_API_URL;
-    const baseUrl = "https://c1491/Evaluacion_Institucional";
+    const baseUrl = process.env.REACT_APP_API_URL;
     const cleanPath = data.url.replace(/[\\\\]/g, '/');
-    const url =  baseUrl + '/' + cleanPath;
+    const url = baseUrl + '/' + cleanPath;
     
     return {
       id,
@@ -36,18 +55,5 @@ export class QuestionMapper {
         uid: data.id,
       },
     };
-  }
-
-  answerEvidencesToFormData(evidences: AnswerEvidence[]): FormData {
-    const formData = new FormData();
-
-    evidences.forEach((evidence) => {
-      const { file } = evidence;
-      const ext = file.name.split('.').pop() || '';
-      const blob = new File([file.url], `${evidence.id}.${ext}`);
-      formData.append('files', blob);
-    });
-
-    return formData;
   }
 }

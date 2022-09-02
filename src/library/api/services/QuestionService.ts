@@ -41,9 +41,9 @@ export class QuestionService extends AbstractAPIService implements QuestionRepos
   updateEvidences(
     answerResultId: string, choiceId: number, evidences: AnswerEvidence[]
   ): Promise<AnswerEvidence[]> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const questionMapper = new QuestionMapper(),
-        formData = questionMapper.answerEvidencesToFormData(evidences),
+        formData = await questionMapper.answerEvidencesToFormData(evidences),
         params: dto.UpdateEvidencesParams = {
           evaluationTechnicsId: answerResultId,
           responseId: choiceId
