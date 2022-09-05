@@ -5,6 +5,21 @@ import { Question } from "library/models/Question";
 import { Choice } from "library/models/Choice";
 import { AnswerEvidence } from 'library/models/Question';
 
+const isQuestionCompleted = (question: Question) => {
+  const { choosenAnswer, answerEvidences } = question;
+  const isEvidenceRequired = choosenAnswer?.isEvidenceRequired;
+
+  if (isEvidenceRequired) {
+    const answerEvidencesIds = answerEvidences.map((ae) => ae.id);
+    const { requiredEvidences } = choosenAnswer;
+
+    return requiredEvidences.every((e) => answerEvidencesIds.includes(e.id));
+
+  } else {
+    return Boolean(choosenAnswer);
+  }
+};
+
 export interface QuestionState extends CommonState {
   questionary: Question[];
   activeQuestion: number;
@@ -19,6 +34,7 @@ const initialState: QuestionState = {
   hasError: false,
   errorMessage: "",
 };
+
 
 export const questionSlice = createSlice({
   name: "questions",
@@ -45,6 +61,7 @@ export const questionSlice = createSlice({
 
       if (question) {
         question.choosenAnswer = action.payload;
+        question.isCompleted = isQuestionCompleted(question);
       }
     },
     updateEvidencesSuccess: (state, action: PayloadAction<[Question, AnswerEvidence[]]>) => {
@@ -56,6 +73,7 @@ export const questionSlice = createSlice({
       
       if (stateQuestion) {
         stateQuestion.answerEvidences = evidences;
+        stateQuestion.isCompleted = isQuestionCompleted(question);
       }
     },
     questionPrevNext: (state, action: PayloadAction<number>) => {

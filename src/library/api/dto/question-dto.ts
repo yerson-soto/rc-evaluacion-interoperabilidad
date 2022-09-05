@@ -1,5 +1,11 @@
 import { GetChoice, GetRequiredEvidence } from './choice-dto';
+import { GetCriterion } from './criterion-dto';
 
+export interface GetQuestion {
+  criterionResponse: GetCriterion;
+  responses: GetChoice;
+  fileEvaluationResponses: GetAnswerEvidence[];
+}
 
 export interface GetAnswerResult {
   evaluationTechnicsId: string;

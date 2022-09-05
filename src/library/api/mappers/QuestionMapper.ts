@@ -1,11 +1,22 @@
-import { Mapper } from "library/common/interfaces";
 import * as dto from "../dto/question-dto";
-import { AnswerEvidence } from "library/models/Question";
+import { AnswerEvidence, CompletedQuestion } from "library/models/Question";
 import { ContentType } from "library/common/enums";
 import { AnswerResult } from 'library/models/AnswerResult';
 import { ChoiceMapper } from './ChoiceMapper';
+import { CriterionMapper } from './CriterionMapper';
 
 export class QuestionMapper {
+
+  fromAPICompleted(data: dto.GetQuestion): CompletedQuestion {
+    const criterionMapper = new CriterionMapper();
+    const choiceMapper = new ChoiceMapper();
+
+    return {
+      criterion: criterionMapper.fromAPI(data.criterionResponse),
+      choosenAnswer: choiceMapper.fromAPI(data.responses),
+      answerEvidences: data.fileEvaluationResponses.map(this.answerEvidencesFromAPI)
+    }
+  }
 
   answerResultFromAPI(data: dto.GetAnswerResult): AnswerResult {
     const choiceMapper = new ChoiceMapper();
@@ -25,7 +36,7 @@ export class QuestionMapper {
       .then(responses => responses.map(res => res.arrayBuffer()));
 
     const blobFiles = await Promise.all(filePromises);
-    
+    console.log('blobFIles', blobFiles);
     evidences.forEach(async (evidence, index) => {
       const { file } = evidence;
       const ext = file.name.split('.').pop() || '';

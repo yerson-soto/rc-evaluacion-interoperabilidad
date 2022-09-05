@@ -1,13 +1,17 @@
+import { useContext } from "react";
 import { message } from "antd";
 import { actions } from "redux/slices/questionSlice";
 import { Question } from "library/models/Question";
 import { useParams } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { Choice } from "library/models/Choice";
 import { AnswerEvidence } from "library/models/Question";
 import { UpdateAnswer } from "library/api/dto/question-dto";
 import { QuestionService } from "library/api/services/QuestionService";
+import { EvaluationDetailContext } from "../EvaluationContext";
+
+message.config({ maxCount: 3 });
 
 export function useQuestionControls() {
   const { questionary, activeQuestion } = useAppSelector(
@@ -15,37 +19,21 @@ export function useQuestionControls() {
   );
   const dispatch = useAppDispatch();
   const questionService = new QuestionService();
+  const { changeScore } = useContext(EvaluationDetailContext);
 
   const { t } = useTranslation();
   const { uid: evaluationId } = useParams<Record<"uid", string>>();
-
-  const isQuestionCompleted = (question: Question) => {
-    const { choosenAnswer, answerEvidences } = question;
-    const isEvidenceRequired = choosenAnswer?.isEvidenceRequired;
-
-    console.log(choosenAnswer, answerEvidences)
-    if (isEvidenceRequired) {
-      const requiredEvidencesIds = choosenAnswer.requiredEvidences.map(
-        (re) => re.id
-      );
-      return answerEvidences.every((e) => requiredEvidencesIds.includes(e.id));
-    } else {
-      return Boolean(choosenAnswer);
-    }
-  };
 
   const setActiveQuestion = (questionNumber: number) => {
     const isNext = questionNumber > activeQuestion;
     if (isNext) {
       const question = questionary.find((q) => q.number === activeQuestion);
 
-      if (evaluationId && question) {
-
-        if (isQuestionCompleted(question)) {
+      if (evaluationId) {
+        if (question?.isCompleted) {
           updateQuestion(evaluationId, question);
-
         } else {
-          message.info(t("alerts.complete_question"))
+          message.info(t("alerts.complete_question"));
         }
       }
     } else {
@@ -61,7 +49,7 @@ export function useQuestionControls() {
     dispatch(actions.updateEvidencesSuccess([question, evidences]));
   };
 
-  const updateQuestion = (evaluationId: string, question: Question) => {
+  const updateQuestion = async (evaluationId: string, question: Question) => {
     const { choosenAnswer, answerEvidences } = question;
 
     if (choosenAnswer) {
@@ -71,28 +59,25 @@ export function useQuestionControls() {
         responsesId: choosenAnswer.id,
       };
 
-      questionService
-        .updateAnswer(payload)
-        .then((answerResult) => {
-          const { uid, choice, overallScore } = answerResult;
-          const shouldUploadFiles = choosenAnswer.isEvidenceRequired;
+      try {
+        const { uid, choice, overallScore } =
+          await questionService.updateAnswer(payload);
+        const shouldUploadFiles = choosenAnswer.isEvidenceRequired;
 
-          if (shouldUploadFiles) {
-            questionService
-              .updateEvidences(uid, choice.id, answerEvidences)
-              .then((uploadedFiles) => {
-                dispatch(
-                  actions.updateEvidencesSuccess([question, uploadedFiles])
-                );
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
-        })
-        .catch((errorMessage) => {
-          message.error(errorMessage);
-        });
+        if (shouldUploadFiles) {
+          const uploadedFiles = await questionService.updateEvidences(
+            uid,
+            choice.id,
+            answerEvidences
+          );
+
+          dispatch(actions.updateEvidencesSuccess([question, uploadedFiles]));
+        }
+
+        changeScore(overallScore);
+      } catch (errorMessage: any) {
+        message.error(errorMessage);
+      }
     }
   };
 
@@ -101,6 +86,6 @@ export function useQuestionControls() {
     updateAnswer,
     updateEvidences,
     updateQuestion,
-    setActiveQuestion,
+    setActiveQuestion
   };
 }

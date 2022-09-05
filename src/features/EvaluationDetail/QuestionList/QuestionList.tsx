@@ -1,16 +1,13 @@
 import React from "react";
 import { Button, List } from "antd";
 import { useTranslation } from 'react-i18next';
-import { useParams } from "react-router-dom";
+import { CheckOutlined } from '@ant-design/icons';
 import { PaginationConfig, PaginationProps } from "antd/lib/pagination";
 import { QuestionItem } from "features/EvaluationDetail/QuestionItem";
 import { Question } from "library/models/Question";
-import { Choice } from "library/models/Choice";
 import { useQuestionControls } from "./useQuestionControls";
-import { AnswerEvidence } from "library/models/Question";
 
 import './QuestionList.css';
-import { CheckOutlined } from '@ant-design/icons';
 
 export interface QuestionaryProps {
   questions: Question[];
@@ -23,16 +20,16 @@ export default function QuestionList(props: QuestionaryProps) {
     activeQuestion,
     setActiveQuestion,
     updateAnswer,
-    updateEvidences,
+    updateEvidences
   } = useQuestionControls();
   
-  
-
   const renderPaginationItem: PaginationProps["itemRender"] = (
     page,
     type,
     originalElement
   ) => {
+    const question = questions.find(question => question.number === page);
+    
     const buttons: Record<string, any> = {
       prev: (
         <Button>
@@ -40,13 +37,13 @@ export default function QuestionList(props: QuestionaryProps) {
         </Button>
       ),
       next: (
-        <Button type="primary">
+        <Button disabled={true}>
           {t("buttons.save")}
         </Button>
       ),
     };
 
-    if (type === 'page' && page === activeQuestion) {
+    if (type === 'page' && question?.isCompleted) {
       return <CheckOutlined style={{ color: "#1890ff" }} />
     }
 
@@ -57,10 +54,9 @@ export default function QuestionList(props: QuestionaryProps) {
     pageSize: 1,
     current: activeQuestion,
     total: questions.length,
-    responsive: true,
     showSizeChanger: false,
     itemRender: renderPaginationItem,
-    onChange: setActiveQuestion
+    onChange: setActiveQuestion,
   };
 
   return (

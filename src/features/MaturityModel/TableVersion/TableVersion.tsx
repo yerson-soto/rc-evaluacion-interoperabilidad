@@ -15,6 +15,9 @@ import { levelSlice, LevelState } from "redux/slices/levelSlice";
 import { useTranslation } from 'react-i18next';
 import { Choice } from "library/models/Choice";
 import chroma from 'chroma-js';
+import { Evaluation } from 'library/models/Evaluation';
+import { QuestionService } from 'library/api/services/QuestionService';
+import { Question } from '../../../library/models/Question';
 
 // In the fifth row, other columns are merged into first column
 // by setting it's colSpan to be 0
@@ -31,8 +34,11 @@ interface DataType extends FullCriterion {
   score: number;
 }
 
+interface TableVersionProps {
+  evaluation?: Evaluation;
+}
+
 const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
-  console.log('datasource', dataSource);
   return [
     {
       title: "Dominio",
@@ -156,8 +162,13 @@ export default function TableVersion() {
   const [columns, setColumns] = React.useState<ColumnsType<DataType>>([]);
   const [records, setRecords] = React.useState<DataType[]>([]);
 
+  const [questions, setQuestions] = React.useState<Question[]>([]);
+  
   const criterionService = new CriterionService();
   const levelService = new LevelService();
+
+  const questionService = new QuestionService();
+  
 
   const { t } = useTranslation();
  
@@ -192,7 +203,14 @@ export default function TableVersion() {
         render: (value, record) => {
           const choice = record.choices.find(choice => choice.level.id === level.id);
           return choice ? choice.details : 'N/A';
-        }
+        },
+        onCell: (value, record) => {
+          return {
+            style: {
+              backgroundColor: "#b4c6e7",
+            },
+          };
+        },
       }))
 
       setRecords(dataSource);

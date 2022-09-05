@@ -7,15 +7,25 @@ import { QuestionList } from "../QuestionList";
 import { useToggleQuestionary } from "./useToggleQuestionary";
 import { useDomain } from "./useDomain";
 import { useQuestionList } from "../QuestionList/useQuestionList";
+import { useAppSelector } from 'redux/hooks';
 
 
 export default function Questionary() {
   const { visible, close } = useToggleQuestionary();
   const { isFetching, isError, domain, domainTitle, resetDomain } = useDomain();
   const { isLoading, questions, flushQuestions } = useQuestionList(domain?.id);
+  const { activeQuestion } = useAppSelector(state => state.questions);
   const { t } = useTranslation();
 
   const hideQuestionary = (): void => {
+    const question = questions.find(q => q.number === activeQuestion);
+    const isPending = question?.choosenAnswer && !question.isCompleted;
+
+    if (isPending) {
+      const leave = window.confirm(t("alerts.ask_close_questionary"));
+      if (!leave) return;
+    }
+
     resetDomain();
     flushQuestions();
     close();

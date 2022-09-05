@@ -146,7 +146,9 @@
     "send_confirmation_mail_success": "El enlace de confirmación se ha enviado a su correo",
     "item_created": "El registro se ha creado con éxito",
     "item_edited": "El registro se ha editado con éxito",
-    "identity_card_not_found": "La cédula ingresa no existe"
+    "identity_card_not_found": "La cédula ingresa no existe",
+    "complete_question": "Debes completar el criterio para poder avanzar",
+    "ask_close_questionary": "Haz hecho cambios en este criterio, ¿Seguro que deseas descartar estos cambios?"
   },
   "loading": {
     "text": "Cargando",

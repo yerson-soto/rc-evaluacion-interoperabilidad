@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { EvaluationService } from 'library/api/services/EvaluationService';
-import { Evaluation } from 'library/models/Evaluation';
+import { EvaluationDetailContext } from './EvaluationContext';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 export function useEvaluation() {
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [evaluation, setEvaluation] = useState<Evaluation | null>(null);
   const evaluationService = new EvaluationService();
+  const { setEvaluation, evaluationState } = useContext(EvaluationDetailContext);
+  const { evaluation, isLoading } = evaluationState;
 
   const { uid } = useParams<Record<'uid', string>>();
 
@@ -16,11 +15,9 @@ export function useEvaluation() {
       await evaluationService.getById(id)
         .then(result => {
           setEvaluation(result);
-          setLoading(false);
         })
         .catch(() => {
           setEvaluation(null);
-          setLoading(false);
         })
     }
 

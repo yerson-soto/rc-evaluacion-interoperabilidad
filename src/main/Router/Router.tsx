@@ -68,6 +68,7 @@ export default function Router() {
             <Route path={management.levels.index} element={<LevelCrud />} />
             <Route path={management.choices.index} element={<ChoiceCrud />} />
             <Route path={management.evaluations.index} element={<EvaluationCrud />} />
+            <Route path={management.evaluations.index} element={<EvaluationCrud />} />
           </Route>
         </Route>
       </Route>
