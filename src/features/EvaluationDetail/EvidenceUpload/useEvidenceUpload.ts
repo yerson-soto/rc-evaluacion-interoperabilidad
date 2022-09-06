@@ -14,7 +14,12 @@ const getBase64 = (file: RcFile): Promise<string> => {
 }
 
 const createEvidenceFile = (file: UploadFile): EvidenceFile => {
-  const url = window.URL.createObjectURL(file as any);
+  let url: string = '';
+
+  try {
+    url = window.URL.createObjectURL(file as any);
+  } catch {}
+
   return { uid: file.uid, name: file.name, type: file.type as string, url };
 };
 

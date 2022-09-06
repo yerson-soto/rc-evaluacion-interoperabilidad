@@ -26,7 +26,7 @@ export interface GetAnswerEvidence {
   nameFile: string;
   typeDocument: string;
   evaluationTechnicsId: string;
-  requiredEvidences: GetRequiredEvidence;
+  requiredEvidencesResponse: GetRequiredEvidence;
 }
 
 export interface UpdateEvidencesParams {

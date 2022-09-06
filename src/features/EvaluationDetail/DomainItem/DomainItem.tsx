@@ -34,6 +34,7 @@ export default function DomainItem(props: DomainItemProps) {
             <Typography.Text
               style={{
                 color: textColor,
+                fontWeight: "bold",
                 fontSize: 18,
                 textAlign: "center",
               }}

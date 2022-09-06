@@ -14,6 +14,7 @@ export interface Question {
   choosenAnswer: Choice | null;
   answerEvidences: AnswerEvidence[];
   isCompleted: boolean;
+  isSaved: boolean;
 }
 
 export interface EvidenceFile {

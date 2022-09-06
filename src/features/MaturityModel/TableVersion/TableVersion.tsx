@@ -1,6 +1,6 @@
 import { useEffect, useRef, useMemo } from 'react';
 import React from "react";
-import { Table, Tag, Typography } from 'antd';
+import { Table, Tag, Typography, Space } from 'antd';
 import type { ColumnsType } from "antd/es/table";
 import { FullCriterion } from "library/models/Criterion";
 import { Domain } from "../../../library/models/Domain";
@@ -17,7 +17,7 @@ import { Choice } from "library/models/Choice";
 import chroma from 'chroma-js';
 import { Evaluation } from 'library/models/Evaluation';
 import { QuestionService } from 'library/api/services/QuestionService';
-import { Question } from '../../../library/models/Question';
+import { CompletedQuestion, Question } from '../../../library/models/Question';
 
 // In the fifth row, other columns are merged into first column
 // by setting it's colSpan to be 0
@@ -45,6 +45,9 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
       dataIndex: ["domain", "name"],
       align: "center",
       onCell: (record, key ) => {
+        const cellProps: any = { 
+          style: { background: record.domain.color },
+        }
         const recordsByDomain = dataSource.filter(
           (criterion) => criterion.domain.id === record.domain.id
         );
@@ -53,13 +56,13 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           const isFirstOfType = recordsByDomain[0].id === record.id;
   
           if (isFirstOfType) {
-            return { rowSpan: recordsByDomain.length };
+            cellProps.rowSpan = recordsByDomain.length;
           } else {
-            return { rowSpan: 0 };
+            cellProps.rowSpan = 0;
           }
         }
   
-        return { key };
+        return cellProps;
       },
       
       onHeaderCell: (value, record) => {
@@ -67,14 +70,6 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           style: {
             backgroundColor: "#b4c6e7",
           },
-        };
-      },
-      render: (value, record) => {
-        return {
-          props: {
-            style: { background: record.domain.color },
-          },
-          children: value,
         };
       },
     },
@@ -105,7 +100,7 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           }
         }
   
-        return { key };
+        return { };
       },
       onHeaderCell: (value, record) => {
         return {
@@ -120,12 +115,7 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
       align: "center",
       dataIndex: "lineaments",
       render: (values: Lineament[], record) => {
-        return {
-          props: {
-            style: { background: record.domain.color },
-          },
-          children: values.map((value) => <p>{value.nomenclature}</p>),
-        };
+        return values.map((value) => <p key={value.id}>{value.nomenclature}</p>);
       },
       onHeaderCell: (value, record) => {
         return {
@@ -134,18 +124,15 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           },
         };
       },
+      onCell: (record, key) => {
+        return {
+          style: { background: record.domain.color }
+        }
+      }
     },
     {
       title: "Criterio",
       dataIndex: "name",
-      render: (value, record) => {
-        return {
-          props: {
-            style: { background: record.domain.color },
-          },
-          children: value,
-        };
-      },
       onHeaderCell: (value, record) => {
         return {
           style: {
@@ -153,31 +140,42 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           },
         };
       },
+      onCell: (record, key) => {
+        return {
+          style: { background: record.domain.color },
+        }
+      }
     },
   ]
 }
 
 
-export default function TableVersion() {
+export default function TableVersion(props: TableVersionProps) {
   const [columns, setColumns] = React.useState<ColumnsType<DataType>>([]);
   const [records, setRecords] = React.useState<DataType[]>([]);
 
-  const [questions, setQuestions] = React.useState<Question[]>([]);
+  const [questions, setQuestions] = React.useState<CompletedQuestion[]>([]);
   
   const criterionService = new CriterionService();
   const levelService = new LevelService();
 
   const questionService = new QuestionService();
+  const { evaluation } = props;
   
 
   const { t } = useTranslation();
  
   useEffect(() => {
     const fetchRecords = async () => {
-      const [criteria, levels] = await Promise.all([
+      const [criteria, levels, completedQuestions] = await Promise.all([
         criterionService.getDetailed(),
-        levelService.getAll()
+        levelService.getAll(),
+        evaluation && questionService.getCompletedQuestions(evaluation.uid)
       ]);
+
+      if (completedQuestions) {
+        setQuestions(completedQuestions);
+      }
 
       const dataSource: DataType[] = criteria
           .sort((a, b) => a.domain.id - b.domain.id)
@@ -201,13 +199,22 @@ export default function TableVersion() {
           };
         },
         render: (value, record) => {
+          const question = questions.find(q => q.criterion.id === record.id && q.choosenAnswer.level.id === level.id);
+          // console.log(questions);
           const choice = record.choices.find(choice => choice.level.id === level.id);
-          return choice ? choice.details : 'N/A';
+          return <Space direction="vertical">
+            <div>
+            {choice ? choice.details : 'N/A'}
+            </div>
+            {question && <a href="">Ver evidencias</a>}
+          </Space>;
         },
-        onCell: (value, record) => {
+        onCell: (record, key) => {
+          const isSelected = questions.some(q => q.criterion.id === record.id && q.choosenAnswer.level.id === level.id);
+          
           return {
             style: {
-              backgroundColor: "#b4c6e7",
+              backgroundColor: isSelected ? colorRange[index] : "#ffffff",
             },
           };
         },

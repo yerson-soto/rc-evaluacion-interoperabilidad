@@ -14,7 +14,7 @@ import { EvaluationDetailContext } from "../EvaluationContext";
 message.config({ maxCount: 3 });
 
 export function useQuestionControls() {
-  const { questionary, activeQuestion } = useAppSelector(
+  const { isSaving, questionary, activeQuestion } = useAppSelector(
     (state) => state.questions
   );
   const dispatch = useAppDispatch();
@@ -22,37 +22,54 @@ export function useQuestionControls() {
   const { changeScore } = useContext(EvaluationDetailContext);
 
   const { t } = useTranslation();
-  const { uid: evaluationId } = useParams<Record<"uid", string>>();
+  const { uid: evaluationId } = useParams();
 
-  const setActiveQuestion = (questionNumber: number) => {
+  const setActiveQuestion = async (questionNumber: number): Promise<void> => {
     const isNext = questionNumber > activeQuestion;
+
     if (isNext) {
       const question = questionary.find((q) => q.number === activeQuestion);
+      
+      if (!question || !evaluationId) return;
 
-      if (evaluationId) {
-        if (question?.isCompleted) {
-          updateQuestion(evaluationId, question);
-        } else {
-          message.info(t("alerts.complete_question"));
+      const shouldUpdate = !question.isSaved && question.isCompleted;
+      
+      if (shouldUpdate) {
+        try {
+          await _updateQuestion(evaluationId, question);
+        } catch {
+          return;
         }
+
+      } else if (!question.isSaved) {
+        message.info(t("alerts.complete_question"));
+        return;
       }
-    } else {
-      dispatch(actions.questionPrevNext(questionNumber));
     }
+
+    dispatch(actions.questionPrevNext(questionNumber));
   };
 
-  const updateAnswer = (choice: Choice) => {
+  const updateAnswer = (choice: Choice): void => {
     dispatch(actions.updateAnswerSuccess(choice));
   };
 
-  const updateEvidences = (question: Question, evidences: AnswerEvidence[]) => {
+  const updateEvidences = (
+    question: Question, 
+    evidences: AnswerEvidence[]
+  ): void => {
     dispatch(actions.updateEvidencesSuccess([question, evidences]));
   };
 
-  const updateQuestion = async (evaluationId: string, question: Question) => {
+  const _updateQuestion = async (
+    evaluationId: string, 
+    question: Question
+  ): Promise<void> => {
     const { choosenAnswer, answerEvidences } = question;
 
     if (choosenAnswer) {
+      dispatch(actions.startSaveLoading());
+
       const payload: UpdateAnswer = {
         evaluationInstitutionalId: evaluationId,
         criterionId: choosenAnswer.criterion.id,
@@ -62,6 +79,8 @@ export function useQuestionControls() {
       try {
         const { uid, choice, overallScore } =
           await questionService.updateAnswer(payload);
+
+        let newQuestion: Question = { ...question, choosenAnswer: choice };
         const shouldUploadFiles = choosenAnswer.isEvidenceRequired;
 
         if (shouldUploadFiles) {
@@ -71,21 +90,33 @@ export function useQuestionControls() {
             answerEvidences
           );
 
-          dispatch(actions.updateEvidencesSuccess([question, uploadedFiles]));
+          newQuestion = { 
+            ...question, 
+            answerEvidences: uploadedFiles 
+          };
         }
+ 
+        // Save question in state
+        dispatch(actions.saveQuestionSuccess(newQuestion));
 
+        // Update evaluation score
         changeScore(overallScore);
+        
       } catch (errorMessage: any) {
+
+        dispatch(actions.saveQuestionFailed(question));
         message.error(errorMessage);
+
+        throw new Error(errorMessage);
       }
     }
   };
 
   return {
+    isSaving,
     activeQuestion,
     updateAnswer,
     updateEvidences,
-    updateQuestion,
     setActiveQuestion
   };
 }

@@ -19,9 +19,9 @@ export default function Questionary() {
 
   const hideQuestionary = (): void => {
     const question = questions.find(q => q.number === activeQuestion);
-    const isPending = question?.choosenAnswer && !question.isCompleted;
+    const willLoseData = !question?.isSaved;
 
-    if (isPending) {
+    if (willLoseData) {
       const leave = window.confirm(t("alerts.ask_close_questionary"));
       if (!leave) return;
     }

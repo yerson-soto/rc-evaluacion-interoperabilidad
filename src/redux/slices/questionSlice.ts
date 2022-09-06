@@ -24,6 +24,7 @@ export interface QuestionState extends CommonState {
   questionary: Question[];
   activeQuestion: number;
   score: number;
+  isSaving: boolean;
 }
 
 const initialState: QuestionState = {
@@ -31,6 +32,7 @@ const initialState: QuestionState = {
   score: 0,
   activeQuestion: 1,
   isLoading: false,
+  isSaving: false,
   hasError: false,
   errorMessage: "",
 };
@@ -43,7 +45,16 @@ export const questionSlice = createSlice({
     startLoading: (state) => {
       state.isLoading = true;
     },
+    startSaveLoading: (state) => {
+      state.isSaving = true;
+    },
     getSuccess: (state, action: PayloadAction<Question[]>) => {
+      const firstIncompleted = action.payload.find(q => !q.isCompleted);
+
+      if (firstIncompleted) {
+        state.activeQuestion = firstIncompleted.number;
+      }
+      
       state.questionary = action.payload;
       state.isLoading = false;
       state.hasError = false;
@@ -62,19 +73,42 @@ export const questionSlice = createSlice({
       if (question) {
         question.choosenAnswer = action.payload;
         question.isCompleted = isQuestionCompleted(question);
+        question.isSaved = false;
       }
     },
     updateEvidencesSuccess: (state, action: PayloadAction<[Question, AnswerEvidence[]]>) => {
-      const [question, evidences] = action.payload;
+      const [{ criterion }, evidences] = action.payload;
 
-      const stateQuestion = state.questionary.find(
-        (q) => q.criterion.id === question.criterion.id
-      );
+      const question = state.questionary.find((q) => q.criterion.id === criterion.id);
       
-      if (stateQuestion) {
-        stateQuestion.answerEvidences = evidences;
-        stateQuestion.isCompleted = isQuestionCompleted(question);
+      if (question) {
+        question.answerEvidences = evidences;
+        question.isCompleted = isQuestionCompleted(question);
+        question.isSaved = false
       }
+    },
+    saveQuestionSuccess: (state, action: PayloadAction<Question>) => {
+      const updatedQuestion = action.payload;
+      const questionIndex = state.questionary.findIndex((q) => {
+        return q.criterion.id === updatedQuestion.criterion.id;
+      });
+
+      if (questionIndex !== -1) {
+        updatedQuestion.isSaved = true
+        state.questionary.splice(questionIndex, 1, updatedQuestion);
+      }
+
+      state.isSaving = false;
+    },
+    saveQuestionFailed: (state, action: PayloadAction<Question>) => {
+      const { criterion } = action.payload;
+      const question = state.questionary.find((q) => q.criterion.id === criterion.id);
+
+      if (question) {
+        question.isSaved = false;
+      }
+
+      state.isSaving = false;
     },
     questionPrevNext: (state, action: PayloadAction<number>) => {
       state.activeQuestion = action.payload;

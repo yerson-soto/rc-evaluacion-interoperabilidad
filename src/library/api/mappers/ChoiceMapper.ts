@@ -5,6 +5,7 @@ import { ChoiceFormSchema } from "features/ChoiceCrud/ChoiceForm/ChoiceFormSchem
 import { CriterionMapper } from "./CriterionMapper";
 import { ContentType } from "library/common/enums";
 import * as dto from "../dto/choice-dto";
+import { Criterion } from "library/models/Criterion";
 
 export class ChoiceMapper
   implements Mapper<Choice, dto.GetChoice, dto.CreateChoice, ChoiceFormSchema>
@@ -45,7 +46,9 @@ export class ChoiceMapper
       id: data.responsesId,
       details: data.responseDecription,
       level: levelMapper.fromAPI(data.levelsResponse),
-      criterion: criterionMapper.fromAPI(data.criterionResponse),
+      criterion: data.criterionResponse 
+        ? criterionMapper.fromAPI(data.criterionResponse) 
+        : {} as Criterion,
       isEvidenceRequired: data.isEvidenceRequired,
       requiredEvidences: requiredEvidences.map((evidence) => ({
         id: evidence.id,

@@ -6,7 +6,8 @@ import { QuestionMapper } from "../mappers/QuestionMapper";
 import * as dto from "library/api/dto/question-dto";
 
 export interface QuestionRepository {
-  getCompletedByEvaluation: (evaluationId: number) => Promise<CompletedQuestion[]>;
+  getCompletedQuestions: (evaluationId: string) => Promise<CompletedQuestion[]>;
+  getCompletedQuestionsByDomain: (evaluationId: string, domainId: number) => Promise<CompletedQuestion[]>;
   updateAnswer: (data: dto.UpdateAnswer) => Promise<AnswerResult>;
   updateEvidences: (
     answerResultId: string, 
@@ -23,9 +24,8 @@ export class QuestionService extends AbstractAPIService implements QuestionRepos
     this.mapper = new QuestionMapper();
   }
 
-  getCompletedByEvaluation(evaluationId: number): Promise<CompletedQuestion[]> {
+  _getCompletedQuestions(url: string): Promise<CompletedQuestion[]> {
     return new Promise((resolve, reject) => {
-      const url = `/evaluationInstitutionalFile/${evaluationId}`
       this.client.get<APIResponse<dto.GetQuestion[]>>(url)
         .then(res => {
           const mapper = this.mapper.fromAPICompleted.bind(this.mapper);
@@ -34,6 +34,19 @@ export class QuestionService extends AbstractAPIService implements QuestionRepos
         })
         .catch(() => reject("Error al obtener las preguntas"));
     })
+  }
+
+  getCompletedQuestions(evaluationId: string): Promise<CompletedQuestion[]> {
+    const url = `/evaluationInstitutionalFile/${evaluationId}`;
+    return this._getCompletedQuestions(url);
+  }
+
+  getCompletedQuestionsByDomain(
+    evaluationId: string, 
+    domainId: number
+  ): Promise<CompletedQuestion[]> {
+    const url = `/evaluationInstitutionalFile/d907e22f-135b-40e0-8f21-3b236f969502`;
+    return this._getCompletedQuestions(url);
   }
 
   updateAnswer(data: dto.UpdateAnswer): Promise<AnswerResult> {

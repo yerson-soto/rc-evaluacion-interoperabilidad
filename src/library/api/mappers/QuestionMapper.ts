@@ -10,7 +10,7 @@ export class QuestionMapper {
   fromAPICompleted(data: dto.GetQuestion): CompletedQuestion {
     const criterionMapper = new CriterionMapper();
     const choiceMapper = new ChoiceMapper();
-
+    console.log('got here',data.fileEvaluationResponses.map(this.answerEvidencesFromAPI))
     return {
       criterion: criterionMapper.fromAPI(data.criterionResponse),
       choosenAnswer: choiceMapper.fromAPI(data.responses),
@@ -36,12 +36,12 @@ export class QuestionMapper {
       .then(responses => responses.map(res => res.arrayBuffer()));
 
     const blobFiles = await Promise.all(filePromises);
-    console.log('blobFIles', blobFiles);
+    
     evidences.forEach(async (evidence, index) => {
       const { file } = evidence;
       const ext = file.name.split('.').pop() || '';
       const fileName = `${evidence.id}.${ext}`;
-      
+      console.log(evidence.title, fileName)
       const uploadFile = new File([blobFiles[index]], fileName, { type: file.type })
       formData.append('files', uploadFile);
     });
@@ -50,7 +50,7 @@ export class QuestionMapper {
   }
 
   answerEvidencesFromAPI(data: dto.GetAnswerEvidence): AnswerEvidence {
-    const { id, title, contentType } = data.requiredEvidences;
+    const { id, title, contentType } = data.requiredEvidencesResponse;
     const baseUrl = process.env.REACT_APP_API_URL;
     const cleanPath = data.url.replace(/[\\\\]/g, '/');
     const url = baseUrl + '/' + cleanPath;

@@ -52,7 +52,7 @@ export default function EvaluationDetail() {
           }
           key="2"
         >
-          <TableVersion />
+          <TableVersion evaluation={evaluation} />
         </Tabs.TabPane>
       </Tabs>
     </AppBox>

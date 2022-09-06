@@ -17,6 +17,7 @@ export default function QuestionList(props: QuestionaryProps) {
   const { questions } = props;
   const { t } = useTranslation()
   const { 
+    isSaving,
     activeQuestion,
     setActiveQuestion,
     updateAnswer,
@@ -28,7 +29,8 @@ export default function QuestionList(props: QuestionaryProps) {
     type,
     originalElement
   ) => {
-    const question = questions.find(question => question.number === page);
+    const question = questions.find(q => q.number === page);
+    const currentQuestion = questions.find(q => q.number === activeQuestion);
     
     const buttons: Record<string, any> = {
       prev: (
@@ -37,13 +39,13 @@ export default function QuestionList(props: QuestionaryProps) {
         </Button>
       ),
       next: (
-        <Button disabled={true}>
-          {t("buttons.save")}
+        <Button loading={isSaving}>
+          {currentQuestion?.isSaved ? "Siguiente" : t("buttons.save")}
         </Button>
       ),
     };
 
-    if (type === 'page' && question?.isCompleted) {
+    if (type === 'page' && question?.isSaved) {
       return <CheckOutlined style={{ color: "#1890ff" }} />
     }
 
