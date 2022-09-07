@@ -18,21 +18,23 @@ export function useQuestionList(domainId?: number) {
       dispatch(actions.startLoading())
       
       try {
-        const [criteria, completedQuestions] = await Promise.all([
-          criterionService.getByDomain(domain),
-          questionService.getCompletedQuestionsByDomain(evaluation, domain)
-        ]);
+        const criteria = await criterionService.getByDomain(domain);
+        const completedQuestions = await questionService
+          .getCompletedQuestionsByDomain(evaluation, domain);
 
         const questions: Question[] = criteria.map((criterion, key) => {
-          const defaultQuestion = completedQuestions.find(q => q.criterion.id === criterion.id);
+          const defaultQuestion = completedQuestions.find(
+            (q) => q.criterion.id === criterion.id
+          );
+          
           const choosenAnswer = defaultQuestion 
             ? defaultQuestion.choosenAnswer 
             : null;
-            
+          
           const answerEvidences = defaultQuestion 
             ? defaultQuestion.answerEvidences 
             : [];
-          
+            
           return {
             number: key + 1,
             criterion,

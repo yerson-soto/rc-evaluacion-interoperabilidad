@@ -17,7 +17,7 @@ export default function DomainItem(props: DomainItemProps) {
 
   const { t } = useTranslation();
 
-  const textColor = getContrastColor(domain.color, "#ffffff", "#505050");
+  const textColor = getContrastColor(domain.color, "#ffffff", "#4e4e4e");
 
   return (
     <List.Item className={classes.item} onClick={onClick}>

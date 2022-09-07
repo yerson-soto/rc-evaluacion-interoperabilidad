@@ -6,15 +6,17 @@ import { PaginationConfig, PaginationProps } from "antd/lib/pagination";
 import { QuestionItem } from "features/EvaluationDetail/QuestionItem";
 import { Question } from "library/models/Question";
 import { useQuestionControls } from "./useQuestionControls";
+import { Domain } from "library/models/Domain";
 
 import './QuestionList.css';
 
 export interface QuestionaryProps {
+  domain: Domain;
   questions: Question[];
 }
 
 export default function QuestionList(props: QuestionaryProps) {
-  const { questions } = props;
+  const { domain, questions } = props;
   const { t } = useTranslation()
   const { 
     isSaving,
@@ -22,7 +24,7 @@ export default function QuestionList(props: QuestionaryProps) {
     setActiveQuestion,
     updateAnswer,
     updateEvidences
-  } = useQuestionControls();
+  } = useQuestionControls(domain);
   
   const renderPaginationItem: PaginationProps["itemRender"] = (
     page,
@@ -49,7 +51,7 @@ export default function QuestionList(props: QuestionaryProps) {
       return <CheckOutlined style={{ color: "#1890ff" }} />
     }
 
-    return buttons[type] || originalElement;
+    return originalElement;
   };
 
   const paginationConfig: PaginationConfig = {
@@ -59,8 +61,9 @@ export default function QuestionList(props: QuestionaryProps) {
     showSizeChanger: false,
     itemRender: renderPaginationItem,
     onChange: setActiveQuestion,
+    showLessItems: true
   };
-
+  
   return (
     <List<Question>
       itemLayout="vertical"

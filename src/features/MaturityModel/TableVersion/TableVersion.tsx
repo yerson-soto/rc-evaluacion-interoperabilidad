@@ -19,15 +19,6 @@ import { Evaluation } from 'library/models/Evaluation';
 import { QuestionService } from 'library/api/services/QuestionService';
 import { CompletedQuestion, Question } from '../../../library/models/Question';
 
-// In the fifth row, other columns are merged into first column
-// by setting it's colSpan to be 0
-const sharedOnCell = (_: DataType, index: number) => {
-  if (index === 4) {
-    return { colSpan: 0 };
-  }
-
-  return {};
-};
 
 interface DataType extends FullCriterion {
   key: number;
@@ -35,6 +26,7 @@ interface DataType extends FullCriterion {
 }
 
 interface TableVersionProps {
+  
   evaluation?: Evaluation;
 }
 
@@ -79,7 +71,7 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           Resultado
   
           <div style={{ background: "#ffffff" }}>
-            0
+            
           </div>
         </div>
       ),
@@ -162,15 +154,14 @@ export default function TableVersion(props: TableVersionProps) {
   const questionService = new QuestionService();
   const { evaluation } = props;
   
-
   const { t } = useTranslation();
  
   useEffect(() => {
     const fetchRecords = async () => {
-      const [criteria, levels, completedQuestions] = await Promise.all([
+      const [criteria, levels, completedQuestions = []] = await Promise.all([
         criterionService.getDetailed(),
         levelService.getAll(),
-        evaluation && questionService.getCompletedQuestions(evaluation.uid)
+        // evaluation && questionService.getCompletedQuestions(evaluation.uid)
       ]);
 
       if (completedQuestions) {

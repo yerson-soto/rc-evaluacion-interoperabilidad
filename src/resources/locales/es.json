@@ -215,7 +215,8 @@
     "evaluations_crud":  "Evaluaciones (CRUD)",
     "my_account":  "Mi Cuenta",  
     "login": "Iniciar Sesión",
-    "logout": "Cerrar Sesión"
+    "logout": "Cerrar Sesión",
+    "maturity_model": "Modelo de Madurez"
   },
   "contentTypes": {
     "plain_text": "TXT",

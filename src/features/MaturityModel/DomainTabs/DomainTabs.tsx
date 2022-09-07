@@ -6,7 +6,7 @@ import { domainSlice } from "redux/slices/domainSlice";
 import { DomainService } from "library/api/services/DomainService";
 import { CriterionPanel } from "../CriterionPanel";
 
-export default function ChoiceCrud() {
+export default function DomainTabs() {
   const { lg } = Grid.useBreakpoint();
   const { t } = useTranslation();
   const domainService = new DomainService();

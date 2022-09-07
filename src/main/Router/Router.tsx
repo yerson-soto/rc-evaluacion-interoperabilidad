@@ -21,6 +21,7 @@ import { LineamentCrud } from "features/LineamentCrud";
 import { NotFound } from 'features/NotFound';
 import { Settings } from 'features/Settings';
 import { EvaluationCrud } from 'features/EvaluationCrud';
+import { TableVersion } from "features/MaturityModel/TableVersion";
 
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
@@ -50,6 +51,7 @@ export default function Router() {
           {/* Common routes */}
           <Route path={admin.settings.index} element={<Settings />} />
           <Route path={admin.index} element={<Dashboard />} />
+          <Route path={admin.maturityModel.index} element={<TableVersion />} />
 
           {/* Routes for users */}
           <Route element={<PermissionRoute for={[UserType.User]} />}>

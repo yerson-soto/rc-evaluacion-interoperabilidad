@@ -10,7 +10,10 @@ export class QuestionMapper {
   fromAPICompleted(data: dto.GetQuestion): CompletedQuestion {
     const criterionMapper = new CriterionMapper();
     const choiceMapper = new ChoiceMapper();
-    console.log('got here',data.fileEvaluationResponses.map(this.answerEvidencesFromAPI))
+
+    // Add criterion to responses object
+    data.responses.criterionResponse = data.criterionResponse;
+ 
     return {
       criterion: criterionMapper.fromAPI(data.criterionResponse),
       choosenAnswer: choiceMapper.fromAPI(data.responses),
@@ -41,7 +44,7 @@ export class QuestionMapper {
       const { file } = evidence;
       const ext = file.name.split('.').pop() || '';
       const fileName = `${evidence.id}.${ext}`;
-      console.log(evidence.title, fileName)
+  
       const uploadFile = new File([blobFiles[index]], fileName, { type: file.type })
       formData.append('files', uploadFile);
     });

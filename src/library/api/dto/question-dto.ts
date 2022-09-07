@@ -17,6 +17,7 @@ export interface UpdateAnswer {
   evaluationInstitutionalId: string;
   criterionId: number;
   responsesId: number;
+  domainId: number;
 }
 
 export interface GetAnswerEvidence {

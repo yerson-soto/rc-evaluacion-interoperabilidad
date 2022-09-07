@@ -52,7 +52,7 @@ export function EvidenceUpload(props: EvidenceUploadOptions) {
       <Space size="middle" wrap>
         {questionEvidences.map(renderEvidence)}
       </Space>
-
+      
       <PreviewIf
         if={isImage(previewType)}
         title={previewTitle}

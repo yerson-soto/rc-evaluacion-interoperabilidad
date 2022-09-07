@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { RequiredEvidence } from "library/models/RequiredEvidence";
 import { Question } from "library/models/Question";
 import { AnswerEvidence, EvidenceFile } from "library/models/Question";
+import isImage from "library/helpers/is-image";
 import type { RcFile, UploadFile } from "antd/es/upload/interface";
 
 const getBase64 = (file: RcFile): Promise<string> => {
@@ -14,12 +15,7 @@ const getBase64 = (file: RcFile): Promise<string> => {
 }
 
 const createEvidenceFile = (file: UploadFile): EvidenceFile => {
-  let url: string = '';
-
-  try {
-    url = window.URL.createObjectURL(file as any);
-  } catch {}
-
+  const url = window.URL.createObjectURL(file as any);
   return { uid: file.uid, name: file.name, type: file.type as string, url };
 };
 
@@ -35,16 +31,20 @@ export function useEvidenceUpload({ question, onChange }: EvidenceUploadOptions)
   const [previewType, setPreviewType] = useState("");
 
   const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
+    if (isImage(file.type || '')) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj as RcFile);
+      }
+  
+      setPreviewImage(file.url || (file.preview as string));
+      setPreviewVisible(true);
+      setPreviewTitle(
+        file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
+      );
+      setPreviewType(file.type || "");
+    } else {
+      window.open(file.url, '_blank');
     }
-
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewVisible(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
-    );
-    setPreviewType(file.type || "");
   };
 
   const handleChange = (evidence: RequiredEvidence, file: UploadFile) => {

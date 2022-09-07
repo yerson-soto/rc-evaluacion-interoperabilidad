@@ -27,7 +27,7 @@ export const paths = {
   },
   admin: {
     index: "/",
-    settings: { index: "/settings" },
+    settings: { index: "/configuracion" },
     evaluations: {
       index: "evaluaciones",
       detail: {
@@ -39,6 +39,7 @@ export const paths = {
         reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
       },
     },
+    maturityModel: { index: "/modelo-de-madurez" }
   },
   management: {
     domains: {

@@ -5,16 +5,13 @@ import { Question } from "library/models/Question";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { Choice } from "library/models/Choice";
-import { AnswerEvidence } from "library/models/Question";
 import { UpdateAnswer } from "library/api/dto/question-dto";
 import { QuestionService } from "library/api/services/QuestionService";
 import { EvaluationDetailContext } from "../EvaluationContext";
-import { Domain } from "library/models/Domain";
 
 message.config({ maxCount: 3 });
 
-export function useQuestionControls(domain: Domain) {
+export function useQuestionary(domainId?: number) {
   const { isSaving, questionary, activeQuestion } = useAppSelector(
     (state) => state.questions
   );
@@ -22,13 +19,21 @@ export function useQuestionControls(domain: Domain) {
   const questionService = new QuestionService();
   const { changeScore } = useContext(EvaluationDetailContext);
 
+  const prevActive = activeQuestion > 1;
+  const nextActive = activeQuestion < questionary.length;
+
   const { t } = useTranslation();
   const { uid: evaluationId } = useParams();
 
-  const setActiveQuestion = async (questionNumber: number): Promise<void> => {
-    const isNext = questionNumber > activeQuestion;
+  const prevQuestion = (): void => {
+    if (prevActive) {
+      dispatch(actions.questionPrevNext(activeQuestion - 1));
+    }
+  }
 
-    if (isNext) {
+  const nextQuestion = async (): Promise<void> => {
+    if (nextActive) {
+
       const question = questionary.find((q) => q.number === activeQuestion);
       if (!question) return;
 
@@ -45,30 +50,24 @@ export function useQuestionControls(domain: Domain) {
         message.info(t("alerts.complete_question"));
         return;
       }
+
+      dispatch(actions.questionPrevNext(activeQuestion + 1));
     }
-
-    dispatch(actions.questionPrevNext(questionNumber));
-  };
-
-  const updateAnswer = (choice: Choice): void => {
-    dispatch(actions.updateAnswerSuccess(choice));
-  };
-
-  const updateEvidences = (question: Question, evidences: AnswerEvidence[]): void => {
-    dispatch(actions.updateEvidencesSuccess([question, evidences]));
-  };
+  }
 
   const _updateQuestion = async (question: Question): Promise<void> => {
     const { choosenAnswer, answerEvidences } = question;
 
-    if (evaluationId && choosenAnswer) {
+    const shouldUpdate = evaluationId && domainId && choosenAnswer;
+
+    if (shouldUpdate) {
       dispatch(actions.startSaveLoading());
 
       const payload: UpdateAnswer = {
         evaluationInstitutionalId: evaluationId,
         criterionId: choosenAnswer.criterion.id,
         responsesId: choosenAnswer.id,
-        domainId: domain.id
+        domainId: domainId
       };
 
       try {
@@ -109,9 +108,10 @@ export function useQuestionControls(domain: Domain) {
 
   return {
     isSaving,
-    activeQuestion,
-    updateAnswer,
-    updateEvidences,
-    setActiveQuestion
+    activeQuestion: questionary.find(q => q.number === activeQuestion),
+    prevActive,
+    prevQuestion,
+    nextActive,
+    nextQuestion
   };
 }

@@ -83,15 +83,16 @@ export default function Sidenav(props: SidenavProps) {
       getItem(t("nav.levels"), "7", paths.management.levels.reverse(), <SignalFilled />),
       getItem(t("nav.answers"), "8", paths.management.choices.reverse(), <FormOutlined />),
       getItem(t("nav.evaluations_crud"), "9", paths.management.evaluations.reverse(), <FormOutlined />),
-      getItem(t("nav.my_account"), "10", paths.admin.settings.index, <SettingOutlined />),
+      getItem(t("nav.maturity_model"), "10", paths.admin.maturityModel.index, <FormOutlined />),
+      getItem(t("nav.my_account"), "11", paths.admin.settings.index, <SettingOutlined />),
       getItem(
         t("nav.login"),
-        "11",
+        "12",
         paths.auth.login.reverse(),
         <LoginOutlined />
       ),
       {
-        key: "12",
+        key: "13",
         icon: <LogoutOutlined />,
         label: (
           <Popconfirm

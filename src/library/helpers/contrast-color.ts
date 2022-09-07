@@ -1,4 +1,6 @@
 export const getContrastColor = (basedOnColor: string, lightColor: string, darkColor: string) => {
+    if (!basedOnColor) return darkColor;
+
     const hexcolor = basedOnColor.replace("#", "");
     var r = parseInt(hexcolor.substring(0,2),16);
     var g = parseInt(hexcolor.substring(2,4),16);
