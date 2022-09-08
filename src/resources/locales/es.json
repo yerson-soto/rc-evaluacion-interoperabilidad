@@ -46,6 +46,7 @@
     "options": "Opciones"
   },
   "labels": {
+      "attention": "Atención",
       "level": "Nivel",
       "domain": "Dominio",
       "domains": "Dominios",
@@ -56,7 +57,8 @@
       "created_date": "Fecha de Creación",
       "manager": "A cargo de",
       "domain_quantity": "Cantidad de Dominios",
-      "not_found": "No Encontrado"
+      "not_found": "No Encontrado",
+      "questionary_finished": "Dominio Completado"
   },
   "fields": {
     "color": "Color",
@@ -148,7 +150,8 @@
     "item_edited": "El registro se ha editado con éxito",
     "identity_card_not_found": "La cédula ingresa no existe",
     "complete_question": "Debes completar el criterio para poder avanzar",
-    "ask_close_questionary": "Haz hecho cambios en este criterio, ¿Seguro que deseas descartar estos cambios?"
+    "ask_close_questionary": "Ha hecho cambios en este criterio, ¿Seguro que desea descartar estos cambios?",
+    "questionary_finished": "Todos los criterios han sido completados. ¿Deseas cerrar este formulario?"
   },
   "loading": {
     "text": "Cargando",
@@ -173,7 +176,8 @@
     "add_evidence": "Nuevo documento",
     "add_choice": "Agregar respuesta",
     "close": "Cerrar",
-    "back": "Anterior",
+    "back": "Atrás",
+    "previous": "Anterior",
     "next": "Siguiente"
   },
   "links": {

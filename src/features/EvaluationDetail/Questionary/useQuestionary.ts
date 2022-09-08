@@ -12,29 +12,27 @@ import { EvaluationDetailContext } from "../EvaluationContext";
 message.config({ maxCount: 3 });
 
 export function useQuestionary(domainId?: number) {
-  const { isSaving, questionary, activeQuestion } = useAppSelector(
-    (state) => state.questions
-  );
+  const { uid: evaluationId } = useParams();
+  const { isSaving, questionary, current } = useAppSelector((state) => state.questions);
+  const { changeScore } = useContext(EvaluationDetailContext);
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const questionService = new QuestionService();
-  const { changeScore } = useContext(EvaluationDetailContext);
-
-  const prevActive = activeQuestion > 1;
-  const nextActive = activeQuestion < questionary.length;
-
-  const { t } = useTranslation();
-  const { uid: evaluationId } = useParams();
+  const prevActive = typeof current === 'number' && current > 1;
 
   const prevQuestion = (): void => {
     if (prevActive) {
-      dispatch(actions.questionPrevNext(activeQuestion - 1));
+      dispatch(actions.currentChanged(current - 1));
+    } else if (current === 'finish-page') {
+      dispatch(actions.currentChanged(questionary.length));
     }
   }
 
   const nextQuestion = async (): Promise<void> => {
-    if (nextActive) {
-
-      const question = questionary.find((q) => q.number === activeQuestion);
+    const questionsRemain = typeof current === 'number' && current <= questionary.length;
+    
+    if (questionsRemain) {
+      const question = questionary.find((q) => q.number === current);
       if (!question) return;
 
       const shouldUpdate = !question.isSaved && question.isCompleted;
@@ -51,7 +49,13 @@ export function useQuestionary(domainId?: number) {
         return;
       }
 
-      dispatch(actions.questionPrevNext(activeQuestion + 1));
+      const isLastQuestion = question.number === questionary.length;
+      
+      if (isLastQuestion) {
+        dispatch(actions.currentChanged('finish-page'));
+      } else {
+        dispatch(actions.currentChanged(current + 1));
+      }
     }
   }
 
@@ -108,10 +112,9 @@ export function useQuestionary(domainId?: number) {
 
   return {
     isSaving,
-    activeQuestion: questionary.find(q => q.number === activeQuestion),
+    current,
     prevActive,
     prevQuestion,
-    nextActive,
     nextQuestion
   };
 }

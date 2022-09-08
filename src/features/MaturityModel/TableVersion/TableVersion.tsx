@@ -71,7 +71,7 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           Resultado
   
           <div style={{ background: "#ffffff" }}>
-            
+            6.8
           </div>
         </div>
       ),

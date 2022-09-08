@@ -20,9 +20,11 @@ const isQuestionCompleted = (question: Question) => {
   }
 };
 
+type QuestionNumber = number;
+
 export interface QuestionState extends CommonState {
   questionary: Question[];
-  activeQuestion: number;
+  current: QuestionNumber | 'finish-page';
   score: number;
   isSaving: boolean;
 }
@@ -30,7 +32,7 @@ export interface QuestionState extends CommonState {
 const initialState: QuestionState = {
   questionary: [],
   score: 0,
-  activeQuestion: 1,
+  current: 1,
   isLoading: false,
   isSaving: false,
   hasError: false,
@@ -52,7 +54,9 @@ export const questionSlice = createSlice({
       const firstIncompleted = action.payload.find(q => !q.isCompleted);
 
       if (firstIncompleted) {
-        state.activeQuestion = firstIncompleted.number;
+        state.current = firstIncompleted.number;
+      } else {
+        state.current = 'finish-page';
       }
       
       state.questionary = action.payload;
@@ -110,12 +114,12 @@ export const questionSlice = createSlice({
 
       state.isSaving = false;
     },
-    questionPrevNext: (state, action: PayloadAction<number>) => {
-      state.activeQuestion = action.payload;
+    currentChanged: (state, action: PayloadAction<QuestionNumber | 'finish-page'>) => {
+      state.current = action.payload;
     },
     questionsFlushed: (state) => {
       state.questionary = [];
-      state.activeQuestion = 1;
+      state.current = 1;
       state.errorMessage = "";
       state.hasError = false;
     }

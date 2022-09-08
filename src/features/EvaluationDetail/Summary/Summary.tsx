@@ -34,8 +34,10 @@ export default function Summary(props: SummaryProps) {
         >
           <Progress
             type="circle"
-            percent={(evaluation.score * 100) / 5}
+            // percent={(evaluation.score * 100) / 5}
+            percent={evaluation.score}
             format={() => evaluation.score}
+            
           />
         </Col>
 

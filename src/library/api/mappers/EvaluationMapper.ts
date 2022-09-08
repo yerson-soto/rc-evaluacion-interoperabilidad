@@ -20,7 +20,7 @@ export class EvaluationMapper
   fromAPI(data: GetEvaluation): Evaluation {
     const orgMapper = new OrganizationMapper();
     const userMapper = new UserMapper();
-
+    
     const organization = orgMapper.fromAPINested(data.organismo),
       user = userMapper.fromAPI(data.userResponse),
       score = Number(data.resultLevelResponse.resultFinallly.toFixed(2));

@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { List, Empty } from "antd";
-import { PaginationFooter } from "library/components/PaginationFooter";
 import { Questionary } from "../Questionary";
 import { useListAction } from 'features/Crud/useListAction';
 import { domainSlice } from 'redux/slices/domainSlice';
@@ -31,6 +30,8 @@ export default function DomainList() {
         loading={isLoading}
         dataSource={domains}
         className={classes.container}
+        size="large"
+        pagination={false}
         grid={{
           gutter: 30,
           xs: 1,
@@ -40,24 +41,15 @@ export default function DomainList() {
           xl: 3,
           xxl: 3,
         }}
-        size="large"
-        pagination={{
-          pageSize: 10,
-        }}
         locale={{
           emptyText: <Empty description={t("empty.domains")} />,
         }}
-        footer={
-          <PaginationFooter
-            total={domains.length}
-            label={t("pagination.domains")}
-          />
-        }
         renderItem={(domain, key) => (
-          <DomainItem domain={domain} onClick={() => open(domain)} />
+          <DomainItem key={key} domain={domain} onClick={() => open(domain)} />
         )}
       />
+
       <Questionary />
-      </React.Fragment>
+    </React.Fragment>
   );
 }
