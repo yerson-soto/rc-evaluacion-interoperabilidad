@@ -92,6 +92,9 @@ export default function Questionary() {
       forceRender
       destroyOnClose
       footer={renderFooter()}
+      bodyStyle={{
+        overflowY: 'scroll'
+      }}
     >
       {visible && (
         <Skeleton

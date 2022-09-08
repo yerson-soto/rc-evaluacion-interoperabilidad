@@ -58,4 +58,13 @@ export class EvaluationService extends AbstractCrudService<
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
   }
+
+  finish(uid: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const url = `/evaluationsinstitutional/finally/${uid}`;
+      this.client.put(url)
+        .then(res => resolve())
+        .catch(() => reject("Error al finalizar la evaluación"))
+    })
+  }
 }

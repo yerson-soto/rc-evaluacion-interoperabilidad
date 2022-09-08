@@ -50,6 +50,8 @@
       "level": "Nivel",
       "domain": "Dominio",
       "domains": "Dominios",
+      "criterions": "Criterios",
+      "result": "Resultado",
       "details": "Detalles",
       "statistics": "Estadísticas",
       "score": "Puntuación",

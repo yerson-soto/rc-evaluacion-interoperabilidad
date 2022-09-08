@@ -22,6 +22,7 @@ export default function EvaluationDetail() {
       <Summary evaluation={evaluation} />
 
       <Tabs
+        destroyInactiveTabPane
         tabBarStyle={{
           position: "sticky",
           top: 0,

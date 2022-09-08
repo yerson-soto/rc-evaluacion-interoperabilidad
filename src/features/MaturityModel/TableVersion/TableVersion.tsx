@@ -1,6 +1,6 @@
 import { useEffect, useRef, useMemo } from 'react';
 import React from "react";
-import { Table, Tag, Typography, Space } from 'antd';
+import { Table, Tag, Typography, Space, Modal, Upload } from 'antd';
 import type { ColumnsType } from "antd/es/table";
 import { FullCriterion } from "library/models/Criterion";
 import { Domain } from "../../../library/models/Domain";
@@ -12,7 +12,7 @@ import { CriterionService } from "../../../library/api/services/CriterionService
 import { LevelService } from "library/api/services/LevelService";
 import { Level } from "library/models/Level";
 import { levelSlice, LevelState } from "redux/slices/levelSlice";
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Choice } from "library/models/Choice";
 import chroma from 'chroma-js';
 import { Evaluation } from 'library/models/Evaluation';
@@ -30,16 +30,24 @@ interface TableVersionProps {
   evaluation?: Evaluation;
 }
 
-const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
+const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation): ColumnsType<DataType> => {
   return [
     {
-      title: "Dominio",
+      title: <Trans i18nKey="labels.domain" />,
       dataIndex: ["domain", "name"],
       align: "center",
-      onCell: (record, key ) => {
+      onHeaderCell: () => {
+        return {
+          style: {
+            backgroundColor: "#b4c6e7",
+          },
+        };
+      },
+      onCell: (record) => {
         const cellProps: any = { 
           style: { background: record.domain.color },
         }
+
         const recordsByDomain = dataSource.filter(
           (criterion) => criterion.domain.id === record.domain.id
         );
@@ -56,28 +64,27 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
   
         return cellProps;
       },
-      
-      onHeaderCell: (value, record) => {
+    },
+    {
+      title: (
+        <div>
+          <Trans i18nKey="labels.result" />
+  
+          <div style={{ background: "#ffffff" }}>
+            {evaluation?.score}
+          </div>
+        </div>
+      ),
+      align: "center",
+      dataIndex: "score",
+      onHeaderCell: () => {
         return {
           style: {
             backgroundColor: "#b4c6e7",
           },
         };
       },
-    },
-    {
-      title: (
-        <div>
-          Resultado
-  
-          <div style={{ background: "#ffffff" }}>
-            6.8
-          </div>
-        </div>
-      ),
-      align: "center",
-      dataIndex: "score",
-      onCell: (record, key) => {
+      onCell: (record) => {
         const recordsByDomain = dataSource.filter(
           (criterion) => criterion.domain.id === record.domain.id
         );
@@ -92,47 +99,40 @@ const getInitialColumns = (dataSource: DataType[]): ColumnsType<DataType> => {
           }
         }
   
-        return { };
-      },
-      onHeaderCell: (value, record) => {
-        return {
-          style: {
-            backgroundColor: "#b4c6e7",
-          },
-        };
+        return {};
       },
     },
     {
-      title: "Lineamiento",
+      title: <Trans i18nKey="labels.lineaments" />,
       align: "center",
       dataIndex: "lineaments",
       render: (values: Lineament[], record) => {
         return values.map((value) => <p key={value.id}>{value.nomenclature}</p>);
       },
-      onHeaderCell: (value, record) => {
+      onHeaderCell: () => {
         return {
           style: {
             backgroundColor: "#b4c6e7",
           },
         };
       },
-      onCell: (record, key) => {
+      onCell: (record) => {
         return {
           style: { background: record.domain.color }
         }
       }
     },
     {
-      title: "Criterio",
+      title: <Trans i18nKey="labels.criterions" />,
       dataIndex: "name",
-      onHeaderCell: (value, record) => {
+      onHeaderCell: () => {
         return {
           style: {
             backgroundColor: "#b4c6e7",
           },
         };
       },
-      onCell: (record, key) => {
+      onCell: (record) => {
         return {
           style: { background: record.domain.color },
         }
@@ -147,6 +147,7 @@ export default function TableVersion(props: TableVersionProps) {
   const [records, setRecords] = React.useState<DataType[]>([]);
 
   const [questions, setQuestions] = React.useState<CompletedQuestion[]>([]);
+  const [currentLevels, setCurrentLevels] = React.useState<Record<number, number>>({});
   
   const criterionService = new CriterionService();
   const levelService = new LevelService();
@@ -158,15 +159,20 @@ export default function TableVersion(props: TableVersionProps) {
  
   useEffect(() => {
     const fetchRecords = async () => {
-      const [criteria, levels, completedQuestions = []] = await Promise.all([
-        criterionService.getDetailed(),
-        levelService.getAll(),
-        // evaluation && questionService.getCompletedQuestions(evaluation.uid)
-      ]);
+      // const [criteria, levels] = await Promise.all([
+      //   criterionService.getDetailed(),
+      //   levelService.getAll()
+      // ]);
 
-      if (completedQuestions) {
-        setQuestions(completedQuestions);
-      }
+      const criteria = await criterionService.getDetailed();
+      const levels = await levelService.getAll();
+
+
+      const completedQuestions = evaluation 
+        ? await questionService.getCompletedQuestions(evaluation.uid)
+        : [];
+
+      setQuestions(completedQuestions);      
 
       const dataSource: DataType[] = criteria
           .sort((a, b) => a.domain.id - b.domain.id)
@@ -191,30 +197,59 @@ export default function TableVersion(props: TableVersionProps) {
         },
         render: (value, record) => {
           const question = questions.find(q => q.criterion.id === record.id && q.choosenAnswer.level.id === level.id);
-          // console.log(questions);
           const choice = record.choices.find(choice => choice.level.id === level.id);
+
+          if (question) {
+            setCurrentLevels({
+              ...currentLevels,
+              [question.criterion.id]: question.choosenAnswer.level.value
+            })
+          }
+         
           return <Space direction="vertical">
             <div>
             {choice ? choice.details : 'N/A'}
             </div>
-            {question && <a href="">Ver evidencias</a>}
+            {question?.answerEvidences.length ? <a href="" onClick={(e) => {
+              e.preventDefault();
+              Modal.info({
+                okText: "Cerrar",
+                title: `${record.name} - Evidencias`,
+                content: (
+                  <Upload 
+                  showUploadList={{
+                    showRemoveIcon: false,
+                  }}
+                  listType="picture" 
+                  defaultFileList={question.answerEvidences.map(q => ({ ...q.file, name: q.title }))}
+                  >
+                    
+                  </Upload>
+                ),
+                onOk() {},
+              });
+            }}>Ver evidencias</a> : null}
           </Space>;
         },
         onCell: (record, key) => {
           const isSelected = questions.some(q => q.criterion.id === record.id && q.choosenAnswer.level.id === level.id);
-          
+
           return {
             style: {
-              backgroundColor: isSelected ? colorRange[index] : "#ffffff",
+              backgroundColor: isSelected ? "#e6efff" : "#ffffff",
+              border: isSelected ? "1px solid #b4c6e7" : "inherit",
+              // backgroundColor: isSelected ? colorRange[index] : "#ffffff",
             },
           };
         },
       }))
 
       setRecords(dataSource);
-      setColumns(getInitialColumns(dataSource).concat(newColumns).concat([
+      setColumns(getInitialColumns(dataSource, evaluation).concat(newColumns)
+      .concat([
         {
           title: "Nivel Actual",
+          dataIndex: "id",
           fixed: "right",
           onHeaderCell: (value, record) => {
             return {
@@ -223,19 +258,23 @@ export default function TableVersion(props: TableVersionProps) {
               },
             };
           },
+          render: (value, record) => {
+            return currentLevels[value] || '-';
+          },
         },
-      ]));
+      ])
+      );
     };
 
     fetchRecords();
-  }, []);
+  }, [questions.length, evaluation]);
 
   return (
     <Table
       bordered
-      sticky={{
-        offsetHeader: 46,
-      }}
+      // sticky={{
+      //   offsetHeader: 46,
+      // }}
       dataSource={records}
       columns={columns}
       size="small"

@@ -10,7 +10,7 @@ interface AnswerRadioProps extends React.HTMLProps<HTMLInputElement> {
 
 export default forwardRef<any, AnswerRadioProps>((props, ref) => {
   const { label, color, ...inputProps } = props;
-
+  
   return (
     <label
       className={classes.label}

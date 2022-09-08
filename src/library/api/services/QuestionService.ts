@@ -37,7 +37,7 @@ export class QuestionService extends AbstractAPIService implements QuestionRepos
   }
 
   getCompletedQuestions(evaluationId: string): Promise<CompletedQuestion[]> {
-    const url = `/evaluationInstitutionalFile/${evaluationId}`;
+    const url = `/evaluationInstitutional/file/${evaluationId}`;
     return this._getCompletedQuestions(url);
   }
 
@@ -45,7 +45,7 @@ export class QuestionService extends AbstractAPIService implements QuestionRepos
     evaluationId: string, 
     domainId: number
   ): Promise<CompletedQuestion[]> {
-    const url = `/evaluationInstitutionalFile/${evaluationId}/domain/${domainId}`;
+    const url = `/evaluationInstitutional/${evaluationId}/domain/${domainId}`;
     return this._getCompletedQuestions(url);
   }
 

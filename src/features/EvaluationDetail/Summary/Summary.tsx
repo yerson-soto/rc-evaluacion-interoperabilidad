@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Descriptions, Typography } from "antd";
+import { Badge, Descriptions, Typography, Button } from 'antd';
 import { useTranslation } from "react-i18next";
 import { Row, Col } from "antd/lib/grid";
 import { Evaluation } from "library/models/Evaluation";
@@ -10,12 +10,14 @@ import {
 import Card from "antd/lib/card/Card";
 import Progress from "antd/es/progress";
 import classes from "./Summary.module.css";
+import { useFinishEvaluation } from '../useFinishEvaluation';
 
 interface SummaryProps {
   evaluation: Evaluation;
 }
 
 export default function Summary(props: SummaryProps) {
+  const { finishEvaluation, isLoading } = useFinishEvaluation();
   const { evaluation } = props;
   const { t } = useTranslation();
 
@@ -24,7 +26,18 @@ export default function Summary(props: SummaryProps) {
 
   // TODO: Increment score when user selects response
   return (
-    <Card bordered={false}>
+    <Card 
+      title={"Evaluacion de " + evaluation.organization.name} 
+      bordered={false} 
+      extra={
+        <Button type="primary" 
+          onClick={() => finishEvaluation(evaluation.uid)} 
+          loading={isLoading}
+        >
+          Finalizar
+        </Button>
+      }
+    >
       <Row gutter={[16, 16]}>
         <Col
           className={classes.progressCol}
@@ -34,10 +47,9 @@ export default function Summary(props: SummaryProps) {
         >
           <Progress
             type="circle"
-            // percent={(evaluation.score * 100) / 5}
-            percent={evaluation.score}
-            format={() => evaluation.score}
-            
+            percent={(evaluation.score * 100) / 5}
+            // percent={evaluation.score}
+            format={() => Number(evaluation.score).toFixed(2)}
           />
         </Col>
 
