@@ -70,7 +70,7 @@ export default function Summary(props: SummaryProps) {
               labelStyle={{ fontWeight: "bold" }}
               label={t("labels.score")}
             >
-              {evaluation.score} / 5
+              {Number(evaluation.score).toFixed(2)} / 5
             </Descriptions.Item>
 
             <Descriptions.Item

@@ -18,6 +18,8 @@ import chroma from 'chroma-js';
 import { Evaluation } from 'library/models/Evaluation';
 import { QuestionService } from 'library/api/services/QuestionService';
 import { CompletedQuestion, Question } from '../../../library/models/Question';
+import axios from 'axios';
+import { backend } from '../../../library/api/services/AbstractApiService';
 
 
 interface DataType extends FullCriterion {
@@ -30,7 +32,9 @@ interface TableVersionProps {
   evaluation?: Evaluation;
 }
 
-const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation): ColumnsType<DataType> => {
+const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation, domainResults?: { id: number, result: number }[]): ColumnsType<DataType> => {
+  const domainsResultList = domainResults || [];
+  
   return [
     {
       title: <Trans i18nKey="labels.domain" />,
@@ -71,12 +75,12 @@ const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation): Col
           <Trans i18nKey="labels.result" />
   
           <div style={{ background: "#ffffff" }}>
-            {evaluation?.score}
+            {evaluation ? Number(evaluation.score).toFixed(2) : 0}
           </div>
         </div>
       ),
       align: "center",
-      dataIndex: "score",
+      dataIndex: ["domain", "id"],
       onHeaderCell: () => {
         return {
           style: {
@@ -100,6 +104,11 @@ const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation): Col
         }
   
         return {};
+      },
+      render: (value, record, index) => {
+        const punct = domainsResultList.find(d => d.id === record.domain.id);
+
+        return punct ? Number(punct.result).toFixed(2) : 0;
       },
     },
     {
@@ -143,6 +152,7 @@ const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation): Col
 
 
 export default function TableVersion(props: TableVersionProps) {
+  const [isLoading, setLoading] = React.useState<boolean>(false);
   const [columns, setColumns] = React.useState<ColumnsType<DataType>>([]);
   const [records, setRecords] = React.useState<DataType[]>([]);
 
@@ -163,10 +173,19 @@ export default function TableVersion(props: TableVersionProps) {
       //   criterionService.getDetailed(),
       //   levelService.getAll()
       // ]);
-
+      setLoading(true);
       const criteria = await criterionService.getDetailed();
       const levels = await levelService.getAll();
 
+      const domainResponses: any = evaluation 
+      ? await backend.get(`/evaluationInstitutional/resultCurrent/${evaluation.uid}`)
+      : [];
+      
+      const domainResults = evaluation 
+      ? domainResponses.data.result.map((res: any) => ({
+        id: res.domainResponse?.id,
+        result: res.currentResult
+      })) : [];
 
       const completedQuestions = evaluation 
         ? await questionService.getCompletedQuestions(evaluation.uid)
@@ -245,25 +264,32 @@ export default function TableVersion(props: TableVersionProps) {
       }))
 
       setRecords(dataSource);
-      setColumns(getInitialColumns(dataSource, evaluation).concat(newColumns)
-      .concat([
-        {
-          title: "Nivel Actual",
-          dataIndex: "id",
-          fixed: "right",
-          onHeaderCell: (value, record) => {
-            return {
-              style: {
-                backgroundColor: "#b4c6e7",
-              },
-            };
+
+      let allColumns = getInitialColumns(dataSource, evaluation, domainResults).concat(newColumns);
+
+      if (evaluation) {
+        allColumns = allColumns.concat([
+          {
+            title: "Nivel Actual",
+            dataIndex: "id",
+            fixed: "right",
+            onHeaderCell: (value, record) => {
+              return {
+                style: {
+                  backgroundColor: "#b4c6e7",
+                },
+              };
+            },
+            render: (value, record) => {
+              const question = questions.find(q => q.criterion.id === record.id);
+              return question ? question.choosenAnswer.level.value : '-';
+            },
           },
-          render: (value, record) => {
-            return currentLevels[value] || '-';
-          },
-        },
-      ])
-      );
+        ])
+      }
+
+      setColumns(allColumns);
+      setLoading(false);
     };
 
     fetchRecords();
@@ -271,6 +297,7 @@ export default function TableVersion(props: TableVersionProps) {
 
   return (
     <Table
+      loading={isLoading}
       bordered
       // sticky={{
       //   offsetHeader: 46,

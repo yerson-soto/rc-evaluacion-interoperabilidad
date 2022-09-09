@@ -28,7 +28,7 @@ import { PublicRoute } from "./PublicRoute";
 import { PermissionRoute } from "./PermissionRoute";
 import { UserType } from "library/common/enums";
 
-const { auth, admin, admin: { evaluations }, management } = paths;
+const { auth, admin, admin: { evaluations, settings }, management } = paths;
 
 export default function Router() {
   return (
@@ -49,13 +49,17 @@ export default function Router() {
         <Route path={admin.index} element={<AdminPanel />}>
 
           {/* Common routes */}
-          <Route path={admin.settings.index} element={<Settings />} />
           <Route path={admin.index} element={<Dashboard />} />
           <Route path={admin.maturityModel.index} element={<TableVersion />} />
 
+          <Route path={settings.index}>
+            <Route index element={<Settings />} />
+            <Route path={settings.target.index} element={<p>Perfil</p>} />
+          </Route>
+
           {/* Routes for users */}
-          <Route element={<PermissionRoute for={[UserType.User]} />}>
-            <Route path={admin.evaluations.index}>
+          <Route element={<PermissionRoute for={[UserType.Admin, UserType.User]} />}>
+            <Route path={evaluations.index}>
               <Route index element={<EvaluationList />} />
               <Route path={evaluations.detail.index} element={<EvaluationDetail />} />
             </Route>

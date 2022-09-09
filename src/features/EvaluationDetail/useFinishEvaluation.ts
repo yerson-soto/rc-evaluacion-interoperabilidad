@@ -15,14 +15,14 @@ export function useFinishEvaluation() {
     
     evaluationService.finish(uid)
       .then(() => {
-        navigate(paths.admin.evaluations.index);
+        navigate('/evaluaciones');
         setLoading(false);
       })
-      .catch(() => {
+      .catch((errmesage) => {
         setLoading(false);
         
         // TODO: Change to i18n
-        message.error("No se pudo finalizar la evaluacion")
+        message.error(errmesage)
       })
   }
 

@@ -27,7 +27,13 @@ export const paths = {
   },
   admin: {
     index: "/",
-    settings: { index: "/configuracion" },
+    settings: { 
+      index: "configuracion",
+      target: {
+        index: ":tab",
+        reverse: ({ tab }: { tab: string }) => `/configuracion/${tab}`,
+      },
+    },
     evaluations: {
       index: "evaluaciones",
       detail: {

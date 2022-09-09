@@ -11,7 +11,7 @@ import classes from "./EvidenceUpload.module.css";
 const PreviewIf = withIfDirective<ImageProps>(Image);
 
 export function EvidenceUpload(props: EvidenceUploadOptions) {
-  const { question, onChange } = props;
+  const { question } = props;
   const questionEvidences = question.choosenAnswer?.requiredEvidences || [];
   const {
     isPreviewVisible,

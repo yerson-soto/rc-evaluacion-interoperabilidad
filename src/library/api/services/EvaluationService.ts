@@ -61,10 +61,16 @@ export class EvaluationService extends AbstractCrudService<
 
   finish(uid: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      const url = `/evaluationsinstitutional/finally/${uid}`;
+      const url = `/evaluationinstitutional/finally/${uid}`;
       this.client.put(url)
-        .then(res => resolve())
-        .catch(() => reject("Error al finalizar la evaluación"))
+        .then(res => {
+          if (res?.data?.message) {
+            reject("Por favor, complete la evaluación para poder finalizar")
+          } else {
+            resolve()
+          }
+        })
+        .catch(() => reject("Por favor, complete la evaluación para poder finalizar"))
     })
   }
 }

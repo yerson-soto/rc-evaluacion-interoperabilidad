@@ -46,7 +46,7 @@ export default function DomainItem(props: DomainItemProps) {
       >
         <List.Item.Meta
           title={domain.name}
-          description={<Progress percent={30} />}
+          // description={<Progress percent={30} />}
           avatar={<Avatar className={classes.avatar}>{domain.acronym}</Avatar>}
         />
       </Card>
