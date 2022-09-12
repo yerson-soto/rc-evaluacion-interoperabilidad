@@ -48,7 +48,15 @@ export function useEvidenceUpload({ question, onChange }: EvidenceUploadOptions)
   };
 
   const handleChange = (evidence: RequiredEvidence, file: UploadFile) => {
-    const newEvidences = [...question.answerEvidences];
+    const shouldRestartEvidences = question.choosenAnswer?.requiredEvidences.every((re) => {
+      return evidence.id !== re.id;
+    });
+
+    // Validate all evidences belongs to selected answer
+    const requiredIds = question.choosenAnswer?.requiredEvidences.map(re => re.id) || [];
+    const initialEvidences = question.answerEvidences.filter(ae => requiredIds.includes(ae.id)) 
+    
+    const newEvidences = shouldRestartEvidences ? [] : [...initialEvidences];
     const newEvidence: AnswerEvidence = {
       ...evidence,
       file: createEvidenceFile(file),

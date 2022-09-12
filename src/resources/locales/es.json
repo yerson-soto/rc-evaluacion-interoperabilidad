@@ -46,22 +46,25 @@
     "options": "Opciones"
   },
   "labels": {
-      "attention": "Atención",
-      "level": "Nivel",
-      "domain": "Dominio",
-      "domains": "Dominios",
-      "criterions": "Criterios",
-      "result": "Resultado",
-      "details": "Detalles",
-      "lineaments": "Lineamientos",
-      "statistics": "Estadísticas",
-      "score": "Puntuación",
-      "status": "Estado",
-      "created_date": "Fecha de Creación",
-      "manager": "A cargo de",
-      "domain_quantity": "Cantidad de Dominios",
-      "not_found": "No Encontrado",
-      "questionary_finished": "Dominio Completado"
+    "attention": "Atención",
+    "level": "Nivel",
+    "domain": "Dominio",
+    "domains": "Dominios",
+    "criterions": "Criterios",
+    "result": "Resultado",
+    "details": "Detalles",
+    "lineaments": "Lineamientos",
+    "statistics": "Estadísticas",
+    "score": "Puntuación",
+    "status": "Estado",
+    "created_date": "Fecha de Creación",
+    "manager": "A cargo de",
+    "domain_quantity": "Cantidad de Dominios",
+    "not_found": "No Encontrado",
+    "questionary_finished": "Dominio Completado",
+    "confirm_password": "Confirmar contraseña",
+    "current_password": "Contraseña actual",
+    "new_password": "Nueva contraseña"
   },
   "fields": {
     "color": "Color",
@@ -72,8 +75,9 @@
     "first_name": "Nombre",
     "last_name": "Apellidos",
     "password": "Contraseña",
-    "email": "Correo electrónico",
+    "new_password": "Nueva contraseña",
     "confirm_password": "Confirmar contraseña",
+    "email": "Correo electrónico",
     "remember": "Recuérdame",
     "domain": "Dominio",
     "slug": "Slug",
@@ -224,6 +228,10 @@
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión",
     "maturity_model": "Modelo de Madurez"
+  },
+  "settings": {
+    "general": "General",
+    "password": "Contraseña"
   },
   "contentTypes": {
     "plain_text": "TXT",

@@ -84,7 +84,7 @@ export default function Sidenav(props: SidenavProps) {
       getItem(t("nav.answers"), "8", paths.management.choices.reverse(), <FormOutlined />),
       // getItem(t("nav.evaluations_crud"), "9", paths.management.evaluations.reverse(), <FormOutlined />),
       getItem(t("nav.maturity_model"), "10", paths.admin.maturityModel.index, <FormOutlined />),
-      // getItem(t("nav.my_account"), "11", paths.admin.settings.index, <SettingOutlined />),
+      getItem(t("nav.my_account"), "11", paths.admin.settings.index, <SettingOutlined />),
       // getItem(
       //   t("nav.login"),
       //   "12",

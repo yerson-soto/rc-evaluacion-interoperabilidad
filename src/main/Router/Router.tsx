@@ -19,7 +19,7 @@ import { LevelCrud } from "features/LevelCrud";
 import { CriterionCrud } from "features/CriterionCrud";
 import { LineamentCrud } from "features/LineamentCrud";
 import { NotFound } from 'features/NotFound';
-import { Settings } from 'features/Settings';
+import { Configuration } from 'features/Configuration';
 import { EvaluationCrud } from 'features/EvaluationCrud';
 import { TableVersion } from "features/MaturityModel/TableVersion";
 
@@ -51,10 +51,9 @@ export default function Router() {
           {/* Common routes */}
           <Route path={admin.index} element={<Dashboard />} />
           <Route path={admin.maturityModel.index} element={<TableVersion />} />
-
-          <Route path={settings.index}>
-            <Route index element={<Settings />} />
-            <Route path={settings.target.index} element={<p>Perfil</p>} />
+          <Route path={settings.index} element={<Configuration />}>
+            <Route index element={<p>General Settings</p>} />
+            <Route path={settings.target.index} element={<p>Sub Settings</p>} />
           </Route>
 
           {/* Routes for users */}
