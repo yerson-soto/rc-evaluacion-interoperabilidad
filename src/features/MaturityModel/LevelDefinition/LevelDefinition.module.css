@@ -14,14 +14,15 @@
 .level {
   width: 90px;
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
   padding: 8px 15px;
+  color: #000000;
 }
 
 .choice {
   flex: 1;
   padding: 6.4px 15px;
-  font-size: 16px;
+  font-size: 14px;
   background: #ffffff;
   color: #096dd9;
   border: 1px dashed #91d5ff;

@@ -35,7 +35,7 @@ export function useLevelDefinition(criterionId: number) {
         ]);
 
         const colorRange = chroma
-          .scale(["#ef8269", "#fba31e", "#2ac158"])
+          .scale(["#fce4d7", "#fff1cf", "#feffd5", "#e2efda", "#c6e0b3"])
           .colors(levels.length);
 
         const associationList: LevelDefinition[] = levels.map((level, idx) => {

@@ -2,12 +2,14 @@ import { getText } from "i18n";
 import { FormRules } from "library/common/types";
 
 export interface ChangePasswordFormSchema {
+  email: string;
   password: string;
   newPassword: string;
   confirmPassword: string;
 }
 
 export const rules: FormRules<ChangePasswordFormSchema> = {
+  email: [],
   password: [
     {
       required: true,

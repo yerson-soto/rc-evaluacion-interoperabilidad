@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, Col, List, Progress, Row, Typography } from "antd";
 import { Evaluation } from "library/models/Evaluation";
 import { AppBox } from "library/components/AppBox";
-import { Score } from "library/components/Score";
 
 import classes from "./EvaluationItem.module.css";
 
@@ -13,7 +12,7 @@ import { EvaluationStatus } from "library/common/enums";
 interface EvaluationItemProps {
   evaluation: Evaluation;
 }
-
+// TODO: Refactor
 // export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
 //   const navigate = useNavigate();
 

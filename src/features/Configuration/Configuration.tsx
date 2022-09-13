@@ -6,6 +6,7 @@ import { paths } from "library/common/constants";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { PasswordConfig } from "./PasswordConfig";
 import { AppBox } from "library/components/AppBox";
+import { GeneralConfig } from "./GeneralConfig";
 
 
 export default function Configuration() {
@@ -24,6 +25,7 @@ export default function Configuration() {
         tabPosition="left"
         defaultActiveKey={tab}
         onChange={handleTabChange}
+        destroyInactiveTabPane
       >
         <Tabs.TabPane
           tab={
@@ -34,7 +36,9 @@ export default function Configuration() {
           }
           key="general"
         >
-          {t("settings.general")}
+          <AppBox style={{ maxWidth: '600px' }}>
+            <GeneralConfig />
+          </AppBox>
         </Tabs.TabPane>
 
         <Tabs.TabPane
