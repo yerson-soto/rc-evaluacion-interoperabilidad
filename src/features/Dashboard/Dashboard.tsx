@@ -7,7 +7,7 @@ import { AppBox } from "library/components/AppBox";
 import {
   SignalFilled,
   PieChartFilled,
-  AppstoreFilled,
+  SnippetsOutlined,
   AlignLeftOutlined,
   AppstoreOutlined,
   CompressOutlined,
@@ -30,7 +30,7 @@ export default function Dashboard() {
             hoverable
             cover={
               <AppBox className={classes.cardCover} style={{ backgroundColor: '#8b75cd' }}>
-                <AppstoreFilled style={{ fontSize: 60, color: "white" }} />
+                <SnippetsOutlined style={{ fontSize: 60, color: "white" }} />
               </AppBox>
             }
           >
@@ -39,7 +39,7 @@ export default function Dashboard() {
         </Link>
       </Col>
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Link to={paths.management.domains.reverse()}>
+        <Link to={paths.management.domains.fullPath}>
           <Card
             hoverable
             cover={
@@ -53,7 +53,7 @@ export default function Dashboard() {
         </Link>
       </Col>
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Link to={paths.management.criterions.reverse()}>
+        <Link to={paths.management.criterions.fullPath}>
 
           <Card
             hoverable
@@ -68,7 +68,7 @@ export default function Dashboard() {
         </Link>
       </Col>
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Link to={paths.management.lineaments.reverse()}>
+        <Link to={paths.management.lineaments.fullPath}>
 
           <Card
             hoverable
@@ -83,7 +83,7 @@ export default function Dashboard() {
         </Link>
       </Col>
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Link to={paths.management.levels.reverse()}>
+        <Link to={paths.management.levels.fullPath}>
 
           <Card
             hoverable
@@ -98,7 +98,7 @@ export default function Dashboard() {
         </Link>
       </Col>
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Link to={paths.management.choices.reverse()}>
+        <Link to={paths.management.choices.fullPath}>
 
           <Card
             hoverable
@@ -113,7 +113,7 @@ export default function Dashboard() {
         </Link>
       </Col>
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Link to={paths.management.users.reverse()}>
+        <Link to={paths.management.users.fullPath}>
 
           <Card
             hoverable

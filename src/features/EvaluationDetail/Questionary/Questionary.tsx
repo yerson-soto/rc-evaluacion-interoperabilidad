@@ -50,10 +50,6 @@ export default function Questionary() {
     }
   };
 
-  const handleVisibilityChange = (visible: boolean): void => {
-    if (!visible) cleanState();
-  }
-
   const renderFooter = (): React.ReactNode => {
     if (isLoading || isFetching || isError || hasEnded) return;
     
@@ -88,7 +84,7 @@ export default function Questionary() {
       title={domainTitle}
       visible={visible}
       onClose={closeQuestionary}
-      afterVisibleChange={handleVisibilityChange}
+      onCloseEnd={cleanState}
       forceRender
       destroyOnClose
       footer={renderFooter()}

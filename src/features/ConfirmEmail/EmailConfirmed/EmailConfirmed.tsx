@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useTimeoutRedirect } from "library/hooks/useTimeoutRedirect";
 import { paths } from "library/common/constants";
 
-const loginUrl = paths.auth.login.reverse();
+const loginUrl = paths.auth.login.fullPath;
 
 export default function EmailConfirmed() {
   const { t } = useTranslation();

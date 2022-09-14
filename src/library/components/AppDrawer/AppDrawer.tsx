@@ -12,14 +12,14 @@ export default function AppDrawer(props: AppDrawerProps) {
 
   const drawerWidth = width ? width : 500;
   
-  const handleVisibilityChange = (visible: boolean): void => {
-    if (!visible && onCloseEnd) onCloseEnd();
+  const handleOpenChange = (open: boolean): void => {
+    if (!open && onCloseEnd) onCloseEnd();
   };
 
   return (
     <Drawer
       width={isDesktop ? drawerWidth : "100%"}
-      afterVisibleChange={handleVisibilityChange}
+      afterOpenChange={handleOpenChange}
       forceRender
       destroyOnClose
       {...drawerProps}

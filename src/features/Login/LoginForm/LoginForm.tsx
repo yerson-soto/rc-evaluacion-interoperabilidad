@@ -70,7 +70,7 @@ export default function LoginForm(props: LoginFormProps) {
 
           <Link
             className={classes.forgotPassword}
-            to={paths.auth.forgotPassword.reverse()}
+            to={paths.auth.forgotPassword.fullPath}
           >
             {t("links.forgot_password")}
           </Link>

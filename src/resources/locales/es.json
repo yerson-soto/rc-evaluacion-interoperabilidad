@@ -159,7 +159,8 @@
     "complete_question": "Debes completar el criterio para poder avanzar",
     "ask_close_questionary": "Ha hecho cambios en este criterio, ¿Seguro que desea descartar estos cambios?",
     "questionary_finished": "Todos los criterios han sido completados. ¿Deseas cerrar este formulario?",
-    "change_password_success": "La contraseña ha sido modificada con éxito"
+    "change_password_success": "La contraseña ha sido modificada con éxito",
+    "logout_confirmation": "¿Deseas cerrar sesión?"
   },
   "loading": {
     "text": "Cargando",

@@ -28,7 +28,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
   private get resetLink(): string {
     return (
       process.env.REACT_APP_BASE_URL +
-      paths.auth.passwordReset.reverse() +
+      paths.auth.passwordReset.fullPath +
       `?${keys.linkTokenParam}=`
     );
   }
@@ -36,7 +36,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
   private get confirmationLink(): string {
     return (
       process.env.REACT_APP_BASE_URL +
-      paths.auth.confirmEmail.reverse() +
+      paths.auth.confirmEmail.fullPath +
       `?${keys.linkTokenParam}=`
     );
   }

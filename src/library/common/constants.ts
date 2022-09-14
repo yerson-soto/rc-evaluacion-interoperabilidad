@@ -3,45 +3,48 @@ import { UserType, ContentType, EvaluationStatus } from "./enums";
 
 export const paths = {
   auth: {
-    index: "auth",
+    index: "/auth",
     login: {
       index: "iniciar-sesion",
-      reverse: () => "/auth/iniciar-sesion",
+      fullPath: "/auth/iniciar-sesion",
     },
     signup: {
       index: "registrarse",
-      reverse: () => "/auth/registrarse",
+      fullPath: "/auth/registrarse",
     },
     confirmEmail: {
       index: "confirmar-correo",
-      reverse: () => "/auth/confirmar-correo"
+      fullPath: "/auth/confirmar-correo"
     },
     forgotPassword: {
       index: "recuperar",
-      reverse: () => "/auth/recuperar",
+      fullPath: "/auth/recuperar",
     },
     passwordReset: {
       index: "restablecer",
-      reverse: () => "/auth/restablecer",
+      fullPath: "/auth/restablecer",
     },
   },
   admin: {
     index: "/",
     settings: { 
-      index: "configuracion",
+      index: "/configuracion",
       target: {
         index: ":tab",
+        fullPath: '/configuration/:tab',
         reverse: ({ tab }: { tab: string }) => `/configuracion/${tab}`,
       },
     },
     evaluations: {
-      index: "evaluaciones",
+      index: "/evaluaciones",
       detail: {
         index: ":uid",
+        fullPath: '/evaluaciones/:uid',
         reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}`,
       },
       init: {
         index: ":uid/iniciar",
+        fullPath: "/evaluaciones/:uid/iniciar",
         reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
       },
     },
@@ -49,32 +52,28 @@ export const paths = {
   },
   management: {
     domains: {
-      index: "dominios",
-      reverse: () => "/dominios",
+      index: "/dominios",
+      fullPath: "/dominios",
     },
     lineaments: {
       index: "lineamientos",
-      reverse: () => "/lineamientos",
+      fullPath: "/lineamientos",
     },
     criterions: {
       index: "criterios",
-      reverse: () => "/criterios",
+      fullPath: "/criterios",
     },
     levels: {
       index: "niveles",
-      reverse: () => "/niveles",
+      fullPath: "/niveles",
     },
     choices: {
       index: "respuestas",
-      reverse: () => "/respuestas",
+      fullPath: "/respuestas",
     },
     users: {
       index: "usuarios",
-      reverse: () => "/usuarios",
-    },
-    evaluations: {
-      index: "m/evaluaciones",
-      reverse: () => "/m/evaluaciones",
+      fullPath: "/usuarios",
     }
   },
 };
@@ -113,7 +112,7 @@ export const contentTypeLabels = {
 export const evaluationStatusLabels = {
   [EvaluationStatus.Created]: getText('status.created'),
   [EvaluationStatus.Pending]: getText('status.pending'),
-  [EvaluationStatus.Completed]: getText('status.Completada'),
+  [EvaluationStatus.Completed]: getText('status.completed'),
 }
 
 export const evaluationStatusType = {

@@ -17,7 +17,7 @@ export default function ConfirmEmail() {
     <AuthCard
       text={t("texts.confirm_email")}
       redirectSuggestion={t("links.back_login")}
-      redirectPath={paths.auth.login.reverse()}
+      redirectPath={paths.auth.login.fullPath}
     >
       {isInvalid 
       ? <ConfirmInvalid 

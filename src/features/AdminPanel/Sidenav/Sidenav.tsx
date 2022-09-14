@@ -1,31 +1,17 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { matchPath, useLocation } from "react-router-dom";
 import { Layout, Menu, Popconfirm, Typography } from "antd";
-import { AppBox } from "library/components/AppBox";
-
-import {
-  SignalFilled,
-  PieChartFilled,
-  AppstoreFilled,
-  LoginOutlined,
-  AlignLeftOutlined,
-  AppstoreOutlined,
-  CompressOutlined,
-  LeftOutlined,
-  FormOutlined,
-  AimOutlined,
-  LogoutOutlined,
-  UsergroupAddOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, LeftOutlined, LogoutOutlined } from "@ant-design/icons";
 import { MenuItem } from "library/common/types";
-import { keys, paths } from "library/common/constants";
-
-import classnames from "classnames";
-import classes from "./Sidenav.module.css";
+import { keys } from "library/common/constants";
+import { AppBox } from "library/components/AppBox";
 import { useAppDispatch } from "redux/hooks";
 import { logoutDone } from "redux/slices/authSlice";
-import { useTranslation } from "react-i18next";
+import { useNavigationItems } from "library/hooks/useNavigationItems";
+
+import classes from "./Sidenav.module.css";
+import classnames from "classnames";
 
 interface SidenavProps {
   isCompacted: boolean;
@@ -38,10 +24,15 @@ interface SidenavProps {
 }
 
 export default function Sidenav(props: SidenavProps) {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const navItems = useNavigationItems();
+  const location = useLocation();
 
-  const navigate = useNavigate();
+  const currentItem = navItems
+    .find(navItem => matchPath(navItem.path, location.pathname) 
+    || navItem.children?.some(child => matchPath(child.path, location.pathname)));
+  
   const {
     isCompacted,
     baseWidth,
@@ -51,73 +42,43 @@ export default function Sidenav(props: SidenavProps) {
     onLayoutChange,
   } = props;
 
-  const getItem = (
-    label: React.ReactNode,
-    key: React.Key,
-    href: string,
-    icon?: React.ReactNode,
-    children?: MenuItem[]
-  ): MenuItem => {
-    return {
-      key,
-      icon,
-      children,
-      onClick: () => navigate(href),
-      label,
-    } as MenuItem;
+  const handleLogout = (): void => {
+    localStorage.removeItem(keys.tokenLocalStorage);
+    dispatch(logoutDone());
   };
 
-  const getItems = (): MenuItem[] => {
-    return [
-      getItem(t("nav.dashboard"), "1", "/", <PieChartFilled />),
-      getItem(t("nav.users"), "2", paths.management.users.reverse(), <UsergroupAddOutlined />),
-      getItem(t("nav.evaluations"), "3", "/evaluaciones", <AppstoreFilled />),
-      getItem(t("nav.domains"), "4", paths.management.domains.reverse(), <AimOutlined />),
-      getItem(
-        t("nav.lineaments"),
-        "5",
-        paths.management.lineaments.reverse(),
-        <AlignLeftOutlined />
-      ),
-      getItem(t("nav.criterions"), "6", paths.management.criterions.reverse(), <CompressOutlined />),
-      getItem(t("nav.levels"), "7", paths.management.levels.reverse(), <SignalFilled />),
-      getItem(t("nav.answers"), "8", paths.management.choices.reverse(), <FormOutlined />),
-      // getItem(t("nav.evaluations_crud"), "9", paths.management.evaluations.reverse(), <FormOutlined />),
-      getItem(t("nav.maturity_model"), "10", paths.admin.maturityModel.index, <FormOutlined />),
-      getItem(t("nav.my_account"), "11", paths.admin.settings.index, <SettingOutlined />),
-      // getItem(
-      //   t("nav.login"),
-      //   "12",
-      //   paths.auth.login.reverse(),
-      //   <LoginOutlined />
-      // ),
-      {
-        key: "13",
-        icon: <LogoutOutlined />,
-        label: (
-          <Popconfirm
-            placement="bottomLeft"
-            title="Deseas cerrar sesion?"
-            onConfirm={() => {
-              localStorage.removeItem(keys.tokenLocalStorage);
-              dispatch(logoutDone());
-            }}
-            okText="Si"
-            cancelText="No"
-          >
-            <a href="#">{t("nav.logout")}</a>
-          </Popconfirm>
-        ),
+  const handleBreakpoint = (broken: boolean): void => {
+    onLayoutChange(broken);
+  };
+
+  const classNames = classnames(classes.sidenav, {
+    [classes.closed]: isCompacted,
+  });
+
+  const sidenavItems: MenuItem[] = [
+    ...navItems,
+    {
+      type: "divider",
+      style: {
+        borderColor: "#525252",
       },
-    ];
-  };
-
-  const onBreakpoint = (broken: boolean): void => onLayoutChange(broken);
-
-  const getClassNames = (): string =>
-    classnames(classes.sidenav, {
-      [classes.closed]: isCompacted,
-    });
+    },
+    {
+      key: "logout",
+      icon: <LogoutOutlined />,
+      label: (
+        <Popconfirm
+          placement="bottomLeft"
+          title={t("alerts.logout_confirmation")}
+          onConfirm={handleLogout}
+          okText={t("buttons.yes")}
+          cancelText={t("buttons.no")}
+        >
+          <a href="#">{t("nav.logout")}</a>
+        </Popconfirm>
+      ),
+    },
+  ];
 
   return (
     <Layout.Sider
@@ -128,21 +89,21 @@ export default function Sidenav(props: SidenavProps) {
       width={baseWidth}
       collapsedWidth={compactedWidth}
       collapsed={isCompacted}
-      onBreakpoint={onBreakpoint}
-      className={getClassNames()}
+      onBreakpoint={handleBreakpoint}
+      className={classNames}
     >
       <AppBox className={classes.logo}>
         <AppstoreOutlined className={classes.logoIcon} />
         <Typography.Text className={classes.logoText}>
-          Evaluaci&oacute;n
+          EMI
         </Typography.Text>
       </AppBox>
       <Menu
         className={classes.menu}
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={["1"]}
-        items={getItems()}
+        defaultSelectedKeys={currentItem ? [currentItem.path] : undefined}
+        items={sidenavItems}
       />
 
       <AppBox onClick={onToggle} className={classes.trigger}>

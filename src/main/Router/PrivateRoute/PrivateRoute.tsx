@@ -9,5 +9,5 @@ export default function PrivateRoute() {
 
   return haveAccess 
     ? <Outlet /> 
-    : <Navigate to={paths.auth.login.reverse()} replace /> 
+    : <Navigate to={paths.auth.login.fullPath} replace /> 
 }

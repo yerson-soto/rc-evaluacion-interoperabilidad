@@ -7,7 +7,7 @@ import { paths } from "library/common/constants";
 export default function ForbiddenLink() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const goToLogin = () => navigate(paths.auth.login.reverse());
+  const goToLogin = () => navigate(paths.auth.login.fullPath);
 
   return (
     <Result

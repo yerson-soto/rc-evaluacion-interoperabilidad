@@ -12,7 +12,7 @@ export class UserMapper
 {
   formSchemaToAPI(schema: UserFormSchema): CreateUser {
     const loginUrl = process.env.REACT_APP_BASE_URL +
-      paths.auth.confirmEmail.reverse() +
+      paths.auth.confirmEmail.fullPath +
       `?${keys.linkTokenParam}=`
     ;
     

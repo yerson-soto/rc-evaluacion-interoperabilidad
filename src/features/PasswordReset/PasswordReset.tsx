@@ -25,7 +25,7 @@ export default function PasswordReset() {
         <AuthCard
           text={text}
           redirectSuggestion={t("links.back_login")}
-          redirectPath={paths.auth.login.reverse()}
+          redirectPath={paths.auth.login.fullPath}
         >
           {isDone ? (
             <SuccessResult />

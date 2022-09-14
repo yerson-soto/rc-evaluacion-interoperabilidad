@@ -13,7 +13,7 @@ export default function Login() {
     <AuthCard
       text={t("texts.login")}
       redirectSuggestion={t("links.register_now")}
-      redirectPath={paths.auth.signup.reverse()}
+      redirectPath={paths.auth.signup.fullPath}
     >
       <LoginForm onSubmit={login} isLoading={isLoading} />
     </AuthCard>
