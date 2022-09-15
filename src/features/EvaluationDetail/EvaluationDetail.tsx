@@ -9,7 +9,9 @@ import { AppLoader } from "library/components/AppLoader";
 import { NotFound } from "features/NotFound";
 import { DomainList } from "./DomainList";
 import { TableVersion } from "features/MaturityModel/TableVersion";
+import { EvaluationStatus } from "library/common/enums";
 
+// TODO: Refactor Completed Status
 export default function EvaluationDetail() {
   const { t } = useTranslation();
   const { evaluation, isLoading } = useEvaluation();
@@ -17,6 +19,8 @@ export default function EvaluationDetail() {
   if (isLoading) return <AppLoader text={t("loading.fetching_data")} />;
   if (!evaluation) return <NotFound />;
 
+  const isCompleted = evaluation.status === EvaluationStatus.Completed;
+  
   return (
     <AppBox>
       <Summary evaluation={evaluation} />
@@ -30,10 +34,11 @@ export default function EvaluationDetail() {
           backgroundColor: "#ffffff",
           padding: "0 16px",
         }}
-        defaultActiveKey="1"
+        defaultActiveKey={isCompleted ? "2" : "1"}
         animated
       >
         <Tabs.TabPane
+          disabled={isCompleted}
           tab={
             <span>
               <AimOutlined />

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { message } from 'antd';
-import { ChangePasswordFormSchema } from '../ChangePassword/PasswordFormSchema';
+import { ChangePasswordFormSchema } from './ChangePassword/PasswordFormSchema';
 import { AccountService } from 'library/api/services/AccountService';
 import { useTranslation } from 'react-i18next';
 

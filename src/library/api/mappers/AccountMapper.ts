@@ -1,4 +1,4 @@
-import { ChangePasswordFormSchema } from 'features/Configuration/ChangePassword/PasswordFormSchema';
+import { ChangePasswordFormSchema } from 'features/PasswordChange/ChangePassword/PasswordFormSchema';
 import { UpdatePassword } from '../dto/account-dto';
 
 interface AccountMapperType {

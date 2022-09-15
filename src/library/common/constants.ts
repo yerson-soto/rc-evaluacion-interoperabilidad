@@ -29,10 +29,13 @@ export const paths = {
     index: "/",
     settings: { 
       index: "/configuracion",
-      target: {
-        index: ":tab",
-        fullPath: '/configuration/:tab',
-        reverse: ({ tab }: { tab: string }) => `/configuracion/${tab}`,
+      general: {
+        index: "general",
+        fullPath: "/configuracion/general"
+      },
+      password: {
+        index: "password",
+        fullPath: "/configuracion/password",
       },
     },
     evaluations: {
@@ -48,7 +51,9 @@ export const paths = {
         reverse: ({ uid }: { uid: string }) => `/evaluaciones/${uid}/iniciar`,
       },
     },
-    maturityModel: { index: "/modelo-de-madurez" }
+    maturityModel: { 
+      index: "/modelo-de-madurez" 
+    }
   },
   management: {
     domains: {

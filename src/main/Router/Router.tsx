@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { paths } from "library/common/constants";
 
 import { AuthPanel } from 'features/AuthPanel';
@@ -20,8 +20,9 @@ import { CriterionCrud } from "features/CriterionCrud";
 import { LineamentCrud } from "features/LineamentCrud";
 import { NotFound } from 'features/NotFound';
 import { Configuration } from 'features/Configuration';
-import { EvaluationCrud } from 'features/EvaluationCrud';
 import { TableVersion } from "features/MaturityModel/TableVersion";
+import { PasswordChange } from "features/PasswordChange";
+import { GeneralConfig } from "features/Configuration/GeneralConfig";
 
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
@@ -33,10 +34,10 @@ const { auth, admin, admin: { evaluations, settings }, management } = paths;
 export default function Router() {
   return (
     <Routes>
-
       {/* Routes for non authenticated users */}
       <Route element={<PublicRoute />}>
         <Route path={auth.index} element={<AuthPanel />}>
+          <Route index element={<Navigate to={auth.login.index} />} />
           <Route path={auth.login.index}  element={<Login />}  />
           <Route path={auth.confirmEmail.index} element={<ConfirmEmail />} />
           <Route path={auth.forgotPassword.index} element={<ForgotPassword />} />
@@ -52,12 +53,12 @@ export default function Router() {
           <Route path={admin.index} element={<Dashboard />} />
           <Route path={admin.maturityModel.index} element={<TableVersion />} />
           <Route path={settings.index} element={<Configuration />}>
-            <Route index element={<p>General Settings</p>} />
-            <Route path={settings.target.index} element={<p>Sub Settings</p>} />
+            <Route path={settings.general.index} element={<GeneralConfig />} />
+            <Route path={settings.password.index} element={<PasswordChange />} />
           </Route>
 
           {/* Routes for users */}
-          <Route element={<PermissionRoute for={[UserType.Admin, UserType.User]} />}>
+          <Route element={<PermissionRoute for={[UserType.Admin, UserType.Support]} />}>
             <Route path={evaluations.index}>
               <Route index element={<EvaluationList />} />
               <Route path={evaluations.detail.index} element={<EvaluationDetail />} />
@@ -65,7 +66,7 @@ export default function Router() {
           </Route>
 
           {/* Routes for administrators */}
-          <Route element={<PermissionRoute for={[UserType.Admin, UserType.User]} />}>
+          <Route element={<PermissionRoute for={[UserType.Admin]} />}>
             <Route path={management.users.index} element={<UserCrud />} />
             <Route path={management.domains.index} element={<DomainCrud />} />
             <Route path={management.lineaments.index} element={<LineamentCrud />} />

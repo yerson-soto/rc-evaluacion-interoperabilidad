@@ -227,7 +227,7 @@
     "levels": "Niveles",
     "answers":  "Respuestas",
     "evaluations_crud":  "Evaluaciones (CRUD)",
-    "my_account":  "Mi Cuenta",  
+    "settings":  "Configuración",
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión",
     "maturity_model": "Modelo de Madurez"

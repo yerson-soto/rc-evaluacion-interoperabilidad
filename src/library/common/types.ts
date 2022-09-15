@@ -6,4 +6,3 @@ export type ErrorMessage = string;
 export type ID = string | number;
 export type FormRules<T> = Record<keyof T, Rule[]>;
 export type SortType = 'asc' | 'desc';
-export type IsSuccess = boolean;

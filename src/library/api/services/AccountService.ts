@@ -1,5 +1,5 @@
 import { AbstractAPIService } from './AbstractApiService';
-import { ChangePasswordFormSchema } from 'features/Configuration/ChangePassword/PasswordFormSchema';
+import { ChangePasswordFormSchema } from 'features/PasswordChange/ChangePassword/PasswordFormSchema';
 import { UpdatePassword } from '../dto/account-dto';
 import { AccountMapper } from '../mappers/AccountMapper';
 

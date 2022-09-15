@@ -11,6 +11,7 @@ import classes from "./AdminPanel.module.css";
 // TODO: Set footer
 export default function AdminPanel() {
   const {
+    overlayed,
     collapsed,
     contentOffset,
     siderWidth,
@@ -21,16 +22,23 @@ export default function AdminPanel() {
   } = useAdminPanel();
 
   return (
-    <Layout hasSider className={classes.wrapper}>
+    <Layout
+      className={classes.wrapper}
+      hasSider
+    >
       <Sidenav
         isCompacted={collapsed}
         baseWidth={siderWidth}
+        showBackdrop={overlayed}
         compactedWidth={collapsedWidth}
         onToggle={onToggle}
         onCollapse={onCollapse}
         onLayoutChange={onLayoutChange}
       />
-      <Layout className={classes.content} style={{ marginLeft: contentOffset }}>
+      <Layout 
+        className={classes.content} 
+        style={{ marginLeft: contentOffset }}
+      >
         <Header onToggleSidenav={onToggle} />
 
         <Main><Outlet /></Main>

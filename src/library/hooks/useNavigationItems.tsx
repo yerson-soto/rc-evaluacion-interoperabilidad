@@ -2,7 +2,6 @@ import { useAppSelector } from "redux/hooks";
 import { useTranslation } from 'react-i18next';
 import { UserType } from "library/common/enums";
 import { paths } from "library/common/constants";
-import { useNavigate } from 'react-router-dom';
 import { MenuItem } from '../common/types';
 
 import {
@@ -15,19 +14,52 @@ import {
   AimOutlined,
   UsergroupAddOutlined,
   SettingOutlined,
+  UserOutlined,
+  LockOutlined
 } from "@ant-design/icons";
 
-type NavItem = MenuItem & {
+export type NavItem = MenuItem & {
   path: string;
+  label: string;
+  iconelement: React.ElementType
   permissions?: UserType[];
   children?: NavItem[];
+}
+
+export interface FlattenNavItem {
+  parents: string[];
+  path: string;
+}
+
+export const flatNavItems = (
+  navItems: NavItem[], 
+  parents?: string[]
+): FlattenNavItem[] => {
+  return navItems.reduce<FlattenNavItem[]>((prev, navItem) => {
+    prev.push({ 
+      path: navItem.path, 
+      parents: parents ? parents : [] 
+    });
+
+    if (navItem.children) {
+      const childrenParents = parents 
+        ? [...parents, navItem.path] 
+        : [navItem.path];
+
+      prev.push(...flatNavItems(
+        navItem.children, 
+        childrenParents
+      ))
+    }
+    
+    return prev;
+  }, []);
 }
 
 const { admin, management } = paths;
 
 export function useNavigationItems() {
   const userType = useAppSelector((state) => state.auth.user.type);
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const navItems: NavItem[] = [
@@ -36,80 +68,96 @@ export function useNavigationItems() {
       label: t("nav.dashboard"), 
       path: admin.index, 
       icon: <PieChartFilled />,
-      onClick: () => navigate(admin.index)
+      iconelement: PieChartFilled,
     },
     {
       key: management.users.fullPath,
       label: t("nav.users"),
       path: management.users.fullPath,
       icon: <UsergroupAddOutlined />,
+      iconelement: UsergroupAddOutlined,
       permissions: [UserType.Admin],
-      onClick: () => navigate(management.users.fullPath)
     },
     { 
       key: admin.evaluations.index,
       label: t("nav.evaluations"), 
       path: admin.evaluations.index, 
       icon: <AppstoreFilled />,
+      iconelement: AppstoreFilled,
       permissions: [UserType.Admin, UserType.Support],
-      onClick: () => navigate(admin.evaluations.index)
     },
     {
       key: management.domains.fullPath,
       label: t("nav.domains"),
       path: management.domains.fullPath,
       icon: <AimOutlined />,
+      iconelement: AimOutlined,
       permissions: [UserType.Admin],
-      onClick: () => navigate(management.domains.fullPath)
     },
     {
       key: management.lineaments.fullPath,
       label: t("nav.lineaments"),
       path: management.lineaments.fullPath,
       icon: <AlignLeftOutlined />,
+      iconelement: AlignLeftOutlined,
       permissions: [UserType.Admin],
-      onClick: () => navigate(management.lineaments.fullPath)
     },
     {
       key: management.criterions.fullPath,
       label: t("nav.criterions"),
       path: management.criterions.fullPath,
       icon: <CompressOutlined />,
+      iconelement: CompressOutlined,
       permissions: [UserType.Admin],
-      onClick: () => navigate(management.criterions.fullPath)
     },
     {
       key: management.levels.fullPath,
       label: t("nav.levels"),
       path: management.levels.fullPath,
       icon: <SignalFilled />,
+      iconelement: SignalFilled,
       permissions: [UserType.Admin],
-      onClick: () => navigate(management.levels.fullPath)
     },
     {
       key: management.choices.fullPath,
       label: t("nav.answers"),
       path: management.choices.fullPath,
       icon: <FormOutlined />,
+      iconelement: FormOutlined,
       permissions: [UserType.Admin],
-      onClick: () => navigate(management.choices.fullPath)
     },
     {
       key: admin.maturityModel.index,
       label: t("nav.maturity_model"),
       path: admin.maturityModel.index,
       icon: <FormOutlined />,
-      onClick: () => navigate(admin.maturityModel.index)
+      iconelement: FormOutlined,
     },
     {
       key: admin.settings.index,
-      label: t("nav.my_account"),
+      label: t("nav.settings"),
       path: admin.settings.index,
       icon: <SettingOutlined />,
-      onClick: () => navigate(admin.settings.index),
+      iconelement: SettingOutlined,
+      children: [
+        {
+          key: admin.settings.general.fullPath,
+          label: t("settings.general"),
+          path: admin.settings.general.fullPath,
+          icon: <UserOutlined />,
+          iconelement: UserOutlined,
+        },
+        {
+          key: admin.settings.password.fullPath,
+          label: t("settings.password"),
+          path: admin.settings.password.fullPath,
+          icon: <LockOutlined />,
+          iconelement: LockOutlined,
+        }
+      ]
     },
   ];
-
+  
   return navItems.filter(navItem => {
     return !navItem.permissions || navItem.permissions.includes(userType);
   })

@@ -4,6 +4,7 @@ export function useAdminPanel() {
   const [collapsed, setCollapsed] = useState(true);
   const [broken, setBroken] = useState(true);
 
+  const overlayed = !collapsed && broken;
   const siderWidth = "var(--sider-w)";
   const collapsedWidth = broken ? "0" : "var(--sider-collapsed-w)";
   const contentOffset = broken
@@ -25,6 +26,7 @@ export function useAdminPanel() {
   const onLayoutChange = (broken: boolean) => setBroken(broken);
 
   return {
+    overlayed,
     collapsed, 
     contentOffset,
     siderWidth,
