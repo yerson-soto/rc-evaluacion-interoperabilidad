@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Typography, Tag, Grid, Skeleton } from "antd";
+import { Button, Typography, Tag, Grid, Skeleton, Tooltip } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Criterion } from "library/models/Criterion";
 import { useLevelDefinition } from "./useLevelDefinition";
@@ -14,14 +14,14 @@ import { ChoiceService } from "library/api/services/ChoiceService";
 import { ChoiceMapper } from "library/api/mappers/ChoiceMapper";
 import { CreateAction } from "features/Crud/CreateAction";
 import { Choice } from "library/models/Choice";
-import { Level } from 'library/models/Level';
+import { Level } from "library/models/Level";
 
 import classes from "./LevelDefinition.module.css";
 
 interface LevelDefinitionProps {
   criterion: Criterion;
 }
-
+// TODO: Refactor level definition style (responsive)
 export default function LevelDefinition({ criterion }: LevelDefinitionProps) {
   const {
     associations,
@@ -79,7 +79,7 @@ export default function LevelDefinition({ criterion }: LevelDefinitionProps) {
         </Typography.Text>
       )}
     />
-  )
+  );
 
   const renderCreateAction = (level: Level) => (
     <CreateAction<Choice, ChoiceFormSchema, ChoiceState>
@@ -114,21 +114,28 @@ export default function LevelDefinition({ criterion }: LevelDefinitionProps) {
         </Button>
       )}
     />
-  )
+  );
 
   return (
     <Skeleton loading={isLoading} paragraph={{ rows: 6 }} active>
       <AppBox className={classes.box}>
         {associations.map(({ level, choice, hexColor }) => (
-
           <AppBox key={level.id} className={classes.tile}>
-            <Tag color={hexColor} className={classes.level}>
-              {t("labels.level")} {level.value}
-            </Tag>
+            <Tooltip
+              title={
+                <>
+                  <strong>{`${t("labels.level")} ${level.value} - ${level.name}`}</strong>
+                  <br />
+                  {level.description}
+                </>
+              }
+            >
+              <Tag color={hexColor} className={classes.level}>
+                <Typography.Text ellipsis>{level.name}</Typography.Text>
+              </Tag>
+            </Tooltip>
 
-            {choice 
-              ? renderEditAction(choice) 
-              : renderCreateAction(level)}
+            {choice ? renderEditAction(choice) : renderCreateAction(level)}
           </AppBox>
         ))}
       </AppBox>

@@ -7,12 +7,14 @@ import { MenuItem } from '../common/types';
 import {
   SignalFilled,
   PieChartFilled,
-  AppstoreFilled,
+  SnippetsOutlined,
   AlignLeftOutlined,
   CompressOutlined,
   FormOutlined,
   AimOutlined,
   UsergroupAddOutlined,
+  InsertRowBelowOutlined,
+  HistoryOutlined,
   SettingOutlined,
   UserOutlined,
   LockOutlined
@@ -82,8 +84,8 @@ export function useNavigationItems() {
       key: admin.evaluations.index,
       label: t("nav.evaluations"), 
       path: admin.evaluations.index, 
-      icon: <AppstoreFilled />,
-      iconelement: AppstoreFilled,
+      icon: <SnippetsOutlined />,
+      iconelement: SnippetsOutlined,
       permissions: [UserType.Admin, UserType.Support],
     },
     {
@@ -130,8 +132,16 @@ export function useNavigationItems() {
       key: admin.maturityModel.index,
       label: t("nav.maturity_model"),
       path: admin.maturityModel.index,
-      icon: <FormOutlined />,
-      iconelement: FormOutlined,
+      icon: <InsertRowBelowOutlined />,
+      iconelement: InsertRowBelowOutlined,
+    },
+    {
+      key: admin.ranking.index,
+      label: t("nav.ranking"),
+      path: admin.ranking.index,
+      icon: <HistoryOutlined />,
+      iconelement: HistoryOutlined,
+      permissions: [UserType.Admin, UserType.Support]
     },
     {
       key: admin.settings.index,
@@ -158,6 +168,7 @@ export function useNavigationItems() {
     },
   ];
   
+  // TODO: Also filter children items 
   return navItems.filter(navItem => {
     return !navItem.permissions || navItem.permissions.includes(userType);
   })

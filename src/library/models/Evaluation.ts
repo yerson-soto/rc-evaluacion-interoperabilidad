@@ -5,8 +5,10 @@ import { EvaluationStatus } from 'library/common/enums';
 export interface Evaluation {
   uid: string;
   dateCreated: string;
-  score: number;
   organization: Organization;
   user: User;
   status: EvaluationStatus;
+  score: number;
+  scorePercent: number;
+  indicatorColor: string;
 }

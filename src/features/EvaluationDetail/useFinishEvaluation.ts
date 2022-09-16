@@ -15,8 +15,8 @@ export function useFinishEvaluation() {
     
     evaluationService.finish(uid)
       .then(() => {
-        navigate('/evaluaciones');
         setLoading(false);
+        navigate('/evaluaciones');
       })
       .catch((errmesage) => {
         setLoading(false);

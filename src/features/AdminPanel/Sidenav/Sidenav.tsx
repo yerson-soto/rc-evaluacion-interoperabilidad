@@ -126,6 +126,7 @@ export default function Sidenav(props: SidenavProps) {
           theme="dark"
           mode="inline"
           selectedKeys={activeKey ? [activeKey] : undefined}
+          // TODO: Allow keys to be opened
           // defaultOpenKeys={!isCompacted ? openedKeys : []}
           items={sidenavItems}
           onClick={handleMenuClick}

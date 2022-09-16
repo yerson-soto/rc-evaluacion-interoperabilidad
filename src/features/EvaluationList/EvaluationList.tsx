@@ -14,7 +14,7 @@ import { evaluationSlice, EvaluationState } from "redux/slices/evaluationSlice";
 import { EvaluationService } from "library/api/services/EvaluationService";
 
 const { useBreakpoint } = Grid;
-
+// TODO: Change circle loader to Skeleton
 export default function EvaluationList() {
   const { xl } = useBreakpoint();
   const { t } = useTranslation();
@@ -81,8 +81,8 @@ function EvaluationToolbar() {
   
   return (
     <Toolbar
-        title={t("headings.evaluation_list")}
-        actions={renderCreateAction()}
-      />
+      title={t("headings.evaluation_list")}
+      actions={renderCreateAction()}
+    />
   )
 }

@@ -64,7 +64,8 @@
     "questionary_finished": "Dominio Completado",
     "confirm_password": "Confirmar contraseña",
     "current_password": "Contraseña actual",
-    "new_password": "Nueva contraseña"
+    "new_password": "Nueva contraseña",
+    "timeline": "Linea de Tiempo"
   },
   "fields": {
     "color": "Color",
@@ -230,7 +231,8 @@
     "settings":  "Configuración",
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión",
-    "maturity_model": "Modelo de Madurez"
+    "maturity_model": "Modelo de Madurez",
+    "ranking": "Puntuaciones"
   },
   "settings": {
     "general": "General",

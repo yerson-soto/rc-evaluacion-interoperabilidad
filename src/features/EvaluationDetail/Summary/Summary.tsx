@@ -49,7 +49,8 @@ export default function Summary(props: SummaryProps) {
             type="circle"
             percent={(evaluation.score * 100) / 5}
             // percent={evaluation.score}
-            format={() => Number(evaluation.score).toFixed(2)}
+            format={() => evaluation.score}
+            strokeColor={evaluation.indicatorColor}
           />
         </Col>
 

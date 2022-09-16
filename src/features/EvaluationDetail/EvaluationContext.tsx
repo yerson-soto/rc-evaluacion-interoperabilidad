@@ -17,7 +17,6 @@ type LoginAction =
     | { type: 'setEvaluation', payload: Evaluation | null } 
     | { type: 'changeScore', payload: number };
 
-
 const initialState: EvaluationDetailState = {
   evaluation: null,
   isLoading: true,
@@ -27,13 +26,14 @@ export const EvaluationDetailContext = createContext({} as EvaluationContextProp
 
 export const EvaluationDetailProvider = (props: PropsWithChildren<{}>) => {
   const [evaluationState, dispatch] = useReducer(evaluationDetailReducer, initialState);
-
+  
   const setEvaluation = (evaluation: Evaluation | null): void => {
     dispatch({ type: 'setEvaluation', payload: evaluation });
   }
-
+  
   const changeScore = (score: number): void => {
-    dispatch({ type: 'changeScore', payload: score });
+    const roundedScore = Number(score.toFixed(2));
+    dispatch({ type: 'changeScore', payload: roundedScore });
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Tabs } from "antd";
-import { EyeOutlined, AimOutlined } from "@ant-design/icons";
+import { EyeOutlined, AimOutlined, FieldTimeOutlined } from "@ant-design/icons";
 import { AppBox } from "library/components/AppBox";
 import { Summary } from "./Summary";
 import { useEvaluation } from "./useEvaluation";
@@ -49,6 +49,7 @@ export default function EvaluationDetail() {
         >
           <DomainList />
         </Tabs.TabPane>
+
         <Tabs.TabPane
           tab={
             <span>
@@ -59,6 +60,18 @@ export default function EvaluationDetail() {
           key="2"
         >
           <TableVersion evaluation={evaluation} />
+        </Tabs.TabPane>
+
+        <Tabs.TabPane
+          tab={
+            <span>
+              <FieldTimeOutlined />
+              {t("labels.timeline")}
+            </span>
+          }
+          key="3"
+        >
+          Timeline
         </Tabs.TabPane>
       </Tabs>
     </AppBox>

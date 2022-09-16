@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Col, List, Progress, Row, Typography } from "antd";
+import { Avatar, Button, Col, List, Progress, Row, Typography } from "antd";
 import { Evaluation } from "library/models/Evaluation";
 import { AppBox } from "library/components/AppBox";
 
@@ -46,12 +46,12 @@ interface EvaluationItemProps {
 export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   const navigate = useNavigate();
 
-  const { uid, organization, dateCreated, score } = evaluation;
+  const { uid, organization, dateCreated, score, scorePercent, indicatorColor } = evaluation;
 
   const goToDetail = () => navigate(paths.admin.evaluations.detail.reverse({ uid }));
   const goToEvaluation = (): void =>
     navigate(paths.admin.evaluations.init.reverse({ uid }));
-
+ 
   return (
     <List.Item
       className={classes.row}
@@ -70,7 +70,14 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
       <Row align="middle" gutter={20} wrap={false}>
         <Col>
           {/* <Score value={score} /> */}
-          <Progress width={60} type="circle" percent={score * 100 / 5} format={() => score} />
+          {/* <Progress 
+            width={60} 
+            type="circle" 
+            percent={scorePercent} 
+            format={() => score} 
+            strokeColor={indicatorColor}
+          /> */}
+          <Avatar size={60} style={{ backgroundColor: indicatorColor, color: "#000000" }}>{score}</Avatar>
         </Col>
 
         <Col>

@@ -18,20 +18,27 @@ export class EvaluationMapper
   }
 
   fromAPI(data: GetEvaluation): Evaluation {
+    const indicators = ["#f5ac85", "#ffde8d", "#fcff86", "#aaef80", "#7cbd4c"];
+    // const indicators = ["#fce4d7", "#fff1cf", "#feffd5", "#e2efda", "#c6e0b3"];
+
     const orgMapper = new OrganizationMapper();
     const userMapper = new UserMapper();
     
     const organization = orgMapper.fromAPINested(data.organismo),
       user = userMapper.fromAPI(data.userResponse),
-      score = Number(data.resultLevelResponse.resultFinallly.toFixed(2));
+      score = Number(data.resultLevelResponse.resultFinallly.toFixed(2)) || 0,
+      scorePercent = score * 100 / 5,
+      indicatorIndex = score <= 1 ? 0 : Math.round(score) - 1;
 
     return {
       uid: data.id,
       dateCreated: data.dateInitial,
       status: data.statesResponse.id,
+      indicatorColor: indicators[indicatorIndex],
+      scorePercent,
+      score,
       organization,
       user,
-      score
     };
   }
 

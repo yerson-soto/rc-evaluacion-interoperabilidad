@@ -53,7 +53,11 @@ export const paths = {
     },
     maturityModel: { 
       index: "/modelo-de-madurez" 
+    },
+    ranking: {
+      index: "/puntuaciones"
     }
+    
   },
   management: {
     domains: {
@@ -125,3 +129,11 @@ export const evaluationStatusType = {
   [EvaluationStatus.Pending]: "processing",
   [EvaluationStatus.Completed]: "success",
 }
+
+export const levelColors = [
+  "#fce4d7", 
+  "#fff1cf", 
+  "#feffd5", 
+  "#e2efda", 
+  "#c6e0b3"
+]

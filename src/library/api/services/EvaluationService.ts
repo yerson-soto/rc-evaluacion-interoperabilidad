@@ -59,16 +59,13 @@ export class EvaluationService extends AbstractCrudService<
     });
   }
 
-  finish(uid: string): Promise<void> {
+  finish(uid: string): Promise<Evaluation> {
     return new Promise((resolve, reject) => {
       const url = `/evaluationinstitutional/finally/${uid}`;
-      this.client.put(url)
+      this.client.put<APIResponse<dto.GetEvaluation>>(url)
         .then(res => {
-          if (res?.data?.message) {
-            reject("Por favor, complete la evaluación para poder finalizar")
-          } else {
-            resolve()
-          }
+          const evaluation = this.mapper.fromAPI(res.data.result);
+          resolve(evaluation);
         })
         .catch(() => reject("Por favor, complete la evaluación para poder finalizar"))
     })

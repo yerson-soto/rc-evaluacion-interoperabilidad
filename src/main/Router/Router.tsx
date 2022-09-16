@@ -23,6 +23,7 @@ import { Configuration } from 'features/Configuration';
 import { TableVersion } from "features/MaturityModel/TableVersion";
 import { PasswordChange } from "features/PasswordChange";
 import { GeneralConfig } from "features/Configuration/GeneralConfig";
+import { RankingList } from 'features/RankingList';
 
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
@@ -57,8 +58,9 @@ export default function Router() {
             <Route path={settings.password.index} element={<PasswordChange />} />
           </Route>
 
-          {/* Routes for users */}
+          {/* Routes for admin and support */}
           <Route element={<PermissionRoute for={[UserType.Admin, UserType.Support]} />}>
+            <Route path={admin.ranking.index} element={<RankingList />} />
             <Route path={evaluations.index}>
               <Route index element={<EvaluationList />} />
               <Route path={evaluations.detail.index} element={<EvaluationDetail />} />
