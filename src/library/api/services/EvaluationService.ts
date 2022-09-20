@@ -6,7 +6,9 @@ import { EvaluationMapper } from "library/api/mappers/EvaluationMapper";
 import * as dto from "library/api/dto/evaluation-dto";
 
 export interface EvaluationRepository {
-  filter: (page: number, values: FilterValues<Evaluation>) => Promise<Pagination<Evaluation>>
+  filter: (page: number, values: FilterValues<Evaluation>) => Promise<Pagination<Evaluation>>;
+  getTimeline: (institutionId: number) => Promise<Evaluation[]>;
+  finish: (uid: string) => Promise<Evaluation>;
 }
 
 export class EvaluationService extends AbstractCrudService<
@@ -43,6 +45,20 @@ export class EvaluationService extends AbstractCrudService<
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
   }
+
+  getTimeline(institutionId: number): Promise<Evaluation[]> {
+    return new Promise((resolve, reject) => {
+      const url = `evaluationInstitutional/history/${institutionId}`;
+      this.client
+        .get<APIResponse<dto.GetEvaluation[]>>(url)
+        .then((res) => {
+          const results = res.data.result;
+          const evaluations = results.map(this.mapper.fromAPI);
+          resolve(evaluations);
+        })
+        .catch(() => reject("backend.timeline_couldnt_load"));
+    });
+  }
   
   filter(page: number, values: FilterValues<Evaluation>): Promise<Pagination<Evaluation>> {
     return new Promise((resolve, reject) => {
@@ -58,7 +74,7 @@ export class EvaluationService extends AbstractCrudService<
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
   }
-
+  
   finish(uid: string): Promise<Evaluation> {
     return new Promise((resolve, reject) => {
       const url = `/evaluationinstitutional/finally/${uid}`;

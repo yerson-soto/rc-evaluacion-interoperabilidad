@@ -70,20 +70,20 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
       <Row align="middle" gutter={20} wrap={false}>
         <Col>
           {/* <Score value={score} /> */}
-          {/* <Progress 
+          <Progress 
             width={60} 
             type="circle" 
             percent={scorePercent} 
             format={() => score} 
             strokeColor={indicatorColor}
-          /> */}
-          <Avatar size={60} style={{ backgroundColor: indicatorColor, color: "#000000" }}>{score}</Avatar>
+          />
+          {/* <Avatar size={60} style={{ backgroundColor: indicatorColor, color: "#000000" }}>{score}</Avatar> */}
         </Col>
 
         <Col>
           <AppBox>
             <Typography.Text className={classes.title}>
-              {organization.name}
+              {evaluation.nomenclature}
             </Typography.Text>
             <Typography.Text>{dateCreated}</Typography.Text>
           </AppBox>

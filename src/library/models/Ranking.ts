@@ -1,6 +1,6 @@
 import { Organization } from './Organization';
 
-export interface Rating {
+export interface Ranking {
   institution: Organization;
   score: number;
 }

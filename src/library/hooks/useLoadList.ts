@@ -1,8 +1,8 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { ErrorMessage } from "library/common/types";
 import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
 import { RootState } from 'redux/types';
-import { useFetchList } from './useFetchList';
 import { ListRepository } from 'library/api/services/AbstractListService';
 
 interface Actions<T> {
@@ -24,12 +24,22 @@ export function useLoadList<T>(params: UseListParams<T>) {
   const dispatch = useAppDispatch();
   const { service, actions } = params;
 
-  useFetchList({
-    service,
-    onStart: () => dispatch(actions.start()),
-    onSuccess: (data) => dispatch(actions.success(data)),
-    onFailure: (error) => dispatch(actions.failure(error))
-  })
+  useEffect(() => {
+    const fetchResults = async () => {
+      dispatch(actions.start());
+
+      try {
+        const results = await service.getAll();
+        dispatch(actions.success(results));
+      } catch (message) {
+        dispatch(actions.failure(message as any))
+      }
+    };
+
+    fetchResults();
+
+    // eslint-disable-next-line
+  }, []);
 
   return { isLoading, results };
 }

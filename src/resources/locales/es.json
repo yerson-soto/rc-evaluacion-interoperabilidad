@@ -22,7 +22,8 @@
     "user_list": "Lista de Usuarios",
     "evaluation_list": "Evaluaciones",
     "create_evaluation": "Crear evaluación",
-    "domain_criteria_list": "Criterios del Dominio {{ domain }}"
+    "domain_criteria_list": "Criterios del Dominio {{ domain }}",
+    "ranking_list": "Puntuaciones"
   },
   "texts": {
     "login": "!Bienvenido! Utiliza tus credenciales para acceder",
@@ -120,8 +121,10 @@
     "select_criterion": "Seleccionar criterio",
     "select_level": "Seleccionar nivel",
     "search_evaluations": "Buscar evaluaciones...",
+    "search_institutions": "Buscar instituciones...",
     "content_type": "Tipo",
-    "title": "Título"
+    "title": "Título",
+    "search": "Buscar..."
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",

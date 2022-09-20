@@ -19,7 +19,7 @@ export class OrganizationMapper implements Mapper<Organization, GetOrganization,
     return {
       id: data.id,
       name: data.orgasnimo,
-      acronym: data.siglas,
+      acronym: data.siglas?.trim(),
       emailDomain: "",
     };
   }

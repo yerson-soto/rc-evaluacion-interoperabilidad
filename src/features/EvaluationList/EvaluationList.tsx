@@ -5,32 +5,38 @@ import { Space, Card, Empty } from "antd";
 import { EvaluationItem } from "./EvaluationItem";
 import { Evaluation } from "library/models/Evaluation";
 import { useTranslation } from "react-i18next";
-import { EvaluationFilter } from "./EvaluationFilter";
 import { Toolbar } from "library/components/Toolbar";
 import { EvaluationForm } from "features/EvaluationCrud/EvaluationForm";
 import { CreateAction } from "features/Crud/CreateAction";
 import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
 import { evaluationSlice, EvaluationState } from "redux/slices/evaluationSlice";
 import { EvaluationService } from "library/api/services/EvaluationService";
+import { FilterBar } from "library/components/FilterBar";
 
 const { useBreakpoint } = Grid;
+
 // TODO: Change circle loader to Skeleton
 export default function EvaluationList() {
   const { xl } = useBreakpoint();
   const { t } = useTranslation();
-  const { evaluations, total, filter, pageSize, 
-    isLoading, onFilterChange, onPageChange,
+  const {
+    evaluations,
+    isLoading,
+    onFilterChange,
+    filter,
+    paginationConfig,
+    sortByOptions,
   } = useEvaluationList();
-
-  const paginationConfig = { pageSize, total, onChange: onPageChange };
 
   return (
     <Space direction="vertical" size="large" style={{ width: "100%" }}>
       <EvaluationToolbar />
 
-      <EvaluationFilter
+      <FilterBar<Evaluation>
         onChange={onFilterChange}
-        defaults={filter} 
+        defaults={filter}
+        sortByOptions={sortByOptions}
+        searchInputPlaceholder={t("placeholders.search_evaluations")}
       />
 
       <Card>
@@ -52,22 +58,17 @@ export default function EvaluationList() {
   );
 }
 
-
 function EvaluationToolbar() {
   const evaluationService = new EvaluationService();
   const { t } = useTranslation();
 
   const renderCreateAction = () => (
-    <CreateAction<
-      Evaluation, 
-      EvaluationFormSchema, 
-      EvaluationState
-    >
+    <CreateAction<Evaluation, EvaluationFormSchema, EvaluationState>
       toggleKey="create-evaluation"
       title={t("buttons.new")}
       reducer={evaluationSlice}
       service={evaluationService}
-      selectLoading={state => state.auth.isLoading}
+      selectLoading={(state) => state.auth.isLoading}
       render={({ visible, loading, onClose, onSave }) => (
         <EvaluationForm
           show={visible}
@@ -77,12 +78,12 @@ function EvaluationToolbar() {
         />
       )}
     />
-  )
-  
+  );
+
   return (
     <Toolbar
       title={t("headings.evaluation_list")}
       actions={renderCreateAction()}
     />
-  )
+  );
 }

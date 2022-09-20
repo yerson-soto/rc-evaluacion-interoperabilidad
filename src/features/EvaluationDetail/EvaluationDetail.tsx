@@ -10,6 +10,7 @@ import { NotFound } from "features/NotFound";
 import { DomainList } from "./DomainList";
 import { TableVersion } from "features/MaturityModel/TableVersion";
 import { EvaluationStatus } from "library/common/enums";
+import { InstitutionTimeline } from "./InstitutionTimeline";
 
 // TODO: Refactor Completed Status
 export default function EvaluationDetail() {
@@ -71,7 +72,9 @@ export default function EvaluationDetail() {
           }
           key="3"
         >
-          Timeline
+          <InstitutionTimeline 
+            institution={evaluation.organization}  
+          />
         </Tabs.TabPane>
       </Tabs>
     </AppBox>

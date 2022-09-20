@@ -1,15 +1,15 @@
 import React from "react";
+import { Ranking } from "library/models/Ranking";
 import { SortByOption } from "library/components/FilterBar";
 import { usePaginateAction } from "features/Crud/usePaginateAction";
-import { evaluationSlice } from "redux/slices/evaluationSlice";
+import { RankingState } from "redux/slices/rankingSlice";
+import { RankingService } from "library/api/services/RankingService";
+import { rankingSlice } from "redux/slices/rankingSlice";
 import { useTranslation } from "react-i18next";
-import { EvaluationService } from 'library/api/services/EvaluationService';
-import { Evaluation } from "library/models/Evaluation";
-import { EvaluationState } from 'redux/slices/evaluationSlice';
 import { PaginationConfig } from 'antd/lib/pagination';
 
-export function useEvaluationList() {
-  const service = new EvaluationService();
+export function useRankingList() {
+  const service = new RankingService();
   const { t } = useTranslation();
   const {
     total,
@@ -19,10 +19,10 @@ export function useEvaluationList() {
     filter,
     pageSize,
     onPageChange,
-  } = usePaginateAction<Evaluation, EvaluationState>({
+  } = usePaginateAction<Ranking, RankingState>({
     service,
-    reducer: evaluationSlice,
-    selectState: (state) => state.evaluations,
+    reducer: rankingSlice,
+    selectState: (state) => state.rankings,
   });
 
   const paginationConfig: PaginationConfig = { 
@@ -32,14 +32,13 @@ export function useEvaluationList() {
     showSizeChanger: false,
   };
 
-  const sortByOptions: SortByOption<Evaluation>[] = [
-    { value: "dateCreated", label: t("options.date_created") },
-    { value: "organization", label: t("options.organization") },
+  const sortByOptions: SortByOption<Ranking>[] = [
+    { value: "institution", label: t("options.organization") },
     { value: "score", label: t("options.score") },
   ];
 
   return {
-    evaluations: results,
+    rankings: results,
     sortByOptions,
     filter,
     paginationConfig,

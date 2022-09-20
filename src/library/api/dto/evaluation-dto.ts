@@ -6,6 +6,7 @@ export interface GetEvaluation {
   dateInitial: string;
   userResponse: GetUser,
   organismo: GetOrganizationNested;
+  sequecenEvaluation: string;
   resultLevelResponse: {
     id: number;
     resultFinallly: number;

@@ -4,6 +4,7 @@ import { EvaluationStatus } from 'library/common/enums';
 
 export interface Evaluation {
   uid: string;
+  nomenclature: string;
   dateCreated: string;
   organization: Organization;
   user: User;

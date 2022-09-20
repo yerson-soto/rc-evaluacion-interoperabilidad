@@ -1,8 +1,12 @@
 import { AbstractAPIService } from "./AbstractApiService";
-import { APIResponse, Mapper } from "library/common/interfaces";
+import { APIResponse, FilterValues, Mapper, Pagination } from "library/common/interfaces";
 
 export interface ListRepository<T> {
   getAll: () => Promise<T[]>;
+}
+
+export interface PaginateRepository<T> {
+  filter: (page: number, values: FilterValues<T>) => Promise<Pagination<T>>
 }
 
 export abstract class AbstractListService<T, DataReceived>

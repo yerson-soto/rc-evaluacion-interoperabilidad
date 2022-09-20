@@ -5,6 +5,8 @@ import { Evaluation } from "library/models/Evaluation";
 import { createCrudSlice } from "redux/actions/sliceCreator";
 import { CrudState } from "library/common/interfaces";
 import { FilterValues } from 'library/common/interfaces';
+import { createPaginationReducers } from '../reducers/paginationReducers';
+import { PaginationCaseReducers } from 'redux/reducers/paginationReducers';
 
 export interface EvaluationState extends CrudState<Evaluation> {
   total: number;
@@ -12,6 +14,8 @@ export interface EvaluationState extends CrudState<Evaluation> {
   pageSize: number;
   filter: FilterValues<Evaluation>;
 }
+
+const reducers = createPaginationReducers<Evaluation, EvaluationState>();
 
 const initialState: EvaluationState = {
   results: [],
@@ -28,42 +32,16 @@ const initialState: EvaluationState = {
   errorMessage: "",
 };
 
-export interface EvaluationReducers extends SliceCaseReducers<EvaluationState> {
-  filterSuccess: CaseReducer<EvaluationState, PayloadAction<Pagination<Evaluation>>>;
-  filterFailed: CaseReducer<EvaluationState, PayloadAction<ErrorMessage>>;
-  filterChanged: CaseReducer<EvaluationState, PayloadAction<FilterValues<Evaluation>>>;
-  pageChanged: CaseReducer<EvaluationState, PayloadAction<number>>;
-}
-
 export const evaluationSlice = createCrudSlice<
   Evaluation,
   EvaluationState,
   "evaluations",
-  EvaluationReducers
+  PaginationCaseReducers<Evaluation, EvaluationState>
 >({
   name: "evaluations",
   idSource: "uid",
   initialState,
-  extend: {
-    filterSuccess: (state, action: PayloadAction<Pagination<Evaluation>>) => {
-      state.total = action.payload.total;
-      state.results = action.payload.results;
-      state.isLoading = false;
-    },
-    filterFailed: (state, action: PayloadAction<ErrorMessage>) => {
-      state.results = [];
-      state.total = 0;
-      state.isLoading = false;
-      state.hasError = true;
-      state.errorMessage = action.payload;
-    },
-    filterChanged: (state, action: PayloadAction<FilterValues<Evaluation>>) => {
-      state.filter = action.payload;
-    },
-    pageChanged: (state, action: PayloadAction<number>) => {
-      state.page = action.payload;
-    },
-  },
+  extend: { ...reducers },
 });
 
 export const actions = evaluationSlice.actions;

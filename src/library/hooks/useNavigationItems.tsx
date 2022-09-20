@@ -89,6 +89,14 @@ export function useNavigationItems() {
       permissions: [UserType.Admin, UserType.Support],
     },
     {
+      key: admin.ranking.index,
+      label: t("nav.ranking"),
+      path: admin.ranking.index,
+      icon: <HistoryOutlined />,
+      iconelement: HistoryOutlined,
+      permissions: [UserType.Admin, UserType.Support]
+    },
+    {
       key: management.domains.fullPath,
       label: t("nav.domains"),
       path: management.domains.fullPath,
@@ -134,14 +142,6 @@ export function useNavigationItems() {
       path: admin.maturityModel.index,
       icon: <InsertRowBelowOutlined />,
       iconelement: InsertRowBelowOutlined,
-    },
-    {
-      key: admin.ranking.index,
-      label: t("nav.ranking"),
-      path: admin.ranking.index,
-      icon: <HistoryOutlined />,
-      iconelement: HistoryOutlined,
-      permissions: [UserType.Admin, UserType.Support]
     },
     {
       key: admin.settings.index,

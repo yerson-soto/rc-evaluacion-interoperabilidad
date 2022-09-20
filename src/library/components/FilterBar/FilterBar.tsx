@@ -4,18 +4,25 @@ import { Card, Input, Select } from "antd";
 import { useDebouncedCallback } from 'use-debounce';
 import { SortType } from "library/common/types";
 import { FilterValues } from "library/common/interfaces";
-import { Evaluation } from "library/models/Evaluation";
 import { AppBox } from "library/components/AppBox";
 
-import classes from './EvaluationFilter.module.css';
+import classes from './FilterBar.module.css';
 
-interface EvaluationFilterProps {
-  onChange: (filter: FilterValues<Evaluation>) => void;
-  defaults: FilterValues<Evaluation>;
+export interface SortByOption<T> {
+  value: keyof T;
+  label: string;
 }
 
-export default function EvaluationFilter({ onChange, defaults }: EvaluationFilterProps) {
+interface FilterBarProps<T> {
+  onChange: (filter: FilterValues<T>) => void;
+  defaults: FilterValues<T>;
+  sortByOptions: SortByOption<T>[];
+  searchInputPlaceholder?: string;
+}
+
+export default function FilterBar<T>(props: FilterBarProps<T>) {
   const { t } = useTranslation();
+  const { defaults, onChange, sortByOptions, searchInputPlaceholder = t("placeholders.search") } = props;
 
   const handleSearch = useDebouncedCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +32,7 @@ export default function EvaluationFilter({ onChange, defaults }: EvaluationFilte
     300
   );
 
-  const handleSortBy = (sortBy: keyof Evaluation) => {
+  const handleSortBy = (sortBy: keyof T) => {
     onChange({ ...defaults, sortBy });
   }
 
@@ -41,9 +48,14 @@ export default function EvaluationFilter({ onChange, defaults }: EvaluationFilte
         className={classes.select}
         onChange={handleSortBy}
       >
-        <Select.Option value="dateCreated">{t("options.date_created")}</Select.Option>
-        <Select.Option value="organization">{t("options.organization")}</Select.Option>
-        <Select.Option value="score">{t("options.score")}</Select.Option>
+        {sortByOptions.map((option, key) => (
+          <Select.Option 
+            key={key} 
+            value={option.value}
+          >
+            {option.label}
+          </Select.Option>
+        ))}
       </Select>
 
       <Select
@@ -58,7 +70,7 @@ export default function EvaluationFilter({ onChange, defaults }: EvaluationFilte
       <Input.Search
         className={classes.search}
         defaultValue={defaults.search}
-        placeholder={t("placeholders.search_evaluations")}
+        placeholder={searchInputPlaceholder}
         onChange={handleSearch}
         enterButton
       />

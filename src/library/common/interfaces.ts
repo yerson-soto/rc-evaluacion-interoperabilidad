@@ -32,6 +32,14 @@ export interface CrudState<T> extends CommonState {
   results: T[];
 }
 
+export interface PaginationState<T> extends CommonState {
+  results: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  filter: FilterValues<T>;
+}
+
 export interface CrudCaseReducers<T, State extends CrudState<T>> extends SliceCaseReducers<State> {
   startLoading: CaseReducer<State>;
   getSuccess: CaseReducer<State, PayloadAction<T[]>>;
