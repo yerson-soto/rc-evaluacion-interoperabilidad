@@ -90,7 +90,8 @@ export const paths = {
 export const keys = {
   linkTokenParam: "token",
   tokenLocalStorage: "jwt",
-  domainParamName: "d"
+  domainParamName: "d",
+  viewParamName: "view"
 };
 
 export const roleLabels = {
@@ -117,7 +118,7 @@ export const contentTypeLabels = {
   [ContentType.XLS]: getText('contentTypes.xls'),
   [ContentType.XLSX]: getText('contentTypes.xlsx'),
 };
-
+// TODO: Use translation only inside React lifecycle
 export const evaluationStatusLabels = {
   [EvaluationStatus.Created]: getText('status.created'),
   [EvaluationStatus.Pending]: getText('status.pending'),

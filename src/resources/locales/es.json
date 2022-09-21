@@ -36,7 +36,8 @@
     "reset_password_redirect": "Será redirigido para que inicie sesión con sus nuevas credenciales ({{ timeLeft }})",
     "confirm_email_redirect": "Será redirigido para que inicie sesión con la contraseña enviada a su correo electrónico ({{ timeLeft }})",
     "confirm_email_failed": "Al parecer su enlace de confirmacion ya expiró, haga click en el botón de abajo para reenviar su correo de confirmación.",
-    "email_domain_not_found": "La institución seleccionada no esta asociada a ningún dominio de correo electrónico, por favor contacte con el área responsable para configurar su dominio."
+    "email_domain_not_found": "La institución seleccionada no esta asociada a ningún dominio de correo electrónico, por favor contacte con el área responsable para configurar su dominio.",
+    "ranking_item_detail": "Ha sido evaluada {{ timesEvaluated }} veces"
   },
   "dividers": {
     "lineaments": "Lineamientos",
@@ -192,7 +193,8 @@
     "back": "Atrás",
     "previous": "Anterior",
     "next": "Siguiente",
-    "change_password": "Cambiar contraseña"
+    "change_password": "Cambiar contraseña",
+    "details": "Detalles"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",
@@ -257,5 +259,10 @@
     "created": "Iniciada",
     "pending": "En proceso",
     "completed": "Completada"
+  },
+  "timeline": {
+    "evaluation_created": "El {{ dateCreated }}, se creo la evaluación {{ nomenclature }}, a cargo de {{ user }}.",
+    "evaluation_started": "El {{ datePending }} , {{ user }} empezó a realizar la evaluacion.",
+    "evaluation_finished": "El {{ dateEnd }}, la evaluación {{ nomenclature }} fue finalizada con una puntuación de {{ score }}"
   }
 }

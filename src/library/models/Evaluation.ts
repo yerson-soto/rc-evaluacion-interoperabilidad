@@ -6,6 +6,8 @@ export interface Evaluation {
   uid: string;
   nomenclature: string;
   dateCreated: string;
+  dateEnd: string | null;
+  datePending: string | null;
   organization: Organization;
   user: User;
   status: EvaluationStatus;

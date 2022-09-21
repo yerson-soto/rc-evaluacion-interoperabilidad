@@ -5,15 +5,19 @@ import { Questionary } from "../Questionary";
 import { useListAction } from 'features/Crud/useListAction';
 import { domainSlice } from 'redux/slices/domainSlice';
 import { DomainService } from 'library/api/services/DomainService';
-import { useToggleQuestionary } from '../Questionary/useToggleQuestionary';
 import { DomainItem } from '../DomainItem';
+import { useToggleParam } from 'library/hooks/useToggleParam';
 
 import classes from "./DomainList.module.css";
+import { Domain } from 'library/models/Domain';
+import { keys } from '../../../library/common/constants';
 
 
 export default function DomainList() {
   const domainService = new DomainService()
 
+  const { t } = useTranslation();
+  const { setOpen } = useToggleParam(keys.domainParamName);
   const { isLoading, results: domains } = useListAction({
     selectLoading: (state) => state.domains.isLoading,
     selectResults: (state) => state.domains.results,
@@ -21,8 +25,9 @@ export default function DomainList() {
     service: domainService
   });
   
-  const { t } = useTranslation();
-  const { open } = useToggleQuestionary();
+  const handleView = (domain: Domain): void => {
+    setOpen(domain.id.toString());
+  }
 
   return (
     <React.Fragment>
@@ -45,7 +50,7 @@ export default function DomainList() {
           emptyText: <Empty description={t("empty.domains")} />,
         }}
         renderItem={(domain, key) => (
-          <DomainItem key={key} domain={domain} onClick={() => open(domain)} />
+          <DomainItem key={key} domain={domain} onClick={() => handleView(domain)} />
         )}
       />
 

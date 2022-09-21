@@ -32,7 +32,7 @@ export class UserService extends AbstractCrudService<
 
   verifyIdentityCard(identityCard: string): Promise<UserIdentity> {
     return new Promise((resolve, reject) => {
-      const url = `/usersdocument/${identityCard}`;
+      const url = `/users/usersdocument/${identityCard}`;
       this.client.get<APIResponse<GetUserIdentity>>(url)
         .then(res => {
           const identity = this.mapper.toIdentity(res.data.result);

@@ -77,7 +77,7 @@ export class AuthService extends AbstractAPIService implements AuthRepository {
   getAuthUser(token: string): Promise<AuthUser> {
     return new Promise((resolve, reject) => {
       this.client
-        .post<APIResponse<GetAuthUser>>("tokenUser", { token })
+        .post<APIResponse<GetAuthUser>>("/users/tokenUser", { token })
         .then((res) => {
           const user = this.mapper.userFromAPI(res.data.result);
           resolve(user);

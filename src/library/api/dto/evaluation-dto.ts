@@ -4,6 +4,8 @@ import { GetOrganizationNested } from './organization-dto';
 export interface GetEvaluation {
   id: string;
   dateInitial: string;
+  dateProcess: null | string;
+  dateFinally: null | string;
   userResponse: GetUser,
   organismo: GetOrganizationNested;
   sequecenEvaluation: string;

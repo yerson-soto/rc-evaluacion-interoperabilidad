@@ -4,6 +4,7 @@ import { GetOrganizationNested } from './organization-dto';
 export interface GetRanking {
   institutionalResponses: GetOrganizationNested
   finalScore: number;
+  amountEvaluation: number;
 }
 
 export interface GetRankingParams {

@@ -1,38 +1,39 @@
 import React from "react";
-import { Avatar, Timeline, Typography } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
-import { Organization } from "library/models/Organization";
+import { Tag, Timeline, Typography } from 'antd';
 import { useInstitutionTimeline } from "./useInstitutionTimeline";
-import { Evaluation } from 'library/models/Evaluation';
-import { contentTypeLabels } from '../../../library/common/constants';
+
+import classes from './InstitutionTimeline.module.css';
 
 interface InstitutionTimelineProps {
-  institution: Organization;
+  id: number;
 }
 
-export default function InstitutionTimeline(props: InstitutionTimelineProps) {
-  console.log('hola')
-  const { institution } = props;
-  const { evaluations } = useInstitutionTimeline(institution.id);
-
-  const renderTimelineItem = (evaluation: Evaluation): React.ReactNode => {
-    const { uid, nomenclature, score, indicatorColor, dateCreated } = evaluation;
-    
-    return (
-      <Timeline.Item 
-        key={uid} 
-        color={indicatorColor} 
-        dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}
-      >
-        <Typography.Title level={5}>{nomenclature}</Typography.Title>
-        <p>{dateCreated}</p>
-      </Timeline.Item>
-    )
-  }
+export default function InstitutionTimeline({ id }: InstitutionTimelineProps) {
+  const { timeline } = useInstitutionTimeline(id);
 
   return (
-    <Timeline>
-      {evaluations.map(renderTimelineItem)}
+    <Timeline 
+      className={classes.timeline} 
+      mode="alternate" 
+      reverse
+    > 
+      {timeline.map((item) => (
+        <Timeline.Item
+          key={item.key}
+          position={item.position}
+          color={item.color}
+          label={<Tag color={item.statusColor}>{item.status}</Tag>}
+          className={classes.item}
+        >
+          {item.title && (
+            <Typography.Text className={classes.itemTitle}>
+              {item.title}
+            </Typography.Text>
+          )}
+          
+          {item.content}
+        </Timeline.Item>
+      ))}
     </Timeline>
   );
 }

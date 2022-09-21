@@ -31,6 +31,8 @@ export class EvaluationMapper
       uid: data.id,
       nomenclature: data.sequecenEvaluation,
       dateCreated: data.dateInitial,
+      dateEnd: data.dateFinally,
+      datePending: data.dateProcess,
       status: data.statesResponse.id,
       indicatorColor: getScoreColor(score),
       scorePercent,

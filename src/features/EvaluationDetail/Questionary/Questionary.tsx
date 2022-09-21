@@ -4,18 +4,19 @@ import { InfoCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Result, Skeleton, Space } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { NotFound } from "features/NotFound";
-import { useToggleQuestionary } from "./useToggleQuestionary";
+import { useToggleParam } from 'library/hooks/useToggleParam';
 import { useDomain } from "./useDomain";
 import { useQuestionList } from "../QuestionList/useQuestionList";
 import { AppBox } from "library/components/AppBox";
 import { useQuestionary } from "./useQuestionary";
 import { QuestionList } from "../QuestionList";
 import { FinishQuiz } from './FinishQuiz';
+import { keys } from "library/common/constants";
 
 import classes from "./Questionary.module.css";
 
 export default function Questionary() {
-  const { visible, close } = useToggleQuestionary();
+  const { visible, setClose } = useToggleParam(keys.domainParamName);
   const { isFetching, isError, domain, domainTitle, resetDomain } = useDomain();
   const { isLoading, questions, flushQuestions } = useQuestionList(domain?.id);
   const { t } = useTranslation();
@@ -43,10 +44,10 @@ export default function Questionary() {
         content: t("alerts.ask_close_questionary"),
         okText: t("buttons.yes"),
         cancelText: t("buttons.no"),
-        onOk: close,
+        onOk: setClose,
       });
     } else {
-      close();
+      setClose();
     }
   };
 

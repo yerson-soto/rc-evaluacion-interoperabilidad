@@ -12,7 +12,8 @@ export class RankingMapper {
 
     return {
       institution,
-      score:  Number(data.finalScore.toFixed(2)) || 0
+      score:  Number(data.finalScore.toFixed(2)) || 0,
+      timesEvaluated: data.amountEvaluation
     };
   }
 
@@ -29,7 +30,7 @@ export class RankingMapper {
   }
 
   fromFilterToQueryParams(filter: FilterValues<Ranking>): GetRankingParams {
-    const fields: Record<keyof Ranking, GetRankingParams['orderBy']> = {
+    const fields: Record<string, GetRankingParams['orderBy']> = {
       institution: 'Organismo',
       score: 'FinalScore',
     }

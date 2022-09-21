@@ -1,28 +1,31 @@
 import React from "react";
-import { Avatar, Button, List, Progress, Space, Typography, Timeline, Modal } from 'antd';
+import {
+  Avatar,
+  Button,
+  List,
+  Progress,
+  Space,
+  Typography,
+  Timeline,
+  Modal,
+} from "antd";
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import { Ranking } from "library/models/Ranking";
 import { ListItem } from "library/components/ListItem";
 import { getScoreColor } from "library/helpers/score-color";
+import { useTranslation } from 'react-i18next';
 
- 
-import { Evaluation } from 'library/models/Evaluation';
-import InstitutionTimeline from '../../EvaluationDetail/InstitutionTimeline/InstitutionTimeline';
 
 interface RankingItemProps {
   ranking: Ranking;
+  onClick: (item: Ranking) => void;
 }
 
-const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
-
-export default function RankingItem({ ranking }: RankingItemProps) {
+export default function RankingItem(props: RankingItemProps) {
+  const { ranking, onClick } = props;
   const { institution, score } = ranking;
   const { name, acronym } = institution;
+  const { t } = useTranslation();
 
   const title = institution.acronym ? `${name} (${acronym})` : name;
 
@@ -37,17 +40,14 @@ export default function RankingItem({ ranking }: RankingItemProps) {
         //   text="2"
         //   key="list-vertical-message"
         // />,
-        <Button onClick={() => {
-          Modal.info({
-            title: "Linea de tiempo",
-            content: <InstitutionTimeline institution={institution} />
-          })
-        }}>Ver Todo</Button>,
+        <Button onClick={() => onClick(ranking)}>
+          {t("buttons.details")}
+        </Button>,
       ]}
     >
       <List.Item.Meta
-        title={title}
-        description="Ha sido evaluado 5 veces"
+        title={<Typography.Title level={5}>{title}</Typography.Title>}
+        description={t("texts.ranking_item_detail", { timesEvaluated: ranking.timesEvaluated })}
         avatar={
           <Progress
             width={60}
@@ -61,5 +61,3 @@ export default function RankingItem({ ranking }: RankingItemProps) {
     </List.Item>
   );
 }
-
-

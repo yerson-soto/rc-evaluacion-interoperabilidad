@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Tabs } from "antd";
+import { Card, Tabs } from "antd";
 import { EyeOutlined, AimOutlined, FieldTimeOutlined } from "@ant-design/icons";
 import { AppBox } from "library/components/AppBox";
 import { Summary } from "./Summary";
@@ -72,9 +72,9 @@ export default function EvaluationDetail() {
           }
           key="3"
         >
-          <InstitutionTimeline 
-            institution={evaluation.organization}  
-          />
+          <Card>
+            <InstitutionTimeline id={evaluation.organization.id} />
+          </Card>
         </Tabs.TabPane>
       </Tabs>
     </AppBox>

@@ -27,7 +27,7 @@ export default function Summary(props: SummaryProps) {
   // TODO: Increment score when user selects response
   return (
     <Card 
-      title={"Evaluacion de " + evaluation.organization.name} 
+      title={evaluation.nomenclature} 
       bordered={false} 
       extra={
         <Button type="primary" 
