@@ -9,8 +9,9 @@ export default function RankingDetail() {
   const institutionId = Number(paramValue);
 
   return (
+    // TODO: Show institution title here
     <AppDrawer 
-      title="Ministerio de Administracion Publica" 
+      title="Linea de Tiempo" 
       open={visible} 
       onClose={setClose}
     >

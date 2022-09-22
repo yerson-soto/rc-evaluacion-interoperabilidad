@@ -18,7 +18,8 @@ export enum ContentType {
 }
 
 export enum EvaluationStatus {
-  Created = 1,
-  Pending = 2,
-  Completed = 3
+  Scheduled = 1,
+  Started = 2,
+  Pending = 3,
+  Completed = 4
 }

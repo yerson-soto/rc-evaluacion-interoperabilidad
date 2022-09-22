@@ -23,6 +23,8 @@ export interface GetEvaluation {
 export interface CreateEvaluation {
   organismoId: number;
   userId: string;
+  userTechnicsId: string;
+  dateDiary: string;
 }
 
 export interface GetEvaluationParams {

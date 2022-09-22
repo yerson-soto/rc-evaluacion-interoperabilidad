@@ -1,6 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Button, Col, List, Progress, Row, Typography } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  List,
+  Progress,
+  Row,
+  Space,
+  Tag,
+  Typography,
+} from "antd";
 import { Evaluation } from "library/models/Evaluation";
 import { AppBox } from "library/components/AppBox";
 
@@ -8,6 +18,11 @@ import classes from "./EvaluationItem.module.css";
 
 import { paths } from "library/common/constants";
 import { EvaluationStatus } from "library/common/enums";
+import {
+  evaluationStatusLabels,
+  evaluationStatusType,
+} from "../../../library/common/constants";
+import ButtonGroup from "antd/lib/button/button-group";
 
 interface EvaluationItemProps {
   evaluation: Evaluation;
@@ -46,12 +61,20 @@ interface EvaluationItemProps {
 export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   const navigate = useNavigate();
 
-  const { uid, organization, dateCreated, score, scorePercent, indicatorColor } = evaluation;
+  const {
+    uid,
+    organization,
+    dateCreated,
+    score,
+    scorePercent,
+    indicatorColor,
+  } = evaluation;
 
-  const goToDetail = () => navigate(paths.admin.evaluations.detail.reverse({ uid }));
+  const goToDetail = () =>
+    navigate(paths.admin.evaluations.detail.reverse({ uid }));
   const goToEvaluation = (): void =>
     navigate(paths.admin.evaluations.init.reverse({ uid }));
- 
+
   return (
     <List.Item
       className={classes.row}
@@ -59,17 +82,40 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="setting" icon={SettingOutlined} />,
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
-        
+
+
+        <Tag
+          color={evaluationStatusType[evaluation.status]}
+          style={{ padding: "4px 15px", fontSize: "14px" }}
+        >
+          {evaluationStatusLabels[evaluation.status]}
+        </Tag>,
         <Button onClick={goToDetail}>
           {evaluation.status === EvaluationStatus.Completed ? "Ver" : "Evaluar"}
         </Button>,
-       
+
         // <Button danger>Eliminar</Button>,
       ]}
     >
-      <Row align="middle" gutter={20} wrap={false}>
+      <List.Item.Meta
+        description={`${organization.name} | ${dateCreated}`}
+        title={
+          <Typography.Title level={5}>
+            {evaluation.nomenclature}
+          </Typography.Title>
+        }
+        avatar={
+          <Progress
+            width={60}
+            type="circle"
+            percent={scorePercent}
+            format={() => score}
+            strokeColor={indicatorColor}
+          />
+        }
+      />
+      {/* <Row align="middle" gutter={20} wrap={false}>
         <Col>
-          {/* <Score value={score} /> */}
           <Progress 
             width={60} 
             type="circle" 
@@ -77,7 +123,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
             format={() => score} 
             strokeColor={indicatorColor}
           />
-          {/* <Avatar size={60} style={{ backgroundColor: indicatorColor, color: "#000000" }}>{score}</Avatar> */}
+          
         </Col>
 
         <Col>
@@ -88,7 +134,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
             <Typography.Text>{dateCreated}</Typography.Text>
           </AppBox>
         </Col>
-      </Row>
+      </Row> */}
     </List.Item>
   );
 }

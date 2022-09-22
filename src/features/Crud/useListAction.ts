@@ -27,7 +27,6 @@ export function useListAction<T, State extends CrudState<T>>({
       
     service.getAll()
     .then(results => {
-      console.log('fetched', results);
       dispatch(reducer.actions.getSuccess(results))
     })
     .catch((message) => {

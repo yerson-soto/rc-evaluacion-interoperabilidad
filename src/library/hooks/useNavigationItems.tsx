@@ -15,6 +15,7 @@ import {
   UsergroupAddOutlined,
   InsertRowBelowOutlined,
   HistoryOutlined,
+  ScheduleOutlined,
   SettingOutlined,
   UserOutlined,
   LockOutlined
@@ -63,7 +64,7 @@ const { admin, management } = paths;
 export function useNavigationItems() {
   const userType = useAppSelector((state) => state.auth.user.type);
   const { t } = useTranslation();
-
+  
   const navItems: NavItem[] = [
     { 
       key: admin.index,
@@ -71,14 +72,6 @@ export function useNavigationItems() {
       path: admin.index, 
       icon: <PieChartFilled />,
       iconelement: PieChartFilled,
-    },
-    {
-      key: management.users.fullPath,
-      label: t("nav.users"),
-      path: management.users.fullPath,
-      icon: <UsergroupAddOutlined />,
-      iconelement: UsergroupAddOutlined,
-      permissions: [UserType.Admin],
     },
     { 
       key: admin.evaluations.index,
@@ -97,51 +90,67 @@ export function useNavigationItems() {
       permissions: [UserType.Admin, UserType.Support]
     },
     {
-      key: management.domains.fullPath,
-      label: t("nav.domains"),
-      path: management.domains.fullPath,
-      icon: <AimOutlined />,
-      iconelement: AimOutlined,
-      permissions: [UserType.Admin],
+      key: admin.schedule.index,
+      label: t("nav.schedule"),
+      path: admin.schedule.index,
+      icon: <ScheduleOutlined />,
+      iconelement: ScheduleOutlined
     },
     {
-      key: management.lineaments.fullPath,
-      label: t("nav.lineaments"),
-      path: management.lineaments.fullPath,
-      icon: <AlignLeftOutlined />,
-      iconelement: AlignLeftOutlined,
-      permissions: [UserType.Admin],
-    },
-    {
-      key: management.criterions.fullPath,
-      label: t("nav.criterions"),
-      path: management.criterions.fullPath,
-      icon: <CompressOutlined />,
-      iconelement: CompressOutlined,
-      permissions: [UserType.Admin],
-    },
-    {
-      key: management.levels.fullPath,
-      label: t("nav.levels"),
-      path: management.levels.fullPath,
-      icon: <SignalFilled />,
-      iconelement: SignalFilled,
-      permissions: [UserType.Admin],
-    },
-    {
-      key: management.choices.fullPath,
-      label: t("nav.answers"),
-      path: management.choices.fullPath,
-      icon: <FormOutlined />,
-      iconelement: FormOutlined,
-      permissions: [UserType.Admin],
-    },
-    {
-      key: admin.maturityModel.index,
+      key: "maturity-model",
       label: t("nav.maturity_model"),
       path: admin.maturityModel.index,
       icon: <InsertRowBelowOutlined />,
       iconelement: InsertRowBelowOutlined,
+      children: [
+        {
+          key: admin.maturityModel.index,
+          label: t("nav.maturity_model_sub"),
+          path: admin.maturityModel.index,
+          icon: <InsertRowBelowOutlined />,
+          iconelement: InsertRowBelowOutlined,
+        },
+        {
+          key: management.domains.fullPath,
+          label: t("nav.domains"),
+          path: management.domains.fullPath,
+          icon: <AimOutlined />,
+          iconelement: AimOutlined,
+          permissions: [UserType.Admin],
+        },
+        {
+          key: management.lineaments.fullPath,
+          label: t("nav.lineaments"),
+          path: management.lineaments.fullPath,
+          icon: <AlignLeftOutlined />,
+          iconelement: AlignLeftOutlined,
+          permissions: [UserType.Admin],
+        },
+        {
+          key: management.criterions.fullPath,
+          label: t("nav.criterions"),
+          path: management.criterions.fullPath,
+          icon: <CompressOutlined />,
+          iconelement: CompressOutlined,
+          permissions: [UserType.Admin],
+        },
+        {
+          key: management.levels.fullPath,
+          label: t("nav.levels"),
+          path: management.levels.fullPath,
+          icon: <SignalFilled />,
+          iconelement: SignalFilled,
+          permissions: [UserType.Admin],
+        },
+        {
+          key: management.choices.fullPath,
+          label: t("nav.answers"),
+          path: management.choices.fullPath,
+          icon: <FormOutlined />,
+          iconelement: FormOutlined,
+          permissions: [UserType.Admin],
+        },
+      ]
     },
     {
       key: admin.settings.index,
@@ -165,6 +174,14 @@ export function useNavigationItems() {
           iconelement: LockOutlined,
         }
       ]
+    },
+    {
+      key: management.users.fullPath,
+      label: t("nav.users"),
+      path: management.users.fullPath,
+      icon: <UsergroupAddOutlined />,
+      iconelement: UsergroupAddOutlined,
+      permissions: [UserType.Admin],
     },
   ];
   

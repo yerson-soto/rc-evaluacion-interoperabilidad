@@ -124,7 +124,7 @@ export default function ChoiceForm(props: ChoiceFormProps) {
               hidden={hiddenFields?.includes('isEvidenceRequired')}
               noStyle
             >
-              <Checkbox>{t("fields.isEvidenceRequired")}</Checkbox>
+              <Checkbox>{t("fields.is_evidence_required")}</Checkbox>
             </Form.Item>
           </Form.Item>
 

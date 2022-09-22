@@ -21,7 +21,7 @@ export default function EvaluationDetail() {
   if (!evaluation) return <NotFound />;
 
   const isCompleted = evaluation.status === EvaluationStatus.Completed;
-  
+  // TODO: Dont destroyInactiveTabPane
   return (
     <AppBox>
       <Summary evaluation={evaluation} />

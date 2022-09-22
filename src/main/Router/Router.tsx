@@ -29,6 +29,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import { PermissionRoute } from "./PermissionRoute";
 import { UserType } from "library/common/enums";
+import Schedule from '../../features/Schedule/Schedule';
 
 const { auth, admin, admin: { evaluations, settings }, management } = paths;
 
@@ -53,12 +54,13 @@ export default function Router() {
           {/* Common routes */}
           <Route path={admin.index} element={<Dashboard />} />
           <Route path={admin.maturityModel.index} element={<TableVersion />} />
+          <Route path={admin.schedule.index} element={<Schedule />} />
           <Route path={settings.index} element={<Configuration />}>
             <Route path={settings.general.index} element={<GeneralConfig />} />
             <Route path={settings.password.index} element={<PasswordChange />} />
           </Route>
 
-          {/* Routes for admin and support */}
+          {/* Routes for admininstrators and support */}
           <Route element={<PermissionRoute for={[UserType.Admin, UserType.Support]} />}>
             <Route path={admin.ranking.index} element={<RankingList />} />
             <Route path={evaluations.index}>

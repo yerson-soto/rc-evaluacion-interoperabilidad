@@ -5,8 +5,8 @@ export interface ListRepository<T> {
   getAll: () => Promise<T[]>;
 }
 
-export interface PaginateRepository<T> {
-  filter: (page: number, values: FilterValues<T>) => Promise<Pagination<T>>
+export interface PaginateRepository<T, Extra = undefined> {
+  paginate: (page: number, values: FilterValues<T>, extra: Extra) => Promise<Pagination<T>>
 }
 
 export abstract class AbstractListService<T, DataReceived>

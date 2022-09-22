@@ -18,7 +18,7 @@ interface TimelineItem {
 
 export function useInstitutionTimeline(institutionId: number) {
   const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
-  const [isLoading, setloading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const evaluationService = new EvaluationService();
   const { t } = useTranslation();
 
@@ -46,7 +46,7 @@ export function useInstitutionTimeline(institutionId: number) {
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_finished", {
             dateEnd: evaluation.dateEnd,
-            nomenclature: evaluation.user.fullName,
+            nomenclature: evaluation.nomenclature,
             score: evaluation.score,
           }),
         },
@@ -59,20 +59,20 @@ export function useInstitutionTimeline(institutionId: number) {
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_started", {
             datePending: evaluation.datePending,
-            user: evaluation.user.fullName,
+            user: evaluation.manager.fullName,
           }),
         },
         {
-          key: evaluation.uid + EvaluationStatus.Created,
+          key: evaluation.uid + EvaluationStatus.Started,
           color: "gold",
           position,
-          statusColor: evaluationStatusType[EvaluationStatus.Created],
-          status: evaluationStatusLabels[EvaluationStatus.Created],
+          statusColor: evaluationStatusType[EvaluationStatus.Started],
+          status: evaluationStatusLabels[EvaluationStatus.Started],
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_created", {
             dateCreated: evaluation.dateCreated,
             nomenclature: evaluation.nomenclature,
-            user: evaluation.user.fullName,
+            user: evaluation.manager.fullName,
           }),
         }
       );
@@ -83,13 +83,15 @@ export function useInstitutionTimeline(institutionId: number) {
 
   useEffect(() => {
     const fetchTimeline = async () => {
+      setLoading(true);
+
       try {
         const evaluations = await evaluationService.getTimeline(institutionId);
         setEvaluations(evaluations);
       } catch (errorMessage) {
         setEvaluations([]);
       } finally {
-        setloading(false);
+        setLoading(false);
       }
     };
 

@@ -1,7 +1,7 @@
 import { FilterValues, Mapper, Pagination } from "library/common/interfaces";
 import { Evaluation } from "library/models/Evaluation";
 import { GetEvaluation, CreateEvaluation, GetEvaluationParams } from "library/api/dto/evaluation-dto";
-import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
+import { EvaluationFormSchema } from "features/EvaluationList/EvaluationForm/EvaluationFormSchema";
 import { OrganizationMapper } from './OrganizationMapper';
 import { GetPaginatedEvaluation } from '../dto/evaluation-dto';
 import { UserMapper } from "./UserMapper";
@@ -14,7 +14,9 @@ export class EvaluationMapper
   formSchemaToAPI(schema: EvaluationFormSchema): CreateEvaluation {
     return {
       organismoId: schema.organizationId,
-      userId: schema.userId
+      userId: schema.userId,
+      userTechnicsId: schema.supportId,
+      dateDiary: schema.startDate
     };
   }
 
@@ -23,7 +25,7 @@ export class EvaluationMapper
     const userMapper = new UserMapper();
     
     const organization = orgMapper.fromAPINested(data.organismo),
-      user = userMapper.fromAPI(data.userResponse),
+      manager = userMapper.fromAPI(data.userResponse),
       score = Number(data.resultLevelResponse.resultFinallly.toFixed(2)) || 0,
       scorePercent = score * 100 / 5;
 
@@ -38,7 +40,7 @@ export class EvaluationMapper
       scorePercent,
       score,
       organization,
-      user,
+      manager
     };
   }
 

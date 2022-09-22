@@ -90,7 +90,7 @@ export default function Summary(props: SummaryProps) {
               labelStyle={{ fontWeight: "bold" }}
               label={t("labels.manager")}
             >
-              {evaluation.user.fullName}
+              {evaluation.manager.fullName}
             </Descriptions.Item>
             <Descriptions.Item
               labelStyle={{ fontWeight: "bold" }}

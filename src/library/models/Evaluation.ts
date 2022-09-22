@@ -9,9 +9,9 @@ export interface Evaluation {
   dateEnd: string | null;
   datePending: string | null;
   organization: Organization;
-  user: User;
   status: EvaluationStatus;
   score: number;
   scorePercent: number;
   indicatorColor: string;
+  manager: User;
 }

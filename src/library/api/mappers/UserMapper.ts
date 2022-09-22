@@ -5,6 +5,7 @@ import { GetUser, CreateUser, GetUserIdentity } from '../dto/user-dto';
 import { UserIdentity } from 'library/models/User';
 import { keys, paths } from "library/common/constants";
 import { OrganizationMapper } from './OrganizationMapper';
+import { DefaultOptionType } from "antd/lib/select";
 
 export class UserMapper
   implements
@@ -47,5 +48,12 @@ export class UserMapper
       lastName: data.lastName,
       fullName: data.fullName
     };
+  }
+
+  toSelectOption(user: User): DefaultOptionType {
+    return {
+      label: user.fullName,
+      value: user.uid,
+    }
   }
 }

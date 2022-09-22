@@ -6,17 +6,19 @@ import { PaginateRepository } from "library/api/services/AbstractListService";
 import { PaginationReducer } from "redux/reducers/paginationReducers";
 import { RootState } from "redux/types";
 
-interface PaginateAction<T, State extends PaginationState<T>> {
-  service: PaginateRepository<T>;
+interface PaginateAction<T, State extends PaginationState<T>, ExtraArg> {
+  service: PaginateRepository<T, ExtraArg>;
   reducer: PaginationReducer<T, State>;
   selectState: (state: RootState) => State;
+  extraArg?: ExtraArg;
 }
 
-export function usePaginateAction<T, State extends PaginationState<T>>({
+export function usePaginateAction<T, State extends PaginationState<T>, ExtraArgs = any>({
   service,
   reducer,
-  selectState
-}: PaginateAction<T, State>) {
+  selectState,
+  extraArg
+}: PaginateAction<T, State, ExtraArgs>) {
   const {
     results,
     page,
@@ -35,7 +37,7 @@ export function usePaginateAction<T, State extends PaginationState<T>>({
   const filterResults = async (page: number, filter: FilterValues<T>) => {
     dispatch(reducer.actions.startFiltering());
 
-    service.filter(page, filter)
+    service.paginate(page, filter, extraArg as ExtraArgs)
       .then((pagination) => dispatch(reducer.actions.filterSuccess(pagination)))
       .catch((errorMessage) => dispatch(reducer.actions.filterFailed(errorMessage)));
   };

@@ -1,12 +1,14 @@
 import { Evaluation } from "library/models/Evaluation";
 import { APIResponse, FilterValues, Pagination } from "library/common/interfaces";
 import { AbstractCrudService } from "./AbstractCrudService";
-import { EvaluationFormSchema } from "features/EvaluationCrud/EvaluationForm/EvaluationFormSchema";
+import { EvaluationFormSchema } from "features/EvaluationList/EvaluationForm/EvaluationFormSchema";
 import { EvaluationMapper } from "library/api/mappers/EvaluationMapper";
+import { PaginateRepository } from './AbstractListService';
+import { ManagerId } from "library/common/types";
 import * as dto from "library/api/dto/evaluation-dto";
 
-export interface EvaluationRepository {
-  filter: (page: number, values: FilterValues<Evaluation>) => Promise<Pagination<Evaluation>>;
+
+export interface EvaluationRepository extends PaginateRepository<Evaluation, ManagerId> {
   getTimeline: (institutionId: number) => Promise<Evaluation[]>;
   finish: (uid: string) => Promise<Evaluation>;
 }
@@ -60,9 +62,13 @@ export class EvaluationService extends AbstractCrudService<
     });
   }
   
-  filter(page: number, values: FilterValues<Evaluation>): Promise<Pagination<Evaluation>> {
+  paginate(
+    page: number, 
+    values: FilterValues<Evaluation>,
+    managerId: ManagerId
+  ): Promise<Pagination<Evaluation>> {
     return new Promise((resolve, reject) => {
-      const url = `/evaluationsinstitutional/${page}/10`;
+    const url = `/evaluationsinstitutional/${managerId}/${page}/10`;
       const params = this.mapper.fromFilterToQueryParams(values);
       
       this.client

@@ -1,12 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, DatePicker, Form, Input, Select } from "antd";
+import { Button, Checkbox, DatePicker, Form, Input, Select } from "antd";
 import { AppDrawer } from "library/components/AppDrawer";
 import { EvaluationFormSchema, rules } from "./EvaluationFormSchema";
 import { useEvaluationForm } from './useEvaluationForm';
 import { InstitutionSelect } from "library/components/InstitutionSelect";
-import { useAppSelector } from '../../../redux/hooks';
-
+import { useAppSelector } from 'redux/hooks';
+import { ManagerSelect } from "../ManagerSelect";
+import { DatetimePicker } from "../DatetimePicker";
+import { UserType } from '../../../library/common/enums';
 
 interface EvaluationFormProps {
   show: boolean;
@@ -22,7 +24,8 @@ export default function EvaluationForm(props: EvaluationFormProps) {
   const { t } = useTranslation();
 
   // Todo: Refactor source of userId. Should be from select field.
-  const userId = useAppSelector(state => state.auth.user.uid);
+  const user = useAppSelector(state => state.auth.user);
+  const isAdmin = user.type === UserType.Admin;
 
   const {  form, resetForm } = useEvaluationForm();
 
@@ -40,7 +43,7 @@ export default function EvaluationForm(props: EvaluationFormProps) {
 
   const onFinish = () => {
     form.validateFields().then((values) => {
-      onSave({ ...values, userId }).then(onHide);
+      onSave({ ...values, userId: user.uid }).then(onHide);
     });
   };
   
@@ -71,6 +74,7 @@ export default function EvaluationForm(props: EvaluationFormProps) {
           size="large"
           autoComplete="off"
           layout="vertical"
+          requiredMark="optional"
         >
           <Form.Item
             name="organizationId"
@@ -82,14 +86,50 @@ export default function EvaluationForm(props: EvaluationFormProps) {
             />
           </Form.Item>
           
-          {/* <Form.Item
-            name="startDate"
-            label={t("fields.startDate")}
-            extra={t("hints.startDate")}
-            rules={rules.startDate}
+          {isAdmin && (
+            <Form.Item
+              name="supportId"
+              label={t("fields.manager")}
+            >
+              <ManagerSelect
+                placeholder={t("placeholders.select_manager")}
+              />
+            </Form.Item>
+          )}
+
+          <Form.Item>
+            <Form.Item 
+              name="isScheduled" 
+              valuePropName="checked" 
+              noStyle
+            >
+              <Checkbox>{t("fields.schedule_evaluation")}</Checkbox>
+            </Form.Item>
+          </Form.Item>
+          
+          <Form.Item
+            noStyle
+            preserve={false}
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.isScheduled !== currentValues.isScheduled
+            }
           >
-            <DatePicker.RangePicker />
-          </Form.Item> */}
+            {({ getFieldValue }) =>
+              getFieldValue("isScheduled") ? (
+                <Form.Item
+                  name="startDate"
+                  label={t("fields.start_date")}
+                  extra={t("hints.start_date")}
+                  rules={rules.startDate}
+                >
+                  <DatetimePicker 
+                    placeholder={t("placeholders.select_start_date")} 
+                    style={{ width: '100%' }} 
+                  />
+                </Form.Item> 
+              ) : null
+            }
+          </Form.Item>
         </Form>
       )}
     </AppDrawer>

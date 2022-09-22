@@ -93,7 +93,10 @@
     "response": "Respuesta",
     "organization": "Institución",
     "sort": "Ordenar por",
-    "isEvidenceRequired": "¿Esta respuesta requiere alguna evidencia?"
+    "is_evidence_required": "¿Esta respuesta requiere alguna evidencia?",
+    "manager": "Encargado",
+    "schedule_evaluation": "Agendar esta evaluación",
+    "start_date": "Fecha de inicio"
   },
   "options": {
     "date_created": "Fecha de Creación",
@@ -121,11 +124,13 @@
     "choice_description": "Descripción de la respuesta",
     "select_criterion": "Seleccionar criterio",
     "select_level": "Seleccionar nivel",
+    "select_manager": "Seleccionar encargado",
+    "select_start_date": "Seleccionar una fecha de inicio",
     "search_evaluations": "Buscar evaluaciones...",
     "search_institutions": "Buscar instituciones...",
     "content_type": "Tipo",
     "title": "Título",
-    "search": "Buscar..."
+    "search": "Buscar..."    
   },
   "rules": {
     "required": "{{ field }} es un campo obligatorio!",
@@ -140,7 +145,8 @@
     "upload_evidence": "Utilizar documentos, actas, evaluaciones, y en general cualquier tipo de evidencia que soporte la evaluacion.",
     "slug": "Este texto se utiliza como identificador legible del dominio.",
     "domain_acronym": "La abreviatura se utiliza para formar el código de los lineamientos.",
-    "domain_color": "Este color de utiliza para distinguir el dominio de los demás."
+    "domain_color": "Este color de utiliza para distinguir el dominio de los demás.",
+    "start_date": "La evaluación sera agendada para iniciarla en la fecha establecida."
   },
   "pagination": {
     "evaluations": "Evaluación(es)",
@@ -165,7 +171,8 @@
     "ask_close_questionary": "Ha hecho cambios en este criterio, ¿Seguro que desea descartar estos cambios?",
     "questionary_finished": "Todos los criterios han sido completados. ¿Deseas cerrar este formulario?",
     "change_password_success": "La contraseña ha sido modificada con éxito",
-    "logout_confirmation": "¿Deseas cerrar sesión?"
+    "logout_confirmation": "¿Deseas cerrar sesión?",
+    "finish_evaluation_success": "La evaluación ha sido finalizada"
   },
   "loading": {
     "text": "Cargando",
@@ -237,7 +244,9 @@
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión",
     "maturity_model": "Modelo de Madurez",
-    "ranking": "Puntuaciones"
+    "maturity_model_sub": "Modelo",
+    "ranking": "Puntuaciones",
+    "schedule": "Calendario"
   },
   "settings": {
     "general": "General",
@@ -256,7 +265,8 @@
     "pdf": "PDF"
   },
   "status": {
-    "created": "Iniciada",
+    "scheduled": "Agendada",
+    "started": "Iniciada",
     "pending": "En proceso",
     "completed": "Completada"
   },

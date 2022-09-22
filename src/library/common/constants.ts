@@ -54,6 +54,9 @@ export const paths = {
     maturityModel: { 
       index: "/modelo-de-madurez" 
     },
+    schedule: {
+      index: "/calendario"
+    },
     ranking: {
       index: "/puntuaciones"
     }
@@ -120,13 +123,15 @@ export const contentTypeLabels = {
 };
 // TODO: Use translation only inside React lifecycle
 export const evaluationStatusLabels = {
-  [EvaluationStatus.Created]: getText('status.created'),
+  [EvaluationStatus.Scheduled]: getText('status.scheduled'),
+  [EvaluationStatus.Started]: getText('status.started'),
   [EvaluationStatus.Pending]: getText('status.pending'),
   [EvaluationStatus.Completed]: getText('status.completed'),
 }
 
 export const evaluationStatusType = {
-  [EvaluationStatus.Created]: "warning",
+  [EvaluationStatus.Scheduled]: "magenta",
+  [EvaluationStatus.Started]: "warning",
   [EvaluationStatus.Pending]: "processing",
   [EvaluationStatus.Completed]: "success",
 }

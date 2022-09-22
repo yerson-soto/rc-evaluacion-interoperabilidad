@@ -14,7 +14,7 @@ export class OrganizationMapper implements Mapper<Organization, GetOrganization,
       emailDomain: data.email,
     };
   }
-
+  
   fromAPINested(data: GetOrganizationNested): Organization {
     return {
       id: data.id,
@@ -23,7 +23,7 @@ export class OrganizationMapper implements Mapper<Organization, GetOrganization,
       emailDomain: "",
     };
   }
-
+  
   toSelectOption(org: Organization): DefaultOptionType {
     return {
       label: org.name,

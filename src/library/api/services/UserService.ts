@@ -6,6 +6,7 @@ import { UserFormSchema } from "features/UserCrud/UserForm/UserFormSchema";
 import { APIResponse } from 'library/common/interfaces';
 
 interface UserRepository {
+  getSupports: () => Promise<User[]>;
   verifyIdentityCard: (identityCard: string) => Promise<UserIdentity>;
 }
 
@@ -29,6 +30,17 @@ export class UserService extends AbstractCrudService<
   getDetailUrl(id: number): string {
     return "/users/" + id.toString();
   };
+
+  getSupports(): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      this.client.get<APIResponse<GetUser[]>>('/users/userTechnics')
+        .then(res => {
+          const supports = res.data.result.map(this.mapper.fromAPI);
+          resolve(supports);
+        })
+        .catch(() => reject("alerts.could_not_load_users"))
+    })
+  }
 
   verifyIdentityCard(identityCard: string): Promise<UserIdentity> {
     return new Promise((resolve, reject) => {
