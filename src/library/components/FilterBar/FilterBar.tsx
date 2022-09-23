@@ -13,19 +13,26 @@ export interface SortByOption<T> {
   label: string;
 }
 
-interface FilterBarProps<T> {
-  onChange: (filter: FilterValues<T>) => void;
-  defaults: FilterValues<T>;
-  searchInputPlaceholder?: string;
-  sortByOptions: SortByOption<T>[];
+export interface StatusOption<Status> {
+  value: Status;
+  label: string;
 }
 
-export default function FilterBar<T>(props: FilterBarProps<T>) {
+interface FilterBarProps<T, Status> {
+  onChange: (filter: FilterValues<T, Status>) => void;
+  defaults: FilterValues<T, Status>;
+  searchInputPlaceholder?: string;
+  sortByOptions: SortByOption<T>[];
+  statusOptions?: StatusOption<Status>[];
+}
+
+export default function FilterBar<T, Status = any>(props: FilterBarProps<T, Status>) {
   const { t } = useTranslation();
   const {
     defaults,
     onChange,
     sortByOptions,
+    statusOptions,
     searchInputPlaceholder = t("placeholders.search"),
   } = props;
 
@@ -45,9 +52,30 @@ export default function FilterBar<T>(props: FilterBarProps<T>) {
     onChange({ ...defaults, sortType });
   };
 
+  const handleStatus = (status: Status[]) => {
+    onChange({ ...defaults, status });
+  };
+
   return (
     <Card>
       <AppBox className={classes.wrapper}>
+        {statusOptions && (
+          <Select
+            mode="multiple"
+            defaultValue={defaults.status as any}
+            className={classes.select}
+            onChange={handleStatus}
+            maxTagCount="responsive"
+            placeholder={t("placeholders.select_statuses")}
+          >
+            {statusOptions.map((option, key) => (
+              <Select.Option key={key} value={option.value}>
+                {option.label}
+              </Select.Option>
+            ))}
+          </Select>
+        )}
+
         <Select
           defaultValue={defaults.sortBy}
           className={classes.select}

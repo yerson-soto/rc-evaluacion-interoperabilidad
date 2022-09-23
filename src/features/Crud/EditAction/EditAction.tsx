@@ -22,15 +22,14 @@ export interface EditActionProps<T, FormSchema, State extends CrudState<T>> {
   reducer: CrudReducer<T, State>;
   selectLoading: (state: RootState) => boolean;
 
-  // TODO: Change render to renderForm
-  render: (params: RenderEdit<T, FormSchema>) => React.ReactNode;
+  renderForm: (params: RenderEdit<T, FormSchema>) => React.ReactNode;
   renderTrigger?: (trigger: () => void) => void;
 }
 
 export default function EditAction<T, FormSchema, State extends CrudState<T>>(
   props: EditActionProps<T, FormSchema, State>
 ) {
-  const { record, service, reducer, idSource, selectLoading, render, renderTrigger } = props;
+  const { record, service, reducer, idSource, selectLoading, renderForm, renderTrigger } = props;
   const { isOpen, onOpen, onCloseEnd } = useToogleAction<T>({
     action: "edit",
     keyFrom: idSource,
@@ -47,7 +46,7 @@ export default function EditAction<T, FormSchema, State extends CrudState<T>>(
     return await editOne(record[idSource] as any, schema);
   };
   
-  const renderEdit = () => render({
+  const renderEdit = () => renderForm({
     record,
     visible: isOpen,
     loading: isLoading,

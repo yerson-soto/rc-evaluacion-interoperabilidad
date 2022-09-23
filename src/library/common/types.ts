@@ -7,3 +7,4 @@ export type ID = string | number;
 export type FormRules<T> = Record<keyof T, Rule[]>;
 export type SortType = 'asc' | 'desc';
 export type ManagerId = string;
+export type CommaSeparatedItems = string;

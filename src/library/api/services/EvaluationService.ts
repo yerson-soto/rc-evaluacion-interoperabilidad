@@ -47,20 +47,6 @@ export class EvaluationService extends AbstractCrudService<
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
   }
-
-  getTimeline(institutionId: number): Promise<Evaluation[]> {
-    return new Promise((resolve, reject) => {
-      const url = `evaluationInstitutional/history/${institutionId}`;
-      this.client
-        .get<APIResponse<dto.GetEvaluation[]>>(url)
-        .then((res) => {
-          const results = res.data.result;
-          const evaluations = results.map(this.mapper.fromAPI);
-          resolve(evaluations);
-        })
-        .catch(() => reject("backend.timeline_couldnt_load"));
-    });
-  }
   
   paginate(
     page: number, 
@@ -79,6 +65,34 @@ export class EvaluationService extends AbstractCrudService<
         })
         .catch(() => reject("No se pudo cargar las evaluaciones"));
     });
+  }
+
+  getTimeline(institutionId: number): Promise<Evaluation[]> {
+    return new Promise((resolve, reject) => {
+      const url = `evaluationInstitutional/history/${institutionId}`;
+      this.client
+        .get<APIResponse<dto.GetEvaluation[]>>(url)
+        .then((res) => {
+          const results = res.data.result;
+          const evaluations = results.map(this.mapper.fromAPI);
+          resolve(evaluations);
+        })
+        .catch(() => reject("backend.timeline_couldnt_load"));
+    });
+  }
+
+  getCalendar(userId: string, dateFrom: string, dateTo: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.client
+        .get<APIResponse<dto.GetCalendar[]>>('evaluationInstitutional/calendar')
+        .then((res) => {
+          const results = res.data.result;
+          // TODO: Get calendar
+          // const evaluations = results.map(this.mapper.fromAPI);
+          // resolve(evaluations);
+        })
+        .catch(() => reject("backend.timeline_couldnt_load"));
+    })
   }
   
   finish(uid: string): Promise<Evaluation> {

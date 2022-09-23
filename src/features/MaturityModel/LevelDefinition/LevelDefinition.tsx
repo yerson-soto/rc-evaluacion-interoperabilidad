@@ -51,7 +51,7 @@ export default function LevelDefinition({ criterion }: LevelDefinitionProps) {
       service={choiceService}
       reducer={choiceSlice}
       selectLoading={(state) => state.choices.isLoading}
-      render={({ visible, loading, record, onClose }) => (
+      renderForm={({ visible, loading, record, onClose }) => (
         <ChoiceForm
           show={visible}
           isLoading={loading}
@@ -87,7 +87,7 @@ export default function LevelDefinition({ criterion }: LevelDefinitionProps) {
       reducer={choiceSlice}
       service={choiceService}
       selectLoading={(state) => state.auth.isLoading}
-      render={({ visible, loading, onClose }) => (
+      renderForm={({ visible, loading, onClose }) => (
         <ChoiceForm
           show={visible}
           isLoading={loading}

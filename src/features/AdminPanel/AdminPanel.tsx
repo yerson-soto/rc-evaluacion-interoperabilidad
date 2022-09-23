@@ -4,6 +4,7 @@ import { Layout } from "antd";
 import { Header } from "./Header";
 import { Sidenav } from "./Sidenav";
 import { Main } from "./Main";
+import { Footer } from "./Footer";
 import { useAdminPanel } from './useAdminPanel';
 
 import classes from "./AdminPanel.module.css";
@@ -42,9 +43,8 @@ export default function AdminPanel() {
         <Header onToggleSidenav={onToggle} />
 
         <Main><Outlet /></Main>
-        {/* <Layout.Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Layout.Footer> */}
+
+        <Footer />
       </Layout>
     </Layout>
   );

@@ -67,7 +67,8 @@
     "confirm_password": "Confirmar contraseña",
     "current_password": "Contraseña actual",
     "new_password": "Nueva contraseña",
-    "timeline": "Linea de Tiempo"
+    "timeline": "Linea de Tiempo",
+    "maturity_model": "Modelo de Madurez"
   },
   "fields": {
     "color": "Color",
@@ -126,6 +127,7 @@
     "select_level": "Seleccionar nivel",
     "select_manager": "Seleccionar encargado",
     "select_start_date": "Seleccionar una fecha de inicio",
+    "select_statuses": "Seleccionar estatus",
     "search_evaluations": "Buscar evaluaciones...",
     "search_institutions": "Buscar instituciones...",
     "content_type": "Tipo",

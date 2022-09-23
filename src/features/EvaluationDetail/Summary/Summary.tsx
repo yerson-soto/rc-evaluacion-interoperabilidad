@@ -25,6 +25,7 @@ export default function Summary(props: SummaryProps) {
   const statusType = evaluationStatusType[evaluation.status];
 
   // TODO: Increment score when user selects response
+  // TODO: Remove Finish button when is finished
   return (
     <Card 
       title={evaluation.nomenclature} 

@@ -22,22 +22,23 @@ export interface Pagination<T> {
   results: T[]
 }
 
-export interface FilterValues<T> {
+export interface FilterValues<T, Status = any> {
   search?: string;
   sortType?: SortType;
   sortBy?: keyof T;
+  status?: Status[];
 }
 
 export interface CrudState<T> extends CommonState {
   results: T[];
 }
 
-export interface PaginationState<T> extends CommonState {
+export interface PaginationState<T, FilterStatus = any> extends CommonState {
   results: T[];
   total: number;
   page: number;
   pageSize: number;
-  filter: FilterValues<T>;
+  filter: FilterValues<T, FilterStatus>;
 }
 
 export interface CrudCaseReducers<T, State extends CrudState<T>> extends SliceCaseReducers<State> {

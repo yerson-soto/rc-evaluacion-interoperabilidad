@@ -15,6 +15,7 @@ import { keys } from "library/common/constants";
 
 import classes from "./Questionary.module.css";
 
+// TODO: Sometimes appear as undefined
 export default function Questionary() {
   const { visible, setClose } = useToggleParam(keys.domainParamName);
   const { isFetching, isError, domain, domainTitle, resetDomain } = useDomain();

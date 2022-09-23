@@ -1,8 +1,8 @@
 import { useAppSelector } from "redux/hooks";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { UserType } from "library/common/enums";
 import { paths } from "library/common/constants";
-import { MenuItem } from '../common/types';
+import { MenuItem } from "../common/types";
 
 import {
   SignalFilled,
@@ -18,16 +18,16 @@ import {
   ScheduleOutlined,
   SettingOutlined,
   UserOutlined,
-  LockOutlined
+  LockOutlined,
 } from "@ant-design/icons";
 
 export type NavItem = MenuItem & {
   path: string;
   label: string;
-  iconelement: React.ElementType
+  iconelement: React.ElementType;
   permissions?: UserType[];
   children?: NavItem[];
-}
+};
 
 export interface FlattenNavItem {
   parents: string[];
@@ -35,48 +35,62 @@ export interface FlattenNavItem {
 }
 
 export const flatNavItems = (
-  navItems: NavItem[], 
+  navItems: NavItem[],
   parents?: string[]
 ): FlattenNavItem[] => {
   return navItems.reduce<FlattenNavItem[]>((prev, navItem) => {
-    prev.push({ 
-      path: navItem.path, 
-      parents: parents ? parents : [] 
+    prev.push({
+      path: navItem.path,
+      parents: parents ? parents : [],
     });
 
     if (navItem.children) {
-      const childrenParents = parents 
-        ? [...parents, navItem.path] 
+      const childrenParents = parents
+        ? [...parents, navItem.path]
         : [navItem.path];
 
-      prev.push(...flatNavItems(
-        navItem.children, 
-        childrenParents
-      ))
+      prev.push(...flatNavItems(navItem.children, childrenParents));
     }
-    
+
     return prev;
   }, []);
-}
+};
+
+export const reduceNavItems = (navItems: NavItem[], permission: UserType): NavItem[] => {
+  return navItems.reduce<NavItem[]>((prev, navItem) => {
+    const shouldAdd = !navItem.permissions || navItem.permissions.includes(permission);
+
+    if (shouldAdd) {
+      
+      if (navItem.children) {
+        navItem.children = reduceNavItems(navItem.children, permission);
+      }
+
+      prev.push(navItem);
+    }
+
+    return prev;
+  }, []);
+};
 
 const { admin, management } = paths;
 
 export function useNavigationItems() {
   const userType = useAppSelector((state) => state.auth.user.type);
   const { t } = useTranslation();
-  
+
   const navItems: NavItem[] = [
-    { 
+    {
       key: admin.index,
-      label: t("nav.dashboard"), 
-      path: admin.index, 
+      label: t("nav.dashboard"),
+      path: admin.index,
       icon: <PieChartFilled />,
       iconelement: PieChartFilled,
     },
-    { 
+    {
       key: admin.evaluations.index,
-      label: t("nav.evaluations"), 
-      path: admin.evaluations.index, 
+      label: t("nav.evaluations"),
+      path: admin.evaluations.index,
       icon: <SnippetsOutlined />,
       iconelement: SnippetsOutlined,
       permissions: [UserType.Admin, UserType.Support],
@@ -87,14 +101,14 @@ export function useNavigationItems() {
       path: admin.ranking.index,
       icon: <HistoryOutlined />,
       iconelement: HistoryOutlined,
-      permissions: [UserType.Admin, UserType.Support]
+      permissions: [UserType.Admin, UserType.Support],
     },
     {
       key: admin.schedule.index,
       label: t("nav.schedule"),
       path: admin.schedule.index,
       icon: <ScheduleOutlined />,
-      iconelement: ScheduleOutlined
+      iconelement: ScheduleOutlined,
     },
     {
       key: "maturity-model",
@@ -150,7 +164,7 @@ export function useNavigationItems() {
           iconelement: FormOutlined,
           permissions: [UserType.Admin],
         },
-      ]
+      ],
     },
     {
       key: admin.settings.index,
@@ -172,8 +186,8 @@ export function useNavigationItems() {
           path: admin.settings.password.fullPath,
           icon: <LockOutlined />,
           iconelement: LockOutlined,
-        }
-      ]
+        },
+      ],
     },
     {
       key: management.users.fullPath,
@@ -184,9 +198,6 @@ export function useNavigationItems() {
       permissions: [UserType.Admin],
     },
   ];
-  
-  // TODO: Also filter children items 
-  return navItems.filter(navItem => {
-    return !navItem.permissions || navItem.permissions.includes(userType);
-  })
+
+  return reduceNavItems(navItems, userType);
 }

@@ -1,3 +1,3 @@
-import FilterBar, { SortByOption } from './FilterBar';
+import FilterBar, { SortByOption, StatusOption } from './FilterBar';
 export { FilterBar };
-export type { SortByOption };
+export type { SortByOption, StatusOption };

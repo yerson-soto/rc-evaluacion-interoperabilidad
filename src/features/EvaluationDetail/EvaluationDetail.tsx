@@ -12,6 +12,26 @@ import { TableVersion } from "features/MaturityModel/TableVersion";
 import { EvaluationStatus } from "library/common/enums";
 import { InstitutionTimeline } from "./InstitutionTimeline";
 
+const getItem = (
+  label: React.ReactNode,
+  key: string,
+  icon: React.ReactNode,
+  children: React.ReactNode,
+  disabled?: boolean
+) => {
+  return {
+    label: (
+      <span>
+        {icon}
+        {label}
+      </span>
+    ),
+    key,
+    children,
+    disabled
+  };
+};
+
 // TODO: Refactor Completed Status
 export default function EvaluationDetail() {
   const { t } = useTranslation();
@@ -21,12 +41,39 @@ export default function EvaluationDetail() {
   if (!evaluation) return <NotFound />;
 
   const isCompleted = evaluation.status === EvaluationStatus.Completed;
+  
   // TODO: Dont destroyInactiveTabPane
+
+  const items = [
+    getItem(
+      t("labels.domains"),
+      "1",
+      <AimOutlined />,
+      <DomainList />,
+      isCompleted
+    ),
+    getItem(
+      t("labels.maturity_model"),
+      "2",
+      <EyeOutlined />,
+      <TableVersion evaluation={evaluation} />
+    ),
+    getItem(
+      t("labels.timeline"),
+      "3",
+      <EyeOutlined />,
+      <Card>
+        <InstitutionTimeline id={evaluation.organization.id} />
+      </Card>
+    ),
+  ];
+  
   return (
     <AppBox>
       <Summary evaluation={evaluation} />
 
       <Tabs
+        items={items}
         destroyInactiveTabPane
         tabBarStyle={{
           position: "sticky",
@@ -37,46 +84,7 @@ export default function EvaluationDetail() {
         }}
         defaultActiveKey={isCompleted ? "2" : "1"}
         animated
-      >
-        <Tabs.TabPane
-          disabled={isCompleted}
-          tab={
-            <span>
-              <AimOutlined />
-              {t("labels.domains")}
-            </span>
-          }
-          key="1"
-        >
-          <DomainList />
-        </Tabs.TabPane>
-
-        <Tabs.TabPane
-          tab={
-            <span>
-              <EyeOutlined />
-              {t("labels.details")}
-            </span>
-          }
-          key="2"
-        >
-          <TableVersion evaluation={evaluation} />
-        </Tabs.TabPane>
-
-        <Tabs.TabPane
-          tab={
-            <span>
-              <FieldTimeOutlined />
-              {t("labels.timeline")}
-            </span>
-          }
-          key="3"
-        >
-          <Card>
-            <InstitutionTimeline id={evaluation.organization.id} />
-          </Card>
-        </Tabs.TabPane>
-      </Tabs>
+      />
     </AppBox>
   );
 }

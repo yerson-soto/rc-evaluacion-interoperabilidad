@@ -19,7 +19,7 @@ export function useFinishEvaluation() {
       .then(() => {
         setLoading(false);
         
-        message.error(t("alerts.finish_evaluation_success"));
+        message.success(t("alerts.finish_evaluation_success"));
         navigate(paths.admin.evaluations.index);
       })
       .catch((errmesage) => {

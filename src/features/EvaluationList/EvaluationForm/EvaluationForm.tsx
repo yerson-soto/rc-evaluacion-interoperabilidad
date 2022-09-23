@@ -18,7 +18,7 @@ interface EvaluationFormProps {
   onSave: (values: EvaluationFormSchema) => Promise<void>;
   onHide: () => void;
 }
-
+// TODO: Refactor extra fields
 export default function EvaluationForm(props: EvaluationFormProps) {
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();

@@ -85,7 +85,7 @@ export function useCrud<T, FormSchema, State extends CrudState<T>>(
               idSource={idSource}
               service={service}
               reducer={reducer}
-              render={editModal}
+              renderForm={editModal}
               selectLoading={selectLoading}
             />
 

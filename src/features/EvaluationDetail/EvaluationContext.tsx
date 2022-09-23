@@ -1,6 +1,7 @@
 import {  } from '@reduxjs/toolkit';
 import { createContext, PropsWithChildren, useReducer } from "react";
 import { Evaluation } from 'library/models/Evaluation';
+import { getScoreColor } from 'library/helpers/score-color';
 
 export interface EvaluationDetailState {
   evaluation: Evaluation | null;
@@ -58,8 +59,14 @@ function evaluationDetailReducer(
       return { evaluation: action.payload, isLoading: false };
     case "changeScore":
       if (state.evaluation) {
+        const newColor = getScoreColor(action.payload);
+
         return {
-          evaluation: { ...state.evaluation, score: action.payload },
+          evaluation: { 
+            ...state.evaluation, 
+            indicatorColor: newColor, 
+            score: action.payload 
+          },
           isLoading: false,
         }
       } else return state

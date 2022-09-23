@@ -21,7 +21,7 @@ export interface CreateActionProps<T, FormSchema, State extends CrudState<T>> {
   reducer: CrudReducer<T, State>;
   title?: string;
   selectLoading: (state: RootState) => boolean;
-  render: (params: RenderCreate<FormSchema>) => React.ReactNode;
+  renderForm: (params: RenderCreate<FormSchema>) => React.ReactNode;
   renderTrigger?: (trigger: () => void) => React.ReactNode;
 }
 
@@ -34,7 +34,7 @@ export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
     service,
     reducer,
     selectLoading,
-    render,
+    renderForm,
     renderTrigger,
     toggleKey
   } = props;
@@ -51,7 +51,7 @@ export default function CreateAction<T, FormSchema, State extends CrudState<T>>(
     reducer,
   });
 
-  const renderCreate = () => render({
+  const renderCreate = () => renderForm({
     visible: isOpen,
     loading: isLoading,
     onSave: createOne,

@@ -70,7 +70,7 @@ export default function Crud<T, FormSchema, State extends CrudState<T>>(
               toggleKey="crud-create"
               service={service}
               reducer={reducer}
-              render={createModal}
+              renderForm={createModal}
               selectLoading={selectLoading}
             />
           </Space>

@@ -12,6 +12,7 @@ import { EvaluationFormSchema } from "./EvaluationForm/EvaluationFormSchema";
 import { evaluationSlice, EvaluationState } from "redux/slices/evaluationSlice";
 import { EvaluationService } from "library/api/services/EvaluationService";
 import { FilterBar } from "library/components/FilterBar";
+import { EvaluationStatus } from 'library/common/enums';
 
 const { useBreakpoint } = Grid;
 
@@ -26,16 +27,18 @@ export default function EvaluationList() {
     filter,
     paginationConfig,
     sortByOptions,
+    statusOptions
   } = useEvaluationList();
 
   return (
     <Space direction="vertical" size="large" style={{ width: "100%" }}>
       <EvaluationToolbar />
 
-      <FilterBar<Evaluation>
+      <FilterBar<Evaluation, EvaluationStatus>
         onChange={onFilterChange}
         defaults={filter}
         sortByOptions={sortByOptions}
+        statusOptions={statusOptions}
         searchInputPlaceholder={t("placeholders.search_evaluations")}
       />
 
@@ -69,7 +72,7 @@ function EvaluationToolbar() {
       reducer={evaluationSlice}
       service={evaluationService}
       selectLoading={(state) => state.auth.isLoading}
-      render={({ visible, loading, onClose, onSave }) => (
+      renderForm={({ visible, loading, onClose, onSave }) => (
         <EvaluationForm
           show={visible}
           isLoading={loading}

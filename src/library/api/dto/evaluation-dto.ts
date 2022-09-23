@@ -1,5 +1,6 @@
 import { GetUser } from './user-dto';
 import { GetOrganizationNested } from './organization-dto';
+import { CommaSeparatedItems } from 'library/common/types';
 
 export interface GetEvaluation {
   id: string;
@@ -20,6 +21,10 @@ export interface GetEvaluation {
   },
 }
 
+export interface GetCalendar {
+  
+}
+
 export interface CreateEvaluation {
   organismoId: number;
   userId: string;
@@ -27,10 +32,17 @@ export interface CreateEvaluation {
   dateDiary: string;
 }
 
+export interface FilterCalendar {
+  userId: string;
+  dateSince: string;
+  dateUntil: string;
+}
+
 export interface GetEvaluationParams {
   search?: string;
   typeOrder?: 'asc' | 'desc';
   orderBy?: 'Date' | 'Organismo' | 'CurrentLevel';
+  statesId?: CommaSeparatedItems;
 }
 
 export interface GetPaginatedEvaluation {

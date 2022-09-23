@@ -5,6 +5,7 @@
 
 :root {
   --header-h: 64px;
+  --footer-h: 50px;
   --sider-w: 260px;
   --sider-collapsed-w: 80px;
   --content-gutter: 24px;

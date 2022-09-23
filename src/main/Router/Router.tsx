@@ -24,12 +24,12 @@ import { TableVersion } from "features/MaturityModel/TableVersion";
 import { PasswordChange } from "features/PasswordChange";
 import { GeneralConfig } from "features/Configuration/GeneralConfig";
 import { RankingList } from 'features/RankingList';
+import { Schedule } from 'features/Schedule';
 
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import { PermissionRoute } from "./PermissionRoute";
 import { UserType } from "library/common/enums";
-import Schedule from '../../features/Schedule/Schedule';
 
 const { auth, admin, admin: { evaluations, settings }, management } = paths;
 
@@ -50,7 +50,7 @@ export default function Router() {
       {/* Routes for authenticated users */}
       <Route element={<PrivateRoute />}>
         <Route path={admin.index} element={<AdminPanel />}>
-
+          
           {/* Common routes */}
           <Route path={admin.index} element={<Dashboard />} />
           <Route path={admin.maturityModel.index} element={<TableVersion />} />
@@ -59,7 +59,7 @@ export default function Router() {
             <Route path={settings.general.index} element={<GeneralConfig />} />
             <Route path={settings.password.index} element={<PasswordChange />} />
           </Route>
-
+          
           {/* Routes for admininstrators and support */}
           <Route element={<PermissionRoute for={[UserType.Admin, UserType.Support]} />}>
             <Route path={admin.ranking.index} element={<RankingList />} />
@@ -68,7 +68,7 @@ export default function Router() {
               <Route path={evaluations.detail.index} element={<EvaluationDetail />} />
             </Route>
           </Route>
-
+          
           {/* Routes for administrators */}
           <Route element={<PermissionRoute for={[UserType.Admin]} />}>
             <Route path={management.users.index} element={<UserCrud />} />
@@ -80,7 +80,7 @@ export default function Router() {
           </Route>
         </Route>
       </Route>
-
+      
       {/* Routes for all users */}
       <Route path="*" element={<NotFound />} />
     </Routes>

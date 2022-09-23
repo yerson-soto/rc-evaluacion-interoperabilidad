@@ -1,18 +1,16 @@
-import { CaseReducer, PayloadAction, SliceCaseReducers } from "@reduxjs/toolkit";
-import { Pagination } from "library/common/interfaces";
-import { ErrorMessage } from "library/common/types";
 import { Evaluation } from "library/models/Evaluation";
 import { createCrudSlice } from "redux/actions/sliceCreator";
 import { CrudState } from "library/common/interfaces";
 import { FilterValues } from 'library/common/interfaces';
 import { createPaginationReducers } from '../reducers/paginationReducers';
 import { PaginationCaseReducers } from 'redux/reducers/paginationReducers';
+import { EvaluationStatus } from 'library/common/enums';
 
 export interface EvaluationState extends CrudState<Evaluation> {
   total: number;
   page: number;
   pageSize: number;
-  filter: FilterValues<Evaluation>;
+  filter: FilterValues<Evaluation, EvaluationStatus>;
 }
 
 const reducers = createPaginationReducers<Evaluation, EvaluationState>();
@@ -26,6 +24,12 @@ const initialState: EvaluationState = {
     sortType: 'desc',
     sortBy: 'dateCreated',
     search: '',
+    status: [
+      EvaluationStatus.Scheduled, 
+      EvaluationStatus.Started, 
+      EvaluationStatus.Pending, 
+      EvaluationStatus.Completed
+    ]
   },
   hasError: false,
   isLoading: false,

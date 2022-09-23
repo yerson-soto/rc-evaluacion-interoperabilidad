@@ -121,6 +121,7 @@ export const contentTypeLabels = {
   [ContentType.XLS]: getText('contentTypes.xls'),
   [ContentType.XLSX]: getText('contentTypes.xlsx'),
 };
+
 // TODO: Use translation only inside React lifecycle
 export const evaluationStatusLabels = {
   [EvaluationStatus.Scheduled]: getText('status.scheduled'),
@@ -130,7 +131,7 @@ export const evaluationStatusLabels = {
 }
 
 export const evaluationStatusType = {
-  [EvaluationStatus.Scheduled]: "magenta",
+  [EvaluationStatus.Scheduled]: "error",
   [EvaluationStatus.Started]: "warning",
   [EvaluationStatus.Pending]: "processing",
   [EvaluationStatus.Completed]: "success",

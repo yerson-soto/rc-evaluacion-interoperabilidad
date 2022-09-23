@@ -70,8 +70,9 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
     indicatorColor,
   } = evaluation;
 
-  const goToDetail = () =>
+  const goToDetail = () => {
     navigate(paths.admin.evaluations.detail.reverse({ uid }));
+  };
   const goToEvaluation = (): void =>
     navigate(paths.admin.evaluations.init.reverse({ uid }));
 
@@ -90,7 +91,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         >
           {evaluationStatusLabels[evaluation.status]}
         </Tag>,
-        <Button onClick={goToDetail}>
+        <Button disabled={evaluation.status === EvaluationStatus.Scheduled} onClick={goToDetail}>
           {evaluation.status === EvaluationStatus.Completed ? "Ver" : "Evaluar"}
         </Button>,
 

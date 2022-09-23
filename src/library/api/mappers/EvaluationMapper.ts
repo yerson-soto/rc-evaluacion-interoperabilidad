@@ -3,9 +3,10 @@ import { Evaluation } from "library/models/Evaluation";
 import { GetEvaluation, CreateEvaluation, GetEvaluationParams } from "library/api/dto/evaluation-dto";
 import { EvaluationFormSchema } from "features/EvaluationList/EvaluationForm/EvaluationFormSchema";
 import { OrganizationMapper } from './OrganizationMapper';
-import { GetPaginatedEvaluation } from '../dto/evaluation-dto';
+import { GetPaginatedEvaluation, GetCalendar } from '../dto/evaluation-dto';
 import { UserMapper } from "./UserMapper";
-import { getScoreColor } from '../../helpers/score-color';
+import { getScoreColor } from 'library/helpers/score-color';
+import { EvaluationStatus } from 'library/common/enums';
 
 export class EvaluationMapper
   implements Mapper<Evaluation, GetEvaluation, CreateEvaluation, EvaluationFormSchema>
@@ -56,7 +57,9 @@ export class EvaluationMapper
     }
   }
 
-  fromFilterToQueryParams(filter: FilterValues<Evaluation>): GetEvaluationParams {
+  fromFilterToQueryParams(
+    filter: FilterValues<Evaluation, EvaluationStatus>
+  ): GetEvaluationParams {
     const fields: Record<string, GetEvaluationParams['orderBy']> = {
       organization: 'Organismo',
       dateCreated: 'Date',
@@ -66,7 +69,8 @@ export class EvaluationMapper
     return {
       search: filter.search,
       typeOrder: filter.sortType,
-      orderBy: filter.sortBy && fields[filter.sortBy]
+      orderBy: filter.sortBy && fields[filter.sortBy],
+      statesId: filter.status?.join(',')
     };
   }
 }

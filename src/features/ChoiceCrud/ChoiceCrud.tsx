@@ -34,7 +34,7 @@ function ChoiceToolbar() {
           reducer={choiceSlice}
           service={choiceService}
           selectLoading={(state) => state.auth.isLoading}
-          render={({ visible, loading, onClose, onSave }) => (
+          renderForm={({ visible, loading, onClose, onSave }) => (
             <ChoiceForm
               show={visible}
               isLoading={loading}

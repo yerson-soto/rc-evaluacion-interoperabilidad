@@ -20,9 +20,6 @@ export default function InstitutionTimeline({ id }: InstitutionTimelineProps) {
   
   (
     <AppBox>
-      <Typography.Title>
-        
-      </Typography.Title>
       <Timeline 
         className={classes.timeline} 
         mode="alternate" 

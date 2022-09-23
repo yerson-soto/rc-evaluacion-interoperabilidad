@@ -10,6 +10,7 @@ interface HeaderProps {
 }
 
 export default function Header({ onToggleSidenav }: HeaderProps) {
+  // TODO: Refactor traslation system
   const langs = [
     {
       key: "es",
