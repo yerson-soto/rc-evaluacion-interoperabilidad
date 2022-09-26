@@ -15,7 +15,7 @@ export default function RankingDetail() {
       open={visible} 
       onClose={setClose}
     >
-      <InstitutionTimeline id={institutionId} />
+      {visible && <InstitutionTimeline id={institutionId} />}
     </AppDrawer>
   )
 }

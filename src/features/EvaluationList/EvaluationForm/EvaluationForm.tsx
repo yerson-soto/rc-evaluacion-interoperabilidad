@@ -8,7 +8,7 @@ import { InstitutionSelect } from "library/components/InstitutionSelect";
 import { useAppSelector } from 'redux/hooks';
 import { ManagerSelect } from "../ManagerSelect";
 import { DatetimePicker } from "../DatetimePicker";
-import { UserType } from '../../../library/common/enums';
+import { UserType } from 'library/common/enums';
 
 interface EvaluationFormProps {
   show: boolean;

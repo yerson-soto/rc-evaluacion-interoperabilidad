@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { UserType } from "library/common/enums";
 import { paths } from "library/common/constants";
 import { MenuItem } from "../common/types";
+import { useMemo } from "react";
 
 import {
   SignalFilled,
@@ -56,12 +57,15 @@ export const flatNavItems = (
   }, []);
 };
 
-export const reduceNavItems = (navItems: NavItem[], permission: UserType): NavItem[] => {
+export const reduceNavItems = (
+  navItems: NavItem[],
+  permission: UserType
+): NavItem[] => {
   return navItems.reduce<NavItem[]>((prev, navItem) => {
-    const shouldAdd = !navItem.permissions || navItem.permissions.includes(permission);
+    const shouldAdd =
+      !navItem.permissions || navItem.permissions.includes(permission);
 
     if (shouldAdd) {
-      
       if (navItem.children) {
         navItem.children = reduceNavItems(navItem.children, permission);
       }
@@ -199,5 +203,5 @@ export function useNavigationItems() {
     },
   ];
 
-  return reduceNavItems(navItems, userType);
+  return useMemo(() => reduceNavItems(navItems, userType), [userType]);
 }

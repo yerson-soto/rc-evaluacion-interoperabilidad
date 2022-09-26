@@ -11,12 +11,14 @@ import { choiceSlice } from "./slices/choiceSlice";
 import { organizationSlice } from "./slices/organizationSlice";
 import { questionSlice } from "./slices/questionSlice";
 import { rankingSlice } from "./slices/rankingSlice";
+import { scheduleSlice } from "./slices/scheduleSlice";
 
 const store = configureStore({
   reducer: {
     [authSlice.name]: authSlice.reducer,
     [userSlice.name]: userSlice.reducer,
     [evaluationSlice.name]: evaluationSlice.reducer,
+    [scheduleSlice.name]: scheduleSlice.reducer,
     [domainSlice.name]: domainSlice.reducer,
     [lineamentSlice.name]: lineamentSlice.reducer,
     [criterionSlice.name]: criterionSlice.reducer,

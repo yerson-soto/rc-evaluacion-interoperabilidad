@@ -5,7 +5,7 @@ export function useToggleParam(paramName: string) {
 
   const paramValue = queryParams.get(paramName);
   const visible = Boolean(paramValue);
-
+  
   const setOpen = (value: string) => {
     const params = { [paramName]: value };
 

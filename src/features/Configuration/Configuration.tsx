@@ -12,7 +12,8 @@ const getItem = (
   label: React.ReactNode,
   key: string,
   icon: React.ReactNode,
-  children: React.ReactNode
+  children: React.ReactNode,
+  disabled?: boolean
 ) => {
   return {
     label: (
@@ -23,6 +24,7 @@ const getItem = (
     ),
     key,
     children: <AppBox style={{ maxWidth: "600px" }}>{children}</AppBox>,
+    disabled
   };
 };
 
@@ -45,7 +47,8 @@ export default function Configuration() {
       t("settings.general"),
       paths.admin.settings.general.fullPath,
       <UserOutlined />,
-      <Outlet />
+      <Outlet />,
+      true
     ),
     getItem(
       t("settings.password"),

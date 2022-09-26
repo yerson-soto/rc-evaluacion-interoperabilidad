@@ -1,18 +1,17 @@
 import { FilterValues, Mapper, Pagination } from "library/common/interfaces";
 import { Evaluation } from "library/models/Evaluation";
-import { GetEvaluation, CreateEvaluation, GetEvaluationParams } from "library/api/dto/evaluation-dto";
 import { EvaluationFormSchema } from "features/EvaluationList/EvaluationForm/EvaluationFormSchema";
 import { OrganizationMapper } from './OrganizationMapper';
-import { GetPaginatedEvaluation, GetCalendar } from '../dto/evaluation-dto';
 import { UserMapper } from "./UserMapper";
 import { getScoreColor } from 'library/helpers/score-color';
 import { EvaluationStatus } from 'library/common/enums';
+import * as dto from "library/api/dto/evaluation-dto";
 
 export class EvaluationMapper
-  implements Mapper<Evaluation, GetEvaluation, CreateEvaluation, EvaluationFormSchema>
+  implements Mapper<Evaluation, dto.GetEvaluation, dto.CreateEvaluation, EvaluationFormSchema>
 {
 
-  formSchemaToAPI(schema: EvaluationFormSchema): CreateEvaluation {
+  formSchemaToAPI(schema: EvaluationFormSchema): dto.CreateEvaluation {
     return {
       organismoId: schema.organizationId,
       userId: schema.userId,
@@ -21,13 +20,14 @@ export class EvaluationMapper
     };
   }
 
-  fromAPI(data: GetEvaluation): Evaluation {
+  fromAPI(data: dto.GetEvaluation): Evaluation {
     const orgMapper = new OrganizationMapper();
     const userMapper = new UserMapper();
+    const result = data.resultLevelResponse ? data.resultLevelResponse.resultFinallly : 0;
     
     const organization = orgMapper.fromAPINested(data.organismo),
       manager = userMapper.fromAPI(data.userResponse),
-      score = Number(data.resultLevelResponse.resultFinallly.toFixed(2)) || 0,
+      score = Number(result.toFixed(2)) || 0,
       scorePercent = score * 100 / 5;
 
     return {
@@ -45,7 +45,7 @@ export class EvaluationMapper
     };
   }
 
-  fromAPIPaginated(data: GetPaginatedEvaluation): Pagination<Evaluation> {
+  fromAPIPaginated(data: dto.GetPaginatedEvaluation): Pagination<Evaluation> {
     const evaluations = data.evaluations.map(this.fromAPI);
     
     return {
@@ -59,8 +59,8 @@ export class EvaluationMapper
 
   fromFilterToQueryParams(
     filter: FilterValues<Evaluation, EvaluationStatus>
-  ): GetEvaluationParams {
-    const fields: Record<string, GetEvaluationParams['orderBy']> = {
+  ): dto.GetEvaluationParams {
+    const fields: Record<string, dto.GetEvaluationParams['orderBy']> = {
       organization: 'Organismo',
       dateCreated: 'Date',
       score: 'CurrentLevel'

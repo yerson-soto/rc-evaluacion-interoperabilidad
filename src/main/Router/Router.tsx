@@ -24,7 +24,7 @@ import { TableVersion } from "features/MaturityModel/TableVersion";
 import { PasswordChange } from "features/PasswordChange";
 import { GeneralConfig } from "features/Configuration/GeneralConfig";
 import { RankingList } from 'features/RankingList';
-import { Schedule } from 'features/Schedule';
+import { EventSchedule } from 'features/EventSchedule';
 
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
@@ -54,7 +54,7 @@ export default function Router() {
           {/* Common routes */}
           <Route path={admin.index} element={<Dashboard />} />
           <Route path={admin.maturityModel.index} element={<TableVersion />} />
-          <Route path={admin.schedule.index} element={<Schedule />} />
+          <Route path={admin.schedule.index} element={<EventSchedule />} />
           <Route path={settings.index} element={<Configuration />}>
             <Route path={settings.general.index} element={<GeneralConfig />} />
             <Route path={settings.password.index} element={<PasswordChange />} />

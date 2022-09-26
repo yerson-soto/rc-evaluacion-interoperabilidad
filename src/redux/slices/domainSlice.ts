@@ -1,6 +1,6 @@
 import { CrudState } from "library/common/interfaces";
 import { Domain } from "library/models/Domain";
-import { createCrudSlice } from "redux/actions/sliceCreator";
+import { createCrudSlice } from "redux/sliceCreator";
 
 export interface DomainState extends CrudState<Domain> {}
 

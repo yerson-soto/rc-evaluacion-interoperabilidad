@@ -1,6 +1,6 @@
 import { CrudState } from "library/common/interfaces";
 import { Lineament } from "library/models/Lineament";
-import { createCrudSlice } from "redux/actions/sliceCreator";
+import { createCrudSlice } from "redux/sliceCreator";
 
 export interface LineamentState extends CrudState<Lineament> {}
 

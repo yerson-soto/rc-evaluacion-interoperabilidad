@@ -1,5 +1,5 @@
 import { Evaluation } from "library/models/Evaluation";
-import { createCrudSlice } from "redux/actions/sliceCreator";
+import { createCrudSlice } from "redux/sliceCreator";
 import { CrudState } from "library/common/interfaces";
 import { FilterValues } from 'library/common/interfaces';
 import { createPaginationReducers } from '../reducers/paginationReducers';

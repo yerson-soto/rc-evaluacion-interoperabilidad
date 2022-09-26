@@ -1,6 +1,6 @@
 import { CrudState } from "library/common/interfaces";
 import { Criterion } from "library/models/Criterion";
-import { createCrudSlice } from "redux/actions/sliceCreator";
+import { createCrudSlice } from "redux/sliceCreator";
 
 export interface CriterionState extends CrudState<Criterion> {}
 

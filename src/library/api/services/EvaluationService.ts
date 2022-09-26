@@ -1,4 +1,4 @@
-import { Evaluation } from "library/models/Evaluation";
+import { Evaluation } from 'library/models/Evaluation';
 import { APIResponse, FilterValues, Pagination } from "library/common/interfaces";
 import { AbstractCrudService } from "./AbstractCrudService";
 import { EvaluationFormSchema } from "features/EvaluationList/EvaluationForm/EvaluationFormSchema";
@@ -79,20 +79,6 @@ export class EvaluationService extends AbstractCrudService<
         })
         .catch(() => reject("backend.timeline_couldnt_load"));
     });
-  }
-
-  getCalendar(userId: string, dateFrom: string, dateTo: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.client
-        .get<APIResponse<dto.GetCalendar[]>>('evaluationInstitutional/calendar')
-        .then((res) => {
-          const results = res.data.result;
-          // TODO: Get calendar
-          // const evaluations = results.map(this.mapper.fromAPI);
-          // resolve(evaluations);
-        })
-        .catch(() => reject("backend.timeline_couldnt_load"));
-    })
   }
   
   finish(uid: string): Promise<Evaluation> {

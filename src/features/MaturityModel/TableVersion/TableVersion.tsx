@@ -49,7 +49,7 @@ const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation, doma
       },
       onCell: (record) => {
         const cellProps: any = { 
-          style: { background: record.domain.color },
+          style: { background: record.domain.color, fontWeight: "bold" },
         }
 
         const recordsByDomain = dataSource.filter(
@@ -127,7 +127,7 @@ const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation, doma
       },
       onCell: (record) => {
         return {
-          style: { background: record.domain.color }
+          style: { background: record.domain.color, fontWeight: "bold" }
         }
       }
     },
@@ -143,7 +143,7 @@ const getInitialColumns = (dataSource: DataType[], evaluation?: Evaluation, doma
       },
       onCell: (record) => {
         return {
-          style: { background: record.domain.color },
+          style: { background: record.domain.color, fontWeight: "bold" },
         }
       }
     },
@@ -206,7 +206,12 @@ export default function TableVersion(props: TableVersionProps) {
         .colors(levels.length);
 
       const newColumns: ColumnsType<DataType> = levels.map((level, index) => ({
-        title: `${t("labels.level")} ${level.value}`,
+        title: <div style={{ textAlign: 'center'}}>
+         { `${t("labels.level")} ${level.value}`}
+         <div>
+          {level.name}
+         </div>
+        </div>,
         onHeaderCell: (value, record) => {
           return {
             style: {

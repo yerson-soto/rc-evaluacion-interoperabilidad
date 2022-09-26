@@ -21,8 +21,16 @@ export interface GetEvaluation {
   },
 }
 
-export interface GetCalendar {
-  
+export interface GetSchedule {
+  date: string;
+  evaluationResponses: GetEvaluation[];
+  count: number;
+}
+
+export interface FilterSchedule {
+  userId: string;
+  dateFrom: string;
+  dateTo: string;
 }
 
 export interface CreateEvaluation {
@@ -32,11 +40,6 @@ export interface CreateEvaluation {
   dateDiary: string;
 }
 
-export interface FilterCalendar {
-  userId: string;
-  dateSince: string;
-  dateUntil: string;
-}
 
 export interface GetEvaluationParams {
   search?: string;
