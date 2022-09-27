@@ -34,10 +34,10 @@ export interface FilterSchedule {
 }
 
 export interface CreateEvaluation {
-  organismoId: number;
-  userId: string;
-  userTechnicsId: string;
-  dateDiary: string;
+  organismoId?: number | string;
+  userId?: string;
+  userTechnicsId?: string;
+  dateDiary?: string;
 }
 
 

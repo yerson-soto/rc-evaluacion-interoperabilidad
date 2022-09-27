@@ -41,6 +41,7 @@ export default function EvaluationDetail() {
   if (!evaluation) return <NotFound />;
 
   const isCompleted = evaluation.status === EvaluationStatus.Completed;
+  const isScheduled = evaluation.status === EvaluationStatus.Scheduled;
   
   // TODO: Dont destroyInactiveTabPane
 
@@ -50,7 +51,7 @@ export default function EvaluationDetail() {
       "1",
       <AimOutlined />,
       <DomainList />,
-      isCompleted
+      isScheduled || isCompleted
     ),
     getItem(
       t("labels.maturity_model"),

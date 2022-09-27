@@ -1,6 +1,8 @@
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { LocationState } from "library/common/interfaces";
+import { keys } from '../common/constants';
+import { useToggleParam } from 'library/hooks/useToggleParam';
 
 interface ToggleAction<T> {
   action: "detail" | "create" | "edit" | "delete";
@@ -9,11 +11,11 @@ interface ToggleAction<T> {
 }
 
 export function useToogleAction<T>({ action, state, keyFrom }: ToggleAction<T>) {
-  const [params, setQueryParams] = useSearchParams();
+  const { queryParams, setQueryParams, getPrevParams } = useToggleParam(keys.actionParamName);
   const { state: currentState } = useLocation() as LocationState<T>;
 
   const checkIsOpen = (): boolean => {
-    const actionMatch = action === params.get("action");
+    const actionMatch = action === queryParams.get(keys.actionParamName);
  
     if (keyFrom && state) {
       const stateMatch =
@@ -24,19 +26,29 @@ export function useToogleAction<T>({ action, state, keyFrom }: ToggleAction<T>) 
     return actionMatch;
   };
 
-  const onOpen = (): void => {
-    setQueryParams({ action }, { state });
+  const removeActionParam = (
+    params: Record<string, string>
+  ): Record<string, string> => {
+    params[keys.actionParamName] = action;
+    delete params[keys.actionParamName];
 
-      console.log(state);
-    
+    return params;
+  }
+
+  const onOpen = (): void => {
+    const prevParams = getPrevParams();
+    prevParams[keys.actionParamName] = action;
+    setQueryParams(prevParams, { state });
   };
 
   const onCloseStart = (): void => {
-    setQueryParams({}, { state });
+    const newParams = removeActionParam(getPrevParams());
+    setQueryParams(newParams, { state });
   };
 
   const onCloseEnd = (): void => {
-    setQueryParams({});
+    const newParams = removeActionParam(getPrevParams());
+    setQueryParams(newParams);
   };
 
   const isOpen = checkIsOpen();

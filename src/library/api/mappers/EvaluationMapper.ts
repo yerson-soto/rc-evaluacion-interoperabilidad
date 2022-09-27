@@ -5,6 +5,7 @@ import { OrganizationMapper } from './OrganizationMapper';
 import { UserMapper } from "./UserMapper";
 import { getScoreColor } from 'library/helpers/score-color';
 import { EvaluationStatus } from 'library/common/enums';
+import { evaluationStatus, evStatusLabels } from 'library/common/constants';
 import * as dto from "library/api/dto/evaluation-dto";
 
 export class EvaluationMapper
@@ -16,14 +17,15 @@ export class EvaluationMapper
       organismoId: schema.organizationId,
       userId: schema.userId,
       userTechnicsId: schema.supportId,
-      dateDiary: schema.startDate
+      dateDiary: schema.startDate?.format() || ''
     };
   }
 
   fromAPI(data: dto.GetEvaluation): Evaluation {
-    const orgMapper = new OrganizationMapper();
-    const userMapper = new UserMapper();
-    const result = data.resultLevelResponse ? data.resultLevelResponse.resultFinallly : 0;
+    const orgMapper = new OrganizationMapper(),
+      userMapper = new UserMapper(),
+      result = data.resultLevelResponse ? data.resultLevelResponse.resultFinallly : 0,
+      status: EvaluationStatus = data.statesResponse.id;
     
     const organization = orgMapper.fromAPINested(data.organismo),
       manager = userMapper.fromAPI(data.userResponse),
@@ -33,10 +35,12 @@ export class EvaluationMapper
     return {
       uid: data.id,
       nomenclature: data.sequecenEvaluation,
-      dateCreated: data.dateInitial,
-      dateEnd: data.dateFinally,
+      dateStart: data.dateInitial,
       datePending: data.dateProcess,
-      status: data.statesResponse.id,
+      dateEnd: data.dateFinally,
+      status,
+      statusVerbose: evaluationStatus[status],
+      statusLabel: evStatusLabels[status],
       indicatorColor: getScoreColor(score),
       scorePercent,
       score,
@@ -62,7 +66,7 @@ export class EvaluationMapper
   ): dto.GetEvaluationParams {
     const fields: Record<string, dto.GetEvaluationParams['orderBy']> = {
       organization: 'Organismo',
-      dateCreated: 'Date',
+      dateStart: 'Date',
       score: 'CurrentLevel'
     }
 

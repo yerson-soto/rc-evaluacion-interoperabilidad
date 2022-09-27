@@ -1,18 +1,21 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Badge, Typography } from "antd";
 import { Evaluation } from "library/models/Evaluation";
-import { evaluationStatusType } from "library/common/constants";
+import { evaluationStatus } from "library/common/constants";
 
 import moment from "moment";
-import classes from "./EventItem.module.css";
+import classes from "./DateCellItem.module.css";
 
-interface EventItemProps {
+interface DateCellItemProps {
   item: Evaluation;
 }
 
-export default function cellItemRender({ item }: EventItemProps) {
-  const label = evaluationStatusType[item.status] as any;
-  const time = moment(item.dateCreated).format("HH:mm");
+export default function DateCellItem({ item }: DateCellItemProps) {
+  const { t } = useTranslation();
+  const label = evaluationStatus[item.status] as any;
+  const isOld = moment(item.dateStart) < moment();
+  const time = isOld ? t("labels.done") : moment(item.dateStart).format("HH:mm");
 
   return (
     <li key={item.uid}>
@@ -23,6 +26,7 @@ export default function cellItemRender({ item }: EventItemProps) {
           <Typography.Text className={classes.eventText}>
             <strong>({time})</strong> {item.organization.name}
           </Typography.Text>
+          
         }
       />
     </li>

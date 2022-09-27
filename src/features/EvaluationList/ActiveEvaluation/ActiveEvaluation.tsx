@@ -26,7 +26,7 @@ export default function ActiveEvaluation(props: ActiveEvaluationProps) {
           </Typography.Title>
           
 
-          <Typography.Text>{evaluation.dateCreated}</Typography.Text>
+          <Typography.Text>{evaluation.dateStart}</Typography.Text>
         </Col>
 
         <Col flex="auto">

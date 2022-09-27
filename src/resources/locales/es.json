@@ -68,7 +68,8 @@
     "current_password": "Contraseña actual",
     "new_password": "Nueva contraseña",
     "timeline": "Linea de Tiempo",
-    "maturity_model": "Modelo de Madurez"
+    "maturity_model": "Modelo de Madurez",
+    "done": "Listo"
   },
   "fields": {
     "color": "Color",
@@ -174,7 +175,8 @@
     "questionary_finished": "Todos los criterios han sido completados. ¿Deseas cerrar este formulario?",
     "change_password_success": "La contraseña ha sido modificada con éxito",
     "logout_confirmation": "¿Deseas cerrar sesión?",
-    "finish_evaluation_success": "La evaluación ha sido finalizada"
+    "finish_evaluation_success": "La evaluación ha sido finalizada",
+    "daily_schedule_empty": "Este fecha no tiene ningun evento"
   },
   "loading": {
     "text": "Cargando",
@@ -203,7 +205,8 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "change_password": "Cambiar contraseña",
-    "details": "Detalles"
+    "details": "Detalles",
+    "create_event": "Crear evento"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",

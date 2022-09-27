@@ -6,13 +6,10 @@ import { EvaluationItem } from "./EvaluationItem";
 import { Evaluation } from "library/models/Evaluation";
 import { useTranslation } from "react-i18next";
 import { Toolbar } from "library/components/Toolbar";
-import { EvaluationForm } from "./EvaluationForm";
-import { CreateAction } from "features/Crud/CreateAction";
-import { EvaluationFormSchema } from "./EvaluationForm/EvaluationFormSchema";
-import { evaluationSlice, EvaluationState } from "redux/slices/evaluationSlice";
-import { EvaluationService } from "library/api/services/EvaluationService";
 import { FilterBar } from "library/components/FilterBar";
-import { EvaluationStatus } from 'library/common/enums';
+import { EvaluationStatus, UserType } from 'library/common/enums';
+import { useAppSelector } from 'redux/hooks';
+import { AddEvaluation } from "./AddEvaluation";
 
 const { useBreakpoint } = Grid;
 
@@ -62,31 +59,14 @@ export default function EvaluationList() {
 }
 
 function EvaluationToolbar() {
-  const evaluationService = new EvaluationService();
   const { t } = useTranslation();
-
-  const renderCreateAction = () => (
-    <CreateAction<Evaluation, EvaluationFormSchema, EvaluationState>
-      toggleKey="create-evaluation"
-      title={t("buttons.new")}
-      reducer={evaluationSlice}
-      service={evaluationService}
-      selectLoading={(state) => state.auth.isLoading}
-      renderForm={({ visible, loading, onClose, onSave }) => (
-        <EvaluationForm
-          show={visible}
-          isLoading={loading}
-          onHide={onClose}
-          onSave={onSave}
-        />
-      )}
-    />
-  );
+  const userType = useAppSelector(state => state.auth.user.type);
+  const canCreate = userType === UserType.Admin; 
 
   return (
     <Toolbar
       title={t("headings.evaluation_list")}
-      actions={renderCreateAction()}
+      actions={canCreate ? <AddEvaluation /> : null}
     />
   );
 }

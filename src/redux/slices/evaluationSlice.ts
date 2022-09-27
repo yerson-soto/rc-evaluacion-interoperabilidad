@@ -22,7 +22,7 @@ const initialState: EvaluationState = {
   pageSize: 10,
   filter: {
     sortType: 'desc',
-    sortBy: 'dateCreated',
+    sortBy: 'dateStart',
     search: '',
     status: [
       EvaluationStatus.Scheduled, 

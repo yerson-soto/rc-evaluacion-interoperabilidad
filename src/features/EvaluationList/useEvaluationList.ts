@@ -39,7 +39,7 @@ export function useEvaluationList() {
 
   // TODO: Refactor: Move this
   const sortByOptions: SortByOption<Evaluation>[] = [
-    { value: "dateCreated", label: t("options.date_created") },
+    { value: "dateStart", label: t("options.date_created") },
     { value: "organization", label: t("options.organization") },
     { value: "score", label: t("options.score") },
   ];

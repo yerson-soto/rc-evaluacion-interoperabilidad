@@ -3,18 +3,20 @@ import { useAppSelector, useAppDispatch } from "redux/hooks";
 import { ScheduleService } from "library/api/services/ScheduleService";
 import { actions } from "redux/slices/scheduleSlice";
 
-export function useEventList(dateRange: [string, string]) {
+export function useSchedule(dateRange: [string, string]) {
   const { results, isLoading } = useAppSelector((state) => state.schedule);
-
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.auth.user.uid);
-  const scheduleServide = new ScheduleService();
+  const scheduleService = new ScheduleService();
+
+  // Used to dispatch reload
+  const evaluations = useAppSelector(state => state.evaluations.results);
 
   useEffect(() => {
     function fetchSchedule() {
       dispatch(actions.startLoadingSchedule());
 
-      scheduleServide
+      scheduleService
         .getSchedule({
           userId,
           dateFrom: dateRange[0],
@@ -29,7 +31,7 @@ export function useEventList(dateRange: [string, string]) {
     }
 
     fetchSchedule();
-  }, [dateRange]);
+  }, [userId, dateRange, evaluations]);
 
   return { isLoading, schedule: results };
 }

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { Badge, Typography } from "antd";
-import { evaluationStatusType } from "library/common/constants";
-import { useEventList } from "./useEventList";
+import { useSchedule } from "./useSchedule";
 import { CalendarMode } from "antd/lib/calendar/generateCalendar";
 import { useToggleParam } from "library/hooks/useToggleParam";
 import { keys } from "library/common/constants";
-import { EventItem } from "./EventItem";
+import { DateCellItem } from "./DateCellItem";
 
 import moment from "moment";
 import classes from "./EventSchedule.module.css";
@@ -17,35 +15,40 @@ const getMonthData = (value: moment.Moment) => {
 };
 
 const dateFormat = "YYYY-MM-DD";
+const datetimeFormat = "YYYY-MM-DD[T]HH:mm:ss";
 
-const getEntryPoint = (date: moment.Moment) => {
-  return date.clone().startOf("month").subtract(15, "day").format();
+const getDateFrom = (date: moment.Moment) => {
+  return date
+    .clone()
+    .startOf("month")
+    .subtract(15, "day")
+    .format(datetimeFormat);
 };
 
-const getTargetPoint = (date: moment.Moment) => {
+const getDateTo = (date: moment.Moment) => {
   return date.clone().endOf("month").add(15, "day").format();
 };
 
 export function useEventSchedule() {
   const [dateRange, setDateRange] = useState<[string, string]>([
-    getEntryPoint(moment()),
-    getTargetPoint(moment()),
+    getDateFrom(moment()),
+    getDateTo(moment()),
   ]);
-
-  const { schedule, isLoading } = useEventList(dateRange);
-
+  
+  const { schedule, isLoading } = useSchedule(dateRange);
+  
   const { setOpen } = useToggleParam(keys.viewParamName);
-
-  const handlePanelChange = (date: moment.Moment, mode: CalendarMode): void => {
-    if (!(mode === "month")) return;
-
-    const dateStart = getEntryPoint(date);
-    const dateEnd = getTargetPoint(date);
-    setDateRange([dateStart, dateEnd]);
-  };
 
   const handleDateSelect = (date: moment.Moment) => {
     setOpen(date.format(dateFormat));
+  };
+  
+  const handlePanelChange = (date: moment.Moment, mode: CalendarMode): void => {
+    if (!(mode === "month")) return;
+
+    const dateStart = getDateFrom(date);
+    const dateEnd = getDateTo(date);
+    setDateRange([dateStart, dateEnd]);
   };
 
   const monthCellRender = (value: moment.Moment) => {
@@ -66,7 +69,7 @@ export function useEventSchedule() {
 
     return (
       <ul className={classes.events}>
-        {scheduleItem?.events.map(item => <EventItem item={item} />)}
+        {scheduleItem?.events.map(item => <DateCellItem item={item} />)}
       </ul>
     );
   };

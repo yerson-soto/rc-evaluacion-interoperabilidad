@@ -18,11 +18,8 @@ import classes from "./EvaluationItem.module.css";
 
 import { paths } from "library/common/constants";
 import { EvaluationStatus } from "library/common/enums";
-import {
-  evaluationStatusLabels,
-  evaluationStatusType,
-} from "../../../library/common/constants";
 import ButtonGroup from "antd/lib/button/button-group";
+import moment from "moment";
 
 interface EvaluationItemProps {
   evaluation: Evaluation;
@@ -33,7 +30,7 @@ interface EvaluationItemProps {
 
 //   const colors = chroma.scale(["#f16317", "#e9c320", "#0ba931"]).colors(6);
 
-//   const { uid, organization, dateCreated, score } = evaluation;
+//   const { uid, organization, dateStart, score } = evaluation;
 //   const color = colors[Number(score.toFixed())];
 
 //   const goToDetail = () => navigate(`/evaluaciones/${uid}`);
@@ -64,7 +61,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
   const {
     uid,
     organization,
-    dateCreated,
+    dateStart,
     score,
     scorePercent,
     indicatorColor,
@@ -86,20 +83,20 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
 
 
         <Tag
-          color={evaluationStatusType[evaluation.status]}
+          color={evaluation.statusVerbose}
           style={{ padding: "4px 15px", fontSize: "14px" }}
         >
-          {evaluationStatusLabels[evaluation.status]}
+          {evaluation.statusLabel}
         </Tag>,
-        <Button disabled={evaluation.status === EvaluationStatus.Scheduled} onClick={goToDetail}>
-          {evaluation.status === EvaluationStatus.Completed ? "Ver" : "Evaluar"}
+        <Button onClick={goToDetail}>
+          {[EvaluationStatus.Completed, EvaluationStatus.Scheduled].includes(evaluation.status) ? "Ver" : "Evaluar"}
         </Button>,
 
         // <Button danger>Eliminar</Button>,
       ]}
     >
       <List.Item.Meta
-        description={`${organization.name} | ${dateCreated}`}
+        description={`${organization.name} | ${moment(dateStart).format('l HH:mm')}`}
         title={
           <Typography.Title level={5}>
             {evaluation.nomenclature}
@@ -132,7 +129,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
             <Typography.Text className={classes.title}>
               {evaluation.nomenclature}
             </Typography.Text>
-            <Typography.Text>{dateCreated}</Typography.Text>
+            <Typography.Text>{dateStart}</Typography.Text>
           </AppBox>
         </Col>
       </Row> */}

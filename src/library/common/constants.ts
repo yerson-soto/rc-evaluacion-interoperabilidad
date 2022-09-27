@@ -94,7 +94,8 @@ export const keys = {
   linkTokenParam: "token",
   tokenLocalStorage: "jwt",
   domainParamName: "d",
-  viewParamName: "view"
+  viewParamName: "view",
+  actionParamName: "action"
 };
 
 export const roleLabels = {
@@ -123,15 +124,15 @@ export const contentTypeLabels = {
 };
 
 // TODO: Use translation only inside React lifecycle
-export const evaluationStatusLabels = {
+export const evStatusLabels = {
   [EvaluationStatus.Scheduled]: getText('status.scheduled'),
   [EvaluationStatus.Started]: getText('status.started'),
   [EvaluationStatus.Pending]: getText('status.pending'),
   [EvaluationStatus.Completed]: getText('status.completed'),
 }
 
-export const evaluationStatusType = {
-  [EvaluationStatus.Scheduled]: "error",
+export const evaluationStatus = {
+  [EvaluationStatus.Scheduled]: "warning",
   [EvaluationStatus.Started]: "warning",
   [EvaluationStatus.Pending]: "processing",
   [EvaluationStatus.Completed]: "success",

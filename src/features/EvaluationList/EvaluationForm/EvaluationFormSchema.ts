@@ -2,10 +2,11 @@ import { getText } from "i18n";
 import { Rule } from "antd/lib/form";
 
 export interface EvaluationFormSchema {
-  organizationId: number;
-  startDate: string;
-  userId: string;
-  supportId: string;
+  userId?: string;
+  supportId?: string;
+  startDate?: moment.Moment | null;
+  organizationId?: number | string;
+  isScheduled?: boolean;
 }
 
 export const rules: Record<keyof EvaluationFormSchema, Rule[]> = {
@@ -17,6 +18,7 @@ export const rules: Record<keyof EvaluationFormSchema, Rule[]> = {
       }),
     },
   ],
+  isScheduled: [],
   startDate: [],
   userId: [],
   supportId: [],

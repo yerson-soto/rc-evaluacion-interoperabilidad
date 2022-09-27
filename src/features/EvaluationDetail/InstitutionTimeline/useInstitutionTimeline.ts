@@ -2,9 +2,9 @@ import { useEffect, useState, useMemo } from "react";
 import { EvaluationService } from "library/api/services/EvaluationService";
 import { Evaluation } from "library/models/Evaluation";
 import { TagProps, TimelineItemProps } from "antd";
-import { evaluationStatusLabels, evaluationStatusType } from "library/common/constants";
 import { EvaluationStatus } from "library/common/enums";
 import { useTranslation } from "react-i18next";
+import { evaluationStatus, evStatusLabels } from "library/common/constants";
 
 interface TimelineItem {
   key: string;
@@ -41,8 +41,8 @@ export function useInstitutionTimeline(institutionId: number) {
           key: evaluation.uid + EvaluationStatus.Completed,
           color: "green",
           position,
-          statusColor: evaluationStatusType[EvaluationStatus.Completed],
-          status: evaluationStatusLabels[EvaluationStatus.Completed],
+          statusColor: evaluationStatus[EvaluationStatus.Completed],
+          status: evStatusLabels[EvaluationStatus.Completed],
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_finished", {
             dateEnd: evaluation.dateEnd,
@@ -54,8 +54,8 @@ export function useInstitutionTimeline(institutionId: number) {
           key: evaluation.uid + EvaluationStatus.Pending,
           color: "blue",
           position,
-          statusColor: evaluationStatusType[EvaluationStatus.Pending],
-          status: evaluationStatusLabels[EvaluationStatus.Pending],
+          statusColor: evaluationStatus[EvaluationStatus.Pending],
+          status: evStatusLabels[EvaluationStatus.Pending],
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_started", {
             datePending: evaluation.datePending,
@@ -66,11 +66,11 @@ export function useInstitutionTimeline(institutionId: number) {
           key: evaluation.uid + EvaluationStatus.Started,
           color: "gold",
           position,
-          statusColor: evaluationStatusType[EvaluationStatus.Started],
-          status: evaluationStatusLabels[EvaluationStatus.Started],
+          statusColor: evaluationStatus[EvaluationStatus.Started],
+          status: evStatusLabels[EvaluationStatus.Started],
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_created", {
-            dateCreated: evaluation.dateCreated,
+            dateCreated: evaluation.dateStart,
             nomenclature: evaluation.nomenclature,
             user: evaluation.manager.fullName,
           }),

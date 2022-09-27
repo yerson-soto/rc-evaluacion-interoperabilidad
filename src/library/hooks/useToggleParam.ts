@@ -5,16 +5,38 @@ export function useToggleParam(paramName: string) {
 
   const paramValue = queryParams.get(paramName);
   const visible = Boolean(paramValue);
-  
-  const setOpen = (value: string) => {
-    const params = { [paramName]: value };
 
-    setQueryParams(params);
+  const getPrevParams = (): Record<string, string> => {
+    const prevParams: Record<string, string> = {};
+
+    queryParams.forEach((param, key) => {
+      prevParams[key] = param;
+    });
+
+    return prevParams;
+  };
+
+  const setOpen = (value: string) => {
+    const prevParams = getPrevParams();
+    prevParams[paramName] = value;
+
+    setQueryParams(prevParams);
   };
 
   const setClose = () => {
-    setQueryParams({});
+    const prevParams = getPrevParams();
+    delete prevParams[paramName];
+
+    setQueryParams(prevParams);
   };
 
-  return { visible, paramValue, setOpen, setClose };
+  return { 
+    visible, 
+    paramValue, 
+    queryParams,
+    setQueryParams,
+    setOpen, 
+    setClose, 
+    getPrevParams
+  };
 }

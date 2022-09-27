@@ -1,7 +1,7 @@
 import React from "react";
 import { Calendar, Card } from "antd";
 import { useEventSchedule } from "./useEventSchedule";
-import { EventsModal } from "./EventsModal";
+import { DailySchedule } from "./DailySchedule";
 
 export default function Schedule() {
   const {
@@ -20,7 +20,7 @@ export default function Schedule() {
         onSelect={handleDateSelect}
       />
 
-      <EventsModal />
+      <DailySchedule />
     </Card>
   );
 }
