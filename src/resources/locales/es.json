@@ -60,6 +60,7 @@
     "score": "Puntuación",
     "status": "Estado",
     "created_date": "Fecha de Creación",
+    "completed_date": "Fecha Finalizada",
     "manager": "A cargo de",
     "domain_quantity": "Cantidad de Dominios",
     "not_found": "No Encontrado",
@@ -277,7 +278,7 @@
   },
   "timeline": {
     "evaluation_created": "El {{ dateCreated }}, se creo la evaluación {{ nomenclature }}, a cargo de {{ user }}.",
-    "evaluation_started": "El {{ datePending }} , {{ user }} empezó a realizar la evaluacion.",
+    "evaluation_started": "El {{ datePending }}, {{ user }} empezó a realizar la evaluacion.",
     "evaluation_finished": "El {{ dateEnd }}, la evaluación {{ nomenclature }} fue finalizada con una puntuación de {{ score }}"
   }
 }

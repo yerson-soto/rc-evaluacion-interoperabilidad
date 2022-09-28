@@ -261,7 +261,7 @@ export default function TableVersion(props: TableVersionProps) {
           return {
             style: {
               backgroundColor: isSelected ? "#e6efff" : "#ffffff",
-              border: isSelected ? "1px solid #b4c6e7" : "inherit",
+              border: isSelected ? "1px solid #b4c6e7" : "1px solid #f0f0f0",
               // backgroundColor: isSelected ? colorRange[index] : "#ffffff",
             },
           };

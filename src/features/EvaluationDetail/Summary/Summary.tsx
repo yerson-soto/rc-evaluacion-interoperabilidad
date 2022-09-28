@@ -9,6 +9,7 @@ import Card from "antd/lib/card/Card";
 import Progress from "antd/es/progress";
 import classes from "./Summary.module.css";
 import { EvaluationStatus } from 'library/common/enums';
+import { useAppSelector } from '../../../redux/hooks';
 
 interface SummaryProps {
   evaluation: Evaluation;
@@ -16,13 +17,15 @@ interface SummaryProps {
 // Format dateStart, dateEnd, datePending
 export default function Summary(props: SummaryProps) {
   const { finishEvaluation, isLoading } = useFinishEvaluation();
+  const totalDomains = useAppSelector(state => state.domains.results.length);
   const { evaluation } = props;
   const { t } = useTranslation();
-  console.log(evaluation.statusVerbose);
+  
   // TODO: Increment score when user selects response
   // TODO: Remove Finish button when is finished
 
   const canFinish = ![EvaluationStatus.Scheduled, EvaluationStatus.Completed].includes(evaluation.status);
+  const isCompleted = EvaluationStatus.Completed === evaluation.status;
   
   return (
     <Card
@@ -50,7 +53,7 @@ export default function Summary(props: SummaryProps) {
             percent={(evaluation.score * 100) / 5}
             // percent={evaluation.score}
             format={() => evaluation.score}
-            strokeColor={evaluation.indicatorColor}
+            strokeColor={evaluation.scoreColor}
           />
         </Col>
 
@@ -74,7 +77,7 @@ export default function Summary(props: SummaryProps) {
               labelStyle={{ fontWeight: "bold" }}
               label={t("labels.domain_quantity")}
             >
-              4
+              {totalDomains}
             </Descriptions.Item>
             <Descriptions.Item
               labelStyle={{ fontWeight: "bold" }}
@@ -95,8 +98,16 @@ export default function Summary(props: SummaryProps) {
               labelStyle={{ fontWeight: "bold" }}
               label={t("labels.created_date")}
             >
-              {evaluation.dateStart}
+              {evaluation.dateStartReadable}
             </Descriptions.Item>
+            {isCompleted && (
+              <Descriptions.Item
+                labelStyle={{ fontWeight: "bold" }}
+                label={t("labels.completed_date")}
+              >
+                {evaluation.dateEndReadable}
+              </Descriptions.Item>
+              )}
           </Descriptions>
         </Col>
       </Row>

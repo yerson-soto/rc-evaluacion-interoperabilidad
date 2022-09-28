@@ -44,7 +44,7 @@ export default function AdminPanel() {
 
         <Main><Outlet /></Main>
 
-        <Footer />
+        {/* <Footer /> */}
       </Layout>
     </Layout>
   );

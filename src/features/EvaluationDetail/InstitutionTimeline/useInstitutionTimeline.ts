@@ -32,9 +32,9 @@ export function useInstitutionTimeline(institutionId: number) {
         {
           key: evaluation.uid + "result",
           position,
-          statusColor: evaluation.indicatorColor,
+          statusColor: evaluation.scoreColor,
           status: evaluation.score.toString(),
-          color: evaluation.indicatorColor,
+          color: evaluation.scoreColor,
           title: t("labels.result"),
         },
         {
@@ -58,7 +58,7 @@ export function useInstitutionTimeline(institutionId: number) {
           status: evStatusLabels[EvaluationStatus.Pending],
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_started", {
-            datePending: evaluation.datePending,
+            datePending: evaluation.datePendingReadable,
             user: evaluation.manager.fullName,
           }),
         },
@@ -70,7 +70,7 @@ export function useInstitutionTimeline(institutionId: number) {
           status: evStatusLabels[EvaluationStatus.Started],
           title: evaluation.nomenclature,
           content: t("timeline.evaluation_created", {
-            dateCreated: evaluation.dateStart,
+            dateCreated: evaluation.dateStartReadable,
             nomenclature: evaluation.nomenclature,
             user: evaluation.manager.fullName,
           }),

@@ -69,12 +69,17 @@ const DailyScheduleModal = (props: DailyScheduleModalProps) => {
   const { day, visible, onClose, children } = props;
   const userType = useAppSelector((state) => state.auth.user.type);
   const isAdmin = userType === UserType.Admin;
-  const dayMoment = moment(day);
 
+  const now = moment();
+  const dayMoment = moment(day);
   const canCreateEvent = isAdmin && dayMoment >= moment().startOf("day");
+  const defaultStartDate = dayMoment
+    .add(now.hour(), 'hour')
+    .add(now.minute(), 'minute')
+    .add(now.second(), 'second');
 
   const newEvaluationValues = {
-    startDate: dayMoment,
+    startDate: defaultStartDate,
     isScheduled: true,
   };
 

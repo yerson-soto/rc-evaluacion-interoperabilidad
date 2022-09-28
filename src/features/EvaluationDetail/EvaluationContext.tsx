@@ -64,7 +64,7 @@ function evaluationDetailReducer(
         return {
           evaluation: { 
             ...state.evaluation, 
-            indicatorColor: newColor, 
+            scoreColor: newColor, 
             score: action.payload 
           },
           isLoading: false,

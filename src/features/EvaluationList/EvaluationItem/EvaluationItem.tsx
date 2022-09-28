@@ -64,7 +64,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
     dateStart,
     score,
     scorePercent,
-    indicatorColor,
+    scoreColor,
   } = evaluation;
 
   const goToDetail = () => {
@@ -108,7 +108,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
             type="circle"
             percent={scorePercent}
             format={() => score}
-            strokeColor={indicatorColor}
+            strokeColor={scoreColor}
           />
         }
       />
@@ -119,7 +119,7 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
             type="circle" 
             percent={scorePercent} 
             format={() => score} 
-            strokeColor={indicatorColor}
+            strokeColor={scoreColor}
           />
           
         </Col>

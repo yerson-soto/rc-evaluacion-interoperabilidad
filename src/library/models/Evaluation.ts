@@ -5,15 +5,18 @@ import { EvaluationStatus } from 'library/common/enums';
 export interface Evaluation {
   uid: string;
   nomenclature: string;
-  dateStart: string;
-  dateEnd:  string | null;
-  datePending: string | null;
   organization: Organization;
+  manager: User;
   score: number;
   scorePercent: number;
-  indicatorColor: string;
-  manager: User;
+  scoreColor: string;
   status: EvaluationStatus;
   statusVerbose: string;
   statusLabel: string;
+  dateStart: string;
+  dateStartReadable: string;
+  dateEnd: string | null;
+  dateEndReadable: string;
+  datePending: string | null;
+  datePendingReadable: string;
 }
