@@ -6,8 +6,8 @@ import moment from 'moment';
 const dateFormat = 'YYYY-MM-DD HH:mm';
 
 const range = (start: number, end: number) => {
-  const result = [];
-  for (let i = start; i < end; i++) {
+  const result: number[] = [];
+  for (let i: number = start; i < end; i++) {
     result.push(i);
   }
   return result;

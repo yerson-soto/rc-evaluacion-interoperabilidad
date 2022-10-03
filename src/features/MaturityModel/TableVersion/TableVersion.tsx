@@ -277,7 +277,7 @@ export default function TableVersion(props: TableVersionProps) {
           {
             title: "Nivel Actual",
             dataIndex: "id",
-            fixed: "right",
+            // fixed: "right",
             onHeaderCell: (value, record) => {
               return {
                 style: {

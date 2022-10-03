@@ -11,6 +11,7 @@ import { DomainList } from "./DomainList";
 import { TableVersion } from "features/MaturityModel/TableVersion";
 import { EvaluationStatus } from "library/common/enums";
 import { InstitutionTimeline } from "./InstitutionTimeline";
+import { renderToString } from 'react-dom/server';
 
 const getItem = (
   label: React.ReactNode,
@@ -68,7 +69,7 @@ export default function EvaluationDetail() {
       </Card>
     ),
   ];
-  
+
   return (
     <AppBox>
       <Summary evaluation={evaluation} />

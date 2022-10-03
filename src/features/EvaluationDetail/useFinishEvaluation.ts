@@ -4,6 +4,7 @@ import { EvaluationService } from 'library/api/services/EvaluationService';
 import { useNavigate } from 'react-router-dom';
 import { paths } from 'library/common/constants';
 import { message } from 'antd';
+import { convertHTMLToText } from 'library/helpers/convert-html-text';
 
 export function useFinishEvaluation() {
   const [isLoading, setLoading] = useState(false);
@@ -30,5 +31,42 @@ export function useFinishEvaluation() {
       })
   }
 
-  return { finishEvaluation, isLoading };
+  const captureReportHTML = () => {
+    const html = document.querySelector('html');
+    const htmlText = convertHTMLToText(html, true);
+
+    const mainEndTag = '</main>';
+    const mainStart = htmlText.indexOf('<main');
+    const mainEnd = htmlText.indexOf(mainEndTag);
+
+    // Extrac main tag
+    const mainHTMLText = htmlText.substring(mainStart, mainEnd+mainEndTag.length);
+
+    const bodyStartTag = '<body';
+    const bodyEndTag = '</body>';
+    const bodyStart = htmlText.indexOf(bodyStartTag);
+    const bodyEnd = htmlText.indexOf(bodyEndTag);
+
+    // Create new html text with main
+    let newHTMLText = htmlText.substring(0, bodyStart) 
+      + '<body>' 
+      + mainHTMLText 
+      + '</body>' 
+      + htmlText.substring(bodyEnd+bodyEndTag.length);
+
+    // Remove ant card head
+    const antCardHead = html?.querySelector('.ant-card-head');
+    const antCardHeadText = convertHTMLToText(antCardHead, true);
+    newHTMLText = newHTMLText.replace(antCardHeadText, '');
+
+    // Remove ant tabs nav
+    const antTabsHead = html?.querySelector('.ant-tabs-nav');
+    const antTabsHeadText = convertHTMLToText(antTabsHead, true);
+    newHTMLText = newHTMLText.replace(antTabsHeadText, '<br />');
+    console.log(newHTMLText);
+    return newHTMLText;
+  }
+
+  return { finishEvaluation, captureReportHTML, isLoading };
 }
+

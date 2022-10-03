@@ -16,8 +16,8 @@ interface SummaryProps {
 }
 // Format dateStart, dateEnd, datePending
 export default function Summary(props: SummaryProps) {
-  const { finishEvaluation, isLoading } = useFinishEvaluation();
   const totalDomains = useAppSelector(state => state.domains.results.length);
+  const { finishEvaluation, captureReportHTML, isLoading } = useFinishEvaluation();
   const { evaluation } = props;
   const { t } = useTranslation();
   
@@ -31,15 +31,24 @@ export default function Summary(props: SummaryProps) {
     <Card
       title={evaluation.nomenclature}
       bordered={false}
-      extra={canFinish && (
+      // extra={canFinish && (
+      //   <Button
+      //     type="primary"
+      //     onClick={() => finishEvaluation(evaluation.uid)}
+      //     loading={isLoading}
+      //   >
+      //     Finalizar
+      //   </Button>
+      // )}
+      extra={
         <Button
           type="primary"
-          onClick={() => finishEvaluation(evaluation.uid)}
+          onClick={captureReportHTML}
           loading={isLoading}
         >
           Finalizar
         </Button>
-      )}
+      }
     >
       <Row gutter={[16, 16]}>
         <Col
