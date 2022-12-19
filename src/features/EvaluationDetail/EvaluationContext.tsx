@@ -1,4 +1,3 @@
-import {  } from '@reduxjs/toolkit';
 import { createContext, PropsWithChildren, useReducer } from "react";
 import { Evaluation } from 'library/models/Evaluation';
 import { getScoreColor } from 'library/helpers/score-color';
@@ -14,7 +13,7 @@ export interface EvaluationContextProps {
   setEvaluation: (evaluation: Evaluation | null) => void;
 }
 
-type LoginAction = 
+type EvaluationDetailAction = 
     | { type: 'setEvaluation', payload: Evaluation | null } 
     | { type: 'changeScore', payload: number };
 
@@ -52,7 +51,7 @@ export const EvaluationDetailProvider = (props: PropsWithChildren<{}>) => {
 
 function evaluationDetailReducer(
   state: EvaluationDetailState, 
-  action: LoginAction 
+  action: EvaluationDetailAction 
 ): EvaluationDetailState {
   switch ( action.type ) {
     case "setEvaluation":

@@ -84,7 +84,7 @@ export default function Questionary() {
     <AppDrawer
       placement="right"
       title={domainTitle}
-      visible={visible}
+      open={visible}
       onClose={closeQuestionary}
       onCloseEnd={cleanState}
       forceRender

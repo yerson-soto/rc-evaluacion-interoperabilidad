@@ -19,4 +19,5 @@ export interface Evaluation {
   dateEndReadable: string;
   datePending: string | null;
   datePendingReadable: string;
+  reportUrl: string | null;
 }

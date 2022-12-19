@@ -11,6 +11,8 @@ import { AddEvaluation } from "features/EvaluationList/AddEvaluation";
 
 import moment from "moment";
 import classes from "./DailySchedule.module.css";
+import { Link } from "react-router-dom";
+import { paths } from "../../../library/common/constants";
 
 export default function DailySchedule() {
   const { visible, paramValue, setClose } = useToggleParam(keys.viewParamName);
@@ -22,9 +24,12 @@ export default function DailySchedule() {
 
     return (
       <Timeline.Item key={key}>
-        <Typography.Paragraph className={classes.label}>
+        <Link
+          to={paths.admin.evaluations.detail.reverse({ uid: event.uid })}
+          className={classes.label}
+        >
           {time} - {event.organization.name}
-        </Typography.Paragraph>
+        </Link>
 
         <Typography.Paragraph style={{ marginBottom: 5 }}>
           {t("labels.manager")} {event.manager.fullName}
@@ -74,9 +79,9 @@ const DailyScheduleModal = (props: DailyScheduleModalProps) => {
   const dayMoment = moment(day);
   const canCreateEvent = isAdmin && dayMoment >= moment().startOf("day");
   const defaultStartDate = dayMoment
-    .add(now.hour(), 'hour')
-    .add(now.minute(), 'minute')
-    .add(now.second(), 'second');
+    .add(now.hour(), "hour")
+    .add(now.minute(), "minute")
+    .add(now.second(), "second");
 
   const newEvaluationValues = {
     startDate: defaultStartDate,

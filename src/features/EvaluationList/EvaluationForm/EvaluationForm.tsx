@@ -52,7 +52,7 @@ export default function EvaluationForm(props: EvaluationFormProps) {
       placement="right"
       title={title}
       onClose={onHide}
-      visible={show}
+      open={show}
       onCloseEnd={resetForm}
       extra={
         <Button 

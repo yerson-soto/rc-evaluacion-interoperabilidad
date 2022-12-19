@@ -95,10 +95,11 @@ export default function Sidenav(props: SidenavProps) {
         in={showBackdrop}
         nodeRef={nodeRef}
         timeout={300}
-        classNames="alert"
+        classNames="fade"
         unmountOnExit
       >
-        <AppBox 
+        <div
+          ref={nodeRef}
           className={classes.backdrop} 
           onClick={onCollapse} 
         />

@@ -1,15 +1,21 @@
-import { GetUser } from './user-dto';
-import { GetOrganizationNested } from './organization-dto';
-import { CommaSeparatedItems } from 'library/common/types';
+import { GetUser } from "./user-dto";
+import { GetOrganizationNested } from "./organization-dto";
+import { CommaSeparatedItems } from "library/common/types";
 
 export interface GetEvaluation {
   id: string;
   dateInitial: string;
   dateProcess: null | string;
   dateFinally: null | string;
-  userResponse: GetUser,
+  userResponse: GetUser;
   organismo: GetOrganizationNested;
   sequecenEvaluation: string;
+  documentFinallyResponse: {
+    ateFinally: string;
+    fileUrl: string;
+    id: string;
+    typeDocument: string;
+  };
   resultLevelResponse: {
     id: number;
     resultFinallly: number;
@@ -18,7 +24,7 @@ export interface GetEvaluation {
   statesResponse: {
     id: number;
     description: string;
-  },
+  };
 }
 
 export interface GetSchedule {
@@ -40,11 +46,10 @@ export interface CreateEvaluation {
   dateDiary?: string;
 }
 
-
 export interface GetEvaluationParams {
   search?: string;
-  typeOrder?: 'asc' | 'desc';
-  orderBy?: 'Date' | 'Organismo' | 'CurrentLevel';
+  typeOrder?: "asc" | "desc";
+  orderBy?: "Date" | "Organismo" | "CurrentLevel";
   statesId?: CommaSeparatedItems;
 }
 

@@ -19,14 +19,17 @@ export default function AuthCard(props: AuthCardProps) {
   const { text, children, redirectSuggestion, redirectPath } = props;
 
   return (
-    <Card className={classes.card} cover={
-      <AppBox className={classes.cardCover}>
-        <TitledLogo />
-        <Typography.Paragraph className={classes.cardSubtitle}>
-          {text}
-        </Typography.Paragraph>
-      </AppBox>
-    }>
+    <Card 
+      className={classes.card} 
+      bordered={false} 
+      cover={
+        <AppBox className={classes.cardCover}>
+          <TitledLogo />
+          <Typography.Paragraph className={classes.cardSubtitle}>
+            {text}
+          </Typography.Paragraph>
+        </AppBox>
+      }>
       {children}
 
       <Divider orientation="center">{t("dividers.or")}</Divider>

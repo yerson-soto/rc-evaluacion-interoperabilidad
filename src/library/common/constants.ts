@@ -132,7 +132,7 @@ export const evStatusLabels = {
 }
 
 export const evaluationStatus = {
-  [EvaluationStatus.Scheduled]: "warning",
+  [EvaluationStatus.Scheduled]: "error",
   [EvaluationStatus.Started]: "warning",
   [EvaluationStatus.Pending]: "processing",
   [EvaluationStatus.Completed]: "success",

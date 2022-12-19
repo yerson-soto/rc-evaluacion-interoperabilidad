@@ -10,7 +10,7 @@ import * as dto from "library/api/dto/evaluation-dto";
 
 export interface EvaluationRepository extends PaginateRepository<Evaluation, ManagerId> {
   getTimeline: (institutionId: number) => Promise<Evaluation[]>;
-  finish: (uid: string) => Promise<Evaluation>;
+  finish: (uid: string) => Promise<void>;
 }
 
 export class EvaluationService extends AbstractCrudService<
@@ -81,13 +81,13 @@ export class EvaluationService extends AbstractCrudService<
     });
   }
   
-  finish(uid: string): Promise<Evaluation> {
+  finish(uid: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const url = `/evaluationinstitutional/finally/${uid}`;
       this.client.put<APIResponse<dto.GetEvaluation>>(url)
         .then(res => {
-          const evaluation = this.mapper.fromAPI(res.data.result);
-          resolve(evaluation);
+          // const evaluation = this.mapper.fromAPI(res.data.result);
+          resolve();
         })
         .catch(() => reject("Por favor, complete la evaluación para poder finalizar"))
     })

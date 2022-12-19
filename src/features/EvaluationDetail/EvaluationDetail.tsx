@@ -84,7 +84,7 @@ export default function EvaluationDetail() {
           backgroundColor: "#ffffff",
           padding: "0 16px",
         }}
-        defaultActiveKey={isCompleted ? "2" : "1"}
+        defaultActiveKey={isCompleted || isScheduled ? "2" : "1"}
         animated
       />
     </AppBox>

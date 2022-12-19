@@ -80,7 +80,7 @@ export default function QuestionItem(props: QuestionItemProps) {
         <CSSTransition
           in={showEvidences}
           timeout={300}
-          classNames="fade"
+          classNames="fade-up"
           nodeRef={nodeRef}
           unmountOnExit
         >

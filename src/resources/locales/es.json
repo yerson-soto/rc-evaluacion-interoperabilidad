@@ -177,7 +177,8 @@
     "change_password_success": "La contraseña ha sido modificada con éxito",
     "logout_confirmation": "¿Deseas cerrar sesión?",
     "finish_evaluation_success": "La evaluación ha sido finalizada",
-    "daily_schedule_empty": "Este fecha no tiene ningun evento"
+    "daily_schedule_empty": "Este fecha no tiene ningun evento",
+    "finish_evaluation_question": "¿Deseas finalizar esta evaluación?"
   },
   "loading": {
     "text": "Cargando",
@@ -207,7 +208,11 @@
     "next": "Siguiente",
     "change_password": "Cambiar contraseña",
     "details": "Detalles",
-    "create_event": "Crear evento"
+    "create_event": "Crear evento",
+    "finish": "Finalizar",
+    "see": "Ver",
+    "evaluation": "Evaluar",
+    "download_report": "Reporte"
   },
   "links": {
     "forgot_password": "¿Olvidaste tu contraseña?",

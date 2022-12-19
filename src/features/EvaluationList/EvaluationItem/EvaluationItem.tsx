@@ -11,6 +11,8 @@ import {
   Tag,
   Typography,
 } from "antd";
+
+import { DownloadOutlined } from "@ant-design/icons";
 import { Evaluation } from "library/models/Evaluation";
 import { AppBox } from "library/components/AppBox";
 
@@ -20,6 +22,7 @@ import { paths } from "library/common/constants";
 import { EvaluationStatus } from "library/common/enums";
 import ButtonGroup from "antd/lib/button/button-group";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 interface EvaluationItemProps {
   evaluation: Evaluation;
@@ -65,13 +68,18 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
     score,
     scorePercent,
     scoreColor,
+    reportUrl,
   } = evaluation;
+
+  const { t } = useTranslation();
 
   const goToDetail = () => {
     navigate(paths.admin.evaluations.detail.reverse({ uid }));
   };
   const goToEvaluation = (): void =>
     navigate(paths.admin.evaluations.init.reverse({ uid }));
+
+  const isFinished = evaluation.status === EvaluationStatus.Completed;
 
   return (
     <List.Item
@@ -81,26 +89,40 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
 
-
-        <Tag
-          color={evaluation.statusVerbose}
-          style={{ padding: "4px 15px", fontSize: "14px" }}
-        >
-          {evaluation.statusLabel}
-        </Tag>,
+        isFinished && reportUrl ? (
+          <a href={reportUrl} target="_blank" download>
+            <Button type="primary" icon={<DownloadOutlined />} danger>
+              {t("buttons.download_report")}
+            </Button>
+          </a>
+        ) : null,
+        ,
         <Button onClick={goToDetail}>
-          {[EvaluationStatus.Completed, EvaluationStatus.Scheduled].includes(evaluation.status) ? "Ver" : "Evaluar"}
+          {[EvaluationStatus.Completed, EvaluationStatus.Scheduled].includes(
+            evaluation.status
+          )
+            ? t("buttons.see")
+            : t("buttons.evaluate")}
         </Button>,
 
         // <Button danger>Eliminar</Button>,
       ]}
     >
       <List.Item.Meta
-        description={`${organization.name} | ${moment(dateStart).format('l HH:mm')}`}
+        description={`${organization.name} | ${moment(dateStart).format(
+          "l HH:mm"
+        )}`}
         title={
-          <Typography.Title level={5}>
-            {evaluation.nomenclature}
-          </Typography.Title>
+          <Space align="center">
+            <Typography.Title style={{ margin: 0 }} level={5}>
+              {evaluation.nomenclature}
+            </Typography.Title>
+            <Tag
+              color={evaluation.statusVerbose}
+            >
+              {evaluation.statusLabel}
+            </Tag>
+          </Space>
         }
         avatar={
           <Progress
