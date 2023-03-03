@@ -40,7 +40,7 @@ export default function Summary(props: SummaryProps) {
   ].includes(evaluation.status);
   const isCompleted = EvaluationStatus.Completed === evaluation.status;
   const { reportUrl } = evaluation;
-  console.log("eva", isCompleted, evaluation);
+
   const downloadBtn =
     isCompleted && reportUrl ? (
       <a href={reportUrl} target="_blank" download>
@@ -56,7 +56,7 @@ export default function Summary(props: SummaryProps) {
       bordered={false}
       extra={
         <Space>
-          {downloadBtn}
+          {/* {downloadBtn} */}
           {canFinish && (
             <Popconfirm
               title={t("alerts.finish_evaluation_question")}
