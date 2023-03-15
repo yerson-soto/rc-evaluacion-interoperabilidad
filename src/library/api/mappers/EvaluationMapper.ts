@@ -9,6 +9,7 @@ import { evaluationStatus, evStatusLabels } from "library/common/constants";
 import { formatDateReadable } from "library/helpers/date-format";
 import * as dto from "library/api/dto/evaluation-dto";
 import { getDocumentUrl } from '../../helpers/get-document-url';
+import moment from "moment";
 
 export class EvaluationMapper
   implements
@@ -33,22 +34,22 @@ export class EvaluationMapper
       userMapper = new UserMapper(),
       result = data.resultLevelResponse
         ? data.resultLevelResponse.resultFinallly
-        : 0,
-      status: EvaluationStatus = data.statesResponse.id;
+        : 0;
+      // status: EvaluationStatus = data.statesResponse.id;
 
     //     // TODO: Improve this
-    // const isGreather = data.dateInitial && moment(data.dateInitial) < moment();
+    const isGreather = data.dateInitial && moment(data.dateInitial) < moment();
 
     // const orgMapper = new OrganizationMapper(),
     //   userMapper = new UserMapper(),
     //   result = data.resultLevelResponse
     //     ? data.resultLevelResponse.resultFinallly
     //     : 0,
-    //   // status: EvaluationStatus = data.statesResponse.id;
-    //   status: EvaluationStatus =
-    //     data.statesResponse.id === EvaluationStatus.Scheduled && isGreather
-    //       ? EvaluationStatus.Started
-    //       : data.statesResponse.id;
+      // status: EvaluationStatus = data.statesResponse.id;
+      const status: EvaluationStatus =
+        data.statesResponse.id === EvaluationStatus.Scheduled && isGreather
+          ? EvaluationStatus.Started
+          : data.statesResponse.id;
 
     const organization = orgMapper.fromAPINested(data.organismo),
       manager = userMapper.fromAPI(data.userResponse),

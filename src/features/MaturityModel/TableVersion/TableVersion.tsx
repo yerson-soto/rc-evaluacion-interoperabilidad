@@ -311,7 +311,7 @@ export default function TableVersion(props: TableVersionProps) {
       columns={columns}
       size="small"
       pagination={false}
-      // scroll={{ x: 1500, y: 300 }}
+      scroll={{ x: "auto" }}
     />
   );
 }

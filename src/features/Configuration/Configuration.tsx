@@ -35,7 +35,7 @@ export default function Configuration() {
   const location = useLocation();
 
   if (location.pathname === paths.admin.settings.index) {
-    return <Navigate to={paths.admin.settings.general.index} />
+    return <Navigate to={paths.admin.settings.password.index} />
   }
 
   const handleTabChange = (tab: string): void => {

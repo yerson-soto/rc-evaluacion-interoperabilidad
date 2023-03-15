@@ -89,14 +89,14 @@ export default function EvaluationItem({ evaluation }: EvaluationItemProps) {
         // <IconButton key="detail" icon={EyeOutlined} />,
         // <IconButton key="delete" icon={DeleteOutlined} />,
 
-        // isFinished && reportUrl ? (
-        //   <a href={reportUrl} target="_blank" download>
-        //     <Button type="primary" icon={<DownloadOutlined />} danger>
-        //       {t("buttons.download_report")}
-        //     </Button>
-        //   </a>
-        // ) : null,
-        // ,
+        isFinished && reportUrl ? (
+          <a href={reportUrl} target="_blank" download>
+            <Button type="primary" icon={<DownloadOutlined />} danger>
+              {t("buttons.download_report")}
+            </Button>
+          </a>
+        ) : null,
+        ,
         <Button onClick={goToDetail}>
           {[EvaluationStatus.Completed, EvaluationStatus.Scheduled].includes(
             evaluation.status

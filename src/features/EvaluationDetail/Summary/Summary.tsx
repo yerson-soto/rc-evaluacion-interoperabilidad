@@ -56,7 +56,7 @@ export default function Summary(props: SummaryProps) {
       bordered={false}
       extra={
         <Space>
-          {/* {downloadBtn} */}
+          {downloadBtn}
           {canFinish && (
             <Popconfirm
               title={t("alerts.finish_evaluation_question")}

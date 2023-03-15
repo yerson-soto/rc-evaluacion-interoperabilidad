@@ -21,7 +21,7 @@ interface UserFormProps {
 export default function UserForm(props: UserFormProps) {
   const { show, isEdit, isLoading, defaults, onHide, onSave } = props;
   const { t } = useTranslation();
-  const { 
+  const {
     form,
     domainNotFound, 
     emailDomain, 

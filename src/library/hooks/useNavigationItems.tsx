@@ -177,13 +177,13 @@ export function useNavigationItems() {
       icon: <SettingOutlined />,
       iconelement: SettingOutlined,
       children: [
-        {
-          key: admin.settings.general.fullPath,
-          label: t("settings.general"),
-          path: admin.settings.general.fullPath,
-          icon: <UserOutlined />,
-          iconelement: UserOutlined,
-        },
+        // {
+        //   key: admin.settings.general.fullPath,
+        //   label: t("settings.general"),
+        //   path: admin.settings.general.fullPath,
+        //   icon: <UserOutlined />,
+        //   iconelement: UserOutlined,
+        // },
         {
           key: admin.settings.password.fullPath,
           label: t("settings.password"),

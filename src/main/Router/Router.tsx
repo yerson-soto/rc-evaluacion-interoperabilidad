@@ -56,7 +56,7 @@ export default function Router() {
           <Route path={admin.maturityModel.index} element={<TableVersion />} />
           <Route path={admin.schedule.index} element={<EventSchedule />} />
           <Route path={settings.index} element={<Configuration />}>
-            <Route path={settings.general.index} element={<GeneralConfig />} />
+            {/* <Route path={settings.general.index} element={<GeneralConfig />} /> */}
             <Route path={settings.password.index} element={<PasswordChange />} />
           </Route>
           

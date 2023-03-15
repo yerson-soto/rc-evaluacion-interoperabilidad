@@ -1,6 +1,5 @@
 {
   "name": "rc-madurez-interoperabilidad",
-  "homepage": "madurez-interoperabilidad",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -47,7 +46,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^6.4.5",
-    "@types/chroma-js": "^2.1.3",
+    "@types/chroma-js": "^2.4.0",
     "@types/react-transition-group": "^4.4.5",
     "craco-antd": "^2.0.0"
   },
